@@ -1,0 +1,12 @@
+.svg-canvas{
+  border-radius: 7px;
+  box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.1);
+  background: #FFFFFF;
+
+}
+.svg-canvas-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* 100% высоты видимой области страницы */
+}

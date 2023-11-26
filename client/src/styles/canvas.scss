@@ -1,0 +1,18 @@
+@import "./variables";
+
+.canvas{
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('../assets/img/icons.png') repeat 0 0/350px 268px;
+  //opacity: 0.5;
+  z-index: 999;
+}
+
+canvas{
+  border-radius: 7px;
+  background: #FFF;
+  box-shadow: 0px 10px 15px 0px rgba(0, 0, 0, 0.10);
+
+}
