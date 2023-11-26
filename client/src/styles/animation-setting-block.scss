@@ -1,0 +1,13 @@
+.animation-setting-block{
+
+}
+.animation-setting-block-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* 100% высоты видимой области страницы */
+}
+.animation-setting-block-title{
+  text-align: center;
+  padding: 15px;
+}

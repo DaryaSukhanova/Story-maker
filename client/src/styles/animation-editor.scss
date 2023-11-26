@@ -1,4 +1,21 @@
 @import "./variables";
 .animation-editor{
   background: $background-color;
+  display: flex;
+  justify-content: space-between;
+}
+.block-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* 100% высоты видимой области страницы */
+}
+
+.setting-block{
+  width: 350px;
+  height: 700px;
+
+  background-color: #ffffff; /* Цвет фона блока */
+  border-radius: 30px;
+  box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.10);
 }

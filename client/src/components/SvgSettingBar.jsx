@@ -4,7 +4,7 @@ import svgToolState from "../store/svgToolState";
 
 const SvgSettingBar = () => {
     return (
-        <div className="svg-setting-bar">
+        <div className="setting-bar">
             <label htmlFor="line-width">Line width</label>
             <input
                 onChange={e => svgToolState.setLineWidth(e.target.value)}

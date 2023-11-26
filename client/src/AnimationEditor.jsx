@@ -5,13 +5,15 @@ import SvgCanvas from "./components/SvgCanvas";
 import ButtonSaveSvg from "./components/ButtonSaveSvg";
 import SvgToolbar from "./components/SvgToolbar";
 import SvgSettingBar from "./components/SvgSettingBar";
-
+import AnimationSettingBlock from "./components/AnimationSettingBlock";
+import './styles/animation-editor.scss'
+import DrawingBlock from "./components/DrawingBlock";
 const AnimationEditor = () => {
     return (
         <div className="animation-editor">
-            <SvgToolbar></SvgToolbar>
-            <SvgSettingBar></SvgSettingBar>
+            <DrawingBlock></DrawingBlock>
             <SvgCanvas/>
+            <AnimationSettingBlock></AnimationSettingBlock>
             {/*<ButtonSaveSvg></ButtonSaveSvg>*/}
 
         </div>

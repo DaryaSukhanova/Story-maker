@@ -22,7 +22,7 @@ const SvgCanvas = observer (() => {
     }, [])
 
     return (
-        <div className="svg-canvas-container">
+        <div className="block-container">
             <svg ref={svgCanvasRef}
                  className="svg-canvas"
                  id="drawingCanvas"
