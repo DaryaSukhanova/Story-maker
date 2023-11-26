@@ -33,14 +33,14 @@ const Toolbar = () => {
         <div className="tool-bar">
             <Modal show={modal} onHide={()=>{setModal(false)}}>
                 <Modal.Header closeButton >
-                    <Modal.Title>Введите название фона</Modal.Title>
+                    <Modal.Title>Enter the name of the background</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <input type="text" ref={backgroundNameRef}/>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={()=> download()}>
-                        Сохранить
+                        Save
                     </Button>
                 </Modal.Footer>
             </Modal>
