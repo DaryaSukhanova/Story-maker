@@ -1,11 +1,15 @@
 import React from 'react';
-import {Link} from "react-router-dom";
-
+import { NavLink } from 'react-router-dom'
+import "../styles/nav-bar.scss"
 const Navbar = () => {
     return (
         <div className="nav-bar">
-            <Link to="/graphic-editor">Graphic Editor</Link>
-            <Link to="/animation-editor">Animation Editor</Link>
+            <NavLink to="/graphic-editor" activeClassName="active-link">
+                Graphic Editor
+            </NavLink>
+            <NavLink to="/animation-editor" activeClassName="active-link">
+                Animation Editor
+            </NavLink>
         </div>
     );
 };

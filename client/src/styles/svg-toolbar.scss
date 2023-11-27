@@ -40,15 +40,11 @@
 }
 .svg-tool-bar-title{
   text-align: center;
-  padding: 15px 0 0 0;
 }
 .svg-setting-bar{
-  height: $toolbar-height;
+  height: 30px;
   background-color: white;
   display: flex;
-  align-items: center;
-  //position: absolute;
-  width: 100%;
-  //box-shadow: 0 4px 5px gray;
-  top: $toolbar-height;
+  justify-content: space-evenly;
+
 }

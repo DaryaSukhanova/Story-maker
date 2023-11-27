@@ -1,10 +1,10 @@
 import React from 'react';
 import toolState from "../store/toolState";
 import svgToolState from "../store/svgToolState";
-
+import "../styles/svg-toolbar.scss"
 const SvgSettingBar = () => {
     return (
-        <div className="setting-bar">
+        <div className="svg-setting-bar">
             <label htmlFor="line-width">Line width</label>
             <input
                 onChange={e => svgToolState.setLineWidth(e.target.value)}
@@ -12,7 +12,7 @@ const SvgSettingBar = () => {
                 id="line-width" type="number"
                 defaultValue={2} min={1} max={50}
             />
-            <label htmlFor="stroke-color" style={{marginRight: 7}}>Outline color</label>
+            <label htmlFor="stroke-color" >Outline color</label>
             <input id="stroke-color"
                    onChange={e => svgToolState.setFillStroke(e.target.value)}
                    type="color"

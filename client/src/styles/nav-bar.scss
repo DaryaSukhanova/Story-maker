@@ -1,0 +1,14 @@
+@import "./variables";
+.nav-bar .active {
+  background: $background-color;
+
+
+}
+
+
+.nav-bar a {
+  padding: 10px;
+  height: 100%;
+  text-decoration: none;
+  color: #000000;
+}
