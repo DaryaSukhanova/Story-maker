@@ -1,11 +1,14 @@
-export default class AnimationTool{
+export default class AnimationTool {
     constructor(svgCanvas) {
-        this.svgCanvas = svgCanvas
-        this.destroyEvents()
+        this.svgCanvas = svgCanvas;
+        this.destroyEvents();
     }
-    destroyEvents(){
-        this.svgCanvas.onmousemove = null
-        this.svgCanvas.onmousedown = null
-        this.svgCanvas.onmouseup = null
+
+    destroyEvents() {
+        // Проверка наличия элемента перед установкой событий
+        this.svgCanvas.onmousemove = null;
+        this.svgCanvas.onmousedown = null;
+        this.svgCanvas.onmouseup = null;
+
     }
 }

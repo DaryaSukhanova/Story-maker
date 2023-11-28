@@ -5,5 +5,8 @@ class AnimationToolState{
     constructor() {
         makeAutoObservable(this)
     }
+    setAnimationTool(tool){
+        this.tool = tool
+    }
 }
 export default new AnimationToolState()

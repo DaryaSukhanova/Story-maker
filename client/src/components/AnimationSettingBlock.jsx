@@ -1,5 +1,10 @@
 import React from 'react';
 import '../styles/animation-setting-block.scss'
+import animationToolState from "../store/animationToolState";
+import MotionCurve from "../tools/MotionCurve";
+import svgCanvasState from "../store/svgCanvasState";
+import SvgBrush from "../tools/SvgBrush";
+import svgToolState from "../store/svgToolState";
 const AnimationSettingBlock = () => {
     return (
         <div className="block-container">
@@ -7,6 +12,9 @@ const AnimationSettingBlock = () => {
                 <div className="animation-setting-block-title">
                     Animation Settings
                 </div>
+                 <div className="animation-setting-block-btns">
+                     <button className="tool-bar__btn svgBrush" onClick={()=> animationToolState.setAnimationTool(new MotionCurve(svgCanvasState.canvas))}/>
+                 </div>
             </div>
         </div>
 
