@@ -17,11 +17,21 @@ export default class MotionCurve extends AnimationTool {
 
     mouseUpHandler(e) {
         if (this.drawingPath) {
+            const startDataPath = this.drawingPath.getAttribute('d')
+            const match = startDataPath.match(/^M\s*([\d.]+)\s*([\d.]+)/);
+            const startXPath = parseFloat(match[1]);
+            const startYPath = parseFloat(match[2]);
+            console.log("start d ", startXPath +" "+ startYPath)
             this.drawingPath = null;
-
+            const clickedElement = document.elementFromPoint(e.clientX, e.clientY);
+            clickedElement.setAttribute("x", `${startXPath}`)
+            clickedElement.setAttribute("y", `${startYPath}`)
+            console.log('Clicked element:', clickedElement);
+            console.log("start d ", startXPath +" "+ startYPath)
         }
-        const clickedElement = document.elementFromPoint(e.clientX, e.clientY);
-        console.log('Clicked element:', clickedElement);
+
+        // console.log('Clicked element:', clickedElement);
+
     }
 
     mouseDownHandler(e) {
@@ -40,6 +50,7 @@ export default class MotionCurve extends AnimationTool {
         }
 
         this.pathData = `M ${startX} ${startY}`;
+
     }
 
     mouseMoveHandler(e) {
@@ -58,5 +69,9 @@ export default class MotionCurve extends AnimationTool {
         if (this.drawingPath) {
             this.drawingPath.setAttribute("d", this.pathData);
         }
+    }
+
+    getStartDataPath(d){
+        this.startDataPath = d.match(/^M\s*([\d.]+)\s*([\d.]+)/);
     }
 }
