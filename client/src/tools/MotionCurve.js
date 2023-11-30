@@ -4,7 +4,7 @@ export default class MotionCurve extends AnimationTool {
     constructor(svgCanvas) {
         super(svgCanvas);
         this.pathData = "";
-        this.drawingPath = null;
+        this.motionPath = null;
         this.listen();
         this.currentPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
     }
@@ -16,21 +16,35 @@ export default class MotionCurve extends AnimationTool {
     }
 
     mouseUpHandler(e) {
-        if (this.drawingPath) {
-            const startDataPath = this.drawingPath.getAttribute('d')
+        if (this.motionPath) {
+            const startDataPath = this.motionPath.getAttribute('d')
             const match = startDataPath.match(/^M\s*([\d.]+)\s*([\d.]+)/);
             const startXPath = parseFloat(match[1]);
             const startYPath = parseFloat(match[2]);
             console.log("start d ", startXPath +" "+ startYPath)
-            this.drawingPath = null;
-            const clickedElement = document.elementFromPoint(e.clientX, e.clientY);
-            clickedElement.setAttribute("x", `${startXPath}`)
-            clickedElement.setAttribute("y", `${startYPath}`)
-            console.log('Clicked element:', clickedElement);
-            console.log("start d ", startXPath +" "+ startYPath)
-        }
 
-        // console.log('Clicked element:', clickedElement);
+            const clickedElement = document.elementFromPoint(e.clientX, e.clientY);
+            if(clickedElement !== this.svgCanvas && clickedElement !== this.motionPath){
+                // clickedElement.setAttribute("x", `${startXPath}`)
+                // clickedElement.setAttribute("y", `${startYPath}`)
+                console.log('Clicked element:', clickedElement);
+                console.log("start d ", startXPath +" "+ startYPath)
+                // this.animate(clickedElement)
+
+                const animateMotion = document.createElementNS("http://www.w3.org/2000/svg", "animateMotion");
+                animateMotion.setAttribute("dur", "6s"); // Продолжительность анимации
+                animateMotion.setAttribute("repeatCount", "indefinite"); // Бесконечное повторение
+
+
+                const mpath = document.createElementNS("http://www.w3.org/2000/svg", "mpath");
+                mpath.setAttribute("href", "#motionPath"); // Замените "motionPath" на ID вашего пути
+                animateMotion.appendChild(mpath);
+
+                clickedElement.appendChild(animateMotion);
+            }
+
+            this.motionPath = null;
+        }
 
     }
 
@@ -41,12 +55,13 @@ export default class MotionCurve extends AnimationTool {
         const startY = e.pageY - svgCanvasRect.top;
 
 
-        if (!this.drawingPath) {
-            this.drawingPath = this.currentPath
-            this.drawingPath.setAttribute("stroke", "red");
-            this.drawingPath.setAttribute("stroke-width", "2");
-            this.drawingPath.setAttribute("fill", "none");
-            this.svgCanvas.appendChild(this.drawingPath);
+        if (!this.motionPath) {
+            this.motionPath = this.currentPath
+            this.motionPath.setAttribute("stroke", "red");
+            this.motionPath.setAttribute("stroke-width", "2");
+            this.motionPath.setAttribute("fill", "none");
+            this.motionPath.setAttribute("id", "motionPath");
+            this.svgCanvas.appendChild(this.motionPath);
         }
 
         this.pathData = `M ${startX} ${startY}`;
@@ -54,24 +69,24 @@ export default class MotionCurve extends AnimationTool {
     }
 
     mouseMoveHandler(e) {
-        if (this.drawingPath) {
+        if (this.motionPath) {
             const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
             const currentX = e.pageX - svgCanvasRect.left;
             const currentY = e.pageY - svgCanvasRect.top;
             this.pathData += ` L ${currentX} ${currentY}`;
             this.updatePath();
-            console.log(this.drawingPath)
+            console.log(this.motionPath)
         }
 
     }
 
     updatePath() {
-        if (this.drawingPath) {
-            this.drawingPath.setAttribute("d", this.pathData);
+        if (this.motionPath) {
+            this.motionPath.setAttribute("d", this.pathData);
         }
     }
 
-    getStartDataPath(d){
-        this.startDataPath = d.match(/^M\s*([\d.]+)\s*([\d.]+)/);
+    animate(element){
+        // element.setAttribute('transform', 'translate(10, 20)');
     }
 }
