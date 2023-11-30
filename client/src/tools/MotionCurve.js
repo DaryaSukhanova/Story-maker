@@ -18,29 +18,19 @@ export default class MotionCurve extends AnimationTool {
     mouseUpHandler(e) {
         if (this.motionPath) {
             const startDataPath = this.motionPath.getAttribute('d')
-            const match = startDataPath.match(/^M\s*([\d.]+)\s*([\d.]+)/);
-            const startXPath = parseFloat(match[1]);
-            const startYPath = parseFloat(match[2]);
-            console.log("start d ", startXPath +" "+ startYPath)
-
+            // const match = startDataPath.match(/^M\s*([\d.]+)\s*([\d.]+)/);
+            // const startXPath = parseFloat(match[1]);
+            // const startYPath = parseFloat(match[2]);
+            // console.log("start d ", startXPath +" "+ startYPath)
             const clickedElement = document.elementFromPoint(e.clientX, e.clientY);
             if(clickedElement !== this.svgCanvas && clickedElement !== this.motionPath){
                 // clickedElement.setAttribute("x", `${startXPath}`)
                 // clickedElement.setAttribute("y", `${startYPath}`)
-                console.log('Clicked element:', clickedElement);
-                console.log("start d ", startXPath +" "+ startYPath)
+                // console.log('Clicked element:', clickedElement);
+                // console.log("start d ", startXPath +" "+ startYPath)
                 // this.animate(clickedElement)
+            this.animate(clickedElement)
 
-                const animateMotion = document.createElementNS("http://www.w3.org/2000/svg", "animateMotion");
-                animateMotion.setAttribute("dur", "6s"); // Продолжительность анимации
-                animateMotion.setAttribute("repeatCount", "indefinite"); // Бесконечное повторение
-
-
-                const mpath = document.createElementNS("http://www.w3.org/2000/svg", "mpath");
-                mpath.setAttribute("href", "#motionPath"); // Замените "motionPath" на ID вашего пути
-                animateMotion.appendChild(mpath);
-
-                clickedElement.appendChild(animateMotion);
             }
 
             this.motionPath = null;
@@ -87,6 +77,14 @@ export default class MotionCurve extends AnimationTool {
     }
 
     animate(element){
-        // element.setAttribute('transform', 'translate(10, 20)');
+        const animateMotion = document.createElementNS("http://www.w3.org/2000/svg", "animateMotion");
+        animateMotion.setAttribute("dur", "2s");
+        animateMotion.setAttribute("repeatCount", "indefinite"); // Бесконечное повторение
+
+        const mpath = document.createElementNS("http://www.w3.org/2000/svg", "mpath");
+        mpath.setAttribute("href", "#motionPath");
+        animateMotion.appendChild(mpath);
+
+        element.appendChild(animateMotion);
     }
 }
