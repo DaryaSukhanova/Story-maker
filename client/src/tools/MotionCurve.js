@@ -1,5 +1,6 @@
 import AnimationTool from "./AnimationTool";
 import {logDOM} from "@testing-library/react";
+const fs = require('fs');
 
 export default class MotionCurve extends AnimationTool {
     constructor(svgCanvas) {
@@ -7,6 +8,7 @@ export default class MotionCurve extends AnimationTool {
         this.pathData = "";
         this.motionPath = null;
         this.clickedElement = null
+        this.paused = false;
         this.listen();
         this.currentPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
     }
@@ -81,29 +83,40 @@ export default class MotionCurve extends AnimationTool {
     }
 
     animate(element) {
+        const frames = []
         const motionPath = document.getElementById('motionPath');
         const totalLength = motionPath.getTotalLength();
         let distanceCovered = 0;
-        const speed = 1;
+        const speed = 5;
 
-        function moveAlongPath() {
-            const point = motionPath.getPointAtLength(distanceCovered);
-            element.setAttribute("transform", `translate(${point.x} ${point.y})`);
+        const moveAlongPath = () => {
+            if (!this.paused) {
+                const point = motionPath.getPointAtLength(distanceCovered);
+                element.setAttribute("transform", `translate(${point.x} ${point.y})`);
+                frames.push(element)
+                distanceCovered += speed;
 
-            distanceCovered += speed;
-
-            if (distanceCovered <= totalLength) {
-                requestAnimationFrame(moveAlongPath);
+                if (distanceCovered <= totalLength) {
+                    requestAnimationFrame(moveAlongPath);
+                } else {
+                    // Анимация завершена, выполните необходимые действия.
+                    console.log(frames)
+                }
             } else {
-                // Анимация завершена, выполните необходимые действия.
+                requestAnimationFrame(moveAlongPath);
             }
-        }
+        };
 
-        moveAlongPath();
+        moveAlongPath.bind(this)();
     }
 
+    saveFrames(frames) {
+        // Создаем папку, если ее нет
+
+    }
 
     toggleAnimationPause = () => {
-
+        this.paused = !this.paused;
+        console.log(this.paused)
     }
 }
