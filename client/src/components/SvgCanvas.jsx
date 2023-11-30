@@ -9,7 +9,7 @@ import SvgCircle from "../tools/SvgCircle";
 import SvgLine from "../tools/SvgLine";
 import SvgPolyline from "../tools/SvgPolyline";
 import SvgPolygon from "../tools/SvgPolygon";
-import MovingSquareAnimation from "../tools/MovingSquareAnimation";
+
 import svgCanvasState from "../store/svgCanvasState";
 
 const SvgCanvas = observer (() => {

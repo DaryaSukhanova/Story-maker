@@ -13,7 +13,7 @@ const AnimationSettingBlock = () => {
                     Animation Settings
                 </div>
                  <div className="animation-setting-block-btns">
-                     <button className="tool-bar__btn svgBrush" onClick={()=> animationToolState.setAnimationTool(new MotionCurve(svgCanvasState.canvas))}/>
+                     <button className="animation-setting-block-btns__btn motionCurve" onClick={()=> animationToolState.setAnimationTool(new MotionCurve(svgCanvasState.canvas))}/>
                  </div>
             </div>
         </div>
