@@ -1,4 +1,5 @@
 import AnimationTool from "./AnimationTool";
+import {logDOM} from "@testing-library/react";
 
 export default class MotionCurve extends AnimationTool {
     constructor(svgCanvas) {
@@ -79,26 +80,30 @@ export default class MotionCurve extends AnimationTool {
         }
     }
 
-    animate(element){
-        this.animateMotion = document.createElementNS("http://www.w3.org/2000/svg", "animateMotion");
-        this.animateMotion.setAttribute("dur", "2s");
-        this.animateMotion.setAttribute("repeatCount", "indefinite"); // Бесконечное повторение
+    animate(element) {
+        const motionPath = document.getElementById('motionPath');
+        const totalLength = motionPath.getTotalLength();
+        let distanceCovered = 0;
+        const speed = 1;
 
-        const mpath = document.createElementNS("http://www.w3.org/2000/svg", "mpath");
-        mpath.setAttribute("href", "#motionPath");
-        this.animateMotion.appendChild(mpath);
+        function moveAlongPath() {
+            const point = motionPath.getPointAtLength(distanceCovered);
+            element.setAttribute("transform", `translate(${point.x} ${point.y})`);
 
-        element.appendChild(this.animateMotion);
+            distanceCovered += speed;
+
+            if (distanceCovered <= totalLength) {
+                requestAnimationFrame(moveAlongPath);
+            } else {
+                // Анимация завершена, выполните необходимые действия.
+            }
+        }
+
+        moveAlongPath();
     }
 
 
     toggleAnimationPause = () => {
-        if (this.animateMotion) {
-            if (this.animateMotion.getAttribute('repeatCount') === 'indefinite') {
-                this.animateMotion.setAttribute('repeatCount', '0');
-            } else {
-                this.animateMotion.setAttribute('repeatCount', 'indefinite');
-            }
-        }
+
     }
 }
