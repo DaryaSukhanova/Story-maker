@@ -5,6 +5,7 @@ export default class MotionCurve extends AnimationTool {
         super(svgCanvas);
         this.pathData = "";
         this.motionPath = null;
+        this.clickedElement = null
         this.listen();
         this.currentPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
     }
@@ -22,19 +23,21 @@ export default class MotionCurve extends AnimationTool {
             // const startXPath = parseFloat(match[1]);
             // const startYPath = parseFloat(match[2]);
             // console.log("start d ", startXPath +" "+ startYPath)
-            const clickedElement = document.elementFromPoint(e.clientX, e.clientY);
-            if(clickedElement !== this.svgCanvas && clickedElement !== this.motionPath){
+            this.clickedElement = document.elementFromPoint(e.clientX, e.clientY);
+            if(this.clickedElement !== this.svgCanvas && this.clickedElement !== this.motionPath){
                 // clickedElement.setAttribute("x", `${startXPath}`)
                 // clickedElement.setAttribute("y", `${startYPath}`)
                 // console.log('Clicked element:', clickedElement);
                 // console.log("start d ", startXPath +" "+ startYPath)
                 // this.animate(clickedElement)
-            this.animate(clickedElement)
+            this.animate(this.clickedElement)
 
             }
 
             this.motionPath = null;
         }
+        const pauseButton = document.getElementById('pauseButton')
+        pauseButton.addEventListener('click', this.toggleAnimationPause);
 
     }
 
@@ -77,14 +80,25 @@ export default class MotionCurve extends AnimationTool {
     }
 
     animate(element){
-        const animateMotion = document.createElementNS("http://www.w3.org/2000/svg", "animateMotion");
-        animateMotion.setAttribute("dur", "2s");
-        animateMotion.setAttribute("repeatCount", "indefinite"); // Бесконечное повторение
+        this.animateMotion = document.createElementNS("http://www.w3.org/2000/svg", "animateMotion");
+        this.animateMotion.setAttribute("dur", "2s");
+        this.animateMotion.setAttribute("repeatCount", "indefinite"); // Бесконечное повторение
 
         const mpath = document.createElementNS("http://www.w3.org/2000/svg", "mpath");
         mpath.setAttribute("href", "#motionPath");
-        animateMotion.appendChild(mpath);
+        this.animateMotion.appendChild(mpath);
 
-        element.appendChild(animateMotion);
+        element.appendChild(this.animateMotion);
+    }
+
+
+    toggleAnimationPause = () => {
+        if (this.animateMotion) {
+            if (this.animateMotion.getAttribute('repeatCount') === 'indefinite') {
+                this.animateMotion.setAttribute('repeatCount', '0');
+            } else {
+                this.animateMotion.setAttribute('repeatCount', 'indefinite');
+            }
+        }
     }
 }
