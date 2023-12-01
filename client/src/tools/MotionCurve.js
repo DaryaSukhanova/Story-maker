@@ -1,6 +1,5 @@
 import AnimationTool from "./AnimationTool";
-import {logDOM} from "@testing-library/react";
-const fs = require('fs');
+
 
 export default class MotionCurve extends AnimationTool {
     constructor(svgCanvas) {
@@ -22,19 +21,9 @@ export default class MotionCurve extends AnimationTool {
     mouseUpHandler(e) {
         if (this.motionPath) {
             const startDataPath = this.motionPath.getAttribute('d')
-            // const match = startDataPath.match(/^M\s*([\d.]+)\s*([\d.]+)/);
-            // const startXPath = parseFloat(match[1]);
-            // const startYPath = parseFloat(match[2]);
-            // console.log("start d ", startXPath +" "+ startYPath)
             this.clickedElement = document.elementFromPoint(e.clientX, e.clientY);
             if(this.clickedElement !== this.svgCanvas && this.clickedElement !== this.motionPath){
-                // clickedElement.setAttribute("x", `${startXPath}`)
-                // clickedElement.setAttribute("y", `${startYPath}`)
-                // console.log('Clicked element:', clickedElement);
-                // console.log("start d ", startXPath +" "+ startYPath)
-                // this.animate(clickedElement)
-            this.animate(this.clickedElement)
-
+                this.animate(this.clickedElement)
             }
 
             this.motionPath = null;
@@ -99,7 +88,7 @@ export default class MotionCurve extends AnimationTool {
                 if (distanceCovered <= totalLength) {
                     requestAnimationFrame(moveAlongPath);
                 } else {
-                    // Анимация завершена, выполните необходимые действия.
+
                     console.log(frames)
                 }
             } else {
@@ -107,13 +96,9 @@ export default class MotionCurve extends AnimationTool {
             }
         };
 
-        moveAlongPath.bind(this)();
+        moveAlongPath();
     }
 
-    saveFrames(frames) {
-        // Создаем папку, если ее нет
-
-    }
 
     toggleAnimationPause = () => {
         this.paused = !this.paused;

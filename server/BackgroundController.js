@@ -14,7 +14,9 @@ class BackgroundController{
             const background = await BackgroundService.getAll()
             return res.status(200).json(background);
         } catch (e){
-            res.status(e.status).json(e.message)
+            const status = e.status || 500;
+            const message = e.message || 'Internal Server Error';
+            res.status(status).json(message);
         }
     }
     async getOne(req, res, error){
