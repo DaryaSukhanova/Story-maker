@@ -97,7 +97,6 @@ class BackgroundService{
                     console.log(err);
                 });
                 background = await Background.findByIdAndDelete(file._id);
-
             }
         }
         if (background === 0) {
@@ -105,25 +104,31 @@ class BackgroundService{
         }
         return background;
     }
+
+    async saveFrames(frames) {
+        try {
+            const framesFolder = path.resolve('frames');
+            // Проверяем, существует ли папка "frames", если нет, создаём её.
+            if (!fs.existsSync(framesFolder)) {
+                fs.mkdirSync(framesFolder);
+            }
+
+            frames.forEach((frame, index) => {
+                try {
+                    const frameFileName = `frame_${index + 1}.json`;
+                    const frameData = JSON.stringify(frame);
+
+                    fs.writeFileSync(path.resolve(framesFolder, frameFileName), frameData);
+                } catch (error) {
+                    console.error(`Error saving frame ${index + 1}:`, error);
+                    throw new Error(`Error saving frame ${index + 1}`);
+                }
+            });
+        } catch (error) {
+            console.error('Error in saveFrames:', error);
+            throw error;
+        }
+    }
+
 }
 export default new BackgroundService();
-// app.post('/backgrounds', (req, res) => {
-//     try {
-//         const data = req.body.backgroundImage.replace(`data:image/png;base64,`, '')
-//         fs.writeFileSync(path.resolve(__dirname, 'files', `${req.body.backgroundName}.png`), data, 'base64')
-//         return res.status(200).json({message: "Загружено"})
-//     } catch (e) {
-//         console.log(e)
-//         return res.status(500).json('error')
-//     }
-// })
-// app.get('/backgrounds', (req, res) => {
-//     try {
-//         const file = fs.readdirSync(path.resolve(__dirname, 'files'))
-//         const data = `data:image/png;base64,` + file.toString('base64')
-//         res.json(data)
-//     } catch (e) {
-//         console.log(e)
-//         return res.status(500).json('error')
-//     }
-// })

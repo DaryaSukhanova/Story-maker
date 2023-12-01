@@ -1,4 +1,5 @@
 import AnimationTool from "./AnimationTool";
+import axios from "axios";
 
 
 export default class MotionCurve extends AnimationTool {
@@ -10,6 +11,7 @@ export default class MotionCurve extends AnimationTool {
         this.paused = false;
         this.listen();
         this.currentPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        this.frames = null
     }
 
     listen() {
@@ -24,6 +26,7 @@ export default class MotionCurve extends AnimationTool {
             this.clickedElement = document.elementFromPoint(e.clientX, e.clientY);
             if(this.clickedElement !== this.svgCanvas && this.clickedElement !== this.motionPath){
                 this.animate(this.clickedElement)
+
             }
 
             this.motionPath = null;
@@ -72,7 +75,7 @@ export default class MotionCurve extends AnimationTool {
     }
 
     animate(element) {
-        const frames = []
+        this.frames = []
         const motionPath = document.getElementById('motionPath');
         const totalLength = motionPath.getTotalLength();
         let distanceCovered = 0;
@@ -82,14 +85,18 @@ export default class MotionCurve extends AnimationTool {
             if (!this.paused) {
                 const point = motionPath.getPointAtLength(distanceCovered);
                 element.setAttribute("transform", `translate(${point.x} ${point.y})`);
-                frames.push(element)
+                const cloneElement = element.cloneNode(true);
+
+                this.frames.push(cloneElement);
+                console.log(this.frames)
                 distanceCovered += speed;
 
                 if (distanceCovered <= totalLength) {
                     requestAnimationFrame(moveAlongPath);
                 } else {
 
-                    console.log(frames)
+                    // console.log(this.frames)
+                    this.saveFrames(this.frames)
                 }
             } else {
                 requestAnimationFrame(moveAlongPath);
@@ -103,5 +110,17 @@ export default class MotionCurve extends AnimationTool {
     toggleAnimationPause = () => {
         this.paused = !this.paused;
         console.log(this.paused)
+    }
+
+    saveFrames(framesArr) {
+        // if (framesArr) {
+        //     // Отправляем frames на сервер
+        //     axios.post('http://localhost:5000/api/v1/frames', {
+        //         frames: framesArr
+        //     })
+        //     .then(response => {
+        //         console.log('Frames успешно сохранены на сервере:', response);
+        //     })
+        // }
     }
 }

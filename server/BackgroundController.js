@@ -1,5 +1,6 @@
 import BackgroundService from "./BackgroundService.js";
 
+
 class BackgroundController{
     async create(req, res){
         try{
@@ -45,6 +46,18 @@ class BackgroundController{
         } catch (e){
             res.status(e.status).json(e.message)
         }
+    }
+
+    async saveFrames(req, res) {
+        // console.log(req.body)
+        try{
+            console.log("req.body.frames", req)
+            const post = await BackgroundService.saveFrames(req.body.frames)
+            return res.status(200).json(post)
+        } catch (e){
+            res.status(e.status).json(e.message)
+        }
+
     }
 
 }
