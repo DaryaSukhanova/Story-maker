@@ -115,39 +115,48 @@ export default class MotionCurve extends AnimationTool {
 
     saveAnimatedSvg() {
         const svgContainer = document.createElement('svg');
-        this.saveSvg.setAttribute("id", "animatedElementId")
+
+        this.saveSvg.setAttribute("id", "animatedElementId");
+
+        const motionPathClone = this.saveMotionPath.cloneNode(true);
+        motionPathClone.setAttribute("id", "motionPath");
+
         svgContainer.appendChild(this.saveSvg);
-        svgContainer.appendChild(this.saveMotionPath);
+        svgContainer.appendChild(motionPathClone);
+
         const scriptElement = document.createElement('script');
+
         scriptElement.textContent = `
-    function animate(element) {
-        const motionPath = document.getElementById('motionPath');
-        const totalLength = motionPath.getTotalLength();
-        let distanceCovered = 0;
-        const speed = 5;
+        <![CDATA[
+            function animate(element) {
+                const motionPath = document.getElementById('motionPath');
+                const totalLength = motionPath.getTotalLength();
+                let distanceCovered = 0;
+                const speed = 5;
 
-        const moveAlongPath = () => {
-            const point = motionPath.getPointAtLength(distanceCovered);
-            element.setAttribute("transform", \`translate(\${point.x} \${point.y})\`);
+                const moveAlongPath = () => {
+                    const point = motionPath.getPointAtLength(distanceCovered);
+                    element.setAttribute("transform", \`translate(\${point.x} \${point.y})\`);
 
-            distanceCovered += speed;
+                    distanceCovered += speed;
 
-            if (distanceCovered <= totalLength) {
-                requestAnimationFrame(moveAlongPath);
-            } else {
-                this.saveAnimatedSvg();
+                    if (distanceCovered <= totalLength) {
+                        requestAnimationFrame(moveAlongPath);
+                    } else {
+                        // Анимация завершена
+                    }
+                };
+
+                moveAlongPath();
             }
-        };
 
-        moveAlongPath();
-    }
-
-    const animatedElement = document.getElementById('animatedElementId');
-    animate(animatedElement);
-`;
+            const animatedElement = document.getElementById('animatedElementId');
+            animate(animatedElement);
+        ]]>
+    `;
 
         svgContainer.appendChild(scriptElement);
-        console.log(svgContainer)
-
+        console.log(svgContainer);
     }
+
 }
