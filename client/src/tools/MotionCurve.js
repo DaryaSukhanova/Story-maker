@@ -8,6 +8,8 @@ export default class MotionCurve extends AnimationTool {
         this.pathData = "";
         this.motionPath = null;
         this.clickedElement = null
+        this.saveSvg = null
+        this.saveMotionPath = null
         this.paused = false;
         this.listen();
         this.currentPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
@@ -24,6 +26,10 @@ export default class MotionCurve extends AnimationTool {
         if (this.motionPath) {
             const startDataPath = this.motionPath.getAttribute('d')
             this.clickedElement = document.elementFromPoint(e.clientX, e.clientY);
+            this.saveSvg = this.clickedElement.cloneNode(true)
+            this.saveMotionPath = this.motionPath.cloneNode(true)
+            this.saveSvg.removeAttribute("id");
+
             if(this.clickedElement !== this.svgCanvas && this.clickedElement !== this.motionPath){
                 this.animate(this.clickedElement)
 
@@ -75,32 +81,27 @@ export default class MotionCurve extends AnimationTool {
     }
 
     animate(element) {
-        this.frames = []
         const motionPath = document.getElementById('motionPath');
         const totalLength = motionPath.getTotalLength();
         let distanceCovered = 0;
         const speed = 5;
 
         const moveAlongPath = () => {
-            if (!this.paused) {
+            // if (!this.paused) {
                 const point = motionPath.getPointAtLength(distanceCovered);
                 element.setAttribute("transform", `translate(${point.x} ${point.y})`);
-                const cloneElement = element.cloneNode(true);
 
-                this.frames.push(cloneElement);
-                console.log(this.frames)
                 distanceCovered += speed;
 
                 if (distanceCovered <= totalLength) {
                     requestAnimationFrame(moveAlongPath);
                 } else {
-
                     // console.log(this.frames)
-                    this.saveFrames(this.frames)
+                    this.saveAnimatedSvg()
                 }
-            } else {
-                requestAnimationFrame(moveAlongPath);
-            }
+            // } else {
+            //     requestAnimationFrame(moveAlongPath);
+            // }
         };
 
         moveAlongPath();
@@ -112,15 +113,41 @@ export default class MotionCurve extends AnimationTool {
         console.log(this.paused)
     }
 
-    saveFrames(framesArr) {
-        // if (framesArr) {
-        //     // Отправляем frames на сервер
-        //     axios.post('http://localhost:5000/api/v1/frames', {
-        //         frames: framesArr
-        //     })
-        //     .then(response => {
-        //         console.log('Frames успешно сохранены на сервере:', response);
-        //     })
-        // }
+    saveAnimatedSvg() {
+        const svgContainer = document.createElement('svg');
+        this.saveSvg.setAttribute("id", "animatedElementId")
+        svgContainer.appendChild(this.saveSvg);
+        svgContainer.appendChild(this.saveMotionPath);
+        const scriptElement = document.createElement('script');
+        scriptElement.textContent = `
+    function animate(element) {
+        const motionPath = document.getElementById('motionPath');
+        const totalLength = motionPath.getTotalLength();
+        let distanceCovered = 0;
+        const speed = 5;
+
+        const moveAlongPath = () => {
+            const point = motionPath.getPointAtLength(distanceCovered);
+            element.setAttribute("transform", \`translate(\${point.x} \${point.y})\`);
+
+            distanceCovered += speed;
+
+            if (distanceCovered <= totalLength) {
+                requestAnimationFrame(moveAlongPath);
+            } else {
+                this.saveAnimatedSvg();
+            }
+        };
+
+        moveAlongPath();
+    }
+
+    const animatedElement = document.getElementById('animatedElementId');
+    animate(animatedElement);
+`;
+
+        svgContainer.appendChild(scriptElement);
+        console.log(svgContainer)
+
     }
 }
