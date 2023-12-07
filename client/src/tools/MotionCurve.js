@@ -1,7 +1,7 @@
 import AnimationTool from "./AnimationTool";
 import axios from "axios";
-
-
+// import {parseString} from "xml2js/lib/parser";
+// import xml2js from "xml2js";
 export default class MotionCurve extends AnimationTool {
     constructor(svgCanvas) {
         super(svgCanvas);
@@ -13,7 +13,7 @@ export default class MotionCurve extends AnimationTool {
         this.paused = false;
         this.listen();
         this.currentPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        this.frames = null
+        // this.frames = null
     }
 
     listen() {
@@ -96,7 +96,7 @@ export default class MotionCurve extends AnimationTool {
                 if (distanceCovered <= totalLength) {
                     requestAnimationFrame(moveAlongPath);
                 } else {
-                    // console.log(this.frames)
+                    // console.log(this.animations)
                     this.saveAnimatedSvg()
                 }
             // } else {
@@ -115,7 +115,10 @@ export default class MotionCurve extends AnimationTool {
 
     saveAnimatedSvg() {
         const svgContainer = document.createElement('svg');
-
+        svgContainer.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        svgContainer.setAttribute("width", "1000");
+        svgContainer.setAttribute("height", "1000");
+        svgContainer.setAttribute("viewBox", "0 0 1000 1000");
         this.saveSvg.setAttribute("id", "animatedElementId");
 
         const motionPathClone = this.saveMotionPath.cloneNode(true);
@@ -127,36 +130,46 @@ export default class MotionCurve extends AnimationTool {
         const scriptElement = document.createElement('script');
 
         scriptElement.textContent = `
-        <![CDATA[
-            function animate(element) {
-                const motionPath = document.getElementById('motionPath');
-                const totalLength = motionPath.getTotalLength();
-                let distanceCovered = 0;
-                const speed = 5;
-
-                const moveAlongPath = () => {
-                    const point = motionPath.getPointAtLength(distanceCovered);
-                    element.setAttribute("transform", \`translate(\${point.x} \${point.y})\`);
-
-                    distanceCovered += speed;
-
-                    if (distanceCovered <= totalLength) {
-                        requestAnimationFrame(moveAlongPath);
-                    } else {
-                        // Анимация завершена
-                    }
-                };
-
-                moveAlongPath();
-            }
-
-            const animatedElement = document.getElementById('animatedElementId');
-            animate(animatedElement);
-        ]]>
-    `;
-
+            <![CDATA[
+                function animate(element) {
+                    const motionPath = document.getElementById('motionPath');
+                    const totalLength = motionPath.getTotalLength();
+                    let distanceCovered = 0;
+                    const speed = 5;
+    
+                    const moveAlongPath = () => {
+                        const point = motionPath.getPointAtLength(distanceCovered);
+                        element.setAttribute("transform", \`translate(\${point.x} \${point.y})\`);
+    
+                        distanceCovered += speed;
+    
+                        if (distanceCovered <= totalLength) {
+                            requestAnimationFrame(moveAlongPath);
+                        } else {
+                            // Анимация завершена
+                        }
+                    };
+    
+                    moveAlongPath();
+                }
+    
+                const animatedElement = document.getElementById('animatedElementId');
+                animate(animatedElement);
+            ]]>
+        `;
         svgContainer.appendChild(scriptElement);
         console.log(svgContainer);
+
+        // parseString(svgContainer, function(err, result) {
+        //     if (err) {
+        //     } else {
+        //         axios.post('http://localhost:5000/api/v1/animations', {
+        //             animationFile: result
+        //         })
+        //         .then(response => console.log(response.data))
+        //     }
+        // });
+
     }
 
 }

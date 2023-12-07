@@ -2,6 +2,8 @@ import Background from "./Background.js";
 import fs from "fs"
 import path from "path"
 import createError from 'http-errors'
+import xml2js from 'xml2js'
+
 class BackgroundService{
     // createId() {
     //     let id = 0
@@ -105,30 +107,33 @@ class BackgroundService{
         return background;
     }
 
-    async saveFrames(frames) {
+    async saveAnimation(xml) {
         try {
-            const framesFolder = path.resolve('frames');
-            // Проверяем, существует ли папка "frames", если нет, создаём её.
-            if (!fs.existsSync(framesFolder)) {
-                fs.mkdirSync(framesFolder);
-            }
-
-            frames.forEach((frame, index) => {
-                try {
-                    const frameFileName = `frame_${index + 1}.json`;
-                    const frameData = JSON.stringify(frame);
-
-                    fs.writeFileSync(path.resolve(framesFolder, frameFileName), frameData);
-                } catch (error) {
-                    console.error(`Error saving frame ${index + 1}:`, error);
-                    throw new Error(`Error saving frame ${index + 1}`);
-                }
+            // Парсинг XML в объект
+            const parsedXml = await xml2js.parseStringPromise(xml, {
+                explicitChildren: true,
+                preserveChildrenOrder: true,
             });
+
+            // Преобразование объекта в SVG-код
+            const svgCode = this.convertToSVG(parsedXml);
+
+            // Ваш код сохранения SVG-кода, например, отправка на клиент или сохранение в базе данных
+            console.log('Converted SVG:', svgCode);
+
         } catch (error) {
-            console.error('Error in saveFrames:', error);
+            console.error('Error in saveAnimation:', error);
             throw error;
         }
     }
+    convertToSVG(data) {
+        const svgElement = data.svg; // Предполагаем, что ваш объект имеет структуру { svg: {...} }
+        const builder = new xml2js.Builder();
+        const svgString = builder.buildObject(svgElement);
+
+        return svgString;
+    }
+
 
 }
 export default new BackgroundService();
