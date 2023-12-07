@@ -3,6 +3,7 @@ import fs from "fs"
 import path from "path"
 import createError from 'http-errors'
 import xml2js from 'xml2js'
+import { DOMParser } from 'xmldom';
 
 class BackgroundService{
     // createId() {
@@ -107,33 +108,17 @@ class BackgroundService{
         return background;
     }
 
-    async saveAnimation(xml) {
+    async saveAnimation(json) {
         try {
-            // Парсинг XML в объект
-            const parsedXml = await xml2js.parseStringPromise(xml, {
-                explicitChildren: true,
-                preserveChildrenOrder: true,
-            });
-
-            // Преобразование объекта в SVG-код
-            const svgCode = this.convertToSVG(parsedXml);
-
-            // Ваш код сохранения SVG-кода, например, отправка на клиент или сохранение в базе данных
-            console.log('Converted SVG:', svgCode);
+            const svg = json.svg; // Получаем строку SVG из JSON
+            console.log(json.svg)
+            const filePath = './animations/animation.svg';
+            fs.writeFileSync(filePath, svg, 'utf-8');
 
         } catch (error) {
-            console.error('Error in saveAnimation:', error);
-            throw error;
+            console.error('Error:', error);
         }
     }
-    convertToSVG(data) {
-        const svgElement = data.svg; // Предполагаем, что ваш объект имеет структуру { svg: {...} }
-        const builder = new xml2js.Builder();
-        const svgString = builder.buildObject(svgElement);
-
-        return svgString;
-    }
-
 
 }
 export default new BackgroundService();
