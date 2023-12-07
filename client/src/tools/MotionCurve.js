@@ -159,16 +159,25 @@ export default class MotionCurve extends AnimationTool {
         `;
         svgContainer.appendChild(scriptElement);
         console.log(svgContainer);
+        const svgString = new XMLSerializer().serializeToString(svgContainer);
+        console.log(svgString);
+        const jsonData = {
+            svgData: svgString,
+            // Дополнительные данные, если необходимо
+        };
 
-        // parseString(svgContainer, function(err, result) {
-        //     if (err) {
-        //     } else {
-        //         axios.post('http://localhost:5000/api/v1/animations', {
-        //             animationFile: result
-        //         })
-        //         .then(response => console.log(response.data))
-        //     }
-        // });
+        // Отправка на сервер с использованием Axios
+        axios.post(`http://localhost:5000/api/v1/animations`, jsonData, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => {
+            console.log('Server response:', response.data);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 
     }
 
