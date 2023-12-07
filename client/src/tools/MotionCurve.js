@@ -159,11 +159,9 @@ export default class MotionCurve extends AnimationTool {
         `;
         svgContainer.appendChild(scriptElement);
         console.log(svgContainer);
-        const svgString = new XMLSerializer().serializeToString(svgContainer);
-        console.log(svgString);
         const jsonData = {
-            svgData: svgString,
-            // Дополнительные данные, если необходимо
+            svg: svgContainer.outerHTML // включаем SVG непосредственно в объект JSON
+
         };
 
         // Отправка на сервер с использованием Axios
