@@ -12,15 +12,16 @@ export default class MotionCurve extends AnimationTool {
         this.saveSvg = null
         this.saveMotionPath = null
         this.playButton = document.getElementById('playBtn');
+        this.leftStopButton = document.getElementById('leftStopBtn')
         this.play = false;
         this.listen();
         this.currentPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
         // this.initializePlayButton();
         this.playButton.addEventListener('click', this.toggleAnimationPause.bind(this));
+        this.leftStopButton.addEventListener('click', this.toggleAnimationLeftStop.bind(this));
+
     }
-    initializePlayButton() {
-        this.playButton.addEventListener('click', this.toggleAnimationPause.bind(this));
-    }
+
 
     listen() {
         this.svgCanvas.onmousemove = this.mouseMoveHandler.bind(this);
@@ -30,7 +31,6 @@ export default class MotionCurve extends AnimationTool {
 
     mouseUpHandler(e) {
         if (this.motionPath) {
-            // const startDataPath = this.motionPath.getAttribute('d')
             this.clickedElement = document.elementFromPoint(e.clientX, e.clientY);
             this.saveSvg = this.clickedElement.cloneNode(true)
             this.saveMotionPath = this.motionPath.cloneNode(true)
@@ -38,9 +38,7 @@ export default class MotionCurve extends AnimationTool {
 
             if(this.play && this.clickedElement !== this.svgCanvas && this.clickedElement !== this.motionPath){
                 this.animate(this.clickedElement)
-
             }
-
             this.motionPath = null;
         }
         // console.log(this.clickedElement)
@@ -56,7 +54,11 @@ export default class MotionCurve extends AnimationTool {
         const startX = e.pageX - svgCanvasRect.left;
         const startY = e.pageY - svgCanvasRect.top;
 
-
+        // this.initialPosition = {
+        //     x: startX,
+        //     y: startY
+        // };
+        // console.log(this.initialPosition)
         if (!this.motionPath) {
             this.motionPath = this.currentPath
             this.motionPath.setAttribute("stroke", "red");
@@ -124,6 +126,22 @@ export default class MotionCurve extends AnimationTool {
             this.play = !this.play;
             this.playButton.className = this.play ? "btn pause-button " : "btn play-button"
             console.log(this.play);
+        }
+    }
+    toggleAnimationLeftStop = () => {
+        if (this.clickedElement !== this.svgCanvas && this.clickedElement !== this.currentPath) {
+
+            // Возвращение элемента к изначальной точке пути
+            if (this.currentPath) {
+                // Остановка движения элемента
+                this.play = false;
+                this.playButton.className = "btn play-button"; // Предполагаю, что это ваш класс для кнопки воспроизведения
+                const initialX = this.currentPath.getPointAtLength(0).x;
+                const initialY = this.currentPath.getPointAtLength(0).y;
+                console.log(initialX, initialY)
+                const initialTransform = `translate(${initialX} ${initialY})`;
+                this.clickedElement.setAttribute("transform", initialTransform);
+            }
         }
     }
 
