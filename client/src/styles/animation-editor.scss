@@ -1,14 +1,19 @@
 @import "./variables";
 .animation-editor{
   background: $background-color;
+  height: calc(100vh - 40px);
+}
+.animation-editor-workspace{
+  padding: 50px 0;
   display: flex;
   justify-content: space-between;
+  //padding: 60px 0;
 }
 .block-container{
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* 100% высоты видимой области страницы */
+  height: 100%;
 }
 
 .setting-block{

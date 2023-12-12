@@ -7,15 +7,18 @@ import SvgSettingBar from "./components/SvgSettingBar";
 import AnimationSettingBlock from "./components/AnimationSettingBlock";
 import './styles/animation-editor.scss'
 import DrawingBlock from "./components/DrawingBlock";
+import TimelineBlock from "./components/TimelineBlock";
 const AnimationEditor = () => {
     return (
         <div className="animation-editor">
-            <DrawingBlock></DrawingBlock>
-            <SvgCanvas/>
-            <AnimationSettingBlock></AnimationSettingBlock>
-            {/*<ButtonSaveSvg></ButtonSaveSvg>*/}
-
+            <div className="animation-editor-workspace">
+                <DrawingBlock></DrawingBlock>
+                <SvgCanvas/>
+                <AnimationSettingBlock></AnimationSettingBlock>
+            </div>
+            <TimelineBlock></TimelineBlock>
         </div>
+
     );
 };
 

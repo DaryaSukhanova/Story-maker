@@ -1,0 +1,24 @@
+
+.timeline-block{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 140px;
+  background-color: white;
+  border-radius: 30px;
+}
+.btn{
+  width: 30px;
+  height: 30px;
+  border: none;
+  cursor: pointer;
+}
+.play-button{
+  background: url('../assets/img/play.svg') no-repeat center center;
+}
+.left-stop-button{
+  background: url('../assets/img/leftStop.svg') no-repeat center center;
+}
+.timeline-player{
+  padding: 10px;
+}
