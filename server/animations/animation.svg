@@ -1,28 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewbox="0 0 1000 1000"><rect stroke="black" stroke-width="2" fill="none" x="71" y="36.5" width="43" height="45" id="animatedElementId"></rect><path stroke="red" stroke-width="2" fill="none" id="motionPath" d="M 212 187.5 L 213 187.5 L 214 186.5 L 215 185.5 L 216 184.5 L 217 183.5 L 217 181.5 L 218 180.5 L 219 179.5 L 221 177.5 L 222 176.5 L 224 174.5 L 225 172.5 L 227 171.5 L 228 168.5 L 230 166.5 L 232 164.5 L 234 162.5 L 237 159.5 L 239 157.5 L 241 155.5 L 243 152.5 L 246 150.5 L 249 147.5 L 253 145.5 L 256 142.5 L 260 140.5 L 263 137.5 L 268 134.5 L 273 131.5 L 277 129.5 L 282 126.5 L 288 123.5 L 294 120.5 L 300 117.5 L 305 114.5 L 313 111.5 L 320 108.5 L 327 105.5 L 334 102.5 L 341 99.5 L 348 97.5 L 355 95.5 L 362 93.5 L 371 91.5 L 379 89.5 L 387 86.5 L 395 85.5 L 403 84.5 L 413 83.5 L 422 82.5 L 432 81.5 L 441 80.5 L 453 79.5 L 465 78.5 L 476 77.5 L 487 77.5 L 496 77.5 L 505 77.5 L 515 77.5 L 524 77.5 L 533 77.5 L 541 77.5 L 549 77.5 L 557 77.5 L 565 77.5 L 573 77.5 L 581 77.5 L 590 77.5 L 596 78.5 L 603 79.5 L 610 80.5 L 617 80.5 L 624 81.5 L 631 82.5 L 636 83.5 L 642 84.5 L 648 85.5 L 653 86.5 L 659 87.5 L 663 87.5 L 667 88.5 L 672 89.5 L 676 90.5 L 680 91.5 L 685 93.5 L 688 94.5 L 691 95.5 L 695 97.5 L 698 98.5 L 700 100.5 L 703 101.5 L 706 102.5 L 708 103.5 L 710 104.5 L 712 105.5 L 714 106.5 L 717 107.5 L 719 108.5 L 721 109.5 L 723 110.5 L 725 110.5 L 726 111.5 L 728 112.5 L 730 112.5 L 731 113.5 L 732 114.5 L 734 114.5 L 735 115.5 L 736 115.5 L 738 115.5 L 739 115.5 L 740 115.5 L 741 115.5 L 742 115.5 L 743 115.5 L 744 115.5 L 745 115.5 L 746 115.5 L 747 114.5"></path><script>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewbox="0 0 1000 1000"><rect stroke="black" stroke-width="2" fill="none" x="125" y="55" width="68" height="74" id="animatedElementId"></rect><path stroke="red" stroke-width="2" fill="none" id="motionPath" d="M 453 57 L 453 54 L 453 53 L 453 52 L 455 52 L 460 51 L 469 50 L 486 50 L 508 54 L 533 61 L 568 76 L 591 89 L 603 102 L 607 113 L 603 123 L 591 131 L 568 139 L 541 146 L 511 151 L 480 159 L 455 170 L 439 179 L 432 186 L 433 191 L 442 194 L 469 197 L 510 202 L 559 208 L 607 216 L 642 227 L 652 233 L 651 239 L 640 252 L 623 263 L 590 279 L 554 293 L 518 308 L 487 322 L 473 329 L 470 334 L 473 338 L 484 344 L 501 352 L 521 361 L 540 371 L 549 378 L 552 385 L 551 393 L 547 399 L 537 404 L 520 412 L 504 417 L 488 421 L 476 419 L 468 415"></path><script>
             <![CDATA[
-                function animate(element) {
-                    const motionPath = document.getElementById('motionPath');
-                    const totalLength = motionPath.getTotalLength();
-                    let distanceCovered = 0;
-                    const speed = 5;
-    
-                    const moveAlongPath = () => {
-                        const point = motionPath.getPointAtLength(distanceCovered);
-                        element.setAttribute("transform", `translate(${point.x} ${point.y})`);
-    
-                        distanceCovered += speed;
-    
-                        if (distanceCovered <= totalLength) {
-                            requestAnimationFrame(moveAlongPath);
-                        } else {
-                            // Анимация завершена
-                        }
-                    };
-    
-                    moveAlongPath();
-                }
+                animate(element) {
+    const motionPath = document.getElementById('motionPath');
+    const totalLength = motionPath.getTotalLength();
+    let distanceCovered = 0;
+    const speed = 5;
+    const moveAlongPath = () => {
+      // if (!this.paused) {
+      const point = motionPath.getPointAtLength(distanceCovered);
+      element.setAttribute("transform", `translate(${point.x} ${point.y})`);
+      distanceCovered += speed;
+      if (distanceCovered <= totalLength) {
+        requestAnimationFrame(moveAlongPath);
+      } else {
+        // console.log(this.animations)
+        this.saveAnimatedSvg();
+      }
+      // } else {
+      //     requestAnimationFrame(moveAlongPath);
+      // }
+    };
+
+    moveAlongPath();
+  }
     
                 const animatedElement = document.getElementById('animatedElementId');
                 animate(animatedElement);
             ]]>
-        </script></svg>
+</script></svg>

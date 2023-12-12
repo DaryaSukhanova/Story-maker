@@ -131,32 +131,11 @@ export default class MotionCurve extends AnimationTool {
 
         scriptElement.textContent = `
             <![CDATA[
-                function animate(element) {
-                    const motionPath = document.getElementById('motionPath');
-                    const totalLength = motionPath.getTotalLength();
-                    let distanceCovered = 0;
-                    const speed = 5;
-    
-                    const moveAlongPath = () => {
-                        const point = motionPath.getPointAtLength(distanceCovered);
-                        element.setAttribute("transform", \`translate(\${point.x} \${point.y})\`);
-    
-                        distanceCovered += speed;
-    
-                        if (distanceCovered <= totalLength) {
-                            requestAnimationFrame(moveAlongPath);
-                        } else {
-                            // Анимация завершена
-                        }
-                    };
-    
-                    moveAlongPath();
-                }
-    
+                ${this.animate.toString()}
                 const animatedElement = document.getElementById('animatedElementId');
                 animate(animatedElement);
             ]]>
-        `;
+`;
         svgContainer.appendChild(scriptElement);
         console.log(svgContainer);
         const jsonData = {
