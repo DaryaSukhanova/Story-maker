@@ -11,11 +11,15 @@ export default class MotionCurve extends AnimationTool {
         this.clickedElement = null
         this.saveSvg = null
         this.saveMotionPath = null
-        this.play = true;
+        this.playButton = document.getElementById('playBtn');
+        this.play = false;
         this.listen();
         this.currentPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-
-        // this.frames = null
+        // this.initializePlayButton();
+        this.playButton.addEventListener('click', this.toggleAnimationPause.bind(this));
+    }
+    initializePlayButton() {
+        this.playButton.addEventListener('click', this.toggleAnimationPause.bind(this));
     }
 
     listen() {
@@ -26,22 +30,23 @@ export default class MotionCurve extends AnimationTool {
 
     mouseUpHandler(e) {
         if (this.motionPath) {
-            const startDataPath = this.motionPath.getAttribute('d')
+            // const startDataPath = this.motionPath.getAttribute('d')
             this.clickedElement = document.elementFromPoint(e.clientX, e.clientY);
             this.saveSvg = this.clickedElement.cloneNode(true)
             this.saveMotionPath = this.motionPath.cloneNode(true)
             this.saveSvg.removeAttribute("id");
 
-            if(this.clickedElement !== this.svgCanvas && this.clickedElement !== this.motionPath && this.play){
+            if(this.play && this.clickedElement !== this.svgCanvas && this.clickedElement !== this.motionPath){
                 this.animate(this.clickedElement)
 
             }
 
             this.motionPath = null;
         }
-        const playButton = document.getElementById('playBtn')
-        console.log('playButton ', playButton)
-        playButton.addEventListener('click', this.toggleAnimationPause);
+        // console.log(this.clickedElement)
+        // const playButton = document.getElementById('playBtn')
+        // console.log('playButton ', playButton)
+        // playButton.addEventListener('click', this.toggleAnimationPause);
 
     }
 
@@ -72,7 +77,7 @@ export default class MotionCurve extends AnimationTool {
             const currentY = e.pageY - svgCanvasRect.top;
             this.pathData += ` L ${currentX} ${currentY}`;
             this.updatePath();
-            console.log(this.motionPath)
+            // console.log(this.motionPath)
         }
 
     }
@@ -95,12 +100,13 @@ export default class MotionCurve extends AnimationTool {
                 element.setAttribute("transform", `translate(${point.x} ${point.y})`);
 
                 distanceCovered += speed;
-
                 if (distanceCovered <= totalLength) {
                     requestAnimationFrame(moveAlongPath);
                 } else {
                     // console.log(this.animations)
-                    this.saveAnimatedSvg()
+                    distanceCovered = 0
+                    requestAnimationFrame(moveAlongPath);
+
                 }
             } else {
                 requestAnimationFrame(moveAlongPath);
@@ -108,12 +114,17 @@ export default class MotionCurve extends AnimationTool {
         };
 
         moveAlongPath();
+        this.saveAnimatedSvg()
     }
 
 
     toggleAnimationPause = () => {
-        this.play = !this.play;
-        console.log(this.play)
+        if (this.clickedElement !== this.svgCanvas && this.clickedElement !== this.currentPath) {
+            console.log(this.clickedElement)
+            this.play = !this.play;
+            this.playButton.className = this.play ? "btn pause-button " : "btn play-button"
+            console.log(this.play);
+        }
     }
 
     saveAnimatedSvg() {
