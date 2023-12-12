@@ -5,7 +5,7 @@ const TimelineBlock = () => {
         <div className="timeline-block">
             <div className="timeline-player">
                 <button className="btn left-stop-button"></button>
-                <button className="btn play-button"></button>
+                <button className="btn play-button" id="playBtn"></button>
             </div>
         </div>
     );

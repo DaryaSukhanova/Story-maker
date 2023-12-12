@@ -14,7 +14,6 @@ const AnimationSettingBlock = () => {
                 </div>
                  <div className="animation-setting-block-btns">
                      <button className="animation-setting-block-btns__btn motionCurve" onClick={()=> animationToolState.setAnimationTool(new MotionCurve(svgCanvasState.canvas))}/>
-                     {/*<button id="pauseButton">Pause</button>*/}
                  </div>
             </div>
         </div>

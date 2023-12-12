@@ -2,6 +2,7 @@ import AnimationTool from "./AnimationTool";
 import axios from "axios";
 // import {parseString} from "xml2js/lib/parser";
 // import xml2js from "xml2js";
+
 export default class MotionCurve extends AnimationTool {
     constructor(svgCanvas) {
         super(svgCanvas);
@@ -10,9 +11,10 @@ export default class MotionCurve extends AnimationTool {
         this.clickedElement = null
         this.saveSvg = null
         this.saveMotionPath = null
-        this.paused = false;
+        this.play = true;
         this.listen();
         this.currentPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+
         // this.frames = null
     }
 
@@ -30,15 +32,16 @@ export default class MotionCurve extends AnimationTool {
             this.saveMotionPath = this.motionPath.cloneNode(true)
             this.saveSvg.removeAttribute("id");
 
-            if(this.clickedElement !== this.svgCanvas && this.clickedElement !== this.motionPath){
+            if(this.clickedElement !== this.svgCanvas && this.clickedElement !== this.motionPath && this.play){
                 this.animate(this.clickedElement)
 
             }
 
             this.motionPath = null;
         }
-        const pauseButton = document.getElementById('pauseButton')
-        pauseButton.addEventListener('click', this.toggleAnimationPause);
+        const playButton = document.getElementById('playBtn')
+        console.log('playButton ', playButton)
+        playButton.addEventListener('click', this.toggleAnimationPause);
 
     }
 
@@ -87,7 +90,7 @@ export default class MotionCurve extends AnimationTool {
         const speed = 5;
 
         const moveAlongPath = () => {
-            // if (!this.paused) {
+            if (this.play) {
                 const point = motionPath.getPointAtLength(distanceCovered);
                 element.setAttribute("transform", `translate(${point.x} ${point.y})`);
 
@@ -99,9 +102,9 @@ export default class MotionCurve extends AnimationTool {
                     // console.log(this.animations)
                     this.saveAnimatedSvg()
                 }
-            // } else {
-            //     requestAnimationFrame(moveAlongPath);
-            // }
+            } else {
+                requestAnimationFrame(moveAlongPath);
+            }
         };
 
         moveAlongPath();
@@ -109,8 +112,8 @@ export default class MotionCurve extends AnimationTool {
 
 
     toggleAnimationPause = () => {
-        this.paused = !this.paused;
-        console.log(this.paused)
+        this.play = !this.play;
+        console.log(this.play)
     }
 
     saveAnimatedSvg() {
@@ -132,10 +135,11 @@ export default class MotionCurve extends AnimationTool {
         scriptElement.textContent = `
             <![CDATA[
                 ${this.animate.toString()}
+
                 const animatedElement = document.getElementById('animatedElementId');
                 animate(animatedElement);
             ]]>
-`;
+        `;
         svgContainer.appendChild(scriptElement);
         console.log(svgContainer);
         const jsonData = {
