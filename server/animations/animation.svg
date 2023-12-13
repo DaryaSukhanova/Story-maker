@@ -1,27 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewbox="0 0 1000 1000"><rect stroke="black" stroke-width="2" fill="none" x="109" y="47" width="78" height="58" id="animatedElementId"></rect><path stroke="red" stroke-width="2" fill="none" id="motionPath" d="M 507 113 L 507 112 L 514 107 L 530 103 L 559 100 L 600 97 L 652 95 L 697 94 L 741 94 L 780 94 L 810 98 L 820 100 L 820 101 L 815 105 L 804 110 L 784 119 L 766 130 L 749 139 L 736 146 L 730 150 L 729 154 L 729 158"></path><script>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewbox="0 0 1000 1000"><rect stroke="black" stroke-width="2" fill="none" x="169" y="46" width="94" height="51" id="animatedElementId"></rect><path stroke="red" stroke-width="2" fill="none" id="motionPath" d="M 369 248 L 356 250 L 323 251 L 313 251 L 316 247 L 334 235 L 377 218 L 452 190 L 533 157 L 607 125 L 655 102 L 664 95 L 663 95 L 646 95 L 608 101 L 558 120 L 498 154 L 453 187 L 432 216 L 435 231 L 460 236 L 508 235 L 581 231 L 642 230 L 679 233 L 687 237 L 679 242 L 657 254 L 629 269 L 608 281 L 594 290 L 590 292"></path><script>
             <![CDATA[
                 
-                    function animate(element) {
-                    const motionPath = document.getElementById('motionPath');
-                    const totalLength = motionPath.getTotalLength();
-                    let distanceCovered = 0;
-                    const speed = 5;
-    
-                    const moveAlongPath = () => {
-                        const point = motionPath.getPointAtLength(distanceCovered);
-                        element.setAttribute("transform", `translate(${point.x} ${point.y})`);
-    
-                        distanceCovered += speed;
-    
-                        if (distanceCovered <= totalLength) {
-                            requestAnimationFrame(moveAlongPath);
-                        } else {
-                            // Анимация завершена
-                        }
-                    };
-    
-                    moveAlongPath();
-                }
+                function animate(element) {
+    const motionPath = document.getElementById('motionPath');
+    const totalLength = motionPath.getTotalLength();
+    let distanceCovered = 0;
+    const speed = 5;
+    const moveAlongPath = () => {
+      // if (this.play) {
+      const point = motionPath.getPointAtLength(distanceCovered);
+      element.setAttribute("transform", `translate(${point.x} ${point.y})`);
+      distanceCovered += speed;
+      if (distanceCovered <= totalLength) {
+        requestAnimationFrame(moveAlongPath);
+      } else {
+        // console.log(this.animations)
+        // distanceCovered = 0
+        // requestAnimationFrame(moveAlongPath);
+        this.saveAnimatedSvg();
+      }
+      // } else {
+      //     requestAnimationFrame(moveAlongPath);
+      // }
+    };
+
+    moveAlongPath();
+  }
                 const animatedElement = document.getElementById('animatedElementId');
                 animate(animatedElement);
             ]]>

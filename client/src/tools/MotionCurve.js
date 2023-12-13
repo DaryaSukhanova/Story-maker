@@ -98,7 +98,7 @@ export default class MotionCurve extends AnimationTool {
 
         const moveAlongPath = () => {
 
-            if (this.play) {
+            // if (this.play) {
                 const point = motionPath.getPointAtLength(distanceCovered);
                 element.setAttribute("transform", `translate(${point.x} ${point.y})`);
 
@@ -111,9 +111,9 @@ export default class MotionCurve extends AnimationTool {
                     // requestAnimationFrame(moveAlongPath);
                     this.saveAnimatedSvg()
                 }
-            } else {
-                requestAnimationFrame(moveAlongPath);
-            }
+            // } else {
+            //     requestAnimationFrame(moveAlongPath);
+            // }
         };
 
         moveAlongPath();
@@ -165,27 +165,7 @@ export default class MotionCurve extends AnimationTool {
         scriptElement.textContent = `
             <![CDATA[
                 
-                    function animate(element) {
-                    const motionPath = document.getElementById('motionPath');
-                    const totalLength = motionPath.getTotalLength();
-                    let distanceCovered = 0;
-                    const speed = 5;
-    
-                    const moveAlongPath = () => {
-                        const point = motionPath.getPointAtLength(distanceCovered);
-                        element.setAttribute("transform", \`translate(\${point.x} \${point.y})\`);
-    
-                        distanceCovered += speed;
-    
-                        if (distanceCovered <= totalLength) {
-                            requestAnimationFrame(moveAlongPath);
-                        } else {
-                            // Анимация завершена
-                        }
-                    };
-    
-                    moveAlongPath();
-                }
+                function ${this.animate.toString()}
                 const animatedElement = document.getElementById('animatedElementId');
                 animate(animatedElement);
             ]]>
