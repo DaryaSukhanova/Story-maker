@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewbox="0 0 1000 1000"><rect stroke="black" stroke-width="2" fill="none" x="169" y="46" width="94" height="51" id="animatedElementId"></rect><path stroke="red" stroke-width="2" fill="none" id="motionPath" d="M 369 248 L 356 250 L 323 251 L 313 251 L 316 247 L 334 235 L 377 218 L 452 190 L 533 157 L 607 125 L 655 102 L 664 95 L 663 95 L 646 95 L 608 101 L 558 120 L 498 154 L 453 187 L 432 216 L 435 231 L 460 236 L 508 235 L 581 231 L 642 230 L 679 233 L 687 237 L 679 242 L 657 254 L 629 269 L 608 281 L 594 290 L 590 292"></path><script>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewbox="0 0 1000 1000"><rect stroke="black" stroke-width="2" fill="none" x="182" y="44" width="99" height="100" id="animatedElementId"></rect><path stroke="red" stroke-width="2" fill="none" id="motionPath" d="M 258 165 L 229 165 L 226 165 L 242 163 L 292 157 L 366 153 L 456 150 L 565 148 L 641 148 L 679 154 L 683 159 L 668 169 L 625 190 L 544 224 L 473 258 L 428 280 L 419 287 L 429 287 L 468 283 L 535 279 L 591 276 L 621 276 L 627 277 L 623 281 L 614 292 L 605 312 L 603 329 L 605 339 L 608 345 L 608 346"></path><script>
             <![CDATA[
                 
                 function animate(element) {
@@ -7,23 +7,23 @@
     let distanceCovered = 0;
     const speed = 5;
     const moveAlongPath = () => {
-      // if (this.play) {
-      const point = motionPath.getPointAtLength(distanceCovered);
-      element.setAttribute("transform", `translate(${point.x} ${point.y})`);
-      distanceCovered += speed;
-      if (distanceCovered <= totalLength) {
-        requestAnimationFrame(moveAlongPath);
+      this.play = true;
+      if (this.play) {
+        const point = motionPath.getPointAtLength(distanceCovered);
+        element.setAttribute("transform", `translate(${point.x} ${point.y})`);
+        distanceCovered += speed;
+        if (distanceCovered <= totalLength) {
+          requestAnimationFrame(moveAlongPath);
+        } else {
+          // console.log(this.animations)
+          distanceCovered = 0;
+          requestAnimationFrame(moveAlongPath);
+          this.saveAnimatedSvg();
+        }
       } else {
-        // console.log(this.animations)
-        // distanceCovered = 0
-        // requestAnimationFrame(moveAlongPath);
-        this.saveAnimatedSvg();
+        requestAnimationFrame(moveAlongPath);
       }
-      // } else {
-      //     requestAnimationFrame(moveAlongPath);
-      // }
     };
-
     moveAlongPath();
   }
                 const animatedElement = document.getElementById('animatedElementId');

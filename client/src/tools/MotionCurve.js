@@ -97,8 +97,8 @@ export default class MotionCurve extends AnimationTool {
         const speed = 5;
 
         const moveAlongPath = () => {
-
-            // if (this.play) {
+            this.play = true
+            if (this.play) {
                 const point = motionPath.getPointAtLength(distanceCovered);
                 element.setAttribute("transform", `translate(${point.x} ${point.y})`);
 
@@ -107,13 +107,13 @@ export default class MotionCurve extends AnimationTool {
                     requestAnimationFrame(moveAlongPath);
                 } else {
                     // console.log(this.animations)
-                    // distanceCovered = 0
-                    // requestAnimationFrame(moveAlongPath);
+                    distanceCovered = 0
+                    requestAnimationFrame(moveAlongPath);
                     this.saveAnimatedSvg()
                 }
-            // } else {
-            //     requestAnimationFrame(moveAlongPath);
-            // }
+            } else {
+                requestAnimationFrame(moveAlongPath);
+            }
         };
 
         moveAlongPath();
