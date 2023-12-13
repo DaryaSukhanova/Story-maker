@@ -13,7 +13,7 @@ export default class MotionCurve extends AnimationTool {
         this.saveMotionPath = null
         this.playButton = document.getElementById('playBtn');
         this.leftStopButton = document.getElementById('leftStopBtn')
-        this.play = false;
+        this.play = true;
         this.listen();
         this.currentPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
         // this.initializePlayButton();
@@ -97,7 +97,8 @@ export default class MotionCurve extends AnimationTool {
         const speed = 5;
 
         const moveAlongPath = () => {
-            if (this.play) {
+
+            // if (this.play) {
                 const point = motionPath.getPointAtLength(distanceCovered);
                 element.setAttribute("transform", `translate(${point.x} ${point.y})`);
 
@@ -106,17 +107,17 @@ export default class MotionCurve extends AnimationTool {
                     requestAnimationFrame(moveAlongPath);
                 } else {
                     // console.log(this.animations)
-                    distanceCovered = 0
-                    requestAnimationFrame(moveAlongPath);
-
+                    // distanceCovered = 0
+                    // requestAnimationFrame(moveAlongPath);
+                    this.saveAnimatedSvg()
                 }
-            } else {
-                requestAnimationFrame(moveAlongPath);
-            }
+            // } else {
+            //     requestAnimationFrame(moveAlongPath);
+            // }
         };
 
         moveAlongPath();
-        this.saveAnimatedSvg()
+
     }
 
 
@@ -163,8 +164,28 @@ export default class MotionCurve extends AnimationTool {
 
         scriptElement.textContent = `
             <![CDATA[
-                ${this.animate.toString()}
-
+                
+                    function animate(element) {
+                    const motionPath = document.getElementById('motionPath');
+                    const totalLength = motionPath.getTotalLength();
+                    let distanceCovered = 0;
+                    const speed = 5;
+    
+                    const moveAlongPath = () => {
+                        const point = motionPath.getPointAtLength(distanceCovered);
+                        element.setAttribute("transform", \`translate(\${point.x} \${point.y})\`);
+    
+                        distanceCovered += speed;
+    
+                        if (distanceCovered <= totalLength) {
+                            requestAnimationFrame(moveAlongPath);
+                        } else {
+                            // Анимация завершена
+                        }
+                    };
+    
+                    moveAlongPath();
+                }
                 const animatedElement = document.getElementById('animatedElementId');
                 animate(animatedElement);
             ]]>
