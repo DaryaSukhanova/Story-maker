@@ -95,9 +95,9 @@ export default class MotionCurve extends AnimationTool {
         const totalLength = motionPath.getTotalLength();
         let distanceCovered = 0;
         const speed = 5;
-
+        element.setAttribute("x", 0)
+        element.setAttribute("y", 0)
         const moveAlongPath = () => {
-            this.play = true
             if (this.play) {
                 const point = motionPath.getPointAtLength(distanceCovered);
                 element.setAttribute("transform", `translate(${point.x} ${point.y})`);
@@ -136,7 +136,7 @@ export default class MotionCurve extends AnimationTool {
             if (this.currentPath) {
                 // Остановка движения элемента
                 this.play = false;
-                this.playButton.className = "btn play-button"; // Предполагаю, что это ваш класс для кнопки воспроизведения
+                this.playButton.className = "btn play-button";
                 const initialX = this.currentPath.getPointAtLength(0).x;
                 const initialY = this.currentPath.getPointAtLength(0).y;
                 console.log(initialX, initialY)
@@ -164,7 +164,7 @@ export default class MotionCurve extends AnimationTool {
 
         scriptElement.textContent = `
             <![CDATA[
-                
+                this.play = true
                 function ${this.animate.toString()}
                 const animatedElement = document.getElementById('animatedElementId');
                 animate(animatedElement);
