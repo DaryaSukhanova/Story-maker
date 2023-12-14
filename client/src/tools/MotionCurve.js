@@ -4,6 +4,7 @@ import axios from "axios";
 // import xml2js from "xml2js";
 
 let distanceCovered = null
+let isAnimationSaved = false;
 export default class MotionCurve extends AnimationTool {
     constructor(svgCanvas) {
         super(svgCanvas);
@@ -110,7 +111,11 @@ export default class MotionCurve extends AnimationTool {
                     // console.log(this.animations)
                     distanceCovered = 0
                     requestAnimationFrame(moveAlongPath);
-                    this.saveAnimatedSvg()
+                    if (!isAnimationSaved) {
+                        isAnimationSaved = true;
+                        this.saveAnimatedSvg()
+                    }
+
                 }
             } else {
                 requestAnimationFrame(moveAlongPath);
