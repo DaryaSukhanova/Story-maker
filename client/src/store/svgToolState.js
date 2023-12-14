@@ -12,10 +12,10 @@ class SvgToolState{
     //     this.tool.fillColor = color
     // }
     setFillStroke(color){
-        this.tool.fillStroke = color
+        this.tool.svgFillStroke = color
     }
     setLineWidth(width){
-        this.tool.lineWidth = width
+        this.tool.svgLineWidth = width
     }
 }
 

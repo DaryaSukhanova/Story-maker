@@ -6,10 +6,11 @@ export default class SvgTool{
         this.destroyEvents()
     }
 
-    set fillStroke(color){
+    set svgFillStroke(color){
+        console.log(color)
         this.currentStroke = color
     }
-    set lineWidth(width){
+    set svgLineWidth(width){
         this.currenLineWidth = width
     }
 

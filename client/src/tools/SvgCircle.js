@@ -28,7 +28,8 @@ export default class SvgCircle extends SvgTool{
         this.drawingCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         this.drawingCircle.setAttribute("id", "svgCircle");
         this.drawingCircle.setAttribute("fill", "none");
-        this.drawingCircle.setAttribute("stroke", "black");
+        this.drawingCircle.setAttribute("stroke", this.currentStroke);
+        this.drawingCircle.setAttribute("stroke-width", this.currenLineWidth);
         this.svgCanvas.appendChild(this.drawingCircle)
         // this.drawingCircle = { x: this.startX, y: this.startY, r: 0 };
         // this.draw(this.drawingCircle.x, this.drawingCircle.y, this.drawingCircle.r);
@@ -73,7 +74,8 @@ export default class SvgCircle extends SvgTool{
             circle.setAttribute("cy", y);
             circle.setAttribute("r", r);
             circle.setAttribute("fill", "none");
-            circle.setAttribute("stroke", "black");
+            circle.setAttribute("stroke", this.currentStroke);
+            circle.setAttribute("stroke-width", this.currenLineWidth);
             this.svgCanvas.appendChild(circle);
         }
     }
