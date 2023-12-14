@@ -3,6 +3,7 @@ import axios from "axios";
 // import {parseString} from "xml2js/lib/parser";
 // import xml2js from "xml2js";
 
+let distanceCovered = null
 export default class MotionCurve extends AnimationTool {
     constructor(svgCanvas) {
         super(svgCanvas);
@@ -93,7 +94,7 @@ export default class MotionCurve extends AnimationTool {
     animate(element) {
         const motionPath = document.getElementById('motionPath');
         const totalLength = motionPath.getTotalLength();
-        let distanceCovered = 0;
+        distanceCovered = 0;
         const speed = 5;
         element.setAttribute("x", 0)
         element.setAttribute("y", 0)
@@ -120,7 +121,6 @@ export default class MotionCurve extends AnimationTool {
 
     }
 
-
     toggleAnimationPause = () => {
         if (this.clickedElement !== this.svgCanvas && this.clickedElement !== this.currentPath) {
             console.log(this.clickedElement)
@@ -142,6 +142,7 @@ export default class MotionCurve extends AnimationTool {
                 console.log(initialX, initialY)
                 const initialTransform = `translate(${initialX} ${initialY})`;
                 this.clickedElement.setAttribute("transform", initialTransform);
+                distanceCovered = 0
             }
         }
     }
