@@ -37,7 +37,7 @@ export default class SvgLine extends SvgTool{
         this.drawingLine = {d: this.pathData}
         this.drawingLine = document.createElementNS("http://www.w3.org/2000/svg", "path");
         this.drawingLine.setAttribute("stroke", this.currentStroke);
-        this.drawingLine.setAttribute("stroke-width", this.currenLineWidth);
+        this.drawingLine.setAttribute("stroke-width", this.currentLineWidth);
         this.drawingLine.setAttribute("fill", "none");
         this.svgCanvas.appendChild(this.drawingLine)
         // this.draw(this.drawingLine.d);

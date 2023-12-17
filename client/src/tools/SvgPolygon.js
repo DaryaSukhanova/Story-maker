@@ -41,7 +41,7 @@ export default class SvgPolygon extends SvgTool{
             this.pathData = `${this.currentX},${this.currentY}`;
             this.drawingPolygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
             this.drawingPolygon.setAttribute("stroke", this.currentStroke);
-            this.drawingPolygon.setAttribute("stroke-width", this.currenLineWidth);
+            this.drawingPolygon.setAttribute("stroke-width", this.currentLineWidth);
             this.drawingPolygon.setAttribute("fill", "none");
             this.drawingPolygon.setAttribute("points", this.pathData);
             this.svgCanvas.appendChild(this.drawingPolygon);

@@ -85,14 +85,14 @@ export default class MotionCurve extends AnimationTool {
         const motionPath = document.getElementById('motionPath');
         const totalLength = motionPath.getTotalLength();
         distanceCovered = 0;
-        const speed = 5;
+        let speed = this.currentSpeed;
         element.setAttribute("x", 0)
         element.setAttribute("y", 0)
         const moveAlongPath = () => {
             if (this.play) {
                 const point = motionPath.getPointAtLength(distanceCovered);
                 element.setAttribute("transform", `translate(${point.x} ${point.y})`);
-
+                speed = this.currentSpeed;
                 distanceCovered += speed;
                 if (distanceCovered <= totalLength) {
                     requestAnimationFrame(moveAlongPath);

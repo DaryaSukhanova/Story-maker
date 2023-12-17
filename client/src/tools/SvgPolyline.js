@@ -38,7 +38,7 @@ export default class SvgPolyline extends SvgTool {
             this.pathData = `${this.currentX},${this.currentY}`;
             this.drawingPolyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
             this.drawingPolyline.setAttribute("stroke", this.currentStroke);
-            this.drawingPolyline.setAttribute("stroke-width", this.currenLineWidth);
+            this.drawingPolyline.setAttribute("stroke-width", this.currentLineWidth);
             this.drawingPolyline.setAttribute("fill", "none");
             this.drawingPolyline.setAttribute("points", this.pathData);
             this.svgCanvas.appendChild(this.drawingPolyline);

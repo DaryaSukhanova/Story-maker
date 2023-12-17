@@ -29,7 +29,7 @@ export default class SvgCircle extends SvgTool{
         this.drawingCircle.setAttribute("id", "svgCircle");
         this.drawingCircle.setAttribute("fill", "none");
         this.drawingCircle.setAttribute("stroke", this.currentStroke);
-        this.drawingCircle.setAttribute("stroke-width", this.currenLineWidth);
+        this.drawingCircle.setAttribute("stroke-width", this.currentLineWidth);
         this.svgCanvas.appendChild(this.drawingCircle)
         // this.drawingCircle = { x: this.startX, y: this.startY, r: 0 };
         // this.draw(this.drawingCircle.x, this.drawingCircle.y, this.drawingCircle.r);
@@ -62,7 +62,7 @@ export default class SvgCircle extends SvgTool{
             circle.setAttribute("r", circleData.r);
             circle.setAttribute("fill", "none");
             circle.setAttribute("stroke", this.currentStroke);
-            circle.setAttribute("stroke-width", this.currenLineWidth);
+            circle.setAttribute("stroke-width", this.currentLineWidth);
             this.svgCanvas.appendChild(circle);
         });
 
@@ -75,7 +75,7 @@ export default class SvgCircle extends SvgTool{
             circle.setAttribute("r", r);
             circle.setAttribute("fill", "none");
             circle.setAttribute("stroke", this.currentStroke);
-            circle.setAttribute("stroke-width", this.currenLineWidth);
+            circle.setAttribute("stroke-width", this.currentLineWidth);
             this.svgCanvas.appendChild(circle);
         }
     }
