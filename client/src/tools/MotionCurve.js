@@ -23,8 +23,6 @@ export default class MotionCurve extends AnimationTool {
         this.leftStopButton.addEventListener('click', this.toggleAnimationLeftStop.bind(this));
 
     }
-
-
     listen() {
         this.svgCanvas.onmousemove = this.mouseMoveHandler.bind(this);
         this.svgCanvas.onmousedown = this.mouseDownHandler.bind(this);
@@ -43,11 +41,6 @@ export default class MotionCurve extends AnimationTool {
             }
             this.motionPath = null;
         }
-        // console.log(this.clickedElement)
-        // const playButton = document.getElementById('playBtn')
-        // console.log('playButton ', playButton)
-        // playButton.addEventListener('click', this.toggleAnimationPause);
-
     }
 
     mouseDownHandler(e) {
@@ -56,11 +49,7 @@ export default class MotionCurve extends AnimationTool {
         const startX = e.pageX - svgCanvasRect.left;
         const startY = e.pageY - svgCanvasRect.top;
 
-        // this.initialPosition = {
-        //     x: startX,
-        //     y: startY
-        // };
-        // console.log(this.initialPosition)
+
         if (!this.motionPath) {
             this.motionPath = this.currentPath
             this.motionPath.setAttribute("stroke", "red");
@@ -121,9 +110,7 @@ export default class MotionCurve extends AnimationTool {
                 requestAnimationFrame(moveAlongPath);
             }
         };
-
         moveAlongPath();
-
     }
 
     toggleAnimationPause = () => {
@@ -195,7 +182,5 @@ export default class MotionCurve extends AnimationTool {
         .catch(error => {
             console.error('Error:', error);
         });
-
     }
-
 }
