@@ -1,7 +1,8 @@
 export default class AnimationTool {
     constructor(svgCanvas) {
         this.svgCanvas = svgCanvas;
-        this.currentSpeed = 10
+        this.currentSpeed = 20
+        this.statePlay = true
         this.destroyEvents();
     }
 
@@ -14,5 +15,8 @@ export default class AnimationTool {
     set animationSpeed(speed){
         this.currentSpeed = speed
         console.log("speed",this.currentSpeed)
+    }
+    set currentPlay(play){
+        this.statePlay = play
     }
 }

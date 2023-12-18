@@ -15,10 +15,9 @@ export default class MotionCurve extends AnimationTool {
         this.saveMotionPath = null
         this.playButton = document.getElementById('playBtn');
         this.leftStopButton = document.getElementById('leftStopBtn')
-        this.play = true;
+        this.play = this.statePlay;
         this.listen();
         this.currentPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        // this.initializePlayButton();
         this.playButton.addEventListener('click', this.toggleAnimationPause.bind(this));
         this.leftStopButton.addEventListener('click', this.toggleAnimationLeftStop.bind(this));
 
@@ -30,6 +29,7 @@ export default class MotionCurve extends AnimationTool {
     }
 
     mouseUpHandler(e) {
+        console.log(this.play)
         if (this.motionPath) {
             this.clickedElement = document.elementFromPoint(e.clientX, e.clientY);
             this.saveSvg = this.clickedElement.cloneNode(true)
