@@ -58,7 +58,6 @@ export default class MotionCurve extends AnimationTool {
             this.motionPath.setAttribute("id", "motionPath");
             this.svgCanvas.appendChild(this.motionPath);
         }
-
         this.pathData = `M ${startX} ${startY}`;
 
     }
@@ -82,6 +81,7 @@ export default class MotionCurve extends AnimationTool {
     }
 
     animate(element) {
+
         const motionPath = document.getElementById('motionPath');
         const totalLength = motionPath.getTotalLength();
         distanceCovered = 0;
@@ -104,7 +104,6 @@ export default class MotionCurve extends AnimationTool {
                         isAnimationSaved = true;
                         this.saveAnimatedSvg()
                     }
-
                 }
             } else {
                 requestAnimationFrame(moveAlongPath);

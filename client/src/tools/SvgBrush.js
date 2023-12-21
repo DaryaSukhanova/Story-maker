@@ -1,11 +1,11 @@
-import svgCanvas from "../components/SvgCanvas";
-
 import SvgTool from "./SvgTool";
-export default class SvgBrush extends SvgTool{
+
+export default class SvgBrush extends SvgTool {
     constructor(svgCanvas) {
-        super(svgCanvas)
+        super(svgCanvas);
         this.pathData = "";
         this.drawingPath = null;
+        this.svgElement = null;
         this.listen();
     }
 
@@ -27,7 +27,11 @@ export default class SvgBrush extends SvgTool{
         const startX = e.pageX - svgCanvasRect.left;
         const startY = e.pageY - svgCanvasRect.top;
         this.pathData = `M ${startX} ${startY}`;
+        this.svgElement = this.createSvgElement();
         this.drawingPath = this.createPath();
+        // Добавить svg в svgCanvas сразу при начале рисования
+        this.svgCanvas.appendChild(this.svgElement);
+        this.svgElement.appendChild(this.drawingPath);
     }
 
     mouseMoveHandler(e) {
@@ -40,13 +44,18 @@ export default class SvgBrush extends SvgTool{
         }
     }
 
+    createSvgElement() {
+        const svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svgElement.setAttribute("id", "svgBrush"); // Замените "yourSvgId" на нужный id
+        return svgElement;
+    }
+
     createPath() {
         const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
         path.setAttribute("stroke", this.currentStroke);
         path.setAttribute("stroke-width", this.currentLineWidth);
         path.setAttribute("fill", "none");
         path.setAttribute("d", this.pathData);
-        this.svgCanvas.appendChild(path);
         return path;
     }
 
