@@ -14,16 +14,29 @@
 .animation-setting-block-btns{
 
   &__btn {
-    height: 25px;
-    width: 25px;
+    height: 30px;
+    width: 30px;
     border: none;
     outline: none;
     cursor: pointer;
     background-size: cover;
 
+
   }
   .motionCurve{
     background: url('../assets/img/motionCurve.svg') no-repeat center center;
+    background-size: 100% 100%;
+  }
+  .motionCurve::after {
+    content: "Motion Curve";
+    display: none;
+    position: absolute;
+    padding: 10px 0;
+    font-size: 13px;
+  }
+
+  .motionCurve:hover::after {
+    display: block; /* Показываем текст при наведении */
   }
 
 
