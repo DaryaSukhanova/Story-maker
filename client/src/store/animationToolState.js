@@ -3,7 +3,8 @@ import {makeAutoObservable} from "mobx";
 class AnimationToolState{
     tool = null
     currentPlay = true
-    currentTime = 0
+    newTime = 0
+
     constructor() {
         makeAutoObservable(this)
     }
@@ -18,15 +19,12 @@ class AnimationToolState{
         }
     }
 
-    setPlay(){
-        if(this.tool){
-            this.play = !this.play
-            this.tool.currentPlay = this.play
-        }
-    }
 
-    setTime(){
-        this.currentTime = 0
+    setPlay() {
+        if (this.tool) {
+            this.currentPlay = !this.currentPlay; // Исправлено здесь
+            this.tool.currentPlay = this.currentPlay;
+        }
     }
 
 }

@@ -81,7 +81,6 @@ export default class MotionCurve extends AnimationTool {
     }
 
     animate(element) {
-
         const motionPath = document.getElementById('motionPath');
         const totalLength = motionPath.getTotalLength();
         distanceCovered = 0;
@@ -122,7 +121,6 @@ export default class MotionCurve extends AnimationTool {
 
     toggleAnimationPause = () => {
         if (this.clickedElement !== this.svgCanvas && this.clickedElement !== this.currentPath) {
-            console.log(this.clickedElement)
             this.play = !this.play;
             this.playButton.className = this.play ? "btn pause-button " : "btn play-button"
             console.log(this.play);
@@ -138,7 +136,6 @@ export default class MotionCurve extends AnimationTool {
                 this.playButton.className = "btn play-button";
                 const initialX = this.currentPath.getPointAtLength(0).x;
                 const initialY = this.currentPath.getPointAtLength(0).y;
-                console.log(initialX, initialY)
                 const initialTransform = `translate(${initialX} ${initialY})`;
                 this.clickedElement.setAttribute("transform", initialTransform);
                 distanceCovered = 0
@@ -171,7 +168,6 @@ export default class MotionCurve extends AnimationTool {
             ]]>
         `;
         svgContainer.appendChild(scriptElement);
-        console.log(svgContainer);
         const jsonData = {
             svg: svgContainer.outerHTML // включаем SVG непосредственно в объект JSON
 

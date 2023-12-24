@@ -1,30 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import '../styles/timeline-block.scss';
 import animationToolState from '../store/animationToolState';
 import AnimationTool from "../tools/AnimationTool";
 import MotionCurve from "../tools/MotionCurve";
+import {observer} from "mobx-react-lite";
 
-const TimelineBlock = () => {
-
+const TimelineBlock = observer (() => {
     const [elapsedTime, setElapsedTime] = useState(0);
+    const intervalIdRef = useRef(null);
 
     useEffect(() => {
-        const startTime = Date.now();
-        const interval = setInterval(() => {
-        const currentTime = Date.now();
-        const newElapsedTime = currentTime - startTime;
-        setElapsedTime(newElapsedTime);
+        console.log("useEffect triggered");
+        console.log("currPlay", animationToolState.currentPlay);
 
-        }, 10);
+        if (animationToolState.currentPlay) {
+            const startTime = Date.now() - elapsedTime;
+            intervalIdRef.current = setInterval(() => {
+                const currentTime = Date.now();
+                const newElapsedTime = currentTime - startTime;
+                setElapsedTime(newElapsedTime);
+            }, 10);
+        } else {
+            clearInterval(intervalIdRef.current);
+        }
 
-        return () => clearInterval(interval);
-    }, []);
+        return () => clearInterval(intervalIdRef.current);
+    }, [animationToolState.currentPlay]);
 
     const formatTime = (time) => {
         const pad = (num) => (num < 10 ? `0${num}` : num);
         const minutes = Math.floor((time / 1000 / 60) % 60);
         const seconds = Math.floor((time / 1000) % 60);
-        const milliseconds = Math.floor(time %100);
+        const milliseconds = Math.floor(time % 100);
         return `${pad(minutes)}:${pad(seconds)}:${pad(milliseconds)}`;
     };
 
@@ -47,6 +54,6 @@ const TimelineBlock = () => {
             </div>
         </div>
     );
-};
+});
 
 export default TimelineBlock;
