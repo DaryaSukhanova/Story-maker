@@ -6,6 +6,7 @@ import svgCanvasState from "../store/svgCanvasState";
 import SvgBrush from "../tools/SvgBrush";
 import svgToolState from "../store/svgToolState";
 const AnimationSettingBlock = () => {
+
     return (
         <div className="block-container">
             <div className="setting-block">

@@ -8,11 +8,9 @@ import {observer} from "mobx-react-lite";
 const TimelineBlock = observer (() => {
     const [elapsedTime, setElapsedTime] = useState(0);
     const intervalIdRef = useRef(null);
-
+    let currentPlay = false
     useEffect(() => {
-        console.log("useEffect triggered");
-        console.log("currPlay", animationToolState.currentPlay);
-
+        console.log("currentPlay", animationToolState.currentPlay);
         if (animationToolState.currentPlay) {
             const startTime = Date.now() - elapsedTime;
             intervalIdRef.current = setInterval(() => {

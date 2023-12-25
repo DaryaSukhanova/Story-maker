@@ -1,8 +1,10 @@
+import animationToolState from "../store/animationToolState";
+
 export default class AnimationTool {
     constructor(svgCanvas) {
         this.svgCanvas = svgCanvas;
         this.currentSpeed = 20
-        this.statePlay = true
+        // this.statePlay = false
         this.destroyEvents();
     }
 

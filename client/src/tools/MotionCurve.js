@@ -1,5 +1,7 @@
 import AnimationTool from "./AnimationTool";
 import axios from "axios";
+import animationToolState from "../store/animationToolState";
+import {logDOM} from "@testing-library/react";
 // import {parseString} from "xml2js/lib/parser";
 // import xml2js from "xml2js";
 
@@ -15,13 +17,14 @@ export default class MotionCurve extends AnimationTool {
         this.saveMotionPath = null
         this.playButton = document.getElementById('playBtn');
         this.leftStopButton = document.getElementById('leftStopBtn')
-        this.play = this.statePlay;
+        this.play = animationToolState.currentPlay;
         this.listen();
         this.currentPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
         this.playButton.addEventListener('click', this.toggleAnimationPause.bind(this));
         this.leftStopButton.addEventListener('click', this.toggleAnimationLeftStop.bind(this));
 
     }
+
     listen() {
         this.svgCanvas.onmousemove = this.mouseMoveHandler.bind(this);
         this.svgCanvas.onmousedown = this.mouseDownHandler.bind(this);
@@ -29,14 +32,16 @@ export default class MotionCurve extends AnimationTool {
     }
 
     mouseUpHandler(e) {
-        console.log(this.play)
         if (this.motionPath) {
             this.clickedElement = document.elementFromPoint(e.clientX, e.clientY);
             this.saveSvg = this.clickedElement.cloneNode(true)
             this.saveMotionPath = this.motionPath.cloneNode(true)
             this.saveSvg.removeAttribute("id");
-
+            if(this.clickedElement !== null){
+                this.play = !this.play
+            }
             if(this.play && this.clickedElement !== this.svgCanvas && this.clickedElement !== this.motionPath){
+                this.playButton.className =  "btn pause-button "
                 this.animate(this.clickedElement)
             }
             this.motionPath = null;
@@ -69,7 +74,6 @@ export default class MotionCurve extends AnimationTool {
             const currentY = e.pageY - svgCanvasRect.top;
             this.pathData += ` L ${currentX} ${currentY}`;
             this.updatePath();
-            // console.log(this.motionPath)
         }
 
     }
@@ -87,7 +91,7 @@ export default class MotionCurve extends AnimationTool {
         let speed = this.currentSpeed;
         element.setAttribute("x", 0)
         element.setAttribute("y", 0)
-
+        animationToolState.setPlay()
         const moveAlongPath = () => {
             if (this.play) {
                 const point = motionPath.getPointAtLength(distanceCovered);
@@ -104,7 +108,6 @@ export default class MotionCurve extends AnimationTool {
                 if (distanceCovered <= totalLength) {
                     requestAnimationFrame(moveAlongPath);
                 } else {
-                    // console.log(this.animations)
                     distanceCovered = 0
                     requestAnimationFrame(moveAlongPath);
                     if (!isAnimationSaved) {
@@ -123,7 +126,6 @@ export default class MotionCurve extends AnimationTool {
         if (this.clickedElement !== this.svgCanvas && this.clickedElement !== this.currentPath) {
             this.play = !this.play;
             this.playButton.className = this.play ? "btn pause-button " : "btn play-button"
-            console.log(this.play);
         }
     }
     toggleAnimationLeftStop = () => {
