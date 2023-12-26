@@ -12,10 +12,10 @@ const TimelineBlock = observer (() => {
     useEffect(() => {
         console.log("currentPlay", animationToolState.currentPlay);
         if (animationToolState.currentPlay) {
-            const startTime = Date.now() - elapsedTime;
+            // const startTime = animationToolState.startTime
             intervalIdRef.current = setInterval(() => {
                 const currentTime = Date.now();
-                const newElapsedTime = currentTime - startTime;
+                const newElapsedTime = currentTime - animationToolState.startTime;
                 setElapsedTime(newElapsedTime);
 
             }, 10);

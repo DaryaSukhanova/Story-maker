@@ -2,6 +2,7 @@ import AnimationTool from "./AnimationTool";
 import axios from "axios";
 import animationToolState from "../store/animationToolState";
 import {logDOM} from "@testing-library/react";
+import TimelineBlock from "../components/TimelineBlock";
 // import {parseString} from "xml2js/lib/parser";
 // import xml2js from "xml2js";
 
@@ -43,7 +44,6 @@ export default class MotionCurve extends AnimationTool {
             if(this.clickedElement !== this.svgCanvas && this.clickedElement !== this.motionPath){
                 animationToolState.setPlay()
                 this.play = animationToolState.currentPlay
-                // this.playButton.className =  "btn pause-button "
                 console.log(this.clickedElement)
                 this.animate(this.clickedElement)
             }
@@ -94,8 +94,6 @@ export default class MotionCurve extends AnimationTool {
         element.setAttribute("x", 0)
         element.setAttribute("y", 0)
 
-        // animationToolState.setPlay()
-
         const moveAlongPath = () => {
             if (this.play) {
                 const point = motionPath.getPointAtLength(distanceCovered);
@@ -106,18 +104,21 @@ export default class MotionCurve extends AnimationTool {
                 } else {
                     element.setAttribute("transform", `translate(${point.x} ${point.y})`);
                 }
-
                 speed = this.currentSpeed;
                 distanceCovered += speed;
                 if (distanceCovered <= totalLength) {
                     requestAnimationFrame(moveAlongPath);
+
                 } else {
                     distanceCovered = 0
+                    const newStartTime = Date.now();
+                    animationToolState.setStartTime(newStartTime);
                     requestAnimationFrame(moveAlongPath);
                     if (!isAnimationSaved) {
                         isAnimationSaved = true;
                         this.saveAnimatedSvg()
                     }
+
                 }
             } else {
                 requestAnimationFrame(moveAlongPath);
@@ -148,6 +149,10 @@ export default class MotionCurve extends AnimationTool {
                 distanceCovered = 0
             }
         }
+    }
+
+    resetTimer() {
+        this.startTime = Date.now();
     }
 
     saveAnimatedSvg() {
