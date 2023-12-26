@@ -112,7 +112,7 @@ export default class MotionCurve extends AnimationTool {
                 } else {
                     distanceCovered = 0
                     const newStartTime = Date.now();
-                    animationToolState.setStartTime(newStartTime);
+                    // animationToolState.setStartTime(newStartTime);
                     requestAnimationFrame(moveAlongPath);
                     if (!isAnimationSaved) {
                         isAnimationSaved = true;
@@ -174,6 +174,10 @@ export default class MotionCurve extends AnimationTool {
         scriptElement.textContent = `
             <![CDATA[
                 this.play = true
+                this.currentSpeed = ${this.currentSpeed}
+                let distanceCovered = 0;
+                let isAnimationSaved = false;
+                
                 function ${this.animate.toString()}
                 const animatedElement = document.getElementById('animatedElementId');
                 animate(animatedElement);
