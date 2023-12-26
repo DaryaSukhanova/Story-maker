@@ -41,6 +41,7 @@ export default class MotionCurve extends AnimationTool {
             //     this.play = !this.play
             // }
             if(this.clickedElement !== this.svgCanvas && this.clickedElement !== this.motionPath){
+                animationToolState.setPlay()
                 this.play = animationToolState.currentPlay
                 // this.playButton.className =  "btn pause-button "
                 console.log(this.clickedElement)

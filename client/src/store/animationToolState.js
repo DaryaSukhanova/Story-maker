@@ -2,7 +2,7 @@ import {makeAutoObservable} from "mobx";
 
 class AnimationToolState{
     tool = null
-    currentPlay = true
+    currentPlay = false
 
     constructor() {
         makeAutoObservable(this)
