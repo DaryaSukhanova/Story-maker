@@ -8,6 +8,7 @@ import TimelineBlock from "../components/TimelineBlock";
 
 let distanceCovered = null
 let isAnimationSaved = false;
+let isUpdateTime = true
 export default class MotionCurve extends AnimationTool {
     constructor(svgCanvas) {
         super(svgCanvas);
@@ -23,6 +24,7 @@ export default class MotionCurve extends AnimationTool {
         this.currentPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
         this.playButton.addEventListener('click', this.toggleAnimationPause.bind(this));
         this.leftStopButton.addEventListener('click', this.toggleAnimationLeftStop.bind(this));
+
 
     }
 
@@ -112,7 +114,10 @@ export default class MotionCurve extends AnimationTool {
                 } else {
                     distanceCovered = 0
                     const newStartTime = Date.now();
-                    // animationToolState.setStartTime(newStartTime);
+                    if (isUpdateTime){
+                        animationToolState.setStartTime(newStartTime);
+                    }
+
                     requestAnimationFrame(moveAlongPath);
                     if (!isAnimationSaved) {
                         isAnimationSaved = true;
@@ -177,6 +182,7 @@ export default class MotionCurve extends AnimationTool {
                 this.currentSpeed = ${this.currentSpeed}
                 let distanceCovered = 0;
                 let isAnimationSaved = false;
+                let isUpdateTime = false
                 
                 function ${this.animate.toString()}
                 const animatedElement = document.getElementById('animatedElementId');
