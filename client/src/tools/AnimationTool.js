@@ -6,6 +6,7 @@ export default class AnimationTool {
         this.currentSpeed = 20
         // this.statePlay = false
         this.destroyEvents();
+        this.currentTime = 0
     }
 
     destroyEvents() {
@@ -16,9 +17,12 @@ export default class AnimationTool {
     }
     set animationSpeed(speed){
         this.currentSpeed = speed
-        console.log("speed",this.currentSpeed)
     }
     set currentPlay(play){
         this.statePlay = play
+    }
+
+    set newTime(time){
+        this.currentTime = time
     }
 }

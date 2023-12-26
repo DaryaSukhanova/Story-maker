@@ -17,7 +17,7 @@ export default class MotionCurve extends AnimationTool {
         this.saveMotionPath = null
         this.playButton = document.getElementById('playBtn');
         this.leftStopButton = document.getElementById('leftStopBtn')
-        this.play = animationToolState.currentPlay;
+        this.play = false;
         this.listen();
         this.currentPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
         this.playButton.addEventListener('click', this.toggleAnimationPause.bind(this));
@@ -37,11 +37,13 @@ export default class MotionCurve extends AnimationTool {
             this.saveSvg = this.clickedElement.cloneNode(true)
             this.saveMotionPath = this.motionPath.cloneNode(true)
             this.saveSvg.removeAttribute("id");
-            if(this.clickedElement !== null){
-                this.play = !this.play
-            }
-            if(this.play && this.clickedElement !== this.svgCanvas && this.clickedElement !== this.motionPath){
-                this.playButton.className =  "btn pause-button "
+            // if(this.clickedElement !== null){
+            //     this.play = !this.play
+            // }
+            if(this.clickedElement !== this.svgCanvas && this.clickedElement !== this.motionPath){
+                this.play = animationToolState.currentPlay
+                // this.playButton.className =  "btn pause-button "
+                console.log(this.clickedElement)
                 this.animate(this.clickedElement)
             }
             this.motionPath = null;
@@ -49,7 +51,6 @@ export default class MotionCurve extends AnimationTool {
     }
 
     mouseDownHandler(e) {
-
         const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
         const startX = e.pageX - svgCanvasRect.left;
         const startY = e.pageY - svgCanvasRect.top;
@@ -91,7 +92,9 @@ export default class MotionCurve extends AnimationTool {
         let speed = this.currentSpeed;
         element.setAttribute("x", 0)
         element.setAttribute("y", 0)
-        animationToolState.setPlay()
+
+        // animationToolState.setPlay()
+
         const moveAlongPath = () => {
             if (this.play) {
                 const point = motionPath.getPointAtLength(distanceCovered);
@@ -124,6 +127,7 @@ export default class MotionCurve extends AnimationTool {
 
     toggleAnimationPause = () => {
         if (this.clickedElement !== this.svgCanvas && this.clickedElement !== this.currentPath) {
+            console.log("click play")
             this.play = !this.play;
             this.playButton.className = this.play ? "btn pause-button " : "btn play-button"
         }

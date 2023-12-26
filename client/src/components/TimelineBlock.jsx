@@ -17,11 +17,11 @@ const TimelineBlock = observer (() => {
                 const currentTime = Date.now();
                 const newElapsedTime = currentTime - startTime;
                 setElapsedTime(newElapsedTime);
+
             }, 10);
         } else {
             clearInterval(intervalIdRef.current);
         }
-
         return () => clearInterval(intervalIdRef.current);
     }, [animationToolState.currentPlay]);
 
