@@ -19,9 +19,25 @@
 .setting-block{
   padding: 15px;
   width: 350px;
-  height: 700px;
+  height: 600px;
 
   background-color: #ffffff; /* Цвет фона блока */
   border-radius: 30px;
   box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.10);
+}
+
+.action-panel-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.action-button{
+  margin: 0 20px;
+  padding: 10px 40px;
+  border-radius: 8px;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  background-color: $main-color-animation-editor;
+  color: #FFFFFF;
 }
