@@ -7,7 +7,7 @@ import TimelineBlock from "../components/TimelineBlock";
 // import xml2js from "xml2js";
 
 let distanceCovered = null
-let isAnimationSaved = false;
+let isAnimationSaved = animationToolState.isAnimationSaved;
 let isUpdateTime = true
 export default class MotionCurve extends AnimationTool {
     constructor(svgCanvas) {
@@ -119,9 +119,10 @@ export default class MotionCurve extends AnimationTool {
                     }
 
                     requestAnimationFrame(moveAlongPath);
-                    if (!isAnimationSaved) {
-                        isAnimationSaved = true;
+                    if (animationToolState.isAnimationSaved) {
+                        console.log("isSave")
                         this.saveAnimatedSvg()
+                        animationToolState.isAnimationSaved = false;
                     }
 
                 }

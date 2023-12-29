@@ -5,6 +5,7 @@ class AnimationToolState{
     currentPlay = false
     newTime = 0
     startTime = Date.now()
+    isAnimationSaved = false
     constructor() {
         makeAutoObservable(this)
     }
