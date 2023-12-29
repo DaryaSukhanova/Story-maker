@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import '../styles/timeline-block.scss';
 import animationToolState from '../store/animationToolState';
-import AnimationTool from "../tools/AnimationTool";
-import MotionCurve from "../tools/MotionCurve";
 import {observer} from "mobx-react-lite";
 
 const TimelineBlock = observer (() => {

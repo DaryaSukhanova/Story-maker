@@ -1,10 +1,6 @@
 import AnimationTool from "./AnimationTool";
 import axios from "axios";
 import animationToolState from "../store/animationToolState";
-import {logDOM} from "@testing-library/react";
-import TimelineBlock from "../components/TimelineBlock";
-// import {parseString} from "xml2js/lib/parser";
-// import xml2js from "xml2js";
 
 let distanceCovered = null
 let isAnimationSaved = animationToolState.isAnimationSaved;
@@ -96,10 +92,16 @@ export default class MotionCurve extends AnimationTool {
         element.setAttribute("x", 0)
         element.setAttribute("y", 0)
 
+        if(element.type === "circle"){
+            element.setAttribute("cx", 0)
+            element.setAttribute("cy", 0)
+        }
+
+        this.playButton.className = "btn pause-button "
         const moveAlongPath = () => {
             if (this.play) {
                 const point = motionPath.getPointAtLength(distanceCovered);
-                if (element.hasAttribute("d")){
+                if (element.hasAttribute("d") || element.hasAttribute("points")){
                     const initialX = element.getPointAtLength(0).x;
                     const initialY = element.getPointAtLength(0).y;
                     element.setAttribute("transform", `translate(${point.x-initialX} ${point.y-initialY})`);
@@ -124,7 +126,6 @@ export default class MotionCurve extends AnimationTool {
                         this.saveAnimatedSvg()
                         animationToolState.isAnimationSaved = false;
                     }
-
                 }
             } else {
                 requestAnimationFrame(moveAlongPath);

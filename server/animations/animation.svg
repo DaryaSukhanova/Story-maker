@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewbox="0 0 1000 1000"><rect stroke="#8DADFF" stroke-width="3" fill="none" x="194" y="85" width="45" height="44" id="animatedElementId"></rect><path stroke="red" stroke-width="2" fill="none" id="motionPath" d="M 284 217 L 292 201 L 303 178 L 323 145 L 340 122 L 345 117 L 350 113 L 353 112 L 358 111 L 368 106 L 375 104 L 388 100 L 410 96 L 421 96 L 439 97 L 451 99 L 460 102 L 470 105 L 473 105 L 475 105 L 476 105 L 478 105 L 480 104 L 485 101"></path><script>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewbox="0 0 1000 1000"><path stroke="#8DADFF" stroke-width="2" fill="none" d="M 115 79 L 116 79 L 117 77 L 120 76 L 125 73 L 129 70 L 134 66 L 141 61 L 146 58 L 151 56 L 155 56 L 158 55 L 161 55 L 164 56 L 167 57 L 172 60 L 176 61 L 182 62 L 189 62 L 195 61 L 199 59 L 204 57 L 206 55 L 208 53 L 208 52 L 209 52 L 210 52 L 212 52 L 213 52" id="animatedElementId"></path><path stroke="red" stroke-width="2" fill="none" id="motionPath" d="M 307 177 L 312 172 L 320 165 L 333 155 L 349 143 L 370 124 L 393 109 L 415 94 L 437 81 L 452 71 L 460 66 L 463 61 L 463 58 L 462 55 L 458 51 L 454 48 L 448 45"></path><script>
             <![CDATA[
                 this.play = true
-                this.currentSpeed = 20
+                this.currentSpeed = 4
                 let distanceCovered = 0;
                 let isAnimationSaved = false;
                 let isUpdateTime = false
@@ -13,10 +13,15 @@
     let speed = this.currentSpeed;
     element.setAttribute("x", 0);
     element.setAttribute("y", 0);
+    if (element.type === "circle") {
+      element.setAttribute("cx", 0);
+      element.setAttribute("cy", 0);
+    }
+    this.playButton.className = "btn pause-button ";
     const moveAlongPath = () => {
       if (this.play) {
         const point = motionPath.getPointAtLength(distanceCovered);
-        if (element.hasAttribute("d")) {
+        if (element.hasAttribute("d") || element.hasAttribute("points")) {
           const initialX = element.getPointAtLength(0).x;
           const initialY = element.getPointAtLength(0).y;
           element.setAttribute("transform", `translate(${point.x - initialX} ${point.y - initialY})`);

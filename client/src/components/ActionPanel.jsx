@@ -1,7 +1,5 @@
 import React from 'react';
-import svgCanvas from "./SvgCanvas";
 import svgCanvasState from "../store/svgCanvasState";
-import MotionCurve from "../tools/MotionCurve";
 import animationToolState from "../store/animationToolState";
 
 const ActionPanel = () => {
