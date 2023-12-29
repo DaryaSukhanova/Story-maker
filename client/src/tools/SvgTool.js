@@ -1,7 +1,7 @@
 export default class SvgTool{
     constructor(svgCanvas) {
         this.svgCanvas = svgCanvas
-        this.currentStroke = 'black';
+        this.currentStroke = '#8DADFF';
         this.currentLineWidth = '2'
         this.destroyEvents()
     }

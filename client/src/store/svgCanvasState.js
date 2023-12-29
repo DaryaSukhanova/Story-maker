@@ -1,4 +1,7 @@
 import {makeAutoObservable} from "mobx";
+import animationToolState from "./animationToolState";
+import TimelineBlock from "../components/TimelineBlock";
+
 
 class SvgCanvasState{
     canvas = null
@@ -12,6 +15,11 @@ class SvgCanvasState{
     setSvgCanvas(canvas){
         this.canvas = canvas
     }
+    handleClearCanvas = () => {
+        this.canvas.innerHTML = '';
+        animationToolState.currentPlay = false
+
+    };
 
 }
 

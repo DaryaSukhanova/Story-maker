@@ -49,3 +49,10 @@
   justify-content: space-evenly;
 
 }
+.stroke-color{
+  appearance: none;
+  border: 1px solid #ccc;
+  padding: 5px; /* Добавляем немного отступов, чтобы сделать внешний вид более приятным */
+  border-radius: 4px; /* Делаем углы слегка закругленными */
+  cursor: pointer;
+}

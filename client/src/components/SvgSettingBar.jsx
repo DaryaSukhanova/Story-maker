@@ -2,6 +2,16 @@ import React from 'react';
 import toolState from "../store/toolState";
 import svgToolState from "../store/svgToolState";
 import "../styles/svg-toolbar.scss"
+import SvgTool from "../tools/SvgTool";
+
+const strokeColorStyles = {
+    background: '#fff',
+    appearance: 'none',
+    border: 'none',
+    padding: '2px',
+    borderRadius: '4px',
+    cursor: 'pointer'
+};
 const SvgSettingBar = () => {
     return (
         <div className="svg-setting-bar">
@@ -12,8 +22,9 @@ const SvgSettingBar = () => {
                 id="line-width" type="number"
                 defaultValue={2} min={1} max={50}
             />
-            <label htmlFor="stroke-color" >Outline color</label>
-            <input id="stroke-color"
+            <label htmlFor="strokeColor" >Outline color</label>
+            <input id="strokeColor"
+                   style={strokeColorStyles}
                    onChange={e => svgToolState.setFillStroke(e.target.value)}
                    type="color"
             />

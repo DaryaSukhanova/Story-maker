@@ -21,6 +21,8 @@ const SvgCanvas = observer (() => {
         svgToolState.setSvgTool(new SvgBrush(svgCanvasRef.current))
     }, [])
 
+
+
     return (
         <div className="block-container">
             <svg ref={svgCanvasRef}
