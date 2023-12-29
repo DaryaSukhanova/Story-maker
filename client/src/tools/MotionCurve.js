@@ -5,6 +5,7 @@ import animationToolState from "../store/animationToolState";
 let distanceCovered = null
 let isAnimationSaved = animationToolState.isAnimationSaved;
 let isUpdateTime = true
+
 export default class MotionCurve extends AnimationTool {
     constructor(svgCanvas) {
         super(svgCanvas);
@@ -43,6 +44,7 @@ export default class MotionCurve extends AnimationTool {
                 animationToolState.setPlay()
                 this.play = animationToolState.currentPlay
                 console.log(this.clickedElement)
+                this.playButton.className = "btn pause-button "
                 this.animate(this.clickedElement)
             }
             this.motionPath = null;
@@ -97,7 +99,7 @@ export default class MotionCurve extends AnimationTool {
             element.setAttribute("cy", 0)
         }
 
-        this.playButton.className = "btn pause-button "
+
         const moveAlongPath = () => {
             if (this.play) {
                 const point = motionPath.getPointAtLength(distanceCovered);
@@ -185,7 +187,6 @@ export default class MotionCurve extends AnimationTool {
                 let distanceCovered = 0;
                 let isAnimationSaved = false;
                 let isUpdateTime = false
-                
                 function ${this.animate.toString()}
                 const animatedElement = document.getElementById('animatedElementId');
                 animate(animatedElement);
