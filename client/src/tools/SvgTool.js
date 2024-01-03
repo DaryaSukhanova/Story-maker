@@ -31,9 +31,22 @@ export default class SvgTool {
         svgPoint.y = boundingBox.y + boundingBox.height;
         const endPoint = svgPoint.matrixTransform(this.svgCanvas.getScreenCTM().inverse());
         console.log("startPoint.x", startPoint.x, "startPoint.y", startPoint.y)
-        return {
-            width: endPoint.x - startPoint.x,
-            height: endPoint.y - startPoint.y,
-        };
+
+        let width = endPoint.x - startPoint.x
+        let height = endPoint.y - startPoint.y
+        const rectElement = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        rectElement.setAttribute("x", `${element.getBBox().x}`);
+        rectElement.setAttribute("y", `${element.getBBox().y}`);
+        rectElement.setAttribute("width", `${width}`);
+        rectElement.setAttribute("height", `${height}`);
+        rectElement.setAttribute("stroke", "#003ace");
+        rectElement.setAttribute("fill", "none");
+        rectElement.setAttribute("stroke-width", "0.5");
+
+        this.svgCanvas.appendChild(rectElement);
+        // return {
+        //     width: endPoint.x - startPoint.x,
+        //     height: endPoint.y - startPoint.y,
+        // };
     }
 }

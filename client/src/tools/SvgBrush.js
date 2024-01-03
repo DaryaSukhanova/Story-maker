@@ -17,19 +17,8 @@ export default class SvgBrush extends SvgTool{
 
     mouseUpHandler(e) {
         if (this.drawingPath) {
-            const boundingBox = this.getBoundingBox(this.drawingPath);
-
-            const rectElement = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-            rectElement.setAttribute("x", `${this.drawingPath.getBBox().x}`);
-            rectElement.setAttribute("y", `${this.drawingPath.getBBox().y}`);
-            rectElement.setAttribute("width", boundingBox.width);
-            rectElement.setAttribute("height", boundingBox.height);
-            rectElement.setAttribute("stroke", "#003ace");
-            rectElement.setAttribute("fill", "none");
-            rectElement.setAttribute("stroke-width", "0.5");
-
-            this.svgCanvas.appendChild(rectElement);
-            console.log("drawingPath", this.drawingPath.getBBox())
+            // const boundingBox = this.getBoundingBox(this.drawingPath);
+            this.getBoundingBox(this.drawingPath)
             this.drawingPath = null;
         }
     }
