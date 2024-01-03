@@ -4,6 +4,7 @@ export default class SvgTool {
         this.currentStroke = '#8DADFF';
         this.currentLineWidth = '2';
         this.destroyEvents();
+        this.boundingBoxRect = null;
     }
 
     set svgFillStroke(color) {
@@ -32,8 +33,15 @@ export default class SvgTool {
         const endPoint = svgPoint.matrixTransform(this.svgCanvas.getScreenCTM().inverse());
         console.log("startPoint.x", startPoint.x, "startPoint.y", startPoint.y)
 
-        let width = endPoint.x - startPoint.x
-        let height = endPoint.y - startPoint.y
+        let width = endPoint.x - startPoint.x;
+        let height = endPoint.y - startPoint.y;
+
+        // Если есть предыдущий ограничивающий прямоугольник, удаляем его
+        if (this.boundingBoxRect) {
+            this.svgCanvas.removeChild(this.boundingBoxRect);
+        }
+
+        // Создаем новый ограничивающий прямоугольник
         const rectElement = document.createElementNS("http://www.w3.org/2000/svg", "rect");
         rectElement.setAttribute("x", `${element.getBBox().x}`);
         rectElement.setAttribute("y", `${element.getBBox().y}`);
@@ -43,10 +51,10 @@ export default class SvgTool {
         rectElement.setAttribute("fill", "none");
         rectElement.setAttribute("stroke-width", "0.5");
 
+        // Добавляем новый ограничивающий прямоугольник на холст
         this.svgCanvas.appendChild(rectElement);
-        // return {
-        //     width: endPoint.x - startPoint.x,
-        //     height: endPoint.y - startPoint.y,
-        // };
+
+        // Сохраняем ссылку на новый ограничивающий прямоугольник
+        this.boundingBoxRect = rectElement;
     }
 }

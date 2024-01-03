@@ -17,7 +17,6 @@ export default class SvgBrush extends SvgTool{
 
     mouseUpHandler(e) {
         if (this.drawingPath) {
-            // const boundingBox = this.getBoundingBox(this.drawingPath);
             this.getBoundingBox(this.drawingPath)
             this.drawingPath = null;
         }
