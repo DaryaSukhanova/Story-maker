@@ -28,7 +28,7 @@ const SvgCanvas = observer (() => {
             <svg ref={svgCanvasRef}
                  className="svg-canvas"
                  id="drawingCanvas"
-                 width={950}
+                 width={1000}
                  height={544}>
             </svg>
         </div>
