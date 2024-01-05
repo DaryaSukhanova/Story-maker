@@ -33,7 +33,7 @@ export default class SvgRect extends SvgTool {
         this.drawingRect.setAttribute("id", "svgRect");
         this.drawingRect.setAttribute("stroke", this.currentStroke);
         this.drawingRect.setAttribute("stroke-width", this.currentLineWidth);
-        this.drawingRect.setAttribute("fill", "none");
+        this.drawingRect.setAttribute("fill", this.currentFillColor);
         this.svgCanvas.appendChild(this.drawingRect);
     }
 

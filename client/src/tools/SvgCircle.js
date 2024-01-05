@@ -33,7 +33,7 @@ export default class SvgCircle extends SvgTool{
         this.startY = e.pageY - svgCanvasRect.top;
         this.drawingCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
         this.drawingCircle.setAttribute("id", "svgCircle");
-        this.drawingCircle.setAttribute("fill", "none");
+        this.drawingCircle.setAttribute("fill", this.currentFillColor);
         this.drawingCircle.setAttribute("stroke", this.currentStroke);
         this.drawingCircle.setAttribute("stroke-width", this.currentLineWidth);
         this.svgCanvas.appendChild(this.drawingCircle)

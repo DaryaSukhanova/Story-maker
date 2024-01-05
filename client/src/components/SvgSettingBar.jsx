@@ -5,7 +5,6 @@ import "../styles/svg-toolbar.scss"
 import SvgTool from "../tools/SvgTool";
 import {SketchPicker} from "react-color";
 
-
 const SvgSettingBar = () => {
     const [currentColor, setCurrentColor] = useState("rgba(0, 0, 0, 1)")
     const handleOnChange = (color) => {
@@ -41,7 +40,7 @@ const SvgSettingBar = () => {
                 <div className="fill-color-container">
                     {/*<label htmlFor="fillColor" >Fill color</label>*/}
                     <input id="fillColor"
-                           onChange={e => svgToolState.setFillStroke(e.target.value)}
+                           onChange={e => svgToolState.setFillColor(e.target.value)}
                            type="color"
                     />
                 </div>

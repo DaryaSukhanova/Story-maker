@@ -9,9 +9,9 @@ class SvgToolState{
     setSvgTool(tool){
         this.tool = tool
     }
-    // setFillColor(color){
-    //     this.tool.fillColor = color
-    // }
+    setFillColor(color){
+        this.tool.svgFillColor = color
+    }
     setFillStroke(color){
         console.log("svg Tool State", color)
         this.tool.svgFillStroke = color

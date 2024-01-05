@@ -2,6 +2,7 @@ export default class SvgTool {
     constructor(svgCanvas) {
         this.svgCanvas = svgCanvas;
         this.currentStroke = '#000000';
+        this.currentFillColor = 'none';
         this.currentLineWidth = '2';
         this.boundingBoxRect = null
         this.destroyEvents();
@@ -13,6 +14,9 @@ export default class SvgTool {
     }
     set svgLineWidth(width) {
         this.currentLineWidth = width;
+    }
+    set svgFillColor(color){
+        this.currentFillColor = color
     }
 
     destroyEvents() {
