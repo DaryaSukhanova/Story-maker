@@ -1,4 +1,5 @@
 import {makeAutoObservable} from "mobx";
+import {logDOM} from "@testing-library/react";
 
 class SvgToolState{
     tool = null
@@ -12,8 +13,11 @@ class SvgToolState{
     //     this.tool.fillColor = color
     // }
     setFillStroke(color){
+        console.log("svg Tool State", color)
         this.tool.svgFillStroke = color
     }
+
+
     setLineWidth(width){
         this.tool.svgLineWidth = width
     }
