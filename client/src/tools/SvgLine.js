@@ -23,6 +23,9 @@ export default class SvgLine extends SvgTool{
         //     console.log(this.drawingLine)
         //     this.drawingLine = null;
         // }
+        if(this.drawingLine){
+            this.getBoundingBox(this.drawingLine)
+        }
         this.drawingLine = null
 
     }

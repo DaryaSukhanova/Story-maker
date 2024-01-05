@@ -25,6 +25,9 @@ export default class SvgPolyline extends SvgTool {
 
     mouseUpHandler(e) {
         this.mouseDown = false;
+        if(this.drawingPolyline){
+            this.getBoundingBox(this.drawingPolyline)
+        }
     }
 
     mouseDownHandler(e) {

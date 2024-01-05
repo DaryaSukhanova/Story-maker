@@ -26,7 +26,9 @@ export default class SvgPolygon extends SvgTool{
 
     mouseUpHandler(e) {
         this.mouseDown = false;
-
+        if(this.drawingPolygon){
+            this.getBoundingBox(this.drawingPolygon)
+        }
 
     }
 

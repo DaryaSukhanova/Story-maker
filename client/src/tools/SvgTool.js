@@ -1,10 +1,11 @@
 export default class SvgTool {
     constructor(svgCanvas) {
         this.svgCanvas = svgCanvas;
-        this.currentStroke = '#8DADFF';
+        this.currentStroke = '#000000';
         this.currentLineWidth = '2';
+        this.boundingBoxRect = null
         this.destroyEvents();
-        this.boundingBoxRect = null;
+
     }
 
     set svgFillStroke(color) {
@@ -15,6 +16,13 @@ export default class SvgTool {
     }
 
     destroyEvents() {
+        console.log("this.boundingBoxRect", document.getElementById("boundingBox"))
+        const boundingBoxElement = document.getElementById("boundingBox");
+
+        if (boundingBoxElement && boundingBoxElement.parentNode) {
+            boundingBoxElement.parentNode.removeChild(boundingBoxElement);
+        }
+        
         this.svgCanvas.onmousemove = null;
         this.svgCanvas.onmousedown = null;
         this.svgCanvas.onmouseup = null;
@@ -31,7 +39,6 @@ export default class SvgTool {
         svgPoint.x = boundingBox.x + boundingBox.width;
         svgPoint.y = boundingBox.y + boundingBox.height;
         const endPoint = svgPoint.matrixTransform(this.svgCanvas.getScreenCTM().inverse());
-        console.log("startPoint.x", startPoint.x, "startPoint.y", startPoint.y)
 
         let width = endPoint.x - startPoint.x;
         let height = endPoint.y - startPoint.y;
@@ -43,6 +50,7 @@ export default class SvgTool {
 
         // Создаем новый ограничивающий прямоугольник
         const rectElement = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        rectElement.setAttribute("id", "boundingBox")
         rectElement.setAttribute("x", `${element.getBBox().x}`);
         rectElement.setAttribute("y", `${element.getBBox().y}`);
         rectElement.setAttribute("width", `${width}`);

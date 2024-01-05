@@ -17,10 +17,16 @@ export default class SvgCircle extends SvgTool{
 
     mouseUpHandler(e) {
         this.mouseDown = false;
+        if(this.drawingCircle){
+            this.getBoundingBox(this.drawingCircle)
+        }
         this.drawingCircle = null;
+
     }
 
     mouseDownHandler(e) {
+
+
         const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
         this.mouseDown = true;
         this.startX = e.pageX - svgCanvasRect.left;
@@ -31,8 +37,7 @@ export default class SvgCircle extends SvgTool{
         this.drawingCircle.setAttribute("stroke", this.currentStroke);
         this.drawingCircle.setAttribute("stroke-width", this.currentLineWidth);
         this.svgCanvas.appendChild(this.drawingCircle)
-        // this.drawingCircle = { x: this.startX, y: this.startY, r: 0 };
-        // this.draw(this.drawingCircle.x, this.drawingCircle.y, this.drawingCircle.r);
+
     }
 
     mouseMoveHandler(e) {
