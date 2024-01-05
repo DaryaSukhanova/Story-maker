@@ -39,9 +39,14 @@ const SvgSettingBar = () => {
 
                 <div className="fill-color-container">
                     {/*<label htmlFor="fillColor" >Fill color</label>*/}
-                    <input id="fillColor"
-                           onChange={e => svgToolState.setFillColor(e.target.value)}
-                           type="color"
+                    {/*<input id="fillColor"*/}
+                    {/*       onChange={e => svgToolState.setFillColor(e.target.value)}*/}
+                    {/*       type="color"*/}
+                    {/*/>*/}
+                    <input
+                        type="button"
+                        value="Fill Color"
+                        onClick={e=>svgToolState.setFillColor(currentColor)}
                     />
                 </div>
             </div>
