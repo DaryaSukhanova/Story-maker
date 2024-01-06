@@ -20,7 +20,7 @@ const SvgToolbar = () =>{
                 Drawing Tools
             </div>
             <div className="svg-tool-bar">
-                <button className="tool-bar__btn svgBrush" onClick={()=> svgToolState.setSvgTool(new BoxSelect(svgCanvasState.canvas))}/>
+                <button className="tool-bar__btn boxSelect" onClick={()=> svgToolState.setSvgTool(new BoxSelect(svgCanvasState.canvas))}/>
                 <button className="tool-bar__btn svgBrush" onClick={()=> svgToolState.setSvgTool(new SvgBrush(svgCanvasState.canvas))}/>
                 <button className="tool-bar__btn svgLine" onClick={()=> svgToolState.setSvgTool(new SvgLine(svgCanvasState.canvas))}/>
                 <button className="tool-bar__btn svgPolyline" onClick={()=> svgToolState.setSvgTool(new SvgPolyline(svgCanvasState.canvas))}/>
