@@ -160,10 +160,6 @@ export default class MotionCurve extends AnimationTool {
         }
     }
 
-    resetTimer() {
-        this.startTime = Date.now();
-    }
-
     saveAnimatedSvg() {
         const svgContainer = document.createElement('svg');
         svgContainer.setAttribute("xmlns", "http://www.w3.org/2000/svg");

@@ -19,7 +19,7 @@ export default class SvgRect extends SvgTool {
     mouseUpHandler(e) {
         this.mouseDown = false;
         if(this.drawingRect){
-            this.getBoundingBox(this.drawingRect)
+            // this.getBoundingBox(this.drawingRect)
         }
         this.drawingRect = null; // Сбрасываем текущий рисуемый прямоугольник
     }

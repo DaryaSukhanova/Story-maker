@@ -6,6 +6,7 @@ export default class SvgTool {
         this.currentLineWidth = '2';
         this.boundingBoxRect = null
         this.destroyEvents();
+        
 
     }
 
@@ -23,9 +24,9 @@ export default class SvgTool {
         console.log("this.boundingBoxRect", document.getElementById("boundingBox"))
         const boundingBoxElement = document.getElementById("boundingBox");
 
-        if (boundingBoxElement && boundingBoxElement.parentNode) {
-            boundingBoxElement.parentNode.removeChild(boundingBoxElement);
-        }
+        // if (boundingBoxElement && boundingBoxElement.parentNode) {
+        //     boundingBoxElement.parentNode.removeChild(boundingBoxElement);
+        // }
         
         this.svgCanvas.onmousemove = null;
         this.svgCanvas.onmousedown = null;

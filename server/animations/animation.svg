@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewbox="0 0 1000 1000"><path stroke="#8DADFF" stroke-width="2" fill="none" d="M 254 122 L 257 121 L 258 117 L 263 108 L 268 97 L 278 85 L 294 75 L 313 69 L 334 66 L 355 66 L 368 66 L 374 66 L 376 69 L 377 71 L 380 73 L 385 73" id="animatedElementId"></path><path stroke="red" stroke-width="2" fill="none" id="motionPath" d="M 513 231 L 501 222 L 504 209 L 517 184 L 540 148 L 562 113 L 580 85 L 598 60 L 609 45 L 616 35 L 618 31 L 618 29 L 617 29"></path><script>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewbox="0 0 1000 1000"><rect stroke="#000000" stroke-width="2" fill="rgba(229, 31, 31, 1)" x="154" y="145" width="59" height="80" id="animatedElementId"></rect><path stroke="red" stroke-width="2" fill="none" id="motionPath" d="M 209 309 L 212 307 L 216 304 L 224 300 L 240 294 L 262 288 L 293 282 L 336 278 L 378 276 L 423 273 L 474 267 L 516 260 L 553 250 L 579 235 L 590 225 L 592 216 L 592 211 L 589 208 L 586 207 L 581 207 L 575 207 L 565 212 L 549 219 L 531 228 L 514 237 L 503 243 L 502 247 L 502 251 L 504 253 L 510 256 L 517 261 L 530 265 L 549 268 L 572 271 L 598 272 L 623 275 L 648 275 L 676 276 L 707 277 L 740 278 L 775 278 L 822 278 L 860 276 L 895 275 L 914 274 L 920 274 L 921 274"></path><script>
             <![CDATA[
                 this.play = true
-                this.currentSpeed = 4
+                this.currentSpeed = 5
                 let distanceCovered = 0;
                 let isAnimationSaved = false;
                 let isUpdateTime = false
