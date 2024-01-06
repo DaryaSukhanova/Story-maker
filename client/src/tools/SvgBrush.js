@@ -17,7 +17,7 @@ export default class SvgBrush extends SvgTool{
 
     mouseUpHandler(e) {
         if (this.drawingPath) {
-            this.getBoundingBox(this.drawingPath)
+            // this.getBoundingBox(this.drawingPath)
             this.drawingPath = null;
         }
     }
@@ -47,6 +47,7 @@ export default class SvgBrush extends SvgTool{
         path.setAttribute("stroke-width", this.currentLineWidth);
         path.setAttribute("fill", "none");
         path.setAttribute("d", this.pathData);
+        path.setAttribute('data-tool', 'true');
         this.svgCanvas.appendChild(path);
         return path;
     }

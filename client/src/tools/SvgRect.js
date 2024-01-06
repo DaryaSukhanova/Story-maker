@@ -34,6 +34,7 @@ export default class SvgRect extends SvgTool {
         this.drawingRect.setAttribute("stroke", this.currentStroke);
         this.drawingRect.setAttribute("stroke-width", this.currentLineWidth);
         this.drawingRect.setAttribute("fill", this.currentFillColor);
+        this.drawingRect.setAttribute('data-tool', 'true');
         this.svgCanvas.appendChild(this.drawingRect);
     }
 
@@ -48,6 +49,7 @@ export default class SvgRect extends SvgTool {
             this.drawingRect.setAttribute("y", this.startY);
             this.drawingRect.setAttribute("width", width);
             this.drawingRect.setAttribute("height", height);
+            this.drawingRect.setAttribute('data-tool', 'true');
         }
     }
 }

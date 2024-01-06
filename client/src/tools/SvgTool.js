@@ -6,7 +6,6 @@ export default class SvgTool {
         this.currentLineWidth = '2';
         this.boundingBoxRect = null
         this.destroyEvents();
-        
 
     }
 
@@ -21,7 +20,7 @@ export default class SvgTool {
     }
 
     destroyEvents() {
-        console.log("this.boundingBoxRect", document.getElementById("boundingBox"))
+        // console.log("this.boundingBoxRect", document.getElementById("boundingBox"))
         const boundingBoxElement = document.getElementById("boundingBox");
 
         // if (boundingBoxElement && boundingBoxElement.parentNode) {
@@ -63,6 +62,7 @@ export default class SvgTool {
         rectElement.setAttribute("stroke", "#003ace");
         rectElement.setAttribute("fill", "none");
         rectElement.setAttribute("stroke-width", "0.5");
+
 
         // Добавляем новый ограничивающий прямоугольник на холст
         this.svgCanvas.appendChild(rectElement);

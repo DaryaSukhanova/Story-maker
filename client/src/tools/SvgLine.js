@@ -24,7 +24,7 @@ export default class SvgLine extends SvgTool{
         //     this.drawingLine = null;
         // }
         if(this.drawingLine){
-            this.getBoundingBox(this.drawingLine)
+            // this.getBoundingBox(this.drawingLine)
         }
         this.drawingLine = null
 
@@ -66,6 +66,7 @@ export default class SvgLine extends SvgTool{
             line.setAttribute("stroke-width", "2");
             line.setAttribute("fill", "none");
             line.setAttribute("d", lineData.d);
+            line.setAttribute('data-tool', 'true');
             this.svgCanvas.appendChild(line);
         })
         if (this.drawingLine) {
@@ -74,6 +75,7 @@ export default class SvgLine extends SvgTool{
             line.setAttribute("stroke-width", "2");
             line.setAttribute("fill", "none");
             line.setAttribute("d", d);
+            line.setAttribute('data-tool', 'true');
             this.svgCanvas.appendChild(line);
         }
     }

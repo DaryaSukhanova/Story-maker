@@ -18,7 +18,7 @@ export default class SvgCircle extends SvgTool{
     mouseUpHandler(e) {
         this.mouseDown = false;
         if(this.drawingCircle){
-            this.getBoundingBox(this.drawingCircle)
+            // this.getBoundingBox(this.drawingCircle)
         }
         this.drawingCircle = null;
 
@@ -36,6 +36,7 @@ export default class SvgCircle extends SvgTool{
         this.drawingCircle.setAttribute("fill", this.currentFillColor);
         this.drawingCircle.setAttribute("stroke", this.currentStroke);
         this.drawingCircle.setAttribute("stroke-width", this.currentLineWidth);
+        this.drawingCircle.setAttribute('data-tool', 'true');
         this.svgCanvas.appendChild(this.drawingCircle)
 
     }

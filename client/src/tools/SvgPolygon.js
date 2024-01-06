@@ -27,7 +27,7 @@ export default class SvgPolygon extends SvgTool{
     mouseUpHandler(e) {
         this.mouseDown = false;
         if(this.drawingPolygon){
-            this.getBoundingBox(this.drawingPolygon)
+            // this.getBoundingBox(this.drawingPolygon)
         }
 
     }
@@ -46,6 +46,7 @@ export default class SvgPolygon extends SvgTool{
             this.drawingPolygon.setAttribute("stroke-width", this.currentLineWidth);
             this.drawingPolygon.setAttribute("fill", this.currentFillColor);
             this.drawingPolygon.setAttribute("points", this.pathData);
+            this.drawingPolygon.setAttribute('data-tool', 'true');
             this.svgCanvas.appendChild(this.drawingPolygon);
         } else {
             // Обновить существующую полилинию, если уже рисуется

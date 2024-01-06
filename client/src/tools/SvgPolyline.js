@@ -26,7 +26,7 @@ export default class SvgPolyline extends SvgTool {
     mouseUpHandler(e) {
         this.mouseDown = false;
         if(this.drawingPolyline){
-            this.getBoundingBox(this.drawingPolyline)
+            // this.getBoundingBox(this.drawingPolyline)
         }
     }
 
@@ -45,6 +45,7 @@ export default class SvgPolyline extends SvgTool {
             this.drawingPolyline.setAttribute("fill", "none");
             this.drawingPolyline.setAttribute("points", this.pathData);
             this.svgCanvas.appendChild(this.drawingPolyline);
+
         } else {
             // Обновить существующую полилинию, если уже рисуется
             this.pathData += ` ${this.currentX},${this.currentY}`;
