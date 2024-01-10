@@ -21,6 +21,8 @@ class SvgToolState{
     setLineWidth(width){
         this.tool.svgLineWidth = width
     }
+
+
 }
 
 export default new SvgToolState()
