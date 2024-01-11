@@ -21,7 +21,7 @@ const SvgToolbar = () =>{
             </div>
             <div className="svg-tool-bar">
                 <button className="tool-bar__btn boxSelect" onClick={()=> {
-                    const boundingBox = document.getElementById('boundingBox');
+                    const boundingBox = document.getElementById('boundingBoxGroup');
                     if (boundingBox) {
                         boundingBox.parentNode.removeChild(boundingBox);
                     }

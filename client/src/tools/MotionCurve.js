@@ -21,8 +21,6 @@ export default class MotionCurve extends AnimationTool {
         this.currentPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
         this.playButton.addEventListener('click', this.toggleAnimationPause.bind(this));
         this.leftStopButton.addEventListener('click', this.toggleAnimationLeftStop.bind(this));
-
-
     }
 
     listen() {
@@ -40,7 +38,7 @@ export default class MotionCurve extends AnimationTool {
             // if(this.clickedElement !== null){
             //     this.play = !this.play
             // }
-            if(this.clickedElement !== this.svgCanvas && this.clickedElement !== this.motionPath){
+            if(this.clickedElement.getAttribute('data-tool') === 'true'){
                 animationToolState.setPlay()
                 this.play = animationToolState.currentPlay
                 console.log(this.clickedElement)
@@ -59,7 +57,7 @@ export default class MotionCurve extends AnimationTool {
 
         if (!this.motionPath) {
             this.motionPath = this.currentPath
-            this.motionPath.setAttribute("stroke", "red");
+            this.motionPath.setAttribute("stroke", "#8DADFF");
             this.motionPath.setAttribute("stroke-width", "2");
             this.motionPath.setAttribute("fill", "none");
             this.motionPath.setAttribute("id", "motionPath");
@@ -77,7 +75,6 @@ export default class MotionCurve extends AnimationTool {
             this.pathData += ` L ${currentX} ${currentY}`;
             this.updatePath();
         }
-
     }
 
     updatePath() {
@@ -94,11 +91,10 @@ export default class MotionCurve extends AnimationTool {
         element.setAttribute("x", 0)
         element.setAttribute("y", 0)
 
-        if(element.type === "circle"){
+        if(element.hasAttribute("r")){
             element.setAttribute("cx", 0)
             element.setAttribute("cy", 0)
         }
-
 
         const moveAlongPath = () => {
             if (this.play) {
@@ -129,22 +125,24 @@ export default class MotionCurve extends AnimationTool {
                         animationToolState.isAnimationSaved = false;
                     }
                 }
+                motionPath.style.display = "none"
             } else {
                 requestAnimationFrame(moveAlongPath);
+                motionPath.style.display = "block"
             }
         };
         moveAlongPath();
     }
 
     toggleAnimationPause = () => {
-        if (this.clickedElement !== this.svgCanvas && this.clickedElement !== this.currentPath) {
+        if (this.clickedElement.getAttribute('data-tool') === 'true') {
             console.log("click play")
             this.play = !this.play;
             this.playButton.className = this.play ? "btn pause-button " : "btn play-button"
         }
     }
     toggleAnimationLeftStop = () => {
-        if (this.clickedElement !== this.svgCanvas && this.clickedElement !== this.currentPath) {
+        if (this.clickedElement.getAttribute('data-tool') === 'true') {
 
             // Возвращение элемента к изначальной точке пути
             if (this.currentPath) {
@@ -201,7 +199,8 @@ export default class MotionCurve extends AnimationTool {
             },
         })
         .then(response => {
-            console.log('Server response:', response.data);
+            alert("successfully uploaded to the server")
+            console.log("successfully uploaded to the server")
         })
         .catch(error => {
             console.error('Error:', error);

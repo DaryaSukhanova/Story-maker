@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewbox="0 0 1000 1000"><rect stroke="#000000" stroke-width="2" fill="rgba(229, 31, 31, 1)" x="154" y="145" width="59" height="80" id="animatedElementId"></rect><path stroke="red" stroke-width="2" fill="none" id="motionPath" d="M 209 309 L 212 307 L 216 304 L 224 300 L 240 294 L 262 288 L 293 282 L 336 278 L 378 276 L 423 273 L 474 267 L 516 260 L 553 250 L 579 235 L 590 225 L 592 216 L 592 211 L 589 208 L 586 207 L 581 207 L 575 207 L 565 212 L 549 219 L 531 228 L 514 237 L 503 243 L 502 247 L 502 251 L 504 253 L 510 256 L 517 261 L 530 265 L 549 268 L 572 271 L 598 272 L 623 275 L 648 275 L 676 276 L 707 277 L 740 278 L 775 278 L 822 278 L 860 276 L 895 275 L 914 274 L 920 274 L 921 274"></path><script>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewbox="0 0 1000 1000"><circle fill="rgba(35, 170, 232, 1)" stroke="rgba(220, 101, 241, 1)" stroke-width="2" data-tool="true" cx="153" cy="118" r="33.015148038438355" id="animatedElementId"></circle><path stroke="#8DADFF" stroke-width="2" fill="none" id="motionPath" d="M 197 282 L 198 282 L 202 280 L 208 276 L 217 272 L 228 268 L 245 265 L 261 263 L 278 261 L 299 260 L 317 260 L 337 260 L 360 260 L 382 260 L 406 259 L 424 257 L 442 254 L 461 249 L 477 244 L 488 239 L 501 232 L 508 226 L 514 222 L 520 216 L 523 211 L 525 207 L 527 204 L 528 204 L 530 204 L 534 203 L 545 203 L 560 203 L 577 203 L 600 203 L 618 204 L 634 205 L 646 205 L 655 208 L 661 210 L 665 211 L 670 211 L 675 211 L 684 210 L 694 206 L 703 201 L 711 197 L 719 192 L 726 188 L 732 185 L 738 182 L 743 181 L 752 179 L 762 179 L 773 179 L 784 179 L 795 179 L 805 178 L 816 178 L 822 176 L 828 174"></path><script>
             <![CDATA[
                 this.play = true
-                this.currentSpeed = 5
+                this.currentSpeed = 8
                 let distanceCovered = 0;
                 let isAnimationSaved = false;
                 let isUpdateTime = false
@@ -12,7 +12,7 @@
     let speed = this.currentSpeed;
     element.setAttribute("x", 0);
     element.setAttribute("y", 0);
-    if (element.type === "circle") {
+    if (element.hasAttribute("r")) {
       element.setAttribute("cx", 0);
       element.setAttribute("cy", 0);
     }
@@ -43,8 +43,10 @@
             _store_animationToolState__WEBPACK_IMPORTED_MODULE_1__["default"].isAnimationSaved = false;
           }
         }
+        motionPath.style.display = "none";
       } else {
         requestAnimationFrame(moveAlongPath);
+        motionPath.style.display = "block";
       }
     };
     moveAlongPath();
