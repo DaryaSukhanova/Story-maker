@@ -143,16 +143,26 @@ export default class MotionCurve extends AnimationTool {
     }
     toggleAnimationLeftStop = () => {
         if (this.clickedElement.getAttribute('data-tool') === 'true') {
-
             // Возвращение элемента к изначальной точке пути
             if (this.currentPath) {
                 // Остановка движения элемента
                 this.play = false;
                 this.playButton.className = "btn play-button";
-                const initialX = this.currentPath.getPointAtLength(0).x;
-                const initialY = this.currentPath.getPointAtLength(0).y;
-                const initialTransform = `translate(${initialX} ${initialY})`;
-                this.clickedElement.setAttribute("transform", initialTransform);
+                if (this.clickedElement.hasAttribute("d") || this.clickedElement.hasAttribute("points")){
+                    const motionPath = document.getElementById('motionPath');
+                    const point = motionPath.getPointAtLength(0);
+                    const initialX = this.clickedElement.getPointAtLength(0).x;
+                    const initialY = this.clickedElement.getPointAtLength(0).y;
+                    console.log(initialX, initialY)
+                    console.log(point.x, point.y)
+                    this.clickedElement.setAttribute("transform", `translate(${point.x-initialX} ${point.y-initialY})`);
+                } else {
+                    const initialX = this.currentPath.getPointAtLength(0).x;
+                    const initialY = this.currentPath.getPointAtLength(0).y;
+                    const initialTransform = `translate(${initialX} ${initialY})`;
+                    this.clickedElement.setAttribute("transform", initialTransform);
+                }
+
                 distanceCovered = 0
             }
         }
