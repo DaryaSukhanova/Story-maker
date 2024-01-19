@@ -21,6 +21,8 @@ export default class MotionCurve extends AnimationTool {
         this.currentPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
         this.playButton.addEventListener('click', this.toggleAnimationPause.bind(this));
         this.leftStopButton.addEventListener('click', this.toggleAnimationLeftStop.bind(this));
+        this.groupElement = document.createElementNS("http://www.w3.org/2000/svg", "g");
+
     }
 
     listen() {
@@ -32,19 +34,29 @@ export default class MotionCurve extends AnimationTool {
     mouseUpHandler(e) {
         if (this.motionPath) {
             this.clickedElement = document.elementFromPoint(e.clientX, e.clientY);
-            this.saveSvg = this.clickedElement.cloneNode(true)
-            this.saveMotionPath = this.motionPath.cloneNode(true)
+            this.saveSvg = this.clickedElement.cloneNode(true);
+            this.saveMotionPath = this.motionPath.cloneNode(true);
             this.saveSvg.removeAttribute("id");
-            // if(this.clickedElement !== null){
-            //     this.play = !this.play
-            // }
-            if(this.clickedElement.getAttribute('data-tool') === 'true'){
-                animationToolState.setPlay()
-                this.play = animationToolState.currentPlay
-                console.log(this.clickedElement)
-                this.playButton.className = "btn pause-button "
-                this.animate(this.clickedElement)
+
+            if (this.clickedElement.getAttribute('data-tool') === 'true') {
+                animationToolState.setPlay();
+                this.play = animationToolState.currentPlay;
+                console.log(this.clickedElement);
+                this.playButton.className = "btn pause-button ";
+                this.animate(this.clickedElement);
             }
+
+            const motionPathClone = this.saveMotionPath.cloneNode(true);
+            motionPathClone.setAttribute("id", "motionPath");
+
+
+            this.groupElement.setAttribute("id", "animationGroup");
+            this.groupElement.appendChild(this.clickedElement);
+            this.groupElement.appendChild(this.motionPath);
+
+            // Добавить группу в SVG-холст
+            this.svgCanvas.appendChild(this.groupElement);
+
             this.motionPath = null;
         }
     }
@@ -170,6 +182,7 @@ export default class MotionCurve extends AnimationTool {
 
     saveAnimatedSvg() {
         const svgContainer = document.createElement('svg');
+
         svgContainer.setAttribute("xmlns", "http://www.w3.org/2000/svg");
         svgContainer.setAttribute("width", "1000");
         svgContainer.setAttribute("height", "1000");

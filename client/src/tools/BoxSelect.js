@@ -35,7 +35,6 @@ export default class BoxSelect extends SvgTool {
         if (!(clickedElement.getAttribute('data-tool') === 'true')) {
             if(clickedElement.getAttribute('id') !== 'boundingBoxGroup'){
                 this.resetBoundingBox()
-                console.log("click box")
             }
             // Элемент не является экземпляром SvgTool, прекращаем выполнение
             return;
