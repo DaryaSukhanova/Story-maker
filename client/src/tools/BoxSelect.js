@@ -32,6 +32,8 @@ export default class BoxSelect extends SvgTool {
 
                 // Размеры bounding box до изменений
                 const rectBBox = this.boundingBoxRect.getBBox();
+                const initialWidth = rectBBox.width
+                const initialHeight = rectBBox.height
 
                 // Изменяем размеры bounding box в зависимости от выбранной ручки
                 switch (this.selectedHandle.id) {
@@ -79,11 +81,21 @@ export default class BoxSelect extends SvgTool {
                     }
                 });
 
+                const svgContent = document.querySelector('[data-tool="true"]');
+                if (svgContent) {
+                    const dx = transformedPoint.x - rectBBox.x;
+                    const dy = transformedPoint.y - rectBBox.y;
+                    const scaleX = rectBBox.width / initialWidth;
+                    const scaleY = rectBBox.height / initialHeight;
+
+                    const matrixValues = `${scaleX} 0 0 ${scaleY} ${dx} ${dy}`;
+                    const matrixString = `matrix(${matrixValues})`;
+                    svgContent.setAttribute('transform', matrixString);
+                }
 
             }
         }
     }
-
 
     mouseUpHandler(event) {
         this.isDragging = false;
@@ -111,7 +123,6 @@ export default class BoxSelect extends SvgTool {
         //     // Элемент не является экземпляром SvgTool, прекращаем выполнение
         //     return;
         // }
-
         if(!this.boundingBoxRect){
             this.getBoundingBox(clickedElement);
         }
