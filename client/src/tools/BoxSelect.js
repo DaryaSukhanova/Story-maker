@@ -22,8 +22,17 @@ export default class BoxSelect extends SvgTool {
         }
     }
 
-    mouseUpHandler() {
+    mouseUpHandler(event) {
         this.isDragging = false;
+
+        const x = event.clientX;
+        const y = event.clientY;
+
+        // Находим элемент под указанными координатами
+        const clickedElement = document.elementFromPoint(x, y);
+
+
+
     }
     mouseDownHandler(event) {
         const x = event.clientX;
@@ -31,18 +40,24 @@ export default class BoxSelect extends SvgTool {
 
         // Находим элемент под указанными координатами
         const clickedElement = document.elementFromPoint(x, y);
-        console.log(clickedElement)
-        if (!(clickedElement.getAttribute('data-tool') === 'true')) {
-            if(clickedElement.getAttribute('id') !== 'boundingBoxGroup'){
-                this.resetBoundingBox()
-            }
-            // Элемент не является экземпляром SvgTool, прекращаем выполнение
-            return;
-        }
+
+        // if (!(clickedElement.getAttribute('data-tool') === 'true')) {
+        //     if(clickedElement.getAttribute('id') !== 'boundingBoxGroup'){
+        //         this.resetBoundingBox()
+        //     }
+        //     // Элемент не является экземпляром SvgTool, прекращаем выполнение
+        //     return;
+        // }
+
         if(!this.boundingBoxRect){
             this.getBoundingBox(clickedElement);
         }
 
+
+        if(clickedElement.getAttribute("id") === "boxHandle"){
+            console.log("handle")
+            this.handleResize(clickedElement)
+        }
         this.isDragging = true;
     }
 
@@ -102,6 +117,7 @@ export default class BoxSelect extends SvgTool {
         handle.setAttribute("class", "resize-handle");
         handle.setAttribute("cx", x);
         handle.setAttribute("cy", y);
+        handle.setAttribute("id", "boxHandle");
         handle.setAttribute("r", "4");
         handle.setAttribute("fill", "#ffffff");
         handle.setAttribute("stroke", "#6189ef");
@@ -121,24 +137,22 @@ export default class BoxSelect extends SvgTool {
         handles.forEach(handleInfo => {
             const handle = this.createHandle(handleInfo.x, handleInfo.y, handleInfo.cursor);
             currentGroup.appendChild(handle);
-            handle.addEventListener("mousedown", (event) => {
-                this.handleResizeStart(event, handleInfo);
-            });
+
         });
     }
 
-    handleResizeStart(event, handleInfo) {
-        event.preventDefault();
-        event.stopPropagation();
-
-        const initialX = event.clientX;
-        const initialY = event.clientY;
-
-        // Начальные размеры элемента
-        const initialWidth = parseFloat(this.boundingBoxRect.getAttribute("width"));
-        const initialHeight = parseFloat(this.boundingBoxRect.getAttribute("height"));
-
-
+    handleResizeStart(currentHandle){
+        console.log("func", currentHandle.style)
+        switch (currentHandle.style.cursor){
+            case "nwse-resize":
+                console.log("nwse-resize")
+                break;
+            case "nesw-resize":
+                console.log("nesw-resize")
+                break;
+        }
     }
+
+
 
 }
