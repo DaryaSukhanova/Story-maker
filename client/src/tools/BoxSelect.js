@@ -141,7 +141,7 @@ export default class BoxSelect extends SvgTool {
         });
     }
 
-    handleResizeStart(currentHandle){
+    handleResize(currentHandle){
         console.log("func", currentHandle.style)
         switch (currentHandle.style.cursor){
             case "nwse-resize":
