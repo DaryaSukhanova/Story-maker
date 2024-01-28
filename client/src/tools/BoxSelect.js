@@ -7,6 +7,7 @@ export default class BoxSelect extends SvgTool {
         this.listen();
         this.boundingBoxRect = null;
         this.isDragging = false;
+        this.selectedHandle = null;
     }
 
     listen() {
@@ -19,8 +20,70 @@ export default class BoxSelect extends SvgTool {
         if (this.isDragging) {
             const x = event.clientX;
             const y = event.clientY;
+
+            // Проверяем, что выбрана ручка и bounding box существует
+            if (this.selectedHandle && this.boundingBoxRect) {
+                const svgPoint = this.svgCanvas.createSVGPoint();
+                svgPoint.x = x;
+                svgPoint.y = y;
+
+                // Преобразуем координаты экрана в координаты SVG
+                const transformedPoint = svgPoint.matrixTransform(this.svgCanvas.getScreenCTM().inverse());
+
+                // Размеры bounding box до изменений
+                const rectBBox = this.boundingBoxRect.getBBox();
+
+                // Изменяем размеры bounding box в зависимости от выбранной ручки
+                switch (this.selectedHandle.id) {
+                    case 'top-left':
+                        this.boundingBoxRect.setAttribute('x', transformedPoint.x);
+                        this.boundingBoxRect.setAttribute('y', transformedPoint.y);
+                        this.boundingBoxRect.setAttribute('width', rectBBox.width - (transformedPoint.x - rectBBox.x));
+                        this.boundingBoxRect.setAttribute('height', rectBBox.height - (transformedPoint.y - rectBBox.y));
+                        break;
+                    case 'top-right':
+                        this.boundingBoxRect.setAttribute('y', transformedPoint.y);
+                        this.boundingBoxRect.setAttribute('width', transformedPoint.x - rectBBox.x);
+                        this.boundingBoxRect.setAttribute('height', rectBBox.height - (transformedPoint.y - rectBBox.y));
+                        break;
+                    case 'bottom-left':
+                        this.boundingBoxRect.setAttribute('x', transformedPoint.x);
+                        this.boundingBoxRect.setAttribute('width', rectBBox.width - (transformedPoint.x - rectBBox.x));
+                        this.boundingBoxRect.setAttribute('height', transformedPoint.y - rectBBox.y);
+                        break;
+                    case 'bottom-right':
+                        this.boundingBoxRect.setAttribute('width', transformedPoint.x - rectBBox.x);
+                        this.boundingBoxRect.setAttribute('height', transformedPoint.y - rectBBox.y);
+                        break;
+                }
+
+                const handles = this.svgCanvas.querySelectorAll('.resize-handle');
+                handles.forEach(handle => {
+                    switch (handle.id) {
+                        case 'top-left':
+                            handle.setAttribute('cx', parseFloat(this.boundingBoxRect.getAttribute('x')));
+                            handle.setAttribute('cy', parseFloat(this.boundingBoxRect.getAttribute('y')));
+                            break;
+                        case 'top-right':
+                            handle.setAttribute('cx', parseFloat(this.boundingBoxRect.getAttribute('x')) + parseFloat(this.boundingBoxRect.getAttribute('width')));
+                            handle.setAttribute('cy', parseFloat(this.boundingBoxRect.getAttribute('y')));
+                            break;
+                        case 'bottom-left':
+                            handle.setAttribute('cx', parseFloat(this.boundingBoxRect.getAttribute('x')));
+                            handle.setAttribute('cy', parseFloat(this.boundingBoxRect.getAttribute('y')) + parseFloat(this.boundingBoxRect.getAttribute('height')));
+                            break;
+                        case 'bottom-right':
+                            handle.setAttribute('cx', parseFloat(this.boundingBoxRect.getAttribute('x')) + parseFloat(this.boundingBoxRect.getAttribute('width')));
+                            handle.setAttribute('cy', parseFloat(this.boundingBoxRect.getAttribute('y')) + parseFloat(this.boundingBoxRect.getAttribute('height')));
+                            break;
+                    }
+                });
+
+
+            }
         }
     }
+
 
     mouseUpHandler(event) {
         this.isDragging = false;
@@ -53,10 +116,8 @@ export default class BoxSelect extends SvgTool {
             this.getBoundingBox(clickedElement);
         }
 
-
-        if(clickedElement.getAttribute("id") === "boxHandle"){
-            console.log("handle")
-            this.handleResize(clickedElement)
+        if (clickedElement.classList.contains('resize-handle')) {
+            this.selectedHandle = clickedElement;
         }
         this.isDragging = true;
     }
@@ -129,13 +190,14 @@ export default class BoxSelect extends SvgTool {
     addHandles(currentGroup){
         const bbox = this.boundingBoxRect.getBBox()
         const handles = [
-            { x: bbox.x, y: bbox.y, cursor: "nwse-resize" },
-            { x: bbox.x + bbox.width, y: bbox.y, cursor: "nesw-resize" },
-            { x: bbox.x, y: bbox.y + bbox.height, cursor: "nesw-resize" },
-            { x: bbox.x + bbox.width, y: bbox.y + bbox.height, cursor: "nwse-resize" }
+            { x: bbox.x, y: bbox.y, cursor: "nwse-resize", id: "top-left"},
+            { x: bbox.x + bbox.width, y: bbox.y, cursor: "nesw-resize", id: "top-right"},
+            { x: bbox.x, y: bbox.y + bbox.height, cursor: "nesw-resize", id: "bottom-left"},
+            { x: bbox.x + bbox.width, y: bbox.y + bbox.height, cursor: "nwse-resize", id: "bottom-right" }
         ];
         handles.forEach(handleInfo => {
             const handle = this.createHandle(handleInfo.x, handleInfo.y, handleInfo.cursor);
+            handle.setAttribute("id", handleInfo.id)
             currentGroup.appendChild(handle);
 
         });
@@ -152,7 +214,4 @@ export default class BoxSelect extends SvgTool {
                 break;
         }
     }
-
-
-
 }
