@@ -21,6 +21,7 @@ export default class SvgTool {
 
 
 
+
     destroyEvents() {
 
         this.svgCanvas.onmousemove = null;

@@ -32,11 +32,8 @@ export default class MotionCurve extends AnimationTool {
     }
 
     removeMotionPath (){
-        // Получить все дочерние элементы с заданным id
         let elementToRemove = document.getElementById('motionPath');
-
         if (elementToRemove) {
-            // Удалить элемент из DOM
             elementToRemove.parentNode.removeChild(elementToRemove);}
     }
     mouseUpHandler(e) {
