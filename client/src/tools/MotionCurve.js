@@ -22,7 +22,7 @@ export default class MotionCurve extends AnimationTool {
         this.playButton.addEventListener('click', this.toggleAnimationPause.bind(this));
         this.leftStopButton.addEventListener('click', this.toggleAnimationLeftStop.bind(this));
         this.groupElement = document.createElementNS("http://www.w3.org/2000/svg", "g");
-
+        this.removeMotionPath()
     }
 
     listen() {
@@ -31,6 +31,14 @@ export default class MotionCurve extends AnimationTool {
         this.svgCanvas.onmouseup = this.mouseUpHandler.bind(this);
     }
 
+    removeMotionPath (){
+        // Получить все дочерние элементы с заданным id
+        let elementToRemove = document.getElementById('motionPath');
+
+        if (elementToRemove) {
+            // Удалить элемент из DOM
+            elementToRemove.parentNode.removeChild(elementToRemove);}
+    }
     mouseUpHandler(e) {
         if (this.motionPath) {
             this.clickedElement = document.elementFromPoint(e.clientX, e.clientY);
@@ -49,13 +57,12 @@ export default class MotionCurve extends AnimationTool {
             const motionPathClone = this.saveMotionPath.cloneNode(true);
             motionPathClone.setAttribute("id", "motionPath");
 
-
-            this.groupElement.setAttribute("id", "animationGroup");
-            this.groupElement.appendChild(this.clickedElement);
-            this.groupElement.appendChild(this.motionPath);
-
-            // Добавить группу в SVG-холст
-            this.svgCanvas.appendChild(this.groupElement);
+            // this.groupElement.setAttribute("id", "animationGroup");
+            // this.groupElement.appendChild(this.clickedElement);
+            // this.groupElement.appendChild(this.motionPath);
+            //
+            // // Добавить группу в SVG-холст
+            // this.svgCanvas.appendChild(this.groupElement);
 
             this.motionPath = null;
         }
@@ -66,8 +73,7 @@ export default class MotionCurve extends AnimationTool {
         const startX = e.pageX - svgCanvasRect.left;
         const startY = e.pageY - svgCanvasRect.top;
 
-
-        if (!this.motionPath) {
+        if (!this.motionPath ) {
             this.motionPath = this.currentPath
             this.motionPath.setAttribute("stroke", "#8DADFF");
             this.motionPath.setAttribute("stroke-width", "2");
