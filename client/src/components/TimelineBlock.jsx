@@ -8,7 +8,6 @@ const TimelineBlock = observer (() => {
     const intervalIdRef = useRef(null);
     let currentPlay = false
     useEffect(() => {
-        console.log("currentPlay", animationToolState.currentPlay);
         if (animationToolState.currentPlay) {
             // const startTime = animationToolState.startTime
             intervalIdRef.current = setInterval(() => {

@@ -47,8 +47,9 @@ export default class MotionCurve extends AnimationTool {
                 animationToolState.setPlay();
                 this.play = animationToolState.currentPlay;
                 console.log(this.clickedElement);
-                this.playButton.className = "btn pause-button ";
+                // this.playButton.className = "btn pause-button ";
                 this.animate(this.clickedElement);
+
             }
 
             const motionPathClone = this.saveMotionPath.cloneNode(true);
@@ -153,7 +154,7 @@ export default class MotionCurve extends AnimationTool {
         if (this.clickedElement.getAttribute('data-tool') === 'true') {
             console.log("click play")
             this.play = !this.play;
-            this.playButton.className = this.play ? "btn pause-button " : "btn play-button"
+            // this.playButton.className = this.play ? "btn pause-button " : "btn play-button"
         }
     }
     toggleAnimationLeftStop = () => {
@@ -161,8 +162,14 @@ export default class MotionCurve extends AnimationTool {
             // Возвращение элемента к изначальной точке пути
             if (this.currentPath) {
                 // Остановка движения элемента
-                this.play = false;
-                this.playButton.className = "btn play-button";
+                this.play = false
+                if(animationToolState.currentPlay){
+                    animationToolState.setPlay();
+
+                }
+
+                // this.play = false;
+                // this.playButton.className = "btn play-button";
                 if (this.clickedElement.hasAttribute("d") || this.clickedElement.hasAttribute("points")){
                     const motionPath = document.getElementById('motionPath');
                     const point = motionPath.getPointAtLength(0);

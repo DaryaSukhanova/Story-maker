@@ -22,14 +22,14 @@ class AnimationToolState{
 
 
     setPlay() {
+        this.playButton = document.getElementById('playBtn');
         if (this.tool) {
             this.currentPlay = !this.currentPlay;
+            console.log("curr play in store ", this.currentPlay)
+            this.playButton.className = this.currentPlay ? "btn pause-button " : "btn play-button"
         }
     }
-    setTime(time){
-        // console.log(time)
-        this.newTime = time
-    }
+
 
     setStartTime(time) {
         this.startTime = time;
