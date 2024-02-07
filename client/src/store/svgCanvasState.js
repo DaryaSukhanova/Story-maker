@@ -19,7 +19,10 @@ class SvgCanvasState{
     }
     handleClearCanvas = () => {
         this.canvas.innerHTML = '';
-        animationToolState.currentPlay = false
+        if(animationToolState.currentPlay){
+            animationToolState.setPlay();
+        }
+
         svgToolState.setIsDrawnSvg(false)
     };
 

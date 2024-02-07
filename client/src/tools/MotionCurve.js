@@ -49,11 +49,10 @@ export default class MotionCurve extends AnimationTool {
                 console.log(this.clickedElement);
                 // this.playButton.className = "btn pause-button ";
                 this.animate(this.clickedElement);
-
             }
 
             const motionPathClone = this.saveMotionPath.cloneNode(true);
-            motionPathClone.setAttribute("id", "motionPath");
+            this.motionPath.setAttribute("id", "motionPath");
 
             // this.groupElement.setAttribute("id", "animationGroup");
             // this.groupElement.appendChild(this.clickedElement);
@@ -165,7 +164,6 @@ export default class MotionCurve extends AnimationTool {
                 this.play = false
                 if(animationToolState.currentPlay){
                     animationToolState.setPlay();
-
                 }
 
                 // this.play = false;

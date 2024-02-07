@@ -15,7 +15,6 @@ export default class BoxSelect extends SvgTool {
         this.svgCanvas.onmousedown = this.mouseDownHandler.bind(this);
         this.svgCanvas.onmouseup = this.mouseUpHandler.bind(this);
     }
-
     mouseMoveHandler(event) {
         if (this.isDragging) {
             const x = event.clientX;
@@ -51,7 +50,7 @@ export default class BoxSelect extends SvgTool {
                     case 'bottom-left':
                         this.boundingBoxRect.setAttribute('x', transformedPoint.x);
                         this.boundingBoxRect.setAttribute('width', rectBBox.width - (transformedPoint.x - rectBBox.x));
-                        this.boundingBoxRect.setAttribute('height', transformedPoint.y - rectBBox.y);
+                        this.boundingBoxRect.setAttribute('height',     transformedPoint.y - rectBBox.y);
                         break;
                     case 'bottom-right':
                         this.boundingBoxRect.setAttribute('width', transformedPoint.x - rectBBox.x);
@@ -83,16 +82,15 @@ export default class BoxSelect extends SvgTool {
 
                 const svgContent = document.querySelector('[data-tool="true"]');
                 if (svgContent) {
-                    const dx = transformedPoint.x - rectBBox.x;
-                    const dy = transformedPoint.y - rectBBox.y;
-                    const scaleX = rectBBox.width / initialWidth;
-                    const scaleY = rectBBox.height / initialHeight;
+                    const scaleX = initialWidth / svgContent.getBBox().x;
+                    const scaleY = initialHeight / svgContent.getBBox().y;
 
-                    const matrixValues = `${scaleX} 0 0 ${scaleY} ${dx} ${dy}`;
+                    const matrixValues = `${scaleX} 0 0 ${scaleY} 0 0`;
                     const matrixString = `matrix(${matrixValues})`;
-                    svgContent.setAttribute('transform', matrixString);
+                    console.log(svgContent.getBBox().x, svgContent.getBBox().y)
+                    // Устанавливаем трансформацию элемента SVG
+                    svgContent.setAttribute('transform',  `scale(${scaleX} ${scaleY})`);
                 }
-
             }
         }
     }
@@ -105,9 +103,6 @@ export default class BoxSelect extends SvgTool {
 
         // Находим элемент под указанными координатами
         const clickedElement = document.elementFromPoint(x, y);
-
-
-
     }
     mouseDownHandler(event) {
         const x = event.clientX;
