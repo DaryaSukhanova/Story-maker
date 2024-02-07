@@ -10,6 +10,9 @@ const Navbar = () => {
             <NavLink to="/animation-editor" activeClassName="active-link">
                 Animation Editor
             </NavLink>
+            <NavLink to="/book-editor" activeClassName="active-link">
+                Book Editor
+            </NavLink>
         </div>
     );
 };

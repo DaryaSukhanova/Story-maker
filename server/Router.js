@@ -9,5 +9,6 @@ router.get('/backgrounds/:name', BackgroundController.getOne)
 router.put('/backgrounds', BackgroundController.update)
 router.delete('/backgrounds/:name', BackgroundController.delete)
 router.post('/animations', BackgroundController.saveAnimation);
+router.get('/fileManager', BackgroundController.getFiles)
 
 export default router;

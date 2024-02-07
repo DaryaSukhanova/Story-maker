@@ -7,6 +7,7 @@ import GraphicEditor from "./GraphicEditor";
 import {BrowserRouter, Link, Navigate, Route, Routes} from "react-router-dom";
 import AnimationEditor from "./AnimationEditor";
 import Navbar from "./components/Navbar";
+import BookEditor from "./BookEditor";
 const App = () => {
     return (
         <div className="app">
@@ -18,8 +19,11 @@ const App = () => {
                     }>
                     </Route>
                     <Route path="/animation-editor" element={
-                            <AnimationEditor/>
-
+                        <AnimationEditor/>
+                    }>
+                    </Route>
+                    <Route path="/book-editor" element={
+                        <BookEditor/>
                     }>
                     </Route>
                     <Route path="*" element={<Navigate to="/graphic-editor" replace/>}/>

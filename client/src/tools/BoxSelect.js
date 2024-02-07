@@ -8,6 +8,9 @@ export default class BoxSelect extends SvgTool {
         this.boundingBoxRect = null;
         this.isDragging = false;
         this.selectedHandle = null;
+
+        this.initialWidth = 0;
+        this.initialHeight = 0;
     }
 
     listen() {
@@ -31,8 +34,8 @@ export default class BoxSelect extends SvgTool {
 
                 // Размеры bounding box до изменений
                 const rectBBox = this.boundingBoxRect.getBBox();
-                const initialWidth = rectBBox.width
-                const initialHeight = rectBBox.height
+                const bBoxWidth = rectBBox.width
+                const bBoxHeight = rectBBox.height
 
                 // Изменяем размеры bounding box в зависимости от выбранной ручки
                 switch (this.selectedHandle.id) {
@@ -82,12 +85,15 @@ export default class BoxSelect extends SvgTool {
 
                 const svgContent = document.querySelector('[data-tool="true"]');
                 if (svgContent) {
-                    const scaleX = initialWidth / svgContent.getBBox().x;
-                    const scaleY = initialHeight / svgContent.getBBox().y;
+                    const scaleX = bBoxWidth / this.initialWidth;
+                    const scaleY = bBoxHeight / this.initialHeight;
 
                     const matrixValues = `${scaleX} 0 0 ${scaleY} 0 0`;
                     const matrixString = `matrix(${matrixValues})`;
-                    console.log(svgContent.getBBox().x, svgContent.getBBox().y)
+
+                    console.log("initialWidth, initialHeight", bBoxWidth, bBoxHeight)
+                    console.log("svgContent.getBBox().width, svgContent.getBBox().height", this.initialWidth, this.initialHeight)
+
                     // Устанавливаем трансформацию элемента SVG
                     svgContent.setAttribute('transform',  `scale(${scaleX} ${scaleY})`);
                 }
@@ -104,6 +110,7 @@ export default class BoxSelect extends SvgTool {
         // Находим элемент под указанными координатами
         const clickedElement = document.elementFromPoint(x, y);
     }
+
     mouseDownHandler(event) {
         const x = event.clientX;
         const y = event.clientY;
@@ -161,6 +168,9 @@ export default class BoxSelect extends SvgTool {
 
         let width = endPoint.x - startPoint.x;
         let height = endPoint.y - startPoint.y;
+
+        this.initialWidth = width;
+        this.initialHeight = height;
 
         this.boundingBoxRect.setAttribute("x", `${element.getBBox().x}`);
         this.boundingBoxRect.setAttribute("y", `${element.getBBox().y}`);

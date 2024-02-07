@@ -119,6 +119,41 @@ class BackgroundService{
             console.error('Error:', error);
         }
     }
+    async isFolder(path){
+        console.log(fs.lstatSync(path).isDirectory())
+        return fs.lstatSync(path).isDirectory() && fs.existsSync(path)
+    }
+    async getFiles(req){
+        const base = './files/'
+        let path = ''
+        if('path' in req.query){
+            path = req.query.path
+        }
+        if(await this.isFolder(base + path)){
+            console.log("is Folder")
+            let files = fs.readdirSync(base+path).map(item =>{
+                const isDir = fs.lstatSync(base+path+'/'+item).isDirectory()
+                let size = 0
+                if(!isDir){
+                    size = fs.statSync(base+path+'/'+item)
+                    console.log(size.size)
+                }
+
+                return{
+                    name: item,
+                    dir: isDir,
+                    size: size.size ?? 0
+                }
+            })
+            return ({
+                path: path,
+                result: true,
+                files: files
+            })
+        }
+
+        console.log("req fileManager", req.query)
+    }
 
 }
 export default new BackgroundService();

@@ -1,4 +1,5 @@
 import BackgroundService from "./BackgroundService.js";
+import fs from "fs";
 
 
 class BackgroundController{
@@ -54,6 +55,17 @@ class BackgroundController{
             const post = await BackgroundService.saveAnimation(req.body)
             return res.status(200).json(post)
 
+        } catch (e){
+            res.status(e.status).json(e.message)
+        }
+
+    }
+
+
+    async getFiles(req, res){
+        try{
+            const files = await BackgroundService.getFiles(req)
+            return res.status(200).json(files)
         } catch (e){
             res.status(e.status).json(e.message)
         }
