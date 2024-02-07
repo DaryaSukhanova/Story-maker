@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewbox="0 0 1000 1000"><rect stroke="#000000" stroke-width="2" fill="none" data-tool="true" x="317" y="148" width="55" height="45" id="animatedElementId"></rect><path stroke="#8DADFF" stroke-width="2" fill="none" id="motionPath" d="M 288 272 L 288 271 L 289 270 L 294 268 L 307 263 L 338 256 L 387 247 L 453 236 L 510 228 L 561 226 L 604 225 L 626 226 L 636 229 L 641 231 L 644 232 L 648 233 L 655 231 L 665 225 L 673 219 L 678 209 L 678 199 L 672 191 L 660 185 L 649 185 L 638 191 L 630 200 L 628 207 L 628 212 L 635 218 L 647 224 L 668 229 L 699 231 L 729 231 L 754 231 L 773 233 L 781 236 L 785 241 L 789 246 L 794 254 L 804 262 L 819 271 L 837 278 L 854 282 L 868 285 L 873 287 L 873 291 L 861 297 L 840 307 L 809 316 L 804 317"></path><script>
+            <![CDATA[
+                this.play = true
+                this.currentSpeed = 20
+                let distanceCovered = 0;
+                let isAnimationSaved = false;
+                let isUpdateTime = false
+                function animate(element) {
+    const motionPath = document.getElementById('motionPath');
+    const totalLength = motionPath.getTotalLength();
+    distanceCovered = 0;
+    let speed = this.currentSpeed;
+    element.setAttribute("x", 0);
+    element.setAttribute("y", 0);
+    if (element.hasAttribute("r")) {
+      element.setAttribute("cx", 0);
+      element.setAttribute("cy", 0);
+    }
+    const moveAlongPath = () => {
+      if (this.play) {
+        const point = motionPath.getPointAtLength(distanceCovered);
+        if (element.hasAttribute("d") || element.hasAttribute("points")) {
+          const initialX = element.getPointAtLength(0).x;
+          const initialY = element.getPointAtLength(0).y;
+          element.setAttribute("transform", `translate(${point.x - initialX} ${point.y - initialY})`);
+        } else {
+          element.setAttribute("transform", `translate(${point.x} ${point.y})`);
+        }
+        speed = this.currentSpeed;
+        distanceCovered += speed;
+        if (distanceCovered <= totalLength) {
+          requestAnimationFrame(moveAlongPath);
+        } else {
+          distanceCovered = 0;
+          const newStartTime = Date.now();
+          if (isUpdateTime) {
+            _store_animationToolState__WEBPACK_IMPORTED_MODULE_1__["default"].setStartTime(newStartTime);
+          }
+          requestAnimationFrame(moveAlongPath);
+          if (_store_animationToolState__WEBPACK_IMPORTED_MODULE_1__["default"].isAnimationSaved) {
+            console.log("isSave");
+            this.saveAnimatedSvg();
+            _store_animationToolState__WEBPACK_IMPORTED_MODULE_1__["default"].isAnimationSaved = false;
+          }
+        }
+        motionPath.style.display = "none";
+      } else {
+        requestAnimationFrame(moveAlongPath);
+        motionPath.style.display = "block";
+      }
+    };
+    moveAlongPath();
+  }
+                const animatedElement = document.getElementById('animatedElementId');
+                animate(animatedElement);
+            ]]>
+        </script></svg>

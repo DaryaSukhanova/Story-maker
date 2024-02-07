@@ -112,7 +112,7 @@ class BackgroundService{
         try {
             const svg = json.svg; // Получаем строку SVG из JSON
             console.log(json.svg)
-            const filePath = './animations/animation.svg';
+            const filePath = `./files/animations/${json.name}.svg`;
             fs.writeFileSync(filePath, svg, 'utf-8');
 
         } catch (error) {
