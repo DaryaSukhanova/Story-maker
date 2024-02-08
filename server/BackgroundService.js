@@ -16,7 +16,7 @@ class BackgroundService{
     // }
     async create(background){
         const data = background.backgroundImage.replace(`data:image/png;base64,`, '')
-        fs.writeFileSync(path.resolve('files', `${background.backgroundName}.png`), data, 'base64')
+        fs.writeFileSync(path.resolve('files/backgrounds', `${background.backgroundName}.png`), data, 'base64')
         const createdBackground = await Background.create({backgroundName: `${background.backgroundName}.png`})
         if (createdBackground === null){
             throw createError(500, `Server error`)
@@ -28,7 +28,7 @@ class BackgroundService{
         const backgroundNames = await Background.find()
         const backgrounds = []
         backgroundNames.forEach((file) =>{
-            const picture = fs.readFileSync(path.resolve('files', file.backgroundName))
+            const picture = fs.readFileSync(path.resolve('files/backgrounds', file.backgroundName))
             const image = `data:image/png;base64,` + picture.toString('base64')
             backgrounds.push(
                 {
@@ -49,7 +49,7 @@ class BackgroundService{
         let background = 0
         backgroundNames.forEach((file) =>{
             if (name === file.backgroundName){
-                const picture = fs.readFileSync(path.resolve('files', file.backgroundName))
+                const picture = fs.readFileSync(path.resolve('files/backgrounds', file.backgroundName))
                 const image = `data:image/png;base64,` + picture.toString('base64')
                 background =
                     {
@@ -83,8 +83,8 @@ class BackgroundService{
             throw createError(404, `Background not found`)
         }
         const data = background.backgroundImage.replace(`data:image/png;base64,`, '')
-        fs.unlink(path.resolve('files', background.backgroundName), (err)=>{console.log(err)})
-        fs.writeFileSync(path.resolve('files', background.backgroundName), data, 'base64')
+        fs.unlink(path.resolve('files/backgrounds', background.backgroundName), (err)=>{console.log(err)})
+        fs.writeFileSync(path.resolve('files/backgrounds', background.backgroundName), data, 'base64')
         return background;
 
     }
@@ -96,7 +96,7 @@ class BackgroundService{
         let background = 0;
         for (const file of backgroundNames) {
             if (name === file.backgroundName) {
-                fs.unlink(path.resolve('files', file.backgroundName), (err) => {
+                fs.unlink(path.resolve('files/backgrounds', file.backgroundName), (err) => {
                     console.log(err);
                 });
                 background = await Background.findByIdAndDelete(file._id);
