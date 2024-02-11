@@ -1,4 +1,5 @@
 import SvgTool from "./SvgTool";
+import svgCanvas from "../components/SvgCanvas";
 
 export default class BoxSelect extends SvgTool {
     constructor(svgCanvas) {
@@ -11,6 +12,8 @@ export default class BoxSelect extends SvgTool {
 
         this.initialWidth = 0;
         this.initialHeight = 0;
+
+        this.svgGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
     }
 
     listen() {
@@ -62,6 +65,8 @@ export default class BoxSelect extends SvgTool {
                 }
 
                 const handles = this.svgCanvas.querySelectorAll('.resize-handle');
+
+
                 handles.forEach(handle => {
                     switch (handle.id) {
                         case 'top-left':
@@ -75,27 +80,70 @@ export default class BoxSelect extends SvgTool {
                         case 'bottom-left':
                             handle.setAttribute('cx', parseFloat(this.boundingBoxRect.getAttribute('x')));
                             handle.setAttribute('cy', parseFloat(this.boundingBoxRect.getAttribute('y')) + parseFloat(this.boundingBoxRect.getAttribute('height')));
+                            // this.svgGroup.setAttribute('transform', `translate(${left}, ${top}) scale(${-scaleX}, ${scaleY}) translate(${-left}, ${-top})`);
                             break;
                         case 'bottom-right':
                             handle.setAttribute('cx', parseFloat(this.boundingBoxRect.getAttribute('x')) + parseFloat(this.boundingBoxRect.getAttribute('width')));
                             handle.setAttribute('cy', parseFloat(this.boundingBoxRect.getAttribute('y')) + parseFloat(this.boundingBoxRect.getAttribute('height')));
+
+                            // this.svgGroup.setAttribute('transform', `translate(${left}, ${top}) scale(${scaleX}, ${scaleY}) translate(${-left}, ${-top})`);
                             break;
                     }
                 });
 
-                const svgContent = document.querySelector('[data-tool="true"]');
-                if (svgContent) {
+                // const svgContent = document.querySelector('[data-tool="true"]');
+                if (this.svgGroup) {
                     const scaleX = bBoxWidth / this.initialWidth;
                     const scaleY = bBoxHeight / this.initialHeight;
 
-                    const matrixValues = `${scaleX} 0 0 ${scaleY} 0 0`;
-                    const matrixString = `matrix(${matrixValues})`;
+                    let bbox = this.svgGroup.getBBox();
+                    let scalePointX = null;
+                    let scalePointY = null;
+                    let newScalePointX = null;
+                    let newScalePointY = null;
 
-                    console.log("initialWidth, initialHeight", bBoxWidth, bBoxHeight)
-                    console.log("svgContent.getBBox().width, svgContent.getBBox().height", this.initialWidth, this.initialHeight)
+                    let currentTransform
+                    switch(document.elementFromPoint(x, y).getAttribute('id')){
+                        case 'top-left':
+                            scalePointX = bbox.x + bbox.width;
+                            scalePointY = bbox.y + bbox.height;
+                            newScalePointX = parseFloat(this.boundingBoxRect.getAttribute('x')) + parseFloat(this.boundingBoxRect.getAttribute('width'))
+                            newScalePointY = parseFloat(this.boundingBoxRect.getAttribute('y')) + parseFloat(this.boundingBoxRect.getAttribute('height'))
+                            // this.svgGroup.setAttribute('transform', `translate(${}, ${}) scale(${scaleX}, ${scaleY}) translate(${-scalePointX}, ${-scalePointY})`);
 
-                    // Устанавливаем трансформацию элемента SVG
-                    svgContent.setAttribute('transform',  `scale(${scaleX} ${scaleY})`);
+                            break;
+                        case 'top-right':
+                            scalePointX = bbox.x;
+                            scalePointY = bbox.y + bbox.height;
+                            newScalePointX = parseFloat(this.boundingBoxRect.getAttribute('x'))
+                            newScalePointY = parseFloat(this.boundingBoxRect.getAttribute('y')) + parseFloat(this.boundingBoxRect.getAttribute('height'))
+                            // this.svgGroup.setAttribute('transform', `translate(${}, ${}) scale(${scaleX}, ${scaleY}) translate(${-scalePointX}, ${-scalePointY})`);
+
+                            break;
+                        case 'bottom-left':
+                            scalePointX = bbox.x + bbox.width;
+                            scalePointY = bbox.y;
+                            newScalePointX = parseFloat(this.boundingBoxRect.getAttribute('x')) + parseFloat(this.boundingBoxRect.getAttribute('width'))
+                            newScalePointY = parseFloat(this.boundingBoxRect.getAttribute('y'))
+                            // this.svgGroup.setAttribute('transform', `translate(${}, ${}) scale(${scaleX}, ${scaleY}) translate(${-scalePointX}, ${-scalePointY})`);
+
+                            break;
+                        case 'bottom-right':
+                            scalePointX = bbox.x
+                            scalePointY = bbox.y;
+                            newScalePointX = parseFloat(this.boundingBoxRect.getAttribute('x'))
+                            newScalePointY = parseFloat(this.boundingBoxRect.getAttribute('y'))
+                            // this.svgGroup.setAttribute('transform', `translate(${}, ${}) scale(${scaleX}, ${scaleY}) translate(${-scalePointX}, ${-scalePointY})`);
+                            break;
+                    }
+                    if(this.svgGroup.transform){
+                        currentTransform = this.svgGroup.transform.baseVal.consolidate().matrix;
+                        console.log(currentTransform)
+                    }
+                    this.svgGroup.setAttribute('transform', `translate(${newScalePointX}, ${newScalePointY}) scale(${scaleX}, ${scaleY}) translate(${-scalePointX}, ${-scalePointY})`);
+                    // let newTransform = currentTransform.scale(scaleX, scaleY)
+                    // this.svgGroup.setAttribute('transform', `matrix(${newTransform.a},${newTransform.b},${newTransform.c},${newTransform.d},${newTransform.e},${newTransform.f})`);
+
                 }
             }
         }
@@ -117,7 +165,6 @@ export default class BoxSelect extends SvgTool {
 
         // Находим элемент под указанными координатами
         const clickedElement = document.elementFromPoint(x, y);
-
         // if (!(clickedElement.getAttribute('data-tool') === 'true')) {
         //     if(clickedElement.getAttribute('id') !== 'boundingBoxGroup'){
         //         this.resetBoundingBox()
@@ -125,17 +172,23 @@ export default class BoxSelect extends SvgTool {
         //     // Элемент не является экземпляром SvgTool, прекращаем выполнение
         //     return;
         // }
-        if(!this.boundingBoxRect){
-            this.getBoundingBox(clickedElement);
+        if(clickedElement.getAttribute('data-tool') === 'true'){
+            if(!this.boundingBoxRect){
+                this.getBoundingBox(clickedElement);
+            }
         }
-
         if (clickedElement.classList.contains('resize-handle')) {
             this.selectedHandle = clickedElement;
         }
         this.isDragging = true;
+
     }
 
     getBoundingBox(element) {
+        this.svgCanvas.appendChild(this.svgGroup)
+        this.svgGroup.appendChild(element)
+        this.svgGroup.setAttribute('transform', `translate(${0}, ${0}) scale(${1}, ${1}) translate(${0}, ${0})`);
+
         const svgPoint = this.svgCanvas.createSVGPoint();
         svgPoint.x = 0;
         svgPoint.y = 0;
@@ -169,8 +222,9 @@ export default class BoxSelect extends SvgTool {
         let width = endPoint.x - startPoint.x;
         let height = endPoint.y - startPoint.y;
 
-        this.initialWidth = width;
-        this.initialHeight = height;
+        this.initialWidth = element.getBBox().width;
+        this.initialHeight = element.getBBox().height;
+        console.log(this.initialWidth, this.initialHeight)
 
         this.boundingBoxRect.setAttribute("x", `${element.getBBox().x}`);
         this.boundingBoxRect.setAttribute("y", `${element.getBBox().y}`);
@@ -179,6 +233,7 @@ export default class BoxSelect extends SvgTool {
 
         // Добавляем ручки в группу
         this.addHandles(group);
+
     }
 
     resetBoundingBox() {
@@ -220,7 +275,6 @@ export default class BoxSelect extends SvgTool {
     }
 
     handleResize(currentHandle){
-        console.log("func", currentHandle.style)
         switch (currentHandle.style.cursor){
             case "nwse-resize":
                 console.log("nwse-resize")
