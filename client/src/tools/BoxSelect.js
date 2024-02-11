@@ -193,8 +193,8 @@ export default class BoxSelect extends SvgTool {
         svgPoint.x = 0;
         svgPoint.y = 0;
 
-        const group = document.createElementNS("http://www.w3.org/2000/svg", "g");
-        group.setAttribute("id", "boundingBoxGroup");
+        const bBoxGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        bBoxGroup.setAttribute("id", "boundingBoxGroup");
 
         // Создаем новый ограничивающий прямоугольник
         const rectElement = document.createElementNS("http://www.w3.org/2000/svg", "rect");
@@ -204,10 +204,10 @@ export default class BoxSelect extends SvgTool {
         rectElement.setAttribute("stroke-width", "2");
 
         // Добавляем новый ограничивающий прямоугольник в группу
-        group.appendChild(rectElement);
+        bBoxGroup.appendChild(rectElement);
 
         // Добавляем группу с ограничивающим прямоугольником на холст
-        this.svgCanvas.appendChild(group);
+        this.svgCanvas.appendChild(bBoxGroup);
         this.boundingBoxRect = rectElement;
 
         const boundingBox = element.getBBox();
@@ -232,7 +232,7 @@ export default class BoxSelect extends SvgTool {
         this.boundingBoxRect.setAttribute("height", `${height}`);
 
         // Добавляем ручки в группу
-        this.addHandles(group);
+        this.addHandles(bBoxGroup);
 
     }
 

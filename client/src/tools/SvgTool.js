@@ -19,13 +19,18 @@ export default class SvgTool {
         this.currentFillColor = color
     }
 
-
+    clearBoundingBox() {
+        const boundingBoxGroup = document.getElementById("boundingBoxGroup");
+        if (boundingBoxGroup && boundingBoxGroup.parentNode) {
+            boundingBoxGroup.parentNode.removeChild(boundingBoxGroup);
+        }
+    }
 
 
     destroyEvents() {
-
         this.svgCanvas.onmousemove = null;
         this.svgCanvas.onmousedown = null;
         this.svgCanvas.onmouseup = null;
+        this.clearBoundingBox()
     }
 }
