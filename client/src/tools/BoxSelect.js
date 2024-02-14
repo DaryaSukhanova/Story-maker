@@ -91,6 +91,31 @@ export default class BoxSelect extends SvgTool {
                     }
                 });
 
+                const rotateHandles = this.svgCanvas.querySelectorAll('.rotate-handle');
+                // console.log(rotateHandles)
+                rotateHandles.forEach(handle => {
+                    switch (handle.id) {
+                        case 'rotate-top-left':
+                            console.log('rotate')
+                            handle.setAttribute('cx', parseFloat(this.boundingBoxRect.getAttribute('x'))-7);
+                            handle.setAttribute('cy', parseFloat(this.boundingBoxRect.getAttribute('y'))-7);
+                            break;
+                        case 'rotate-top-right':
+                            handle.setAttribute('cx', parseFloat(this.boundingBoxRect.getAttribute('x')) + parseFloat(this.boundingBoxRect.getAttribute('width')) + 7);
+                            handle.setAttribute('cy', parseFloat(this.boundingBoxRect.getAttribute('y'))-7);
+                            break;
+                        case 'rotate-bottom-left':
+                            handle.setAttribute('cx', parseFloat(this.boundingBoxRect.getAttribute('x'))-7);
+                            handle.setAttribute('cy', parseFloat(this.boundingBoxRect.getAttribute('y')) + parseFloat(this.boundingBoxRect.getAttribute('height'))+7);
+                            break;
+                        case 'rotate-bottom-right':
+                            handle.setAttribute('cx', parseFloat(this.boundingBoxRect.getAttribute('x')) + parseFloat(this.boundingBoxRect.getAttribute('width'))+7);
+                            handle.setAttribute('cy', parseFloat(this.boundingBoxRect.getAttribute('y')) + parseFloat(this.boundingBoxRect.getAttribute('height'))+7);
+
+                            break;
+                    }
+                });
+
                 // const svgContent = document.querySelector('[data-tool="true"]');
                 if (this.svgGroup) {
                     const scaleX = bBoxWidth / this.initialWidth;
@@ -110,7 +135,6 @@ export default class BoxSelect extends SvgTool {
                             newScalePointX = parseFloat(this.boundingBoxRect.getAttribute('x')) + parseFloat(this.boundingBoxRect.getAttribute('width'))
                             newScalePointY = parseFloat(this.boundingBoxRect.getAttribute('y')) + parseFloat(this.boundingBoxRect.getAttribute('height'))
                             // this.svgGroup.setAttribute('transform', `translate(${}, ${}) scale(${scaleX}, ${scaleY}) translate(${-scalePointX}, ${-scalePointY})`);
-
                             break;
                         case 'top-right':
                             scalePointX = bbox.x;
@@ -136,10 +160,10 @@ export default class BoxSelect extends SvgTool {
                             // this.svgGroup.setAttribute('transform', `translate(${}, ${}) scale(${scaleX}, ${scaleY}) translate(${-scalePointX}, ${-scalePointY})`);
                             break;
                     }
-                    if(this.svgGroup.transform){
-                        currentTransform = this.svgGroup.transform.baseVal.consolidate().matrix;
-                        console.log(currentTransform)
-                    }
+                    // if(this.svgGroup.transform){
+                    //     currentTransform = this.svgGroup.transform.baseVal.consolidate().matrix;
+                    //     console.log(currentTransform)
+                    // }
                     this.svgGroup.setAttribute('transform', `translate(${newScalePointX}, ${newScalePointY}) scale(${scaleX}, ${scaleY}) translate(${-scalePointX}, ${-scalePointY})`);
                     // let newTransform = currentTransform.scale(scaleX, scaleY)
                     // this.svgGroup.setAttribute('transform', `matrix(${newTransform.a},${newTransform.b},${newTransform.c},${newTransform.d},${newTransform.e},${newTransform.f})`);
@@ -258,6 +282,20 @@ export default class BoxSelect extends SvgTool {
         return handle;
     }
 
+    createRotateHandle(x, y, cursor) {
+        const rotateHandle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        rotateHandle.setAttribute("class", "rotate-handle");
+        rotateHandle.setAttribute("cx", x);
+        rotateHandle.setAttribute("cy", y);
+        rotateHandle.setAttribute("id", "boxHandle");
+        rotateHandle.setAttribute("r", "2");
+        rotateHandle.setAttribute("fill", "#ffffff");
+        rotateHandle.setAttribute("stroke", "#6189ef");
+        rotateHandle.setAttribute("stroke-width", "1");
+        rotateHandle.style.cursor = cursor;
+        return rotateHandle;
+    }
+
     addHandles(currentGroup){
         const bbox = this.boundingBoxRect.getBBox()
         const handles = [
@@ -266,22 +304,24 @@ export default class BoxSelect extends SvgTool {
             { x: bbox.x, y: bbox.y + bbox.height, cursor: "nesw-resize", id: "bottom-left"},
             { x: bbox.x + bbox.width, y: bbox.y + bbox.height, cursor: "nwse-resize", id: "bottom-right" }
         ];
+        const rotateHandles = [
+            { x: bbox.x-7, y: bbox.y-7, cursor: "nwse-resize", id: "rotate-top-left"},
+            { x: bbox.x + bbox.width + 7, y: bbox.y-7, cursor: "nesw-resize", id: "rotate-top-right"},
+            { x: bbox.x-7, y: bbox.y + bbox.height+7, cursor: "nesw-resize", id: "rotate-bottom-left"},
+            { x: bbox.x + bbox.width+7, y: bbox.y + bbox.height+7, cursor: "nwse-resize", id: "rotate-bottom-right" }
+        ];
         handles.forEach(handleInfo => {
             const handle = this.createHandle(handleInfo.x, handleInfo.y, handleInfo.cursor);
             handle.setAttribute("id", handleInfo.id)
             currentGroup.appendChild(handle);
 
         });
+        rotateHandles.forEach(handleInfo => {
+            const rotateHandle = this.createRotateHandle(handleInfo.x, handleInfo.y, handleInfo.cursor);
+            rotateHandle.setAttribute("id", handleInfo.id)
+            currentGroup.appendChild(rotateHandle);
+
+        });
     }
 
-    handleResize(currentHandle){
-        switch (currentHandle.style.cursor){
-            case "nwse-resize":
-                console.log("nwse-resize")
-                break;
-            case "nesw-resize":
-                console.log("nesw-resize")
-                break;
-        }
-    }
 }
