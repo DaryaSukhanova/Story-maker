@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewbox="0 0 1000 1000"><rect stroke="#000000" stroke-width="2" fill="rgba(0, 0, 0, 1)" data-tool="true" x="278" y="120" width="148" height="47" id="animatedElementId"></rect><path stroke="#8DADFF" stroke-width="2" fill="none" id="motionPath" d="M 624 224 L 624 223 L 624 221 L 624 220 L 624 219 L 624 218 L 624 216 L 624 215 L 624 212 L 624 211 L 624 209 L 623 208 L 623 207 L 622 205 L 621 205 L 620 204 L 618 203 L 617 203 L 616 202 L 614 201 L 612 200 L 609 199 L 607 198 L 605 198 L 603 197 L 601 196 L 598 196 L 594 195 L 589 195 L 586 195 L 582 195 L 579 195 L 575 195 L 570 195 L 566 195 L 557 197 L 553 198 L 549 199 L 543 200 L 539 201 L 536 201 L 531 202 L 522 206 L 517 208 L 511 210 L 505 212 L 499 214 L 493 215 L 488 218 L 482 221 L 470 227 L 463 230 L 455 234 L 449 238 L 442 243 L 436 247 L 429 251 L 416 259 L 408 263 L 401 267 L 394 271 L 388 275 L 381 278 L 374 283 L 361 291 L 356 294 L 350 297 L 344 299 L 338 302 L 332 305 L 326 308 L 320 311 L 311 317 L 306 319 L 302 320 L 297 322 L 294 324 L 291 326 L 287 327 L 282 329 L 280 329 L 278 330 L 275 331 L 273 332 L 272 332 L 271 332 L 268 332 L 267 332 L 266 332 L 265 332 L 264 332 L 264 331 L 263 330 L 263 329 L 262 329 L 261 329 L 261 328 L 260 328 L 258 327 L 257 327 L 256 327 L 254 327 L 253 327 L 251 327 L 250 327 L 249 327 L 247 327 L 246 327 L 244 327 L 243 327 L 242 328 L 240 328 L 239 329 L 237 330 L 236 330 L 235 331 L 233 332 L 232 332 L 231 333 L 229 334 L 227 336 L 226 337 L 225 338 L 224 340 L 223 341 L 223 343 L 221 344 L 220 345 L 219 347 L 218 348 L 218 349 L 217 351 L 216 352 L 216 354 L 215 355 L 214 356 L 214 358 L 214 359 L 214 360 L 214 362 L 214 363 L 214 364 L 214 365 L 214 366 L 215 366 L 215 367 L 216 368 L 217 368 L 218 368 L 219 368 L 221 368 L 222 368 L 223 368 L 225 368 L 226 368 L 227 367 L 229 366 L 230 366 L 232 365 L 234 364 L 237 363 L 239 363 L 241 361 L 243 360 L 246 358 L 249 356 L 252 355 L 255 353 L 258 352 L 263 350 L 267 349 L 273 347 L 279 345 L 284 344 L 290 342 L 296 341 L 301 340 L 307 339 L 314 337 L 321 336 L 328 335 L 335 334 L 342 333 L 348 333 L 355 332 L 362 332 L 369 332 L 376 332 L 381 332 L 388 332 L 393 332 L 399 332 L 404 332 L 409 332 L 415 332 L 421 332 L 426 333 L 431 334 L 435 335 L 439 336 L 444 337 L 448 338 L 452 339 L 457 339 L 460 340 L 463 341 L 466 342 L 469 343 L 472 344 L 474 345 L 477 346 L 479 346 L 481 347 L 483 348 L 485 349 L 488 350 L 490 351 L 492 351 L 494 352 L 496 353 L 497 354 L 498 354 L 500 355 L 501 356 L 502 356 L 504 356 L 505 356 L 506 356 L 507 356 L 508 357 L 509 357 L 510 357 L 511 357 L 513 357 L 514 357 L 516 357 L 517 357 L 518 357 L 519 356 L 520 356 L 522 355 L 523 355 L 524 355 L 526 354 L 528 353 L 530 353 L 532 353 L 534 352 L 536 351 L 539 350 L 541 350 L 543 350 L 545 349 L 547 348 L 550 347 L 553 347 L 556 347 L 559 347 L 562 346 L 565 345 L 568 345 L 571 344 L 574 344 L 576 344 L 579 344 L 582 344 L 585 344 L 587 344 L 589 344 L 591 344 L 593 344 L 596 344 L 598 344 L 600 345 L 602 346 L 604 346 L 607 347 L 608 348 L 610 348 L 612 349 L 614 350 L 615 350 L 616 351 L 618 352 L 619 353 L 621 353 L 622 354 L 623 354 L 624 355 L 625 356 L 626 356 L 627 356 L 628 356 L 627 356 L 627 355 L 626 354 L 626 353 L 625 353 L 625 352 L 625 351"></path><script>
+            <![CDATA[
+                this.play = true
+                this.currentSpeed = 20
+                let distanceCovered = 0;
+                let isAnimationSaved = false;
+                let isUpdateTime = false
+                function animate(element) {
+    const motionPath = document.getElementById('motionPath');
+    const totalLength = motionPath.getTotalLength();
+    distanceCovered = 0;
+    let speed = this.currentSpeed;
+    element.setAttribute("x", 0);
+    element.setAttribute("y", 0);
+    if (element.hasAttribute("r")) {
+      element.setAttribute("cx", 0);
+      element.setAttribute("cy", 0);
+    }
+    const moveAlongPath = () => {
+      if (this.play) {
+        const point = motionPath.getPointAtLength(distanceCovered);
+        if (element.hasAttribute("d") || element.hasAttribute("points")) {
+          const initialX = element.getPointAtLength(0).x;
+          const initialY = element.getPointAtLength(0).y;
+          element.setAttribute("transform", `translate(${point.x - initialX} ${point.y - initialY})`);
+        } else {
+          element.setAttribute("transform", `translate(${point.x} ${point.y})`);
+        }
+        speed = this.currentSpeed;
+        distanceCovered += speed;
+        if (distanceCovered <= totalLength) {
+          requestAnimationFrame(moveAlongPath);
+        } else {
+          distanceCovered = 0;
+          const newStartTime = Date.now();
+          if (isUpdateTime) {
+            _store_animationToolState__WEBPACK_IMPORTED_MODULE_1__["default"].setStartTime(newStartTime);
+          }
+          requestAnimationFrame(moveAlongPath);
+          if (_store_animationToolState__WEBPACK_IMPORTED_MODULE_1__["default"].isAnimationSaved) {
+            console.log("isSave");
+            this.saveAnimatedSvg();
+            _store_animationToolState__WEBPACK_IMPORTED_MODULE_1__["default"].isAnimationSaved = false;
+          }
+        }
+        motionPath.style.display = "none";
+      } else {
+        requestAnimationFrame(moveAlongPath);
+        motionPath.style.display = "block";
+      }
+    };
+    moveAlongPath();
+  }
+                const animatedElement = document.getElementById('animatedElementId');
+                animate(animatedElement);
+            ]]>
+        </script></svg>

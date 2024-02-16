@@ -7,6 +7,7 @@ export default class AnimationTool {
         // this.statePlay = false
         this.destroyEvents();
         this.currentTime = 0
+        this.currentName = null
     }
 
     destroyEvents() {
@@ -18,11 +19,8 @@ export default class AnimationTool {
     set animationSpeed(speed){
         this.currentSpeed = speed
     }
-    set currentPlay(play){
-        this.statePlay = play
-    }
 
-    set newTime(time){
-        this.currentTime = time
+    set animationName(name){
+        this.currentName = name
     }
 }

@@ -20,7 +20,6 @@ class AnimationToolState{
         }
     }
 
-
     setPlay() {
         this.playButton = document.getElementById('playBtn');
         if (this.tool) {
@@ -30,9 +29,12 @@ class AnimationToolState{
         }
     }
 
-
     setStartTime(time) {
         this.startTime = time;
+    }
+
+    setAnimationName(name){
+        this.tool.animationName = name
     }
 
 }

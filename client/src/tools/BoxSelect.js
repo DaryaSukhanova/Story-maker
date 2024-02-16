@@ -7,12 +7,11 @@ export default class BoxSelect extends SvgTool {
         // this.resetBoundingBox();
         this.listen();
         this.boundingBoxRect = null;
-        this.isDragging = false;
+        this.isScale = false;
         this.selectedHandle = null;
-
         this.initialWidth = 0;
         this.initialHeight = 0;
-
+        this.shiftRotationHandle = 15
         this.svgGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
     }
 
@@ -22,7 +21,7 @@ export default class BoxSelect extends SvgTool {
         this.svgCanvas.onmouseup = this.mouseUpHandler.bind(this);
     }
     mouseMoveHandler(event) {
-        if (this.isDragging) {
+        if (this.isScale) {
             const x = event.clientX;
             const y = event.clientY;
 
@@ -96,22 +95,20 @@ export default class BoxSelect extends SvgTool {
                 rotateHandles.forEach(handle => {
                     switch (handle.id) {
                         case 'rotate-top-left':
-                            console.log('rotate')
-                            handle.setAttribute('cx', parseFloat(this.boundingBoxRect.getAttribute('x'))-7);
-                            handle.setAttribute('cy', parseFloat(this.boundingBoxRect.getAttribute('y'))-7);
+                            handle.setAttribute('cx', parseFloat(this.boundingBoxRect.getAttribute('x'))-this.shiftRotationHandle);
+                            handle.setAttribute('cy', parseFloat(this.boundingBoxRect.getAttribute('y'))-this.shiftRotationHandle);
                             break;
                         case 'rotate-top-right':
-                            handle.setAttribute('cx', parseFloat(this.boundingBoxRect.getAttribute('x')) + parseFloat(this.boundingBoxRect.getAttribute('width')) + 7);
-                            handle.setAttribute('cy', parseFloat(this.boundingBoxRect.getAttribute('y'))-7);
+                            handle.setAttribute('cx', parseFloat(this.boundingBoxRect.getAttribute('x')) + parseFloat(this.boundingBoxRect.getAttribute('width')) + this.shiftRotationHandle);
+                            handle.setAttribute('cy', parseFloat(this.boundingBoxRect.getAttribute('y'))-this.shiftRotationHandle);
                             break;
                         case 'rotate-bottom-left':
-                            handle.setAttribute('cx', parseFloat(this.boundingBoxRect.getAttribute('x'))-7);
-                            handle.setAttribute('cy', parseFloat(this.boundingBoxRect.getAttribute('y')) + parseFloat(this.boundingBoxRect.getAttribute('height'))+7);
+                            handle.setAttribute('cx', parseFloat(this.boundingBoxRect.getAttribute('x'))-this.shiftRotationHandle);
+                            handle.setAttribute('cy', parseFloat(this.boundingBoxRect.getAttribute('y')) + parseFloat(this.boundingBoxRect.getAttribute('height'))+this.shiftRotationHandle);
                             break;
                         case 'rotate-bottom-right':
-                            handle.setAttribute('cx', parseFloat(this.boundingBoxRect.getAttribute('x')) + parseFloat(this.boundingBoxRect.getAttribute('width'))+7);
-                            handle.setAttribute('cy', parseFloat(this.boundingBoxRect.getAttribute('y')) + parseFloat(this.boundingBoxRect.getAttribute('height'))+7);
-
+                            handle.setAttribute('cx', parseFloat(this.boundingBoxRect.getAttribute('x')) + parseFloat(this.boundingBoxRect.getAttribute('width'))+this.shiftRotationHandle);
+                            handle.setAttribute('cy', parseFloat(this.boundingBoxRect.getAttribute('y')) + parseFloat(this.boundingBoxRect.getAttribute('height'))+this.shiftRotationHandle);
                             break;
                     }
                 });
@@ -127,37 +124,30 @@ export default class BoxSelect extends SvgTool {
                     let newScalePointX = null;
                     let newScalePointY = null;
 
-                    let currentTransform
                     switch(document.elementFromPoint(x, y).getAttribute('id')){
                         case 'top-left':
                             scalePointX = bbox.x + bbox.width;
                             scalePointY = bbox.y + bbox.height;
                             newScalePointX = parseFloat(this.boundingBoxRect.getAttribute('x')) + parseFloat(this.boundingBoxRect.getAttribute('width'))
                             newScalePointY = parseFloat(this.boundingBoxRect.getAttribute('y')) + parseFloat(this.boundingBoxRect.getAttribute('height'))
-                            // this.svgGroup.setAttribute('transform', `translate(${}, ${}) scale(${scaleX}, ${scaleY}) translate(${-scalePointX}, ${-scalePointY})`);
                             break;
                         case 'top-right':
                             scalePointX = bbox.x;
                             scalePointY = bbox.y + bbox.height;
                             newScalePointX = parseFloat(this.boundingBoxRect.getAttribute('x'))
                             newScalePointY = parseFloat(this.boundingBoxRect.getAttribute('y')) + parseFloat(this.boundingBoxRect.getAttribute('height'))
-                            // this.svgGroup.setAttribute('transform', `translate(${}, ${}) scale(${scaleX}, ${scaleY}) translate(${-scalePointX}, ${-scalePointY})`);
-
                             break;
                         case 'bottom-left':
                             scalePointX = bbox.x + bbox.width;
                             scalePointY = bbox.y;
                             newScalePointX = parseFloat(this.boundingBoxRect.getAttribute('x')) + parseFloat(this.boundingBoxRect.getAttribute('width'))
                             newScalePointY = parseFloat(this.boundingBoxRect.getAttribute('y'))
-                            // this.svgGroup.setAttribute('transform', `translate(${}, ${}) scale(${scaleX}, ${scaleY}) translate(${-scalePointX}, ${-scalePointY})`);
-
                             break;
                         case 'bottom-right':
                             scalePointX = bbox.x
                             scalePointY = bbox.y;
                             newScalePointX = parseFloat(this.boundingBoxRect.getAttribute('x'))
                             newScalePointY = parseFloat(this.boundingBoxRect.getAttribute('y'))
-                            // this.svgGroup.setAttribute('transform', `translate(${}, ${}) scale(${scaleX}, ${scaleY}) translate(${-scalePointX}, ${-scalePointY})`);
                             break;
                     }
                     // if(this.svgGroup.transform){
@@ -174,19 +164,18 @@ export default class BoxSelect extends SvgTool {
     }
 
     mouseUpHandler(event) {
-        this.isDragging = false;
-
+        this.isScale = false;
         const x = event.clientX;
         const y = event.clientY;
-
-        // Находим элемент под указанными координатами
-        const clickedElement = document.elementFromPoint(x, y);
     }
 
     mouseDownHandler(event) {
+        this.isScale = true;
+
+
         const x = event.clientX;
         const y = event.clientY;
-
+        console.log(document.elementFromPoint(x, y).getAttribute('id'))
         // Находим элемент под указанными координатами
         const clickedElement = document.elementFromPoint(x, y);
         // if (!(clickedElement.getAttribute('data-tool') === 'true')) {
@@ -204,8 +193,6 @@ export default class BoxSelect extends SvgTool {
         if (clickedElement.classList.contains('resize-handle')) {
             this.selectedHandle = clickedElement;
         }
-        this.isDragging = true;
-
     }
 
     getBoundingBox(element) {
@@ -257,7 +244,6 @@ export default class BoxSelect extends SvgTool {
 
         // Добавляем ручки в группу
         this.addHandles(bBoxGroup);
-
     }
 
     resetBoundingBox() {
@@ -305,10 +291,10 @@ export default class BoxSelect extends SvgTool {
             { x: bbox.x + bbox.width, y: bbox.y + bbox.height, cursor: "nwse-resize", id: "bottom-right" }
         ];
         const rotateHandles = [
-            { x: bbox.x-7, y: bbox.y-7, cursor: "nwse-resize", id: "rotate-top-left"},
-            { x: bbox.x + bbox.width + 7, y: bbox.y-7, cursor: "nesw-resize", id: "rotate-top-right"},
-            { x: bbox.x-7, y: bbox.y + bbox.height+7, cursor: "nesw-resize", id: "rotate-bottom-left"},
-            { x: bbox.x + bbox.width+7, y: bbox.y + bbox.height+7, cursor: "nwse-resize", id: "rotate-bottom-right" }
+            { x: bbox.x-this.shiftRotationHandle, y: bbox.y-this.shiftRotationHandle, cursor: "nwse-resize", id: "rotate-top-left"},
+            { x: bbox.x + bbox.width + this.shiftRotationHandle, y: bbox.y-this.shiftRotationHandle, cursor: "nesw-resize", id: "rotate-top-right"},
+            { x: bbox.x-this.shiftRotationHandle, y: bbox.y + bbox.height+this.shiftRotationHandle, cursor: "nesw-resize", id: "rotate-bottom-left"},
+            { x: bbox.x + bbox.width+this.shiftRotationHandle, y: bbox.y + bbox.height+this.shiftRotationHandle, cursor: "nwse-resize", id: "rotate-bottom-right" }
         ];
         handles.forEach(handleInfo => {
             const handle = this.createHandle(handleInfo.x, handleInfo.y, handleInfo.cursor);

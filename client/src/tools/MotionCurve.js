@@ -5,7 +5,6 @@ import animationToolState from "../store/animationToolState";
 let distanceCovered = null
 let isAnimationSaved = animationToolState.isAnimationSaved;
 let isUpdateTime = true
-let animationCounter = 1;
 
 export default class MotionCurve extends AnimationTool {
     constructor(svgCanvas) {
@@ -223,9 +222,8 @@ export default class MotionCurve extends AnimationTool {
 
         const jsonData = {
             svg: svgContainer.outerHTML, // включаем SVG непосредственно в объект JSON
-            name: `animation${animationCounter}`
+            name: `${this.currentName}`
         };
-        animationCounter++;
 
         // Отправка на сервер с использованием Axios
         axios.post(`http://localhost:5000/api/v1/animations`, jsonData, {
