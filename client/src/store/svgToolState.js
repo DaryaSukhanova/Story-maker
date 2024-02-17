@@ -25,6 +25,12 @@ class SvgToolState{
     setLineWidth(width){
         this.tool.svgLineWidth = width
     }
+    clearBoundingBox() {
+        const boundingBoxGroup = document.getElementById("boundingBoxGroup");
+        if (boundingBoxGroup && boundingBoxGroup.parentNode) {
+            boundingBoxGroup.parentNode.removeChild(boundingBoxGroup);
+        }
+    }
 }
 
 export default new SvgToolState()

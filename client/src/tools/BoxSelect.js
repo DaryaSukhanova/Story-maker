@@ -171,8 +171,6 @@ export default class BoxSelect extends SvgTool {
 
     mouseDownHandler(event) {
         this.isScale = true;
-
-
         const x = event.clientX;
         const y = event.clientY;
         console.log(document.elementFromPoint(x, y).getAttribute('id'))

@@ -1,14 +1,14 @@
+import svgToolState from "../store/svgToolState";
+
 export default class SvgTool {
     constructor(svgCanvas) {
         this.svgCanvas = svgCanvas;
         this.currentStroke = '#000000';
         this.currentFillColor = 'none';
         this.currentLineWidth = '2';
-        // this.boundingBoxRect = null
         this.destroyEvents();
 
     }
-
     set svgFillStroke(color) {
         this.currentStroke = color;
     }
@@ -19,18 +19,18 @@ export default class SvgTool {
         this.currentFillColor = color
     }
 
-    clearBoundingBox() {
-        const boundingBoxGroup = document.getElementById("boundingBoxGroup");
-        if (boundingBoxGroup && boundingBoxGroup.parentNode) {
-            boundingBoxGroup.parentNode.removeChild(boundingBoxGroup);
-        }
-    }
+    // clearBoundingBox() {
+    //     const boundingBoxGroup = document.getElementById("boundingBoxGroup");
+    //     if (boundingBoxGroup && boundingBoxGroup.parentNode) {
+    //         boundingBoxGroup.parentNode.removeChild(boundingBoxGroup);
+    //     }
+    // }
 
 
     destroyEvents() {
         this.svgCanvas.onmousemove = null;
         this.svgCanvas.onmousedown = null;
         this.svgCanvas.onmouseup = null;
-        this.clearBoundingBox()
+        svgToolState.clearBoundingBox()
     }
 }

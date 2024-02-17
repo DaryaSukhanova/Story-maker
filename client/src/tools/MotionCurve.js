@@ -1,6 +1,7 @@
 import AnimationTool from "./AnimationTool";
 import axios from "axios";
 import animationToolState from "../store/animationToolState";
+import svgToolState from "../store/svgToolState";
 
 let distanceCovered = null
 let isAnimationSaved = animationToolState.isAnimationSaved;
@@ -23,6 +24,7 @@ export default class MotionCurve extends AnimationTool {
         this.leftStopButton.addEventListener('click', this.toggleAnimationLeftStop.bind(this));
         this.groupElement = document.createElementNS("http://www.w3.org/2000/svg", "g");
         this.removeMotionPath()
+        svgToolState.clearBoundingBox()
     }
 
     listen() {
