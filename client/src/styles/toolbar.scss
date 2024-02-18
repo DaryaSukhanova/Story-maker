@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  height: 40%;
+  height: 50%;
   //align-items: center;
   //position: absolute;
   width: 100%;
@@ -72,4 +72,19 @@
   width: 100%;
   //box-shadow: 0 4px 5px gray;
   //top: $toolbar-height;
+}
+
+.brush-block-container{
+
+}
+.tool-bar-item-title{
+  text-align: center;
+  padding: 10px;
+}
+.tool-bar-item{
+  display: flex;
+  justify-content: space-evenly;
+  padding: 10px;
+  border: solid #ddd 1px;
+  border-radius: 7px;
 }

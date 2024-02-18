@@ -8,11 +8,14 @@ import Line from "../tools/Line";
 
 const FiguresBlock = () => {
     return (
-        <div>
-            <button className="tool-bar__btn rect" onClick={()=> toolState.setTool(new Rect(canvasState.canvas))}/>
-            <button className="tool-bar__btn circle" onClick={()=> toolState.setTool(new Circle(canvasState.canvas))}/>
+        <div className="figures-block-container">
+            <div className="tool-bar-item-title">Figures</div>
+            <div className="tool-bar-item">
+                <button className="tool-bar__btn rect" onClick={()=> toolState.setTool(new Rect(canvasState.canvas))}/>
+                <button className="tool-bar__btn circle" onClick={()=> toolState.setTool(new Circle(canvasState.canvas))}/>
+                <button className="tool-bar__btn line" onClick={()=> toolState.setTool(new Line(canvasState.canvas))}/>
+            </div>
 
-            <button className="tool-bar__btn line" onClick={()=> toolState.setTool(new Line(canvasState.canvas))}/>
         </div>
     );
 };

@@ -8,11 +8,15 @@ import Pencil from "../tools/Pencil";
 
 const BrushBlock = () => {
     return (
-        <div>
-            <button className="tool-bar__btn brush" onClick={()=> toolState.setTool(new Brush(canvasState.canvas))}/>
-            <button className="tool-bar__btn scratch" onClick={()=> toolState.setTool(new Scratch(canvasState.canvas))}/>
-            <button className="tool-bar__btn bubbles" onClick={()=> toolState.setTool(new Bubbles(canvasState.canvas))}/>
-            <button className="tool-bar__btn pencil" style={{marginRight: 10}} onClick={()=> toolState.setTool(new Pencil(canvasState.canvas))}/>
+        <div className="brush-block-container">
+            <div className="tool-bar-item-title">Brushes</div>
+            <div className="tool-bar-item brush-block">
+                <button className="tool-bar__btn brush" onClick={()=> toolState.setTool(new Brush(canvasState.canvas))}/>
+                <button className="tool-bar__btn scratch" onClick={()=> toolState.setTool(new Scratch(canvasState.canvas))}/>
+                <button className="tool-bar__btn bubbles" onClick={()=> toolState.setTool(new Bubbles(canvasState.canvas))}/>
+                <button className="tool-bar__btn pencil" style={{marginRight: 10}} onClick={()=> toolState.setTool(new Pencil(canvasState.canvas))}/>
+            </div>
+
         </div>
     );
 };
