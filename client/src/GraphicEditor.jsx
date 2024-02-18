@@ -4,6 +4,9 @@ import SettingBar from "./components/SettingBar";
 import Canvas from "./components/Canvas";
 import DrawingBlock from "./components/DrawingBlock";
 import './styles/graphic-editor.scss'
+import './styles/animation-editor.scss'
+import SvgActionPanel from "./components/SvgActionPanel";
+import ActionPanel from "./components/ActionPanel";
 const GraphicEditor = () => {
     return (
         <div className="graphic-editor">
@@ -12,6 +15,7 @@ const GraphicEditor = () => {
                 <Canvas></Canvas>
                 <DrawingBlock></DrawingBlock>
             </div>
+            <ActionPanel></ActionPanel>
         </div>
     );
 };

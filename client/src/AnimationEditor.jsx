@@ -4,7 +4,7 @@ import AnimationSettingBlock from "./components/AnimationSettingBlock";
 import './styles/animation-editor.scss'
 import SvgDrawingBlock from "./components/SvgDrawingBlock";
 import TimelineBlock from "./components/TimelineBlock";
-import ActionPanel from "./components/ActionPanel";
+import SvgActionPanel from "./components/SvgActionPanel";
 const AnimationEditor = () => {
     return (
         <div className="animation-editor">
@@ -13,7 +13,7 @@ const AnimationEditor = () => {
                 <SvgCanvas/>
                 <AnimationSettingBlock></AnimationSettingBlock>
             </div>
-            <ActionPanel></ActionPanel>
+            <SvgActionPanel></SvgActionPanel>
             <TimelineBlock></TimelineBlock>
         </div>
 
