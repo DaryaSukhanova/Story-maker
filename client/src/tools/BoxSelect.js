@@ -43,7 +43,7 @@ export default class BoxSelect extends SvgTool {
                     case 'top-left':
                         let newWidthTL = rectBBox.width - (transformedPoint.x - rectBBox.x);
                         let newHeightTL = rectBBox.height - (transformedPoint.y - rectBBox.y);
-                        if (newWidthTL > 0 && newHeightTL > 0) {
+                        if (newWidthTL >= 0 && newHeightTL >= 0) {
                             this.boundingBoxRect.setAttribute('x', transformedPoint.x);
                             this.boundingBoxRect.setAttribute('y', transformedPoint.y);
                             this.boundingBoxRect.setAttribute('width', newWidthTL);
@@ -52,7 +52,12 @@ export default class BoxSelect extends SvgTool {
                             if(newWidthTL < 0){
                                 console.log('newWidthTL')
                                 this.boundingBoxRect.setAttribute('x', rectBBox.x);
-                                this.boundingBoxRect.setAttribute('width', (transformedPoint.x - rectBBox.x) - rectBBox.width );
+                                this.boundingBoxRect.setAttribute('width', (transformedPoint.x - rectBBox.x) - rectBBox.width);
+                                console.log('width', this.boundingBoxRect.getAttribute('width'))
+                            }
+                            if (newHeightTL < 0) {
+                                this.boundingBoxRect.setAttribute('y', rectBBox.y);
+                                newHeightTL = (transformedPoint.y - rectBBox.y) - rectBBox.height;
                             }
                         }
                         break;
@@ -63,6 +68,8 @@ export default class BoxSelect extends SvgTool {
                             this.boundingBoxRect.setAttribute('y', transformedPoint.y);
                             this.boundingBoxRect.setAttribute('width', newWidthTR);
                             this.boundingBoxRect.setAttribute('height', newHeightTR);
+                        } else {
+
                         }
                         break;
                     case 'bottom-left':
@@ -172,16 +179,10 @@ export default class BoxSelect extends SvgTool {
                             newScalePointY = parseFloat(this.boundingBoxRect.getAttribute('y'))
                             break;
                     }
-                    // if(this.svgGroup.transform){
-                    //     currentTransform = this.svgGroup.transform.baseVal.consolidate().matrix;
-                    //     console.log(currentTransform)
-                    // }
                     if(newScalePointX && newScalePointY && scaleX && scaleY){
-                        this.svgGroup.setAttribute('transform', `translate(${newScalePointX}, ${newScalePointY}) scale(${scaleX}, ${scaleY}) translate(${-scalePointX}, ${-scalePointY})`);
+                        this.svgGroup.setAttribute('transform',
+                            `translate(${newScalePointX}, ${newScalePointY}) scale(${scaleX}, ${scaleY}) translate(${-scalePointX}, ${-scalePointY})`);
                     }
-                    // let newTransform = currentTransform.scale(scaleX, scaleY)
-                    // this.svgGroup.setAttribute('transform', `matrix(${newTransform.a},${newTransform.b},${newTransform.c},${newTransform.d},${newTransform.e},${newTransform.f})`);
-
                 }
             }
         }

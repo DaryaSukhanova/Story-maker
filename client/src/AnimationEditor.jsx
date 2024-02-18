@@ -2,14 +2,14 @@ import React from 'react';
 import SvgCanvas from "./components/SvgCanvas";
 import AnimationSettingBlock from "./components/AnimationSettingBlock";
 import './styles/animation-editor.scss'
-import DrawingBlock from "./components/DrawingBlock";
+import SvgDrawingBlock from "./components/SvgDrawingBlock";
 import TimelineBlock from "./components/TimelineBlock";
 import ActionPanel from "./components/ActionPanel";
 const AnimationEditor = () => {
     return (
         <div className="animation-editor">
             <div className="animation-editor-workspace">
-                <DrawingBlock></DrawingBlock>
+                <SvgDrawingBlock></SvgDrawingBlock>
                 <SvgCanvas/>
                 <AnimationSettingBlock></AnimationSettingBlock>
             </div>

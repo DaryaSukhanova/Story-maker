@@ -1,0 +1,11 @@
+@import "./variables";
+.graphic-editor{
+  background: $background-color;
+  height: calc(100vh - 40px);
+}
+.graphic-editor-workspace{
+  padding: 80px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

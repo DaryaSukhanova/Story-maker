@@ -1,5 +1,6 @@
-.drawing-block{
-  width: 350px;
-  height: 700px;
-
-}
+  .drawing-block{
+    width: 350px;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+  }

@@ -14,6 +14,9 @@ import axios from "axios";
 import Scratch from "../tools/Scratch";
 import Bubbles from "../tools/Bubbles";
 import Pencil from "../tools/Pencil";
+import BrushBlock from "./BrushBlock";
+import FiguresBlock from "./FiguresBlock";
+import ToolsBlock from "./ToolsBlock";
 const Toolbar = () => {
     const backgroundNameRef = useRef()
     const [modal,setModal] = useState(false)
@@ -23,10 +26,6 @@ const Toolbar = () => {
         console.log(dataUrl)
         axios.post(`http://localhost:5000/api/v1/backgrounds`, {backgroundName: `${backgroundNameRef.current.value}`, backgroundImage: dataUrl})
             .then(response => console.log(response.data))
-    }
-    const changeColor = e =>{
-        toolState.setFillColor(e.target.value)
-        toolState.setFillStroke(e.target.value)
     }
 
     return (
@@ -44,18 +43,10 @@ const Toolbar = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-            <button className="tool-bar__btn brush" onClick={()=> toolState.setTool(new Brush(canvasState.canvas))}/>
-            <button className="tool-bar__btn scratch" onClick={()=> toolState.setTool(new Scratch(canvasState.canvas))}/>
-            <button className="tool-bar__btn bubbles" onClick={()=> toolState.setTool(new Bubbles(canvasState.canvas))}/>
-            <button className="tool-bar__btn pencil" style={{marginRight: 10}} onClick={()=> toolState.setTool(new Pencil(canvasState.canvas))}/>
-            <button className="tool-bar__btn rect" onClick={()=> toolState.setTool(new Rect(canvasState.canvas))}/>
-            <button className="tool-bar__btn circle" onClick={()=> toolState.setTool(new Circle(canvasState.canvas))}/>
-            <button className="tool-bar__btn eraser" onClick={()=> toolState.setTool(new Eraser(canvasState.canvas))}/>
-            <button className="tool-bar__btn line" onClick={()=> toolState.setTool(new Line(canvasState.canvas))}/>
-            <input onChange={e=> changeColor(e)} style={{marginLeft: 10}} type="color"/>
-            <button className="tool-bar__btn undo" onClick={()=> canvasState.undo()}/>
-            <button className="tool-bar__btn redo" onClick={()=> canvasState.redo()}/>
-            <button className="tool-bar__btn save" onClick={()=> setModal(true)}/>
+            <BrushBlock></BrushBlock>
+            <FiguresBlock></FiguresBlock>
+            <ToolsBlock></ToolsBlock>
+
         </div>
     );
 };

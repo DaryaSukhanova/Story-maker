@@ -1,18 +1,18 @@
 import React from 'react';
+import Toolbar from "./Toolbar";
 import SvgToolbar from "./SvgToolbar";
 import SvgSettingBar from "./SvgSettingBar";
-import Toolbar from "./Toolbar";
-import SettingBar from "./SettingBar";
-
-const DrawingBlock = () => {
+import "../styles/drawing-block.scss"
+const SvgDrawingBlock = () => {
     return (
         <div className="block-container">
             <div className="setting-block">
-                <Toolbar></Toolbar>
-                <SettingBar></SettingBar>
+                <SvgToolbar></SvgToolbar>
+                <SvgSettingBar></SvgSettingBar>
             </div>
         </div>
+
     );
 };
 
-export default DrawingBlock;
+export default SvgDrawingBlock;

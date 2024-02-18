@@ -1,16 +1,19 @@
 @import "./variables";
 
 .tool-bar{
-  height: $toolbar-height;
+  //height: $toolbar-height;
   background-color: white;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 40%;
+  //align-items: center;
   //position: absolute;
   width: 100%;
-  border-top: solid #EDEEF1 2px;
-  border-bottom: solid #EDEEF1 2px;
+  //border-top: solid #EDEEF1 2px;
+  //border-bottom: solid #EDEEF1 2px;
   //box-shadow: 0 4px 5px gray;
-  z-index: 999;
+  //z-index: 999;
 
   &__btn {
     height: 25px;
@@ -68,5 +71,5 @@
   //position: absolute;
   width: 100%;
   //box-shadow: 0 4px 5px gray;
-  top: $toolbar-height;
+  //top: $toolbar-height;
 }
