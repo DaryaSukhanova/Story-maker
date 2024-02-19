@@ -15,9 +15,12 @@ const ToolsBlock = () => {
 
             <div className="tool-bar-item-title">Tools</div>
             <div className="tool-bar-item">
-                <input onChange={e=> changeColor(e)} style={{marginLeft: 10}} type="color"/>
-                <button className="tool-bar__btn undo" onClick={()=> canvasState.undo()}/>
-                <button className="tool-bar__btn redo" onClick={()=> canvasState.redo()}/>
+                <input onChange={e=> changeColor(e)} type="color"/>
+                <div className="undo-redo-container">
+                    <button className="tool-bar__btn undo" onClick={()=> canvasState.undo()}/>
+                    <button className="tool-bar__btn redo" onClick={()=> canvasState.redo()}/>
+                </div>
+
                 <button className="tool-bar__btn eraser" onClick={()=> toolState.setTool(new Eraser(canvasState.canvas))}/>
                 {/*<button className="tool-bar__btn save" onClick={()=> setModal(true)}/>*/}
             </div>
