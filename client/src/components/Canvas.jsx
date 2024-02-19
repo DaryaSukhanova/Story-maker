@@ -31,7 +31,7 @@ const Canvas = observer(() => {
 
     return (
         <div className="canvas">
-            <canvas onMouseDown={()=> mouseDownHandler()} ref={canvasRef} width={1000} height={544}/>
+            <canvas onMouseDown={()=> mouseDownHandler()} ref={canvasRef} width={1100} height={644}/>
         </div>
     );
 });
