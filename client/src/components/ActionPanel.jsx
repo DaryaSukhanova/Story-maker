@@ -17,6 +17,12 @@ const ActionPanel = () => {
             .then(response => console.log(response.data))
     }
 
+    const clearCanvas = () =>{
+        const canvas = canvasState.canvas;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
     return (
         <div className="action-panel-container">
             <Modal show={modal} onHide={()=>{setModal(false)}}>
@@ -33,7 +39,7 @@ const ActionPanel = () => {
                 </Modal.Footer>
             </Modal>
             <button className="action-button" onClick={()=> setModal(true)}> Save</button>
-            <button className="action-button" onClick={()=>console.log("clear")}>Clear</button>
+            <button className="action-button" onClick={()=>clearCanvas()}>Clear</button>
         </div>
     );
 };
