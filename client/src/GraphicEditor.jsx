@@ -13,7 +13,10 @@ const GraphicEditor = () => {
             <div className="graphic-editor-workspace">
                 <DrawingBlock></DrawingBlock>
                 <Canvas></Canvas>
-                <DrawingBlock></DrawingBlock>
+                <div className="block-container">
+                    <div className="setting-block">
+                    </div>
+                </div>
             </div>
             <ActionPanel></ActionPanel>
         </div>

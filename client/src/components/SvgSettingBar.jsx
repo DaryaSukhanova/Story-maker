@@ -11,6 +11,11 @@ const SvgSettingBar = () => {
         setCurrentColor(`rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`);
         console.log(color.rgb);
     };
+    const changeColor = (value) =>{
+        svgToolState.setFillStroke(value)
+        svgToolState.setFillColor(value)
+        console.log("change")
+    }
     return (
         <div className="setting-bar-container" >
             <div className="svg-setting-bar">
@@ -46,7 +51,7 @@ const SvgSettingBar = () => {
                     <input
                         type="button"
                         value="Fill Color"
-                        onClick={e=>svgToolState.setFillColor(currentColor)}
+                        onClick={e=>changeColor(currentColor)}
                     />
                 </div>
             </div>
