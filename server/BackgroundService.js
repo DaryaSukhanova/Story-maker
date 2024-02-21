@@ -1,4 +1,4 @@
-import Background from "./Background.js";
+import Background from "./models/Background.js";
 import fs from "fs"
 import path from "path"
 import createError from 'http-errors'

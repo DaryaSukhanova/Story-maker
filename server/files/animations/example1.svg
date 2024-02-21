@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewbox="0 0 1000 1000"><circle fill="none" stroke="#000000" stroke-width="2" data-tool="true" cx="227" cy="157" r="113.95174417269794" id="animatedElementId"></circle><path stroke="#8DADFF" stroke-width="2" fill="none" id="motionPath" d="M 1030 93 L 1018 93 L 990 94 L 951 97 L 888 105 L 827 123 L 770 148 L 709 184 L 661 219 L 625 258 L 597 300 L 585 330 L 580 355 L 579 376 L 579 389 L 576 400 L 569 409 L 555 420 L 534 431 L 507 441 L 483 446 L 460 446 L 439 444 L 427 441 L 421 440 L 418 440"></path><script>
+            <![CDATA[
+                this.play = true
+                this.currentSpeed = 20
+                let distanceCovered = 0;
+                let isAnimationSaved = false;
+                let isUpdateTime = false
+                function animate(element) {
+    const motionPath = document.getElementById('motionPath');
+    const totalLength = motionPath.getTotalLength();
+    distanceCovered = 0;
+    let speed = this.currentSpeed;
+    element.setAttribute("x", 0);
+    element.setAttribute("y", 0);
+    if (element.hasAttribute("r")) {
+      element.setAttribute("cx", 0);
+      element.setAttribute("cy", 0);
+    }
+    const moveAlongPath = () => {
+      if (this.play) {
+        const point = motionPath.getPointAtLength(distanceCovered);
+        if (element.hasAttribute("d") || element.hasAttribute("points")) {
+          const initialX = element.getPointAtLength(0).x;
+          const initialY = element.getPointAtLength(0).y;
+          element.setAttribute("transform", `translate(${point.x - initialX} ${point.y - initialY})`);
+        } else {
+          element.setAttribute("transform", `translate(${point.x} ${point.y})`);
+        }
+        speed = this.currentSpeed;
+        distanceCovered += speed;
+        if (distanceCovered <= totalLength) {
+          requestAnimationFrame(moveAlongPath);
+        } else {
+          distanceCovered = 0;
+          const newStartTime = Date.now();
+          if (isUpdateTime) {
+            _store_animationToolState__WEBPACK_IMPORTED_MODULE_1__["default"].setStartTime(newStartTime);
+          }
+          requestAnimationFrame(moveAlongPath);
+          if (_store_animationToolState__WEBPACK_IMPORTED_MODULE_1__["default"].isAnimationSaved) {
+            console.log("isSave");
+            this.saveAnimatedSvg();
+            _store_animationToolState__WEBPACK_IMPORTED_MODULE_1__["default"].isAnimationSaved = false;
+          }
+        }
+        motionPath.style.display = "none";
+      } else {
+        requestAnimationFrame(moveAlongPath);
+        motionPath.style.display = "block";
+      }
+    };
+    moveAlongPath();
+  }
+                const animatedElement = document.getElementById('animatedElementId');
+                animate(animatedElement);
+            ]]>
+        </script></svg>

@@ -21,79 +21,71 @@ export default class BoxSelect extends SvgTool {
         this.svgCanvas.onmouseup = this.mouseUpHandler.bind(this);
     }
     mouseMoveHandler(event) {
+
         if (this.isScale) {
             const x = event.clientX;
             const y = event.clientY;
 
             // Проверяем, что выбрана ручка и bounding box существует
-            if (this.selectedHandle && this.boundingBoxRect &&(this.boundingBoxRect.getAttribute('width')>0)) {
+            if (this.selectedHandle && this.boundingBoxRect) {
                 const svgPoint = this.svgCanvas.createSVGPoint();
                 svgPoint.x = x;
                 svgPoint.y = y;
 
                 // Преобразуем координаты экрана в координаты SVG
                 const transformedPoint = svgPoint.matrixTransform(this.svgCanvas.getScreenCTM().inverse());
+                // console.log(transformedPoint.x, transformedPoint.y)
 
                 // Размеры bounding box до изменений
                 const rectBBox = this.boundingBoxRect.getBBox();
                 const bBoxWidth = rectBBox.width
                 const bBoxHeight = rectBBox.height
-
+                // console.log(rectBBox.width)
                 switch (this.selectedHandle.id) {
                     case 'top-left':
-                        let newWidthTL = rectBBox.width - (transformedPoint.x - rectBBox.x);
-                        let newHeightTL = rectBBox.height - (transformedPoint.y - rectBBox.y);
-                        if (newWidthTL >= 0 && newHeightTL >= 0) {
+                        let newWidthTL = (rectBBox.width - (transformedPoint.x - rectBBox.x));
+                        // console.log(rectBBox.width, "-", "(",transformedPoint.x, "-", rectBBox.x,")")
+                        let newHeightTL = (rectBBox.height - (transformedPoint.y - rectBBox.y));
+                        console.log(newWidthTL)
+                        if(newWidthTL<0){
+                            this.boundingBoxRect.setAttribute('x', transformedPoint.x + newWidthTL);
+                            this.boundingBoxRect.setAttribute('width', Math.abs(newWidthTL));
+                        } else {
                             this.boundingBoxRect.setAttribute('x', transformedPoint.x);
                             this.boundingBoxRect.setAttribute('y', transformedPoint.y);
                             this.boundingBoxRect.setAttribute('width', newWidthTL);
                             this.boundingBoxRect.setAttribute('height', newHeightTL);
-                        } else{
-                            if(newWidthTL < 0){
-                                console.log('newWidthTL')
-                                this.boundingBoxRect.setAttribute('x', rectBBox.x);
-                                this.boundingBoxRect.setAttribute('width', (transformedPoint.x - rectBBox.x) - rectBBox.width);
-                                console.log('width', this.boundingBoxRect.getAttribute('width'))
-                            }
-                            if (newHeightTL < 0) {
-                                this.boundingBoxRect.setAttribute('y', rectBBox.y);
-                                newHeightTL = (transformedPoint.y - rectBBox.y) - rectBBox.height;
-                            }
                         }
                         break;
                     case 'top-right':
-                        let newWidthTR = transformedPoint.x - rectBBox.x;
-                        let newHeightTR = rectBBox.height - (transformedPoint.y - rectBBox.y);
-                        if (newWidthTR >= 0 && newHeightTR >= 0) {
+                        let newWidthTR = (transformedPoint.x - rectBBox.x);
+                        let newHeightTR = (rectBBox.height - (transformedPoint.y - rectBBox.y));
+                        // if (newWidthTR >= 0 && newHeightTR >= 0) {
                             this.boundingBoxRect.setAttribute('y', transformedPoint.y);
                             this.boundingBoxRect.setAttribute('width', newWidthTR);
                             this.boundingBoxRect.setAttribute('height', newHeightTR);
-                        } else {
-
-                        }
+                        // }
                         break;
                     case 'bottom-left':
-                        let newWidthBL = rectBBox.width - (transformedPoint.x - rectBBox.x);
-                        let newHeightBL = transformedPoint.y - rectBBox.y;
-                        if (newWidthBL >= 0 && newHeightBL >= 0) {
+                        let newWidthBL = Math.abs(rectBBox.width - (transformedPoint.x - rectBBox.x));
+                        let newHeightBL = Math.abs(transformedPoint.y - rectBBox.y);
+                        // if (newWidthBL >= 0 && newHeightBL >= 0) {
                             this.boundingBoxRect.setAttribute('x', transformedPoint.x);
                             this.boundingBoxRect.setAttribute('width', newWidthBL);
                             this.boundingBoxRect.setAttribute('height', newHeightBL);
-                        }
+                        // }
                         break;
                     case 'bottom-right':
-                        let newWidthBR = transformedPoint.x - rectBBox.x;
-                        let newHeightBR = transformedPoint.y - rectBBox.y;
-                        if (newWidthBR >= 0 && newHeightBR >= 0) {
+                        let newWidthBR = Math.abs(transformedPoint.x - rectBBox.x);
+                        let newHeightBR = Math.abs(transformedPoint.y - rectBBox.y);
+                        // if (newWidthBR >= 0 && newHeightBR >= 0) {
                             this.boundingBoxRect.setAttribute('width', newWidthBR);
                             this.boundingBoxRect.setAttribute('height', newHeightBR);
-                        }
+                        // }
                         break;
                 }
 
                 const handles = this.svgCanvas.querySelectorAll('.resize-handle');
-
-
                 handles.forEach(handle => {
                     switch (handle.id) {
                         case 'top-left':
