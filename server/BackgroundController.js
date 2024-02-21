@@ -71,6 +71,24 @@ class BackgroundController{
         }
 
     }
+    async registrationUser(req, res){
+        try{
+            const newUser = await BackgroundService.registrationUser(req, res)
+            return res.status(200).json(newUser)
+        } catch(e){
+            res.status(e.status).json(e.message)
+            res.send({message:"Server error"})
+        }
+    }
+    async authUser(req, res){
+        try{
+            const newUser = await BackgroundService.authUser(req, res)
+            return res.status(200).json(newUser)
+        } catch(e){
+            // res.status(e.status).json(e.message)
+            // res.send({message:"Server error"})
+        }
+    }
 
 }
 export default new BackgroundController()

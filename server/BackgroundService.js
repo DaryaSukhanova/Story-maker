@@ -1,11 +1,14 @@
 import Background from "./models/Background.js";
+import User from "./models/User.js";
 import fs from "fs"
 import path from "path"
 import createError from 'http-errors'
-import xml2js from 'xml2js'
-import { DOMParser } from 'xmldom';
+import jwt from "jsonwebtoken"
+import bcrypt from "bcryptjs"
+import {check, validationResult} from "express-validator"
 
-class BackgroundService{
+const secretKey = "mern-secret-key"
+class BackgroundService{7
     // createId() {
     //     let id = 0
     //     const dir = fs.readdirSync(path.resolve('files'))
@@ -153,6 +156,54 @@ class BackgroundService{
         }
 
         console.log("req fileManager", req.query)
+    }
+
+    async registrationUser(req, res){
+        try {
+            const errors = validationResult(req)
+            if(!errors.isEmpty()){
+                return res.status(400).json({message: "Uncorrect reques", errors})
+            }
+            const {email, password} = req.body
+            const candidate = await User.findOne({email})
+            if(candidate){
+                return res.status(400).json({message: `User with email ${email} already exist`})
+            }
+            const hashPassword = await bcrypt.hash(password, 8)
+            const user = new User({email, password: hashPassword})
+            await user.save()
+            return res.json({message:"User was created"})
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    async authUser(req, res){
+        try {
+            const {email, password} = req.body
+            const user = await User.findOne({email})
+            if(!user){
+                return res.status(404).json({message: "User not found"})
+            }
+            const isPassValid = bcrypt.compareSync(password, user.password)
+            if(!isPassValid){
+                return res.status(400).json({message:"Invalid password"})
+            }
+            const token = jwt.sign({id: user.id}, secretKey, {expiresIn: "1h"})
+            return res.json({
+                token,
+                user:{
+                    id: user.id,
+                    email: user.email,
+                    diskSpace: user.diskSpace,
+                    usedSpace: user.usedSpace,
+                    avatar:user.avatar
+                }
+            })
+        } catch (error) {
+            console.error('Error:', error);
+            return res.status(500).json({message: "Server error"});
+        }
     }
 
 }
