@@ -1,0 +1,19 @@
+@import "./variables";
+.home{
+  //background: $background-color;
+  width: 100%;
+  height: calc(100vh - 47px);
+  display: flex;
+  flex-direction: column;
+}
+
+.home-navbar{
+  background: $background-color;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 300px;
+  height: 50px;
+  align-items: center;
+  margin-left: auto;
+}

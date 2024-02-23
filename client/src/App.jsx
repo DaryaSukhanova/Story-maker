@@ -15,7 +15,7 @@ const App = () => {
             <BrowserRouter>
                 <Navbar/>
                 <Routes>
-                    <Route path="/graphic-editor" element={
+                    <Route path="/home" element={
                         <Home/>
                     }>
                     </Route>
