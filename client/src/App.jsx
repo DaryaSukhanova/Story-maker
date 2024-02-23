@@ -9,6 +9,7 @@ import AnimationEditor from "./AnimationEditor";
 import Navbar from "./components/Navbar";
 import BookEditor from "./BookEditor";
 import Home from "./Home";
+import Registration from "./components/Registration";
 const App = () => {
     return (
         <div className="app">
@@ -29,6 +30,10 @@ const App = () => {
                     </Route>
                     <Route path="/book-editor" element={
                         <BookEditor/>
+                    }>
+                    </Route>
+                    <Route path="/registration" element={
+                        <Registration/>
                     }>
                     </Route>
                     <Route path="*" element={<Navigate to="/home" replace/>}/>
