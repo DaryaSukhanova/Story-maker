@@ -74,9 +74,10 @@ class BackgroundController{
     async registrationUser(req, res){
         try{
             const newUser = await BackgroundService.registrationUser(req, res)
+            console.log("hello")
             return res.status(200).json(newUser)
 
-			console.log("pivet")
+
 
         } catch(e){
             // res.status(e.status).json(e.message)
