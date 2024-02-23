@@ -8,12 +8,17 @@ import {BrowserRouter, Link, Navigate, Route, Routes} from "react-router-dom";
 import AnimationEditor from "./AnimationEditor";
 import Navbar from "./components/Navbar";
 import BookEditor from "./BookEditor";
+import Home from "./Home";
 const App = () => {
     return (
         <div className="app">
             <BrowserRouter>
                 <Navbar/>
                 <Routes>
+                    <Route path="/graphic-editor" element={
+                        <Home/>
+                    }>
+                    </Route>
                     <Route path="/graphic-editor" element={
                         <GraphicEditor/>
                     }>
@@ -26,7 +31,7 @@ const App = () => {
                         <BookEditor/>
                     }>
                     </Route>
-                    <Route path="*" element={<Navigate to="/graphic-editor" replace/>}/>
+                    <Route path="*" element={<Navigate to="/home" replace/>}/>
                 </Routes>
             </BrowserRouter>
         </div>
