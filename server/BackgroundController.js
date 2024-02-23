@@ -75,6 +75,9 @@ class BackgroundController{
         try{
             const newUser = await BackgroundService.registrationUser(req, res)
             return res.status(200).json(newUser)
+
+			console.log("pivet")
+
         } catch(e){
             // res.status(e.status).json(e.message)
             // res.send({message:"Server error"})
