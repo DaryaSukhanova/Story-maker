@@ -42,6 +42,7 @@ const BookEditor = () => {
 
     return (
         <div className="book-editor">
+            <div>test</div>
             <div className="file-manager">
                 <div className="book-editor-title">
                     File Manager
