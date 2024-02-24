@@ -11,11 +11,17 @@ class SvgToolState{
         this.tool = tool
     }
     setFillColor(color){
-        this.tool.svgFillColor = color
+        if(this.tool){
+            this.tool.svgFillColor = color
+        }
+
     }
     setFillStroke(color){
-        console.log("svg Tool State", color)
-        this.tool.svgFillStroke = color
+        if(this.tool){
+            console.log("svg Tool State", color)
+            this.tool.svgFillStroke = color
+        }
+
     }
 
     setIsDrawnSvg(bool){

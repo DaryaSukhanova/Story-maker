@@ -10,7 +10,7 @@ const ToolsBlock = ({ currentColor }) => {
     const [isFill, setIsFill] = useState(true);
     const [isStroke, setIsStroke] = useState(false);
 
-    const changeFillColor = () => {
+    const changeColor = () => {
         if (isFill) {
             toolState.setFillColor(currentColor);
             toolState.setFillStroke(currentColor);
@@ -30,15 +30,9 @@ const ToolsBlock = ({ currentColor }) => {
     }
 
     useEffect(() => {
-        if (isFill) {
-            toolState.setFillColor(currentColor);
-            toolState.setFillStroke(currentColor);
-        }
-        if (isStroke) {
-            toolState.setFillStroke(currentColor);
-        }
+        changeColor()
         console.log(isFill, isStroke);
-    }, [currentColor, isFill, isStroke]); // Добавляем зависимости в массив useEffect
+    }, [currentColor]);
 
     return (
         <div className="tools-block-container">
