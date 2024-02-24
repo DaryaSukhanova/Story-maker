@@ -4,10 +4,15 @@
   background: $background-color;
   width: 100%;
   height: calc(100vh - 47px);
-  display: flex;
+  display: block;
   justify-content: center;
   align-items: center;
   font-size: 16px;
+}
+
+.book-editor-workspace {
+  display: flex;
+  margin-left: 20px;
 }
 
 .file-manager {
@@ -64,4 +69,35 @@ ul.folder-list li:nth-child(odd){
 }
 .material-icons {
   pointer-events: none;
+}
+.action-buttons{
+  height: 58px;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  z-index: 99;
+
+
+  &__btn {
+    height: 58px;
+    width: 215px;
+    border: none;
+    border-radius: 11px; 
+    outline: none;
+    cursor: pointer;
+    background-size: cover;
+    margin-left: 10px;
+  }
+  
+
+}
+.center-buttons {
+  display: flex;
+  margin-left: 250px;
+}
+.right-buttons {
+  margin-left: 150px;
+ 
 }
