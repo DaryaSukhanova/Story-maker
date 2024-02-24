@@ -46,8 +46,10 @@ export default class Bubbles extends Tool{
                 this.point.x, this.point.y, this.point.radius,
                 0, Math.PI * 2, false);
             this.ctx.fill();
+            this.ctx.globalAlpha = 1
         }
         this.counter++
+
 
     }
 
