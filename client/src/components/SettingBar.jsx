@@ -15,20 +15,6 @@ const SettingBar = () => {
                         defaultValue={1} min={1} max={50}/>
                 </div>
             </div>
-            {/*<div>*/}
-            {/*    <label htmlFor="stroke-color" >Outline color</label>*/}
-            {/*    <input id="stroke-color" onChange={e=>toolState.setFillStroke(e.target.value)} type="color"/>*/}
-            {/*</div>*/}
-            {/*<div>*/}
-            {/*    <div className="tool-bar-item-title">Color</div>*/}
-            {/*    <div className="color-picker-container">*/}
-            {/*        <SketchPicker*/}
-            {/*            color={currentColor}*/}
-            {/*            onChangeComplete={handleOnChange}*/}
-            {/*        />*/}
-            {/*    </div>*/}
-            {/*</div>*/}
-
         </div>
     );
 };
