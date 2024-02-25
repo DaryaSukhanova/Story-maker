@@ -25,7 +25,12 @@ const App =  observer(() => {
                         <div className="navbar__login"><NavLink to="/registration">Sign In</NavLink></div>
                     </div>
                 }
+                {userState.isAuth &&
+                    <div className="home-navbar">
+                        <div className="navbar__login" onClick={()=>userState.logout()}>Log Out</div>
+                    </div>
 
+                }
                 <Routes>
                     <Route path="/home" element={
                         <Home/>
@@ -48,10 +53,12 @@ const App =  observer(() => {
                         <Registration/>
                     }>
                     </Route>
-                    <Route path="/login" element={
-                        <Login/>
-                    }>
-                    </Route>
+                    {!userState.isAuth &&
+                        <Route path="/login" element={
+                            <Login/>
+                        }>
+                        </Route>
+                    }
                     <Route path="*" element={<Navigate to="/home" replace/>}/>
                 </Routes>
             </BrowserRouter>

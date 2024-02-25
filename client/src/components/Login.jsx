@@ -14,7 +14,7 @@ const Login = observer(() => {
             <Input value={email} setValue={setEmail} type="text" placeholder="Enter email"/>
             <Input value={password} setValue={setPassword} type="password" placeholder="Enter password"/>
             <button onClick={()=> login(email, password)} className="authorization__btn">Log In</button>
-            {isAuth && <div className="authorization__header">Log out</div>}
+
         </div>
     );
 });
