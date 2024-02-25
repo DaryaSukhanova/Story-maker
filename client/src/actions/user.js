@@ -1,5 +1,6 @@
 import axios from "axios";
-import userStore from "../store/userState"
+import userState from "../store/userState"
+
 export const registration = async (email, password)=>{
     try {
         const response = await axios.post(`http://localhost:5000/api/v1/registration`, {
@@ -16,15 +17,17 @@ export const registration = async (email, password)=>{
 
 }
 export const login = async (email, password)=>{
-    
     try {
         const response = await axios.post(`http://localhost:5000/api/v1/login`, {
             email,
             password
         })
         // console.log(response.data)
-		userStore.setUser(response.data)
-		console.log(userStore.currentUser)
+		userState.setUser(response.data.user)
+		console.log(userState.currentUser)
+        console.log("isAuth", userState.isAuth)
+        // alert(response.data.message)
+        localStorage.setItem('token', response.data.token)
         // console.log(response.data.message)
 
     } catch (e){
