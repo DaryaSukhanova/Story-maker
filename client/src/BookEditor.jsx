@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from 'react';
+import BookActivePanel from "./components/BookActivePanel";
+import SvgCanvas from "./components/SvgCanvas";
 import './styles/book-editor.scss'
 const BookEditor = () => {
     const [data, setData] = useState({
@@ -42,6 +44,8 @@ const BookEditor = () => {
 
     return (
         <div className="book-editor">
+             <div className="book-editor-workspace">
+            <SvgCanvas/>
             <div className="file-manager">
                 <div className="book-editor-title">
                     File Manager
@@ -75,6 +79,8 @@ const BookEditor = () => {
                     })}
                 </ul>
             </div>
+            </div>
+            <BookActivePanel/>
         </div>
 
     );
