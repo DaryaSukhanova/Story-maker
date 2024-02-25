@@ -1,6 +1,6 @@
 import Tool from "./Tool";
 
-export default class Line extends Tool{
+export default class Triangle extends Tool{
     constructor(canvas) {
         super(canvas);
         this.listen()
@@ -17,15 +17,17 @@ export default class Line extends Tool{
     }
     mouseDownHandler(e){
         this.mouseDown = true
-        this.startX = e.pageX-e.target.offsetLeft
-        this.startY = e.pageY-e.target.offsetTop
-        this.ctx.beginPath()
-        this.ctx.moveTo(this.startX, this.startY)
+        this.ctx.beginPath() //говорит о том что мы начали рисовать новую линию
+        this.startX = e.pageX - e.target.offsetLeft
+        this.startY = e.pageY - e.target.offsetTop
         this.saved = this.canvas.toDataURL()
     }
     mouseMoveHandler(e){
         if(this.mouseDown){
-            this.draw(e.pageX - e.target.offsetLeft, e.pageY - e.target.offsetTop)
+            let currentX = e.pageX - e.target.offsetLeft
+            let currentY = e.pageY - e.target.offsetTop
+
+            this.draw(currentX, currentY)
         }
     }
 
@@ -38,9 +40,10 @@ export default class Line extends Tool{
             this.ctx.beginPath()
             this.ctx.moveTo(this.startX, this.startY)
             this.ctx.lineTo(x, y)
+            this.ctx.lineTo(this.startX*2-x, y)
+            this.ctx.closePath()
+            this.ctx.fill()
             this.ctx.stroke()
-
         }
-
     }
 }

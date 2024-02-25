@@ -49,8 +49,6 @@ export default class Bubbles extends Tool{
             this.ctx.globalAlpha = 1
         }
         this.counter++
-
-
     }
 
 }
