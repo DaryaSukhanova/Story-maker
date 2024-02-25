@@ -1,13 +1,29 @@
-import {makeAutoObservable} from "mobx";
+import { makeObservable, observable, action } from 'mobx';
 
-const defaultState = {
-    currentUser: {},
-    isAuth: false
-}
-class userState{
-    user = defaultState.currentUser
-    isAuth = defaultState.isAuth
+class UserStore {
+    currentUser = {};
+    isAuth = false;
+
     constructor() {
-        makeAutoObservable(this)
+        makeObservable(this, {
+            currentUser: observable,
+            isAuth: observable,
+            setUser: action,
+            logout: action
+        });
+    }
+
+    setUser(user) {
+        this.currentUser = user;
+        this.isAuth = true;
+    }
+
+    logout() {
+        localStorage.removeItem('token');
+        this.currentUser = {};
+        this.isAuth = false;
     }
 }
+
+const userStore = new UserStore();
+export default userStore;

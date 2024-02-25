@@ -38,8 +38,8 @@ const ToolsBlock = ({ currentColor }) => {
         <div className="tools-block-container">
             <div className="tool-bar-item-title">Tools</div>
             <div className="tool-bar-item">
-                <input className="tool-bar__btn" type="button" onClick={changeFillColorBtn} />
-                <input className="tool-bar__btn" type="button" onClick={changeStrokeColorBtn} />
+                <input className="tool-bar__btn fill" type="button" onClick={changeFillColorBtn} />
+                <input className="tool-bar__btn stroke" type="button" onClick={changeStrokeColorBtn} />
                 <div className="undo-redo-container">
                     <button className="tool-bar__btn undo" onClick={() => canvasState.undo()} />
                     <button className="tool-bar__btn redo" onClick={() => canvasState.redo()} />

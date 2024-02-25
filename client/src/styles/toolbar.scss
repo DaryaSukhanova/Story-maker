@@ -42,22 +42,31 @@
   .circle {
     background: url('../assets/img/circle.png') no-repeat center center;
   }
+  .triangle {
+    background: url('../assets/img/triangle.svg') no-repeat center center;
+  }
   .eraser {
     background: url('../assets/img/eraser.png') no-repeat center center;
   }
   .line {
-    background: url('../assets/img/line.png') no-repeat center center;
+    background: url('../assets/img/Line.svg') no-repeat center center;
   }
   .undo {
     //margin-left: auto;
-    background: url('../assets/img/undo.png') no-repeat center center;
+    background: url('../assets/img/Undo.svg') no-repeat center center;
   }
   .redo {
-    background: url('../assets/img/redo.png') no-repeat center center;
+    background: url('../assets/img/Redo.svg') no-repeat center center;
   }
   .save {
     background: url('../assets/img/save.png') no-repeat center center;
     //margin-right: 10px;
+  }
+  .fill{
+    background: url('../assets/img/fillColor.svg') no-repeat center center;
+  }
+  .stroke{
+    background: url('../assets/img/Stroke.svg') no-repeat center center;
   }
 
 
