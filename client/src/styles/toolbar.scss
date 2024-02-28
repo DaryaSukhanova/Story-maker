@@ -83,7 +83,31 @@
 }
 .slider-line-width{
   min-width: 200px;
-  height: 25px;
+  height: 10px;
+  -webkit-appearance: none;
+  border-radius: 5px;
+  background: #ddd;
+  outline: none;
+  margin: 6px;
+}
+
+/* Стили для ползунка в Chrome и Safari */
+.slider-line-width::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background:$main-color-animation-editor;
+  cursor: pointer;
+}
+
+/* Стили для ползунка в Firefox */
+.slider-line-width::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: $main-color-animation-editor;
+  cursor: pointer;
 }
 
 .brush-block-container{
