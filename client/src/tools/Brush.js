@@ -16,7 +16,8 @@ export default class Brush extends Tool{
     }
     mouseDownHandler(e){
         this.mouseDown = true
-        this.ctx.beginPath() //говорит о том что мы начали рисовать новую линию
+        this.ctx.beginPath()
+        this.ctx.lineJoin = this.ctx.lineCap = 'round';
         this.ctx.moveTo(e.pageX - e.target.offsetLeft, e.pageY - e.target.offsetTop)
     }
     mouseMoveHandler(e){
