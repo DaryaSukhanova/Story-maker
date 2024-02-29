@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewbox="0 0 1000 1000"><rect stroke="#000000" stroke-width="2" fill="none" data-tool="true" x="144" y="83" width="74" height="54" id="animatedElementId"></rect><path stroke="#8DADFF" stroke-width="2" fill="none" id="motionPath" d="M 779 129 L 775 129 L 771 129 L 767 129 L 762 129 L 758 129 L 754 129 L 750 129 L 746 129 L 742 129 L 739 129 L 735 129 L 731 129 L 726 130 L 722 130 L 718 130 L 714 131 L 710 131 L 705 132 L 701 133 L 697 133 L 692 134 L 688 134 L 684 135 L 680 136 L 675 137 L 671 138 L 667 139 L 662 140 L 658 140 L 653 141 L 649 142 L 645 143 L 640 145 L 636 147 L 631 148 L 627 149 L 624 150 L 621 151 L 618 152 L 613 153 L 609 155 L 604 156 L 600 158 L 595 160 L 591 162 L 585 163 L 579 165 L 573 167 L 568 169 L 563 171 L 557 173 L 552 175 L 546 177 L 540 179 L 534 181 L 530 183 L 524 185 L 519 188 L 513 191 L 508 193 L 503 196 L 497 199 L 491 202 L 485 205 L 480 208 L 475 209 L 469 212 L 464 214 L 458 217 L 454 219 L 448 222 L 443 225 L 439 227 L 433 228 L 428 230 L 424 233 L 419 236 L 414 239 L 410 240 L 405 243 L 401 246 L 396 248 L 393 250 L 389 253 L 386 255 L 383 256 L 379 258 L 376 261 L 372 262 L 370 264 L 368 265 L 366 267 L 363 268 L 361 270 L 359 271 L 358 273 L 356 274 L 355 276 L 353 277 L 352 278 L 350 280 L 349 281 L 348 282 L 347 283 L 346 285 L 345 285 L 344 286 L 344 287 L 343 288 L 341 290 L 340 291 L 339 292 L 338 293 L 336 294 L 336 295 L 335 296 L 334 296 L 332 297 L 332 298 L 331 298 L 330 299 L 329 299 L 327 300 L 326 301 L 325 301 L 324 302 L 323 303 L 322 303 L 320 304 L 319 305 L 317 305 L 316 306 L 314 307 L 312 308 L 310 308 L 308 309 L 306 310 L 304 310 L 302 310 L 298 311 L 296 311 L 293 311 L 289 312 L 286 312 L 283 312 L 280 312 L 277 313 L 273 313 L 269 313 L 265 313 L 262 313 L 258 313 L 255 314 L 251 314 L 247 314 L 243 314 L 240 314 L 237 314 L 233 314 L 230 314 L 227 314 L 223 315 L 220 315 L 217 316 L 214 316 L 211 316 L 208 317 L 205 317 L 203 317 L 201 317 L 199 317 L 197 318 L 195 319 L 193 319 L 192 320 L 191 320 L 189 320 L 188 321 L 187 321 L 186 321 L 186 322 L 185 322 L 184 322 L 184 323 L 183 323 L 183 324 L 183 325 L 183 326 L 183 327 L 183 328 L 183 329 L 183 330 L 183 332 L 183 333 L 183 334 L 183 336 L 183 338 L 183 340 L 183 342 L 183 344 L 183 346 L 183 348 L 184 351 L 185 352 L 185 354 L 186 356 L 186 357 L 187 358 L 187 360 L 188 361 L 189 362 L 189 364 L 190 365 L 191 366 L 191 368 L 192 368 L 193 368 L 193 367 L 193 366 L 193 365 L 193 364 L 193 363 L 193 362"></path><script>
+            <![CDATA[
+                this.play = true
+                this.currentSpeed = 20
+                let distanceCovered = 0;
+                let isAnimationSaved = false;
+                let isUpdateTime = false
+                function animate(element) {
+    const motionPath = document.getElementById('motionPath');
+    const totalLength = motionPath.getTotalLength();
+    distanceCovered = 0;
+    let speed = this.currentSpeed;
+    element.setAttribute("x", 0);
+    element.setAttribute("y", 0);
+    if (element.hasAttribute("r")) {
+      element.setAttribute("cx", 0);
+      element.setAttribute("cy", 0);
+    }
+    const moveAlongPath = () => {
+      if (this.play) {
+        const point = motionPath.getPointAtLength(distanceCovered);
+        if (element.hasAttribute("d") || element.hasAttribute("points")) {
+          const initialX = element.getPointAtLength(0).x;
+          const initialY = element.getPointAtLength(0).y;
+          element.setAttribute("transform", `translate(${point.x - initialX} ${point.y - initialY})`);
+        } else {
+          element.setAttribute("transform", `translate(${point.x} ${point.y})`);
+        }
+        speed = this.currentSpeed;
+        distanceCovered += speed;
+        if (distanceCovered <= totalLength) {
+          requestAnimationFrame(moveAlongPath);
+        } else {
+          distanceCovered = 0;
+          const newStartTime = Date.now();
+          if (isUpdateTime) {
+            _store_animationToolState__WEBPACK_IMPORTED_MODULE_1__["default"].setStartTime(newStartTime);
+          }
+          requestAnimationFrame(moveAlongPath);
+          if (_store_animationToolState__WEBPACK_IMPORTED_MODULE_1__["default"].isAnimationSaved) {
+            console.log("isSave");
+            // this.saveAnimatedSvg()
+            this.save();
+            _store_animationToolState__WEBPACK_IMPORTED_MODULE_1__["default"].isAnimationSaved = false;
+          }
+        }
+        motionPath.style.display = "none";
+      } else {
+        requestAnimationFrame(moveAlongPath);
+        motionPath.style.display = "block";
+      }
+    };
+    moveAlongPath();
+  }
+                const animatedElement = document.getElementById('animatedElementId');
+                animate(animatedElement);
+            ]]>
+        </script></svg>
