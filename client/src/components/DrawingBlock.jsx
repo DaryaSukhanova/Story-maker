@@ -9,7 +9,6 @@ const DrawingBlock = () => {
         <div className="block-container">
             <div className="setting-block">
                 <Toolbar></Toolbar>
-                <SettingBar></SettingBar>
             </div>
         </div>
     );

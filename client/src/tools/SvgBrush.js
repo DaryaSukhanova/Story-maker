@@ -47,6 +47,8 @@ export default class SvgBrush extends SvgTool{
         path.setAttribute("stroke-width", this.currentLineWidth);
         path.setAttribute("fill", "none");
         path.setAttribute("d", this.pathData);
+        path.setAttribute("stroke-linejoin", "round");
+        path.setAttribute("stroke-linecap", "round");
         path.setAttribute('data-tool', 'true');
         this.svgCanvas.appendChild(path);
         return path;

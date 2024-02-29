@@ -19,6 +19,7 @@ import FiguresBlock from "./FiguresBlock";
 import ToolsBlock from "./ToolsBlock";
 import {SketchPicker} from "react-color";
 import ColorPicker from "./ColorPicker";
+import SettingBar from "./SettingBar";
 const Toolbar = () => {
     const [currentColor, setCurrentColor] = useState("rgba(0, 0, 0, 1)");
     const handleColorChange = (color) => {
@@ -30,6 +31,7 @@ const Toolbar = () => {
             <FiguresBlock></FiguresBlock>
             <ToolsBlock currentColor={currentColor}></ToolsBlock>
             <ColorPicker currentColor={currentColor} handleColorChange={handleColorChange} />
+            <SettingBar></SettingBar>
         </div>
     );
 };
