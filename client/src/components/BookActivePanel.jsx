@@ -20,7 +20,7 @@ const BookActivePanel = () => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={()=> download()}>
-                        Сохранить
+                        Сохранить историю
                     </Button>
                 </Modal.Footer>
             </Modal>
