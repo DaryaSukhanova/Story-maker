@@ -1,4 +1,5 @@
 import Tool from "./Tool";
+import canvas from "../components/Canvas";
 export default class Brush extends Tool{
     constructor(canvas) {
         super(canvas);

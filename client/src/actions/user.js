@@ -12,5 +12,4 @@ export const registration = async (email, password)=>{
         // console.log(e.response.data)
         alert(e.response.data.message)
     }
-
 }

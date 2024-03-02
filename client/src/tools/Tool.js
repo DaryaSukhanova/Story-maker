@@ -3,6 +3,7 @@ import canvasState from "../store/canvasState";
 export default class Tool{
     constructor(canvas) {
         this.canvas = canvas
+        console.log("tool",this.canvas)
         this.ctx = canvas.getContext('2d')
         this.destroyEvents()
         this.ctx.strokeStyle = null

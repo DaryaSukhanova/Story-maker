@@ -198,62 +198,7 @@ export default class MotionCurve extends AnimationTool {
                 console.log("Animation saved successfully:", response);
             })
             .catch(error => {
-                // Обработка ошибки при сохранении
                 console.error("Error saving animation:", error);
-                // Здесь можно выполнить дополнительные действия в случае ошибки при сохранении
             });
     }
 }
-
-//     saveAnimatedSvg() {
-//         const svgContainer = document.createElement('svg');
-//
-//         svgContainer.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-//         svgContainer.setAttribute("width", "1000");
-//         svgContainer.setAttribute("height", "1000");
-//         svgContainer.setAttribute("viewBox", "0 0 1000 1000");
-//         this.saveSvg.setAttribute("id", "animatedElementId");
-//
-//         const motionPathClone = this.saveMotionPath.cloneNode(true);
-//         motionPathClone.setAttribute("id", "motionPath");
-//
-//         svgContainer.appendChild(this.saveSvg);
-//         svgContainer.appendChild(motionPathClone);
-//
-//         const scriptElement = document.createElement('script');
-//
-//         scriptElement.textContent = `
-//             <![CDATA[
-//                 this.play = true
-//                 this.currentSpeed = ${this.currentSpeed}
-//                 let distanceCovered = 0;
-//                 let isAnimationSaved = false;
-//                 let isUpdateTime = false
-//                 function ${this.animate.toString()}
-//                 const animatedElement = document.getElementById('animatedElementId');
-//                 animate(animatedElement);
-//             ]]>
-//         `;
-//         svgContainer.appendChild(scriptElement);
-//
-//
-//         const jsonData = {
-//             svg: svgContainer.outerHTML, // включаем SVG непосредственно в объект JSON
-//             name: `${this.currentName}`
-//         };
-//
-//         // Отправка на сервер с использованием Axios
-//         axios.post(`http://localhost:5000/api/v1/animations`, jsonData, {
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//         })
-//         .then(response => {
-//             alert("successfully uploaded to the server")
-//             console.log("successfully uploaded to the server")
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//         });
-//     }
-// }
