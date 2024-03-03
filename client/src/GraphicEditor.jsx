@@ -9,7 +9,8 @@ import SvgActionPanel from "./components/SvgActionPanel";
 import ActionPanel from "./components/ActionPanel";
 import LayersBlock from "./components/LayersBlock";
 const GraphicEditor = () => {
-    const [layerRefs, setLayerRefs] = useState({
+    const [layerRefs, setLayerRefs] = useState(
+        {
         layer1: useRef(null),
         layer2: useRef(null)
     });
@@ -18,7 +19,7 @@ const GraphicEditor = () => {
             <div className="graphic-editor-workspace">
                 <DrawingBlock/>
                 <Canvas layerRefs={layerRefs}/>
-                <LayersBlock/>
+                <LayersBlock layerRefs={layerRefs}/>
             </div>
             <ActionPanel layerRefs={layerRefs}/>
         </div>
