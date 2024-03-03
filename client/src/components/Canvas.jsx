@@ -11,7 +11,7 @@ import {forEach} from "react-bootstrap/ElementChildren";
 import Tool from "../tools/Tool";
 const Canvas = observer(({ layerRefs }) => {
     const [currentLayer, setCurrentLayer] = useState('layer1');
-    const [zIndexLayer, setZIndexLayer] = useState(1);
+
     const [currentTool, setCurrentTool] = useState(null);
 
 
@@ -59,7 +59,7 @@ const Canvas = observer(({ layerRefs }) => {
 
     return (
         <div className="canvas">
-            <canvas id="layer1" width={1100} height={644} ref={layerRefs.layer1} ></canvas>
+            <canvas id="layer1" width={1100} height={644} ref={layerRefs.layer1}></canvas>
             <canvas id="layer2" width={1100} height={644} ref={layerRefs.layer2} style={{position: "absolute" }}></canvas>
             <div style={style}>
                 <button onClick={() => setCurrentLayerHandler('layer1')} >Выбрать слой 1</button>

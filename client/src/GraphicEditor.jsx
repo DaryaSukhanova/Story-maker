@@ -7,6 +7,7 @@ import './styles/graphic-editor.scss'
 import './styles/animation-editor.scss'
 import SvgActionPanel from "./components/SvgActionPanel";
 import ActionPanel from "./components/ActionPanel";
+import LayersBlock from "./components/LayersBlock";
 const GraphicEditor = () => {
     const [layerRefs, setLayerRefs] = useState({
         layer1: useRef(null),
@@ -15,14 +16,11 @@ const GraphicEditor = () => {
     return (
         <div className="graphic-editor">
             <div className="graphic-editor-workspace">
-                <DrawingBlock></DrawingBlock>
+                <DrawingBlock/>
                 <Canvas layerRefs={layerRefs}/>
-                <div className="block-container">
-                    <div className="setting-block">
-                    </div>
-                </div>
+                <LayersBlock/>
             </div>
-            <ActionPanel layerRefs={layerRefs}></ActionPanel>
+            <ActionPanel layerRefs={layerRefs}/>
         </div>
     );
 };
