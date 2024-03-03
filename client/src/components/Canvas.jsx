@@ -9,15 +9,11 @@ import {Button, Modal} from "react-bootstrap";
 import axios from 'axios'
 import {forEach} from "react-bootstrap/ElementChildren";
 import Tool from "../tools/Tool";
-const Canvas = observer(() => {
+const Canvas = observer(({ layerRefs }) => {
     const [currentLayer, setCurrentLayer] = useState('layer1');
     const [zIndexLayer, setZIndexLayer] = useState(1);
     const [currentTool, setCurrentTool] = useState(null);
 
-    const layerRefs = {
-        layer1: useRef(null),
-        layer2: useRef(null)
-    };
 
     useEffect(() => {
         canvasState.setCanvas(layerRefs[currentLayer].current);

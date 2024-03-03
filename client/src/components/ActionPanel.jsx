@@ -7,7 +7,7 @@ import toolState from "../store/toolState";
 import {logDOM} from "@testing-library/react";
 import {saveBackground} from "../actions/background";
 
-const ActionPanel = () => {
+const ActionPanel = ({ layerRefs }) => {
     const backgroundNameRef = useRef()
     const [modal,setModal] = useState(false)
 
@@ -35,7 +35,7 @@ const ActionPanel = () => {
                     <input type="text" ref={backgroundNameRef}/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={()=> saveBackground(canvasState.canvas, backgroundNameRef, () => setModal(false))}>
+                    <Button variant="secondary" onClick={()=> saveBackground(layerRefs, backgroundNameRef, () => setModal(false))}>
                         Save
                     </Button>
                 </Modal.Footer>

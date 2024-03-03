@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import Toolbar from "./components/Toolbar";
 import SettingBar from "./components/SettingBar";
 import Canvas from "./components/Canvas";
@@ -8,17 +8,21 @@ import './styles/animation-editor.scss'
 import SvgActionPanel from "./components/SvgActionPanel";
 import ActionPanel from "./components/ActionPanel";
 const GraphicEditor = () => {
+    const [layerRefs, setLayerRefs] = useState({
+        layer1: useRef(null),
+        layer2: useRef(null)
+    });
     return (
         <div className="graphic-editor">
             <div className="graphic-editor-workspace">
                 <DrawingBlock></DrawingBlock>
-                <Canvas></Canvas>
+                <Canvas layerRefs={layerRefs}/>
                 <div className="block-container">
                     <div className="setting-block">
                     </div>
                 </div>
             </div>
-            <ActionPanel></ActionPanel>
+            <ActionPanel layerRefs={layerRefs}></ActionPanel>
         </div>
     );
 };
