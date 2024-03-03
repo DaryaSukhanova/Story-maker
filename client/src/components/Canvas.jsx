@@ -9,6 +9,7 @@ import {Button, Modal} from "react-bootstrap";
 import axios from 'axios'
 import {forEach} from "react-bootstrap/ElementChildren";
 import Tool from "../tools/Tool";
+import Layer from "./Layer";
 const Canvas = observer(({ layerRefs }) => {
     const [currentLayer, setCurrentLayer] = useState('layer1');
 
@@ -24,7 +25,13 @@ const Canvas = observer(({ layerRefs }) => {
     return (
         <div className="canvas">
             {Object.keys(layerRefs).map((layer, index) => (
-                <canvas key={index} id={layer} width={1100} height={644} ref={layerRefs[layer]}></canvas>
+                // <Layer/>
+                <Layer
+                    key={index}
+                    id={layer}
+                    canvasRef={layerRefs[layer]}
+                />
+                // <canvas key={index} id={layer} width={1100} height={644} ref={layerRefs[layer]}></canvas>
             ))}
         </div>
     );
