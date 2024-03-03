@@ -3,6 +3,7 @@ import canvasState from "../store/canvasState";
 import toolState from "../store/toolState";
 import Tool from "../tools/Tool";
 import LayerSelector from "./LayerSelector";
+import '../styles/layers-block.scss'
 
 const LayersBlock = ({ layerRefs }) => {
 

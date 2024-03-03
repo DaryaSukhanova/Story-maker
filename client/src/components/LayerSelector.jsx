@@ -4,6 +4,7 @@ import toolState from "../store/toolState";
 import Tool from "../tools/Tool";
 import LayerButton from "./LayerButton";
 
+
 const LayerSelector = ({layerRefs}) => {
     const [currentLayer, setCurrentLayer] = useState('layer1');
     const [currentTool, setCurrentTool] = useState(null);
@@ -39,9 +40,9 @@ const LayerSelector = ({layerRefs}) => {
     };
 
     return (
-        <div>
+        <div className="layer-selector">
             {Object.keys(layerRefs).map((layer, index) => (
-                <LayerButton id={index} layerName={layer} func={() => setCurrentLayerHandler(layer)}/>
+                <LayerButton id={index} layerName={layer} func={() => setCurrentLayerHandler(layer)} isActive={layer === currentLayer}/>
             ))}
         </div>
     );
