@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import "./styles/app.scss"
 import Toolbar from "./components/Toolbar";
 import SettingBar from "./components/SettingBar";
@@ -13,7 +13,12 @@ import Registration from "./components/Registration";
 import Login from './components/Login';
 import userState from "./store/userState";
 import {observer} from "mobx-react-lite";
+import { auth } from './actions/user';
 const App =  observer(() => {
+
+	useEffect(() => {
+		auth()
+	}, [])
 
     return (
         <div className="app">
@@ -53,12 +58,10 @@ const App =  observer(() => {
                         <Registration/>
                     }>
                     </Route>
-                    {!userState.isAuth &&
-                        <Route path="/login" element={
-                            <Login/>
-                        }>
-                        </Route>
-                    }
+					<Route path="/login" element={
+						<Login/>
+					}>
+					</Route>
                     <Route path="*" element={<Navigate to="/home" replace/>}/>
                 </Routes>
             </BrowserRouter>
