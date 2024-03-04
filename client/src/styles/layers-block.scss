@@ -9,7 +9,7 @@
     width: 200px;
     height: 60px;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     border: solid #ddd 1px;
     min-width: 100%;
     margin-top: 10px;
@@ -20,5 +20,16 @@
       background-color: #ddd;
     }
   }
+  &__btn{
+    height: 25px;
+    width: 25px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-size: cover;
 
+  }
+  .visibility{
+    background: url('../assets/img/viewIcon.png') no-repeat center center;
+  }
 }

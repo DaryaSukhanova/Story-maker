@@ -1,10 +1,11 @@
-import {makeAutoObservable} from "mobx";
+import {action, makeAutoObservable, observable} from "mobx";
 
 class CanvasState{
     canvas = null
     undoList = [] //содержит все действие,которые мы делали
     redoList = [] //содержит те действия, которые мы отменили
     backgroundName = ""
+    layerVisibility = {};
     constructor() {
         makeAutoObservable(this)
     }
@@ -50,6 +51,11 @@ class CanvasState{
             }
 
         }
+    }
+
+    toggleVisibility(id) {
+        console.log(id, this.layerVisibility[id])
+        this.layerVisibility[id] = !this.layerVisibility[id];
     }
 }
 

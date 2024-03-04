@@ -28,7 +28,7 @@ const Canvas = observer(({ layerRefs }) => {
                 // <Layer/>
                 <Layer
                     key={index}
-                    id={layer}
+                    id={index}
                     canvasRef={layerRefs[layer]}
                 />
                 // <canvas key={index} id={layer} width={1100} height={644} ref={layerRefs[layer]}></canvas>

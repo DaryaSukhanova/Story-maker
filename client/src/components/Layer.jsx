@@ -1,9 +1,18 @@
 import React from 'react';
+import canvasState from "../store/canvasState";
+import {observer} from "mobx-react-lite";
 
-const Layer = ({ id, canvasRef }) => {
+const Layer = observer(({id, canvasRef }) => {
+    const isVisible = canvasState.layerVisibility[id];
+    console.log(canvasRef)
+    const layerStyle = {
+        display: isVisible ? 'block' : 'none',
+        position: 'absolute'
+
+    }
     return (
-        <canvas width={1100} height={644}  id={id} ref={canvasRef}></canvas>
+        <canvas width={1100} height={644}  id={canvasRef} ref={canvasRef} style={layerStyle}></canvas>
     );
-};
+});
 
 export default Layer;
