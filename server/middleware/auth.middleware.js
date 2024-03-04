@@ -1,7 +1,7 @@
-const jwt = require('jsonwebtoken')
-const config = require('config')
+import jwt from 'jsonwebtoken'
+import config from 'config'
 
-module.exports = (req, res, next) => {
+const authMiddleware = (req, res, next) => {
 	if (req.methods === "OPTIONS") {
 		return next()
 	}
@@ -18,3 +18,5 @@ module.exports = (req, res, next) => {
 		return res.status(401).json({message: "Auth error"})
 	}
 }
+
+export default authMiddleware
