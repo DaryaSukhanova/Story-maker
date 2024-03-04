@@ -20,7 +20,7 @@
   width: 600px;
   height: 700px;
   padding: 40px;
-
+  margin-left: 30px;
 }
 
 .book-editor-title{
@@ -70,9 +70,10 @@ ul.folder-list li:nth-child(odd){
 .material-icons {
   pointer-events: none;
 }
+
 .action-buttons{
-  height: 58px;
-  width: 100vw;
+  // height: 58px;
+   width: 1400px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -82,22 +83,49 @@ ul.folder-list li:nth-child(odd){
 
   &__btn {
     height: 58px;
-    width: 215px;
+    // width: 215px;
     border: none;
     border-radius: 11px; 
     outline: none;
     cursor: pointer;
     background-size: cover;
     margin-left: 10px;
+    
   }
   
+  .clear {
+    width: 215px;
+    background: $purple-color-buttons;
+    color: #FFF;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 20.265px; 
+  }
 
+  .prevPage, .nextPage, .addText {
+    width: 250px;
+    background: $blue-color-buttons;
+    color: #FFF;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 20.265px; 
+  }
+
+  .save {
+    width: 250px;
+    background: $save-button-book-editor;
+    color: #FFF;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 20.265px;
+    margin-top: 20px;
+  }
 }
 .center-buttons {
   display: flex;
   margin-left: 250px;
 }
 .right-buttons {
-  margin-left: 150px;
- 
+   margin-left: 140px;
+
 }
