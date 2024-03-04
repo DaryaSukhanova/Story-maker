@@ -1,6 +1,8 @@
 @import "./variables";
 
 .canvas{
+  width: 1100px;
+  height: 644px;
   background: #FFF;
   //height: 80vh;
   display: flex;
@@ -13,10 +15,7 @@
 
 canvas{
   border-radius: 7px;
-
+  position: absolute;
   box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.10);
 
-}
-#layer2{
-  position: absolute;
 }

@@ -6,9 +6,7 @@ const Layer = observer(({id, canvasRef }) => {
     const isVisible = canvasState.layerVisibility[id];
     console.log(canvasRef)
     const layerStyle = {
-        display: isVisible ? 'block' : 'none',
-        position: 'absolute'
-
+        display: isVisible ? 'block' : 'none'
     }
     return (
         <canvas width={1100} height={644}  id={canvasRef} ref={canvasRef} style={layerStyle}></canvas>
