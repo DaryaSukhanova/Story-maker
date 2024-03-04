@@ -1,6 +1,8 @@
 import Router from 'express'
 import BackgroundController from "./BackgroundController.js";
 import {check, validationResult} from "express-validator"
+import authMiddleware from './middleware/auth.middleware.js';
+
 const router = new Router()
 
 router.post('/backgrounds', BackgroundController.create)
@@ -16,4 +18,5 @@ router.post('/registration',         [
 ],
     BackgroundController.registrationUser)
 router.post('/login', BackgroundController.authUser)
+router.get('/auth', authMiddleware, BackgroundController.authMiddleware)
 export default router;

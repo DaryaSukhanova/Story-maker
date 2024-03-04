@@ -1,5 +1,6 @@
 import BackgroundService from "./BackgroundService.js";
 import fs from "fs";
+import User from "./models/User.js";
 
 
 class BackgroundController{
@@ -89,6 +90,14 @@ class BackgroundController{
             // res.send({message:"Server error"})
         }
     }
+	async authMiddleware(req, res){
+		try {
+			const newToken = await BackgroundService.authMiddleware(req, res)
+			return res.status(200).json(newToken)
+		} catch (e) {
+			
+		}
+	}
 
 }
 export default new BackgroundController()
