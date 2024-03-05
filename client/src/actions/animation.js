@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const saveAnimatedSvg = async(path, svg, speed, func, name)=>{
+
     const svgContainer = document.createElement('svg');
 
     svgContainer.setAttribute("xmlns", "http://www.w3.org/2000/svg");
@@ -51,4 +52,19 @@ export const saveAnimatedSvg = async(path, svg, speed, func, name)=>{
             console.error('Error:', error);
         });
 
+}
+
+export function savedJson(data, name) {
+    axios.post(`http://localhost:5000/api/v1/animations`, { data: data, name: name }, {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => {
+        alert("successfully uploaded to the server")
+        console.log("successfully uploaded to the server")
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }

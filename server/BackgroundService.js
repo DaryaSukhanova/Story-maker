@@ -8,7 +8,7 @@ import bcrypt from "bcryptjs"
 import {check, validationResult} from "express-validator"
 
 const secretKey = "mern-secret-key"
-class BackgroundService{7
+class BackgroundService{
     // createId() {
     //     let id = 0
     //     const dir = fs.readdirSync(path.resolve('files'))
@@ -113,11 +113,8 @@ class BackgroundService{7
 
     async saveAnimation(json) {
         try {
-            const svg = json.svg; // Получаем строку SVG из JSON
-            console.log(json.svg)
-            const filePath = `./files/animations/${json.name}.svg`;
-            fs.writeFileSync(filePath, svg, 'utf-8');
-
+            const filePath = `./files/animations/${json.name}.json`;
+            fs.writeFileSync(filePath, JSON.stringify(json.data), 'utf-8');
         } catch (error) {
             console.error('Error:', error);
         }

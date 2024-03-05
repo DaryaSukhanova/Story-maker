@@ -2,7 +2,9 @@ import AnimationTool from "./AnimationTool";
 import axios from "axios";
 import animationToolState from "../store/animationToolState";
 import svgToolState from "../store/svgToolState";
-import {saveAnimatedSvg} from "../actions/animation";
+import {saveAnimatedSvg, savedJson} from "../actions/animation";
+import svgCanvas from "../components/SvgCanvas";
+import canvasState from "../store/canvasState";
 
 let distanceCovered = null
 let isAnimationSaved = animationToolState.isAnimationSaved;
@@ -27,6 +29,7 @@ export default class MotionCurve extends AnimationTool {
         this.removeMotionPath()
         this.arrPath = []
         svgToolState.clearBoundingBox()
+
     }
 
     listen() {
@@ -67,6 +70,7 @@ export default class MotionCurve extends AnimationTool {
 
             this.motionPath = null;
         }
+
     }
 
     mouseDownHandler(e) {
@@ -102,16 +106,39 @@ export default class MotionCurve extends AnimationTool {
         }
     }
 
-    alongPath(){
-        const holst = [];
-        const elements = [];
-        const dictionary = new Map();
+    /**
+     * TODO
+     * 1. Сделать key для элементов. У двух и более элементов должен быть одинаковый ключ, ключ положи class/data-attribute, чтобы можно было достать пары и отфильтровать траекториию
+     * 2.
+     */
 
-        this.arrPath.push();
+    saveAlongPath(){
+        const listSvgConfigs = new Map();
+        const documentHolst = document.getElementById('drawingCanvas');
+        // TODO data-type нужно расширить значения допустимые. data-type должен описывать тип фигуры круг/квадрат
+        // TODO Доставать нужно по ключу, ключ и тип являются разными значениями
+        const getAllElementsOnAttribute = documentHolst.querySelectorAll('[fill]')
+        // Родитель всех элементов на странице
+        for(let i = 0; i < 2; i++) {
+            const elements = [];
+            // TODO for(let itemType of types) { }
+            // Тут type
+            for (let item of getAllElementsOnAttribute) {
+                let config = {}
 
+                for (let attr of item.attributes) {
+                    config[attr.name] = attr.value;
+                }
 
+                elements.push(config);
+            }
+
+            listSvgConfigs.set(i, elements);
+        }
+
+        const convertToObject = Object.fromEntries(listSvgConfigs);
+        savedJson(convertToObject, this.currentName)
     }
-
 
     animate(element) {
         const motionPath = document.getElementById('motionPath');
@@ -125,8 +152,6 @@ export default class MotionCurve extends AnimationTool {
             element.setAttribute("cx", 0)
             element.setAttribute("cy", 0)
         }
-
-
 
         const moveAlongPath = () => {
             if (this.play) {
@@ -154,7 +179,8 @@ export default class MotionCurve extends AnimationTool {
                     if (animationToolState.isAnimationSaved) {
                         console.log("isSave")
                         // this.saveAnimatedSvg()
-                        this.save()
+                        // this.save()
+                        this.saveAlongPath()
                         animationToolState.isAnimationSaved = false;
                     }
                 }
@@ -206,13 +232,14 @@ export default class MotionCurve extends AnimationTool {
         }
     }
     save() {
-        const motionPathClone = this.saveMotionPath.cloneNode(true);
-        saveAnimatedSvg(motionPathClone, this.saveSvg, this.currentSpeed, this.animate, this.currentName)
-            .then(response => {
-                console.log("Animation saved successfully:", response);
-            })
-            .catch(error => {
-                console.error("Error saving animation:", error);
-            });
+        this.saveAlongPath()
+        // const motionPathClone = this.saveMotionPath.cloneNode(true);
+        // saveAnimatedSvg(motionPathClone, this.saveSvg, this.currentSpeed, this.animate, this.currentName)
+        //     .then(response => {
+        //         console.log("Animation saved successfully:", response);
+        //     })
+        //     .catch(error => {
+        //         console.error("Error saving animation:", error);
+        //     });
     }
 }
