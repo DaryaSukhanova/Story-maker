@@ -25,6 +25,7 @@ export default class MotionCurve extends AnimationTool {
         this.leftStopButton.addEventListener('click', this.toggleAnimationLeftStop.bind(this));
         this.groupElement = document.createElementNS("http://www.w3.org/2000/svg", "g");
         this.removeMotionPath()
+        this.arrPath = []
         svgToolState.clearBoundingBox()
     }
 
@@ -101,6 +102,17 @@ export default class MotionCurve extends AnimationTool {
         }
     }
 
+    alongPath(){
+        const holst = [];
+        const elements = [];
+        const dictionary = new Map();
+
+        this.arrPath.push();
+
+
+    }
+
+
     animate(element) {
         const motionPath = document.getElementById('motionPath');
         const totalLength = motionPath.getTotalLength();
@@ -113,6 +125,8 @@ export default class MotionCurve extends AnimationTool {
             element.setAttribute("cx", 0)
             element.setAttribute("cy", 0)
         }
+
+
 
         const moveAlongPath = () => {
             if (this.play) {

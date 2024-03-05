@@ -43,6 +43,7 @@ export default class SvgLine extends SvgTool{
         this.drawingLine.setAttribute("stroke-width", this.currentLineWidth);
         this.drawingLine.setAttribute("fill", "none");
         this.drawingLine.setAttribute('data-tool', 'true');
+        this.drawingLine.setAttribute('type-tool', 'line');
         this.svgCanvas.appendChild(this.drawingLine)
         // this.draw(this.drawingLine.d);
     }

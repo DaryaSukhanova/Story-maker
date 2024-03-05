@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Toolbar from "./components/Toolbar";
 import SettingBar from "./components/SettingBar";
 import Canvas from "./components/Canvas";
@@ -14,6 +14,14 @@ const GraphicEditor = () => {
         layer1: useRef(null),
         layer2: useRef(null)
     });
+
+    // const [numLayers, setNumLayers] = useState(2); // Начальное количество слоев
+    // const [layerRefs, setLayerRefs] = useState([]);
+    //
+    // useEffect(() => {
+    //     setLayerRefs(Array.from({ length: numLayers }, () => React.createRef()));
+    // }, [numLayers]);
+
     return (
         <div className="graphic-editor">
             <div className="graphic-editor-workspace">

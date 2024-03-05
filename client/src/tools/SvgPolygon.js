@@ -47,6 +47,7 @@ export default class SvgPolygon extends SvgTool{
             this.drawingPolygon.setAttribute("fill", this.currentFillColor);
             this.drawingPolygon.setAttribute("points", this.pathData);
             this.drawingPolygon.setAttribute('data-tool', 'true');
+            this.drawingPolygon.setAttribute('type-tool', 'polygon');
             this.svgCanvas.appendChild(this.drawingPolygon);
         } else {
             // Обновить существующую полилинию, если уже рисуется

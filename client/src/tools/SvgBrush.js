@@ -50,6 +50,7 @@ export default class SvgBrush extends SvgTool{
         path.setAttribute("stroke-linejoin", "round");
         path.setAttribute("stroke-linecap", "round");
         path.setAttribute('data-tool', 'true');
+        path.setAttribute('type-tool', 'brush');
         this.svgCanvas.appendChild(path);
         return path;
     }

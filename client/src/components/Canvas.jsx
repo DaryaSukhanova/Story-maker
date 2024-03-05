@@ -16,6 +16,7 @@ const Canvas = observer(({ layerRefs }) => {
     const [currentTool, setCurrentTool] = useState(null);
 
     useEffect(() => {
+        console.log(layerRefs)
         canvasState.setCanvas(layerRefs[currentLayer].current);
         const currentToolInstance = toolState.tool; // Получаем текущий инструмент
         setCurrentTool(currentToolInstance); // Устанавливаем текущий инструмент для отображения

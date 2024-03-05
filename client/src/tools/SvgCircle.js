@@ -37,6 +37,7 @@ export default class SvgCircle extends SvgTool{
         this.drawingCircle.setAttribute("stroke", this.currentStroke);
         this.drawingCircle.setAttribute("stroke-width", this.currentLineWidth);
         this.drawingCircle.setAttribute('data-tool', 'true');
+        this.drawingCircle.setAttribute('type-tool', 'circle');
         this.svgCanvas.appendChild(this.drawingCircle)
 
     }
