@@ -1,9 +1,13 @@
 import Router from 'express'
-import BackgroundController from "./BackgroundController.js";
+import BackgroundController from "./BackgroundController.js"
 import {check, validationResult} from "express-validator"
-import authMiddleware from './middleware/auth.middleware.js';
+import authMiddleware from './middleware/auth.middleware.js'
+import FileService from './services/fileService.js'
+import File from './models/File.js'
+import fC from './controllers/fileController.js'
 
 const router = new Router()
+const fileController = new fC()
 
 router.post('/backgrounds', BackgroundController.create)
 router.get('/backgrounds', BackgroundController.getAll)
@@ -19,4 +23,6 @@ router.post('/registration',         [
     BackgroundController.registrationUser)
 router.post('/login', BackgroundController.authUser)
 router.get('/auth', authMiddleware, BackgroundController.authMiddleware)
+router.post("/files", authMiddleware, fileController.createDir)
+router.get("/files", authMiddleware, fileController.getFiles)
 export default router;

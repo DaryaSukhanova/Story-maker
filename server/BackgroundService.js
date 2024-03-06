@@ -6,8 +6,11 @@ import createError from 'http-errors'
 import jwt from "jsonwebtoken"
 import bcrypt from "bcryptjs"
 import {check, validationResult} from "express-validator"
+import FS from "./services/fileService.js";
+import File from "./models/File.js";
 
 const secretKey = "mern-secret-key"
+const FileService = new FS()
 class BackgroundService{7
     // createId() {
     //     let id = 0
@@ -172,6 +175,7 @@ class BackgroundService{7
             const hashPassword = await bcrypt.hash(password, 8)
             const user = new User({email, password: hashPassword})
             await user.save()
+			await FileService.createDir(new File({user: user.id, name: ""}))
             return res.json({message:"User was created"})
         } catch (error) {
             console.error('Error:', error);
