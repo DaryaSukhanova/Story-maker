@@ -14,6 +14,7 @@ import Login from './components/Login';
 import userState from "./store/userState";
 import {observer} from "mobx-react-lite";
 import { auth } from './actions/user';
+import Disk from "./components/Disk";
 const App =  observer(() => {
 
 	useEffect(() => {
@@ -31,10 +32,14 @@ const App =  observer(() => {
                     </div>
                 }
                 {userState.isAuth &&
-                    <div className="home-navbar">
-                        <div className="navbar__logout" onClick={()=>userState.logout()}>Log Out</div>
+                    
+                    <div>
+                        <div className="home-navbar">
+                            <div className="navbar__logout" onClick={()=>userState.logout()}>Log Out</div>                                           
+                        </div>
+                        <Disk/> 
                     </div>
-
+                    
                 }
                 <Routes>
                     <Route path="/home" element={
@@ -60,6 +65,10 @@ const App =  observer(() => {
                     </Route>
 					<Route path="/login" element={
 						<Login/>
+					}>
+					</Route>
+                    <Route path="/disk" element={
+						<Disk/>
 					}>
 					</Route>
                     <Route path="*" element={<Navigate to="/home" replace/>}/>
