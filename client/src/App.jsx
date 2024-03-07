@@ -58,19 +58,24 @@ const App =  observer(() => {
                         <BookEditor/>
                     }>
                     </Route>
-
-                    <Route path="/registration" element={
-                        <Registration/>
-                    }>
-                    </Route>
-					<Route path="/login" element={
-						<Login/>
-					}>
-					</Route>
-                    <Route path="/disk" element={
-						<Disk/>
-					}>
-					</Route>
+                    {!userState.isAuth && 
+                        <Route path="/registration" element={
+                            <Registration/>
+                        }>
+                        </Route>
+                    }
+                    {!userState.isAuth && 
+                        <Route path="/login" element={
+                            <Login/>
+                        }>
+                        </Route>
+                    }
+                    {userState.isAuth && 
+                        <Route path="/disk" element={
+                            <Disk/>
+                        }>
+                        </Route>
+                    }       
                     <Route path="*" element={<Navigate to="/home" replace/>}/>
                 </Routes>
             </BrowserRouter>
