@@ -21,6 +21,7 @@ const GraphicEditor = observer(() => {
         { name: 'Layer2', ref: useRef(null) }
     ])
 
+
     // useEffect(() => {
     //     layerState.setLayerRef('layer1', layer1Ref);
     //     layerState.setLayerRef('layer2', layer2Ref);
@@ -31,6 +32,13 @@ const GraphicEditor = observer(() => {
     // useEffect(() => {
     //     setLayerRefs(Array.from({ length: numLayers }, () => React.createRef()));
     // }, [numLayers]);
+    const newLayerRef = useRef(null); // Объявляем useRef здесь
+    const addLayer = () => {
+        const newLayerName = `Layer${layers.length + 1}`;
+
+        // Обновляем состояние, используя функцию обновления состояния, чтобы гарантировать корректное обновление
+        setLayers(prevLayers => [...prevLayers, { name: newLayerName, ref: newLayerRef }]);
+    };
 
     return (
         <div className="graphic-editor">
@@ -39,6 +47,7 @@ const GraphicEditor = observer(() => {
                 <Canvas layers={layers}/>
                 {/*<DrawingBlock/>*/}
                 <LayersBlock layers={layers}/>
+                <button onClick={addLayer}>Button </button>
             </div>
             <ActionPanel layerRefs={layers}/>
         </div>
