@@ -9,7 +9,7 @@ const Layer = observer(({id, canvasRef }) => {
         display: isVisible ? 'block' : 'none'
     }
     return (
-        <canvas width={1100} height={644}  id={canvasRef} ref={canvasRef} style={layerStyle}></canvas>
+        <canvas width={1100} height={644}  id={id} ref={canvasRef} style={layerStyle}></canvas>
     );
 });
 

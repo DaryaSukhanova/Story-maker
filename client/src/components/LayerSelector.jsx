@@ -5,45 +5,52 @@ import Tool from "../tools/Tool";
 import LayerButton from "./LayerButton";
 
 
-const LayerSelector = ({layerRefs}) => {
-    const [currentLayer, setCurrentLayer] = useState('layer1');
+const LayerSelector = ({layers}) => {
+    const [currentLayer, setCurrentLayer] = useState(0);
     const [currentTool, setCurrentTool] = useState(null);
 
-    const setCurrentLayerHandler = (layer) => {
-        // Удаляем обработчик события mousedown с предыдущего слоя
-        layerRefs[currentLayer].current.removeEventListener('mousedown', mouseDownHandler);
+    const setCurrentLayerHandler = (layerIndex) => {
+        console.log("layerIndex currentLayer", layerIndex, currentLayer)
+        const layer = layers[layerIndex];
 
-        // Сбрасываем состояние инструмента в начальное
-        resetToolState();
+        if (layer) {
+            const { ref, name } = layer;
 
-        // Устанавливаем новый текущий слой
-        setCurrentLayer(layer);
-        canvasState.setCanvas(layerRefs[layer].current);
+            if (ref && ref.current) {
+                ref.current.removeEventListener('mousedown', mouseDownHandler);
 
-        // Добавляем обработчик события mousedown к новому слою
-        layerRefs[layer].current.addEventListener('mousedown', mouseDownHandler);
+                resetToolState();
 
-        if (layer === 'layer2') {
-            layerRefs['layer2'].current.style.pointerEvents = 'auto';
-        } else {
-            layerRefs['layer2'].current.style.pointerEvents = 'none';
+                setCurrentLayer(layerIndex);
+                canvasState.setCanvas(ref.current);
+
+                ref.current.addEventListener('mousedown', mouseDownHandler);
+
+                if (layerIndex === 0) {
+                    ref.current.style.pointerEvents = 'auto';
+                } else {
+                    ref.current.style.pointerEvents = 'none';
+                }
+
+                const toolInstance = toolState.tool;
+                setCurrentTool(toolInstance);
+            }
         }
-
-        const toolInstance = toolState.tool; // Получаем текущий инструмент
-        setCurrentTool(toolInstance); // Устанавливаем текущий инструмент для отображения
     };
     const resetToolState = () => {
-        toolState.setTool(new Tool(layerRefs[currentLayer].current));
+        toolState.setTool(new Tool(layers[currentLayer].ref.current));
     };
     const mouseDownHandler = () => {
-        canvasState.pushToUndo(layerRefs[currentLayer].current.toDataURL());
+        canvasState.pushToUndo(layers[currentLayer].ref.current.toDataURL());
     };
 
     return (
         <div className="layer-selector">
-            {Object.keys(layerRefs).map((layer, index) => (
-                <LayerButton id={index} layerName={layer} func={() => setCurrentLayerHandler(layer)} isActive={layer === currentLayer}/>
+            {Object.keys(layers).map((layer, index) => (
+                <LayerButton id={index} layerName={layers[index].name} func={() => setCurrentLayerHandler(index)} isActive={index === currentLayer}/>
             ))}
+            {/*<LayerButton id={0} layerName={layers.length > 0 ? layers[0].name : ''} func={() => setCurrentLayerHandler(currentLayer)} isActive={layers[0].name === currentLayer}/>*/}
+
         </div>
     );
 };

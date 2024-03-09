@@ -8,13 +8,23 @@ import './styles/animation-editor.scss'
 import SvgActionPanel from "./components/SvgActionPanel";
 import ActionPanel from "./components/ActionPanel";
 import LayersBlock from "./components/LayersBlock";
-const GraphicEditor = () => {
-    const [layerRefs, setLayerRefs] = useState(
-        {
-        layer1: useRef(null),
-        layer2: useRef(null)
-    });
+import {observer} from "mobx-react-lite";
+import layerState from "./store/layerState";
+const GraphicEditor = observer(() => {
+    // const [layers, setLayer] = useState(
+    //     {
+    //     layer1: useRef(null),
+    //     layer2: useRef(null)
+    // });
+    let [layers, setLayers ] = useState([
+        { name: 'Layer1', ref: useRef(null) },
+        { name: 'Layer2', ref: useRef(null) }
+    ])
 
+    // useEffect(() => {
+    //     layerState.setLayerRef('layer1', layer1Ref);
+    //     layerState.setLayerRef('layer2', layer2Ref);
+    // }, []);
     // const [numLayers, setNumLayers] = useState(2); // Начальное количество слоев
     // const [layerRefs, setLayerRefs] = useState([]);
     //
@@ -26,12 +36,13 @@ const GraphicEditor = () => {
         <div className="graphic-editor">
             <div className="graphic-editor-workspace">
                 <DrawingBlock/>
-                <Canvas layerRefs={layerRefs}/>
-                <LayersBlock layerRefs={layerRefs}/>
+                <Canvas layers={layers}/>
+                {/*<DrawingBlock/>*/}
+                <LayersBlock layers={layers}/>
             </div>
-            <ActionPanel layerRefs={layerRefs}/>
+            {/*<ActionPanel layerRefs={layers}/>*/}
         </div>
     );
-};
+});
 
 export default GraphicEditor;

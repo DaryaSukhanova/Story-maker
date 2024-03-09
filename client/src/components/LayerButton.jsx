@@ -9,6 +9,7 @@ const LayerButton = observer(({id, layerName, func, isActive}) => {
     const [layerVisibility, setLayerVisibility] = useState({ [id]: true });
 
     const handleClick = () => {
+        console.log("active",isActive)
         func();
         // setIsActiveState(!isActiveState); // Переключаем состояние активности
     };
@@ -16,7 +17,7 @@ const LayerButton = observer(({id, layerName, func, isActive}) => {
     return (
         <div
             className={`layer-selector__item ${isActive ? 'active' : ''}`}
-            key={id}
+            id={id}
             onClick={handleClick}
         >
             <span>{layerName}</span>
