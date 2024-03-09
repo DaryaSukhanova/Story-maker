@@ -10,7 +10,6 @@ const LayerSelector = ({layers}) => {
     const [currentTool, setCurrentTool] = useState(null);
 
     const setCurrentLayerHandler = (layerIndex) => {
-        console.log("layerIndex currentLayer", layerIndex, currentLayer)
         const layer = layers[layerIndex];
 
         if (layer) {
@@ -26,11 +25,12 @@ const LayerSelector = ({layers}) => {
 
                 ref.current.addEventListener('mousedown', mouseDownHandler);
 
-                if (layerIndex === 0) {
-                    ref.current.style.pointerEvents = 'auto';
-                } else {
-                    ref.current.style.pointerEvents = 'none';
-                }
+                // if (layerIndex === 0) {
+                //     ref.current.style.pointerEvents = 'auto';
+                //
+                // } else {
+                //     ref.current.style.pointerEvents = 'auto';
+                // }
 
                 const toolInstance = toolState.tool;
                 setCurrentTool(toolInstance);

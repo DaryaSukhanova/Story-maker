@@ -4,9 +4,9 @@ import {observer} from "mobx-react-lite";
 
 const Layer = observer(({id, canvasRef }) => {
     const isVisible = canvasState.layerVisibility[id];
-    console.log(canvasRef)
     const layerStyle = {
-        display: isVisible ? 'block' : 'none'
+        display: isVisible ? 'block' : 'none',
+        pointerEvents: isVisible ? 'auto': 'none'
     }
     return (
         <canvas width={1100} height={644}  id={id} ref={canvasRef} style={layerStyle}></canvas>

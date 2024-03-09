@@ -29,9 +29,9 @@ const Canvas = observer(({ layers }) => {
     return (
         <div className="canvas">
             {Object.keys(layers).map((layer, index) => (
-                // <Layer/>
+
                 <Layer
-                    id={layers.length > 0 ? layers[index].name : ''}
+                    id={layers.length > 0 ? index : ''}
                     canvasRef={layers.length > 0 ? layers[index].ref : null}
                 />
                 // <canvas key={index} id={layer} width={1100} height={644} ref={layerRefs[layer]}></canvas>

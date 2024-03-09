@@ -40,7 +40,7 @@ const GraphicEditor = observer(() => {
                 {/*<DrawingBlock/>*/}
                 <LayersBlock layers={layers}/>
             </div>
-            {/*<ActionPanel layerRefs={layers}/>*/}
+            <ActionPanel layerRefs={layers}/>
         </div>
     );
 });
