@@ -4,14 +4,15 @@ import toolState from "../store/toolState";
 import Tool from "../tools/Tool";
 import LayerSelector from "./LayerSelector";
 import '../styles/layers-block.scss'
+import layerState from "../store/layerState";
 
-const LayersBlock = ({ layers }) => {
+const LayersBlock = () => {
 
     return (
         <div className="block-container">
             <div className="setting-block">
                 <div className="tool-bar-item-title">Layers</div>
-                <LayerSelector layers={layers}/>
+                <LayerSelector />
             </div>
         </div>
     );

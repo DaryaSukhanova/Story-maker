@@ -11,45 +11,34 @@ import LayersBlock from "./components/LayersBlock";
 import {observer} from "mobx-react-lite";
 import layerState from "./store/layerState";
 const GraphicEditor = observer(() => {
-    // const [layers, setLayer] = useState(
-    //     {
-    //     layer1: useRef(null),
-    //     layer2: useRef(null)
-    // });
+
     let [layers, setLayers ] = useState([
         { name: 'Layer1', ref: useRef(null) },
         { name: 'Layer2', ref: useRef(null) }
     ])
-
-
-    // useEffect(() => {
-    //     layerState.setLayerRef('layer1', layer1Ref);
-    //     layerState.setLayerRef('layer2', layer2Ref);
-    // }, []);
-    // const [numLayers, setNumLayers] = useState(2); // Начальное количество слоев
-    // const [layerRefs, setLayerRefs] = useState([]);
     //
-    // useEffect(() => {
-    //     setLayerRefs(Array.from({ length: numLayers }, () => React.createRef()));
-    // }, [numLayers]);
-    const newLayerRef = useRef(null); // Объявляем useRef здесь
-    const addLayer = () => {
-        const newLayerName = `Layer${layers.length + 1}`;
+    // const newLayerRef = useRef(null); // Объявляем useRef здесь
+    // const addLayer = () => {
+    //     const newLayerName = `Layer${layers.length + 1}`;
+    //
+    //     // Обновляем состояние, используя функцию обновления состояния, чтобы гарантировать корректное обновление
+    //     setLayers(prevLayers => [...prevLayers, { name: newLayerName, ref: newLayerRef }]);
+    // };
 
-        // Обновляем состояние, используя функцию обновления состояния, чтобы гарантировать корректное обновление
-        setLayers(prevLayers => [...prevLayers, { name: newLayerName, ref: newLayerRef }]);
+    layerState.setLayers(layers)
+    const newLayerRef = useRef(null);
+    const handleAddLayer = () => {
+        layerState.addLayer(newLayerRef);
     };
-
     return (
         <div className="graphic-editor">
             <div className="graphic-editor-workspace">
                 <DrawingBlock/>
-                <Canvas layers={layers}/>
-                {/*<DrawingBlock/>*/}
-                <LayersBlock layers={layers}/>
-                <button onClick={addLayer}>Button </button>
+                <Canvas />
+                <LayersBlock />
+                <button onClick={handleAddLayer}>Button </button>
             </div>
-            <ActionPanel layerRefs={layers}/>
+            <ActionPanel />
         </div>
     );
 });

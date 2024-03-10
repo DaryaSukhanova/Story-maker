@@ -3,9 +3,13 @@ import canvasState from "../store/canvasState";
 import toolState from "../store/toolState";
 import Tool from "../tools/Tool";
 import LayerButton from "./LayerButton";
+import layerState from "../store/layerState";
+import {observer} from "mobx-react-lite";
 
 
-const LayerSelector = ({layers}) => {
+const LayerSelector = observer(() => {
+    let layers = layerState.layers
+
     const [currentLayer, setCurrentLayer] = useState(0);
     const [currentTool, setCurrentTool] = useState(null);
 
@@ -53,6 +57,6 @@ const LayerSelector = ({layers}) => {
 
         </div>
     );
-};
+});
 
 export default LayerSelector;

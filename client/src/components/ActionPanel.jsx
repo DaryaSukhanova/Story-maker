@@ -6,8 +6,10 @@ import axios from "axios";
 import toolState from "../store/toolState";
 import {logDOM} from "@testing-library/react";
 import {saveBackground} from "../actions/background";
+import layerState from "../store/layerState";
 
-const ActionPanel = ({ layerRefs }) => {
+const ActionPanel = () => {
+    let layerRefs = layerState.layers.ref
     const backgroundNameRef = useRef()
     const [modal,setModal] = useState(false)
 

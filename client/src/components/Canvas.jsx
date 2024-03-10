@@ -10,7 +10,10 @@ import axios from 'axios'
 import {forEach} from "react-bootstrap/ElementChildren";
 import Tool from "../tools/Tool";
 import Layer from "./Layer";
-const Canvas = observer(({ layers }) => {
+import layerState from "../store/layerState";
+const Canvas = observer(() => {
+
+    let layers = layerState.layers
     const [currentLayer, setCurrentLayer] = useState(layers[0]);
 
     const [currentTool, setCurrentTool] = useState(null);
