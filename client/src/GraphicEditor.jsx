@@ -26,17 +26,14 @@ const GraphicEditor = observer(() => {
     // };
 
     layerState.setLayers(layers)
-    const newLayerRef = useRef(null);
-    const handleAddLayer = () => {
-        layerState.addLayer(newLayerRef);
-    };
+
     return (
         <div className="graphic-editor">
             <div className="graphic-editor-workspace">
                 <DrawingBlock/>
                 <Canvas />
                 <LayersBlock />
-                <button onClick={handleAddLayer}>Button </button>
+
             </div>
             <ActionPanel />
         </div>

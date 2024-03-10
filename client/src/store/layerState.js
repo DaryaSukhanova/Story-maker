@@ -17,6 +17,11 @@ class layerState{
         const newLayerName = `Layer${this.layers.length + 1}`;
         this.layers.push({ name: newLayerName, ref: newLayerRef });
     }
+    removeLayer() {
+        if (this.layers.length > 1) {
+            this.layers.pop();
+        }
+    }
 }
 
 export default new layerState()
