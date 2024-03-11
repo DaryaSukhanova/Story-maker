@@ -6,11 +6,10 @@ import {logDOM} from "@testing-library/react";
 import {observer} from "mobx-react-lite";
 
 const LayerButton = observer(({id, layerName, func, isActive}) => {
-    const [layerVisibility, setLayerVisibility] = useState({ [id]: true });
+    // const [layerVisibility, setLayerVisibility] = useState({ [id]: true });
 
     const handleClick = () => {
         func();
-        // setIsActiveState(!isActiveState); // Переключаем состояние активности
     };
 
     return (

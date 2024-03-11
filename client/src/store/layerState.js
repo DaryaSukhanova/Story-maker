@@ -7,15 +7,23 @@ class layerState{
     }
 
     layers = [
-        { name: 'Layer1', ref: null },
-        { name: 'Layer2', ref: null }
+        { name: 'Layer1', ref: null, isActive: false },
+        { name: 'Layer2', ref: null, isActive: false }
     ]
     setLayers (currentLayers){
         this.layers = currentLayers;
     }
     addLayer(newLayerRef) {
-        const newLayerName = `Layer${this.layers.length + 1}`;
-        this.layers.push({ name: newLayerName, ref: newLayerRef });
+        if (this.layers.length < 9){
+            const newLayerName = `Layer${this.layers.length + 1}`;
+            this.layers.push({ name: newLayerName, ref: newLayerRef, isActive: false });
+        }
+
+    }
+    setActiveLayer(index) {
+        this.layers.forEach((layer, i) => {
+            layer.isActive = (i === index);
+        });
     }
     removeLayer() {
         if (this.layers.length > 1) {

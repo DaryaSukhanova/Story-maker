@@ -29,6 +29,14 @@ const Canvas = observer(() => {
 
     }, [currentLayer, layers]);
 
+    const activeLayerStyle = {
+        display:'block',
+        pointerEvents: 'auto'
+    }
+    const unActiveLayerStyle = {
+        display:'none',
+        pointerEvents: 'none'
+    }
     return (
         <div className="canvas">
             {Object.keys(layers).map((layer, index) => (
@@ -36,6 +44,10 @@ const Canvas = observer(() => {
                 <Layer
                     id={layers.length > 0 ? index : ''}
                     canvasRef={layers.length > 0 ? layers[index].ref : null}
+                    style={{
+                        display: canvasState.layerVisibility[index] === true ? 'block' : 'none',
+                        pointerEvents: layers[index].isActive === true ? 'auto' : 'none'
+                    }}
                 />
                 // <canvas key={index} id={layer} width={1100} height={644} ref={layerRefs[layer]}></canvas>
             ))}

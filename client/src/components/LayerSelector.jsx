@@ -25,16 +25,12 @@ const LayerSelector = observer(() => {
                 resetToolState();
 
                 setCurrentLayer(layerIndex);
+
+                layerState.setActiveLayer(layerIndex)
+
                 canvasState.setCanvas(ref.current);
 
                 ref.current.addEventListener('mousedown', mouseDownHandler);
-
-                // if (layerIndex === 0) {
-                //     ref.current.style.pointerEvents = 'auto';
-                //
-                // } else {
-                //     ref.current.style.pointerEvents = 'auto';
-                // }
 
                 const toolInstance = toolState.tool;
                 setCurrentTool(toolInstance);
@@ -51,7 +47,7 @@ const LayerSelector = observer(() => {
     return (
         <div className="layer-selector">
             {Object.keys(layers).map((layer, index) => (
-                <LayerButton id={index} layerName={layers[index].name} func={() => setCurrentLayerHandler(index)} isActive={index === currentLayer}/>
+                <LayerButton id={index} layerName={layers[index].name} func={() => setCurrentLayerHandler(index)} isActive={layers[index].isActive}/>
             ))}
             {/*<LayerButton id={0} layerName={layers.length > 0 ? layers[0].name : ''} func={() => setCurrentLayerHandler(currentLayer)} isActive={layers[0].name === currentLayer}/>*/}
 
