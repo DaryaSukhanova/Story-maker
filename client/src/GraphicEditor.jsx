@@ -13,8 +13,8 @@ import layerState from "./store/layerState";
 const GraphicEditor = observer(() => {
 
     let [layers, setLayers ] = useState([
-        { name: 'Layer1', ref: useRef(null) },
-        { name: 'Layer2', ref: useRef(null) }
+        { name: 'Layer1', ref: useRef(null), isActive: true, isVisible: true },
+        { name: 'Layer2', ref: useRef(null), isActive: false, isVisible: true }
     ])
     //
     // const newLayerRef = useRef(null); // Объявляем useRef здесь

@@ -26,14 +26,15 @@ const LayerSelector = observer(() => {
 
                 setCurrentLayer(layerIndex);
 
+
                 layerState.setActiveLayer(layerIndex)
 
                 canvasState.setCanvas(ref.current);
 
                 ref.current.addEventListener('mousedown', mouseDownHandler);
 
-                const toolInstance = toolState.tool;
-                setCurrentTool(toolInstance);
+                // const toolInstance = toolState.tool;
+                // setCurrentTool(toolInstance);
             }
         }
     };

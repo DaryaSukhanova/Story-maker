@@ -4,6 +4,7 @@ import Line from "../tools/Line";
 import canvasState from "../store/canvasState";
 import {logDOM} from "@testing-library/react";
 import {observer} from "mobx-react-lite";
+import layerState from "../store/layerState";
 
 const LayerButton = observer(({id, layerName, func, isActive}) => {
     // const [layerVisibility, setLayerVisibility] = useState({ [id]: true });
@@ -19,7 +20,7 @@ const LayerButton = observer(({id, layerName, func, isActive}) => {
             onClick={handleClick}
         >
             <span>{layerName}</span>
-            <button className="layer-selector__btn visibility" onClick={()=> canvasState.toggleVisibility(id)}/>
+            <button className="layer-selector__btn visibility" onClick={()=> layerState.setVisibleLayer(id)}/>
         </div>
     );
 });

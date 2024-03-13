@@ -45,7 +45,7 @@ const Canvas = observer(() => {
                     id={layers.length > 0 ? index : ''}
                     canvasRef={layers.length > 0 ? layers[index].ref : null}
                     style={{
-                        display: canvasState.layerVisibility[index] === true ? 'block' : 'none',
+                        display: layers[index].isVisible === true ? 'block' : 'none',
                         pointerEvents: layers[index].isActive === true ? 'auto' : 'none'
                     }}
                 />
