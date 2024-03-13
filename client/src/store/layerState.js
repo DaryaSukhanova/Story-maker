@@ -28,9 +28,9 @@ class layerState{
     setVisibleLayer(index){
         this.layers[index].isVisible = !this.layers[index].isVisible
     }
-    removeLayer() {
-        if (this.layers.length > 1) {
-            this.layers.pop();
+    removeLayer(index) {
+        if (index >= 0 && index < this.layers.length) {
+            this.layers.splice(index, 1);
         }
     }
 }

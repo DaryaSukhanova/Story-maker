@@ -40,7 +40,7 @@ const LayerSelector = observer(() => {
         toolState.setTool(new Tool(layers[currentLayer].ref.current));
     };
     const mouseDownHandler = () => {
-        canvasState.pushToUndo(layers[currentLayer].ref.current.toDataURL());
+        // canvasState.pushToUndo(layers[currentLayer].ref.current.toDataURL());
     };
 
     return (

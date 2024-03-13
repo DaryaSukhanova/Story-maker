@@ -12,7 +12,11 @@ const LayersBlock = () => {
         layerState.addLayer(newLayerRef);
     };
     const handleRemoveLayer = () => {
-        layerState.removeLayer();
+        const activeIndex = layerState.layers.findIndex(layer => layer.isActive);
+        if(layerState.layers.length > 1){
+            layerState.removeLayer(activeIndex);
+        }
+
     };
     return (
         <div className="block-container">
