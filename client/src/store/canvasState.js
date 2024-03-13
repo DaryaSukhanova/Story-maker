@@ -16,11 +16,11 @@ class CanvasState{
 
     pushToUndo(data){
         this.undoList.push(data)
+        console.log(this.undoList)
     }
     pushToRedo(data){
         this.redoList.push(data)
     }
-
 
     undo(){
         let ctx = this.canvas.getContext('2d')

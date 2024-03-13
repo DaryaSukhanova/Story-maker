@@ -20,28 +20,23 @@ const LayerSelector = observer(() => {
             const { ref, name } = layer;
 
             if (ref && ref.current) {
-                ref.current.removeEventListener('mousedown', mouseDownHandler);
+                // ref.current.removeEventListener('mousedown', mouseDownHandler);
 
                 // resetToolState();
-
                 setCurrentLayer(layerIndex);
                 layerState.setActiveLayer(layerIndex)
 
                 canvasState.setCanvas(ref.current);
 
-                ref.current.addEventListener('mousedown', mouseDownHandler);
+                // ref.current.addEventListener('mousedown', mouseDownHandler);
 
                 // const toolInstance = toolState.tool;
                 // setCurrentTool(toolInstance);
             }
         }
     };
-    const resetToolState = () => {
-        toolState.setTool(new Tool(layers[currentLayer].ref.current));
-    };
-    const mouseDownHandler = () => {
-        // canvasState.pushToUndo(layers[currentLayer].ref.current.toDataURL());
-    };
+
+
 
     return (
         <div className="layer-selector">
