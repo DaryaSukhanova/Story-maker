@@ -31,7 +31,7 @@ const ToolsBlock = ({ currentColor }) => {
 
     useEffect(() => {
         changeColor()
-        console.log(isFill, isStroke);
+
     }, [currentColor]);
 
     return (

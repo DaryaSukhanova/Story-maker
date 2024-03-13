@@ -22,11 +22,9 @@ const LayerSelector = observer(() => {
             if (ref && ref.current) {
                 ref.current.removeEventListener('mousedown', mouseDownHandler);
 
-                resetToolState();
+                // resetToolState();
 
                 setCurrentLayer(layerIndex);
-
-
                 layerState.setActiveLayer(layerIndex)
 
                 canvasState.setCanvas(ref.current);

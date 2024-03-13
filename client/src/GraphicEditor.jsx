@@ -33,7 +33,6 @@ const GraphicEditor = observer(() => {
                 <DrawingBlock/>
                 <Canvas />
                 <LayersBlock />
-
             </div>
             <ActionPanel />
         </div>

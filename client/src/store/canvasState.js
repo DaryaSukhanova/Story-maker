@@ -53,10 +53,10 @@ class CanvasState{
         }
     }
 
-    toggleVisibility(id) {
-        console.log(id, this.layerVisibility[id])
-        this.layerVisibility[id] = !this.layerVisibility[id];
-    }
+    // toggleVisibility(id) {
+    //     console.log(id, this.layerVisibility[id])
+    //     this.layerVisibility[id] = !this.layerVisibility[id];
+    // }
 }
 
 export default new CanvasState()

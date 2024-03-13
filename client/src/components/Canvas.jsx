@@ -14,29 +14,26 @@ import layerState from "../store/layerState";
 const Canvas = observer(() => {
 
     let layers = layerState.layers
-    const [currentLayer, setCurrentLayer] = useState(layers[0]);
+    const [currentLayer, setCurrentLayer] = useState(0);
 
     const [currentTool, setCurrentTool] = useState(null);
 
     useEffect(() => {
-        console.log(layers)
+
         if (layers.length > 0) {
-            canvasState.setCanvas(layers[0].ref.current); // Передача текущего DOM-элемента холста
-            const currentToolInstance = toolState.tool; // Получаем текущий инструмент
-            setCurrentTool(currentToolInstance); // Устанавливаем текущий инструмент для отображения
-            // console.log(layerRefs[currentLayer].current)
+            const activeIndex = layers.findIndex(layer => layer.isActive);
+            if (activeIndex !== -1) {
+                const activeLayer = layers[activeIndex];
+                canvasState.setCanvas(activeLayer.ref.current);
+                const currentToolInstance = new Brush(canvasState.canvas);
+                toolState.setTool(currentToolInstance);
+                setCurrentTool(currentToolInstance);
+            }
         }
+    }, [canvasState.canvas]);
 
-    }, [currentLayer, layers]);
 
-    const activeLayerStyle = {
-        display:'block',
-        pointerEvents: 'auto'
-    }
-    const unActiveLayerStyle = {
-        display:'none',
-        pointerEvents: 'none'
-    }
+
     return (
         <div className="canvas">
             {Object.keys(layers).map((layer, index) => (
