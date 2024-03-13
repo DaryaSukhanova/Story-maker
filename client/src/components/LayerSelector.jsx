@@ -41,7 +41,7 @@ const LayerSelector = observer(() => {
     return (
         <div className="layer-selector">
             {Object.keys(layers).map((layer, index) => (
-                <LayerButton id={index} layerName={layers[index].name} func={() => setCurrentLayerHandler(index)} isActive={layers[index].isActive}/>
+                <LayerButton id={index} layerName={layers[index].name} func={() => setCurrentLayerHandler(index)} isActive={layers[index].isActive} isVisible={layers[index].isVisible}/>
             ))}
             {/*<LayerButton id={0} layerName={layers.length > 0 ? layers[0].name : ''} func={() => setCurrentLayerHandler(currentLayer)} isActive={layers[0].name === currentLayer}/>*/}
 

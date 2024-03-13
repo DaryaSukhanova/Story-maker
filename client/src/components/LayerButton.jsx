@@ -6,7 +6,7 @@ import {logDOM} from "@testing-library/react";
 import {observer} from "mobx-react-lite";
 import layerState from "../store/layerState";
 
-const LayerButton = observer(({id, layerName, func, isActive}) => {
+const LayerButton = observer(({id, layerName, func, isActive, isVisible}) => {
     // const [layerVisibility, setLayerVisibility] = useState({ [id]: true });
 
     const handleClick = () => {
@@ -20,7 +20,7 @@ const LayerButton = observer(({id, layerName, func, isActive}) => {
             onClick={handleClick}
         >
             <span>{layerName}</span>
-            <button className="layer-selector__btn visibility" onClick={()=> layerState.setVisibleLayer(id)}/>
+            <button className={`layer-selector__btn ${isVisible ? 'visible' : 'invisibleIcon'}`} onClick={()=> layerState.setVisibleLayer(id)}/>
         </div>
     );
 });

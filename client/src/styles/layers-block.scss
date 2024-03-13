@@ -19,6 +19,12 @@
     &.active {
       background-color: #ddd;
     }
+    .visible{
+      background: url('../assets/img/visible.svg') no-repeat center center;
+    }
+    .invisibleIcon{
+      background: url('../assets/img/invisible.svg') no-repeat center center;
+    }
   }
   &__btn{
     height: 25px;
@@ -29,7 +35,5 @@
     background-size: cover;
 
   }
-  .visibility{
-    background: url('../assets/img/viewIcon.png') no-repeat center center;
-  }
+
 }
