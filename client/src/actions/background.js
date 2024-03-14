@@ -1,7 +1,8 @@
 import axios from "axios";
 import canvasState from "../store/canvasState";
+import layerState from "../store/layerState";
 
-export const saveBackground = async (layerRefs, name, closeModal) => {
+export const saveBackground = async (name, closeModal) => {
     closeModal();
 
     // Создаем новый холст-контейнер
@@ -13,10 +14,13 @@ export const saveBackground = async (layerRefs, name, closeModal) => {
     containerCanvas.height = 644;
 
     // Отрисовываем содержимое каждого холста на холсте-контейнере
-    for (let layerName in layerRefs) {
-        const layerCanvas = layerRefs[layerName].current;
+    // for (let layer in layerState.layers) {
+    //
+    // }
+    Object.values(layerState.layers).map((layer, index) => {
+        const layerCanvas = layer.ref.current;
         containerCtx.drawImage(layerCanvas, 0, 0);
-    }
+    });
 
     // Получаем данные в формате Data URL из холста-контейнера
     const dataUrl = containerCanvas.toDataURL('image/png');

@@ -9,7 +9,7 @@ import {saveBackground} from "../actions/background";
 import layerState from "../store/layerState";
 
 const ActionPanel = () => {
-    let layerRefs = layerState.layers.ref
+
     const backgroundNameRef = useRef()
     const [modal,setModal] = useState(false)
 
@@ -37,7 +37,7 @@ const ActionPanel = () => {
                     <input type="text" ref={backgroundNameRef}/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={()=> saveBackground(layerRefs, backgroundNameRef, () => setModal(false))}>
+                    <Button variant="secondary" onClick={()=> saveBackground(backgroundNameRef, () => setModal(false))}>
                         Save
                     </Button>
                 </Modal.Footer>
