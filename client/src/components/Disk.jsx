@@ -27,12 +27,12 @@ const Disk = observer(() => {
 
     return (
         <div className="disk">
-            {/*<div className="disk__btns">*/}
-            {/*    <button className="disk__back" onClick={() => backClickHandler()}>Назад</button>*/}
-            {/*    <button className="disk__create" onClick={()=>showPopupHandler()}>Создать папку</button>*/}
-            {/*</div>*/}
+            <div className="disk__btns">
+                <button className="disk__back" onClick={() => backClickHandler()}>Назад</button>
+                <button className="disk__create" onClick={()=>showPopupHandler()}>Создать папку</button>
+            </div>
             Disk
-            {/*<FileList/>*/}
+            <FileList/>
             {/*<Popup/>*/}
         </div>
     );

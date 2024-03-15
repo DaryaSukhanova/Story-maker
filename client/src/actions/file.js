@@ -8,7 +8,7 @@ export const getFiles = async (dirId) => {
         });
         console.log(response.data)
         // Установка файлов в хранилище
-        // setFiles(response.data);
+        setFiles(response.data);
     } catch (error) {
         alert(error.response.data.message);
     }
