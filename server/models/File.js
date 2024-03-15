@@ -1,4 +1,4 @@
-import {model, Schema, ObjectId} from "mongoose"
+import mongoose, {model, Schema, ObjectId} from "mongoose"
 
 
 const File = new Schema({
@@ -8,9 +8,9 @@ const File = new Schema({
 	size: {type: Number, default: 0},
 	path: {type: String, default: ""},
 	date: {type: Date, default: Date.now()},
-	user: {type: ObjectId, ref: "User"},
-	parent: {type: ObjectId, ref: "File"},
-	childs: [{type: ObjectId, ref: "File"}],
+	user: {type: mongoose.Types.ObjectId, ref: "User"},
+	parent: {type: mongoose.Types.ObjectId, ref: "File"},
+	childs: [{type: mongoose.Types.ObjectId, ref: "File"}],
 })
 
 export default model("File", File)

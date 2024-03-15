@@ -7,7 +7,7 @@ import Disk from './components/Disk';
 const Home = () => {
     return (
         <div className="home">
-            
+            <Disk/>
         </div>
     );
 };

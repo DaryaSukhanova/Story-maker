@@ -8,11 +8,12 @@ import Popup from "./Popup";
 
 const Disk = observer(() => {
 
-    const currentDir = fileState.currentDir
-    const dirStack = fileState.dirStack
+    // const currentDir = fileState.currentDir
+    // const dirStack = fileState.dirStack
+    const currentDir= fileState.currentDir;
 
     useEffect(() => {
-        getFiles(currentDir);
+        getFiles(currentDir) // Вызываем метод получения файлов при изменении текущей директории
     }, [currentDir]);
 
     const showPopupHandler = () =>{
@@ -26,13 +27,13 @@ const Disk = observer(() => {
 
     return (
         <div className="disk">
-            <div className="disk__btns">
-                <button className="disk__back" onClick={() => backClickHandler()}>Назад</button>
-                <button className="disk__create" onClick={()=>showPopupHandler()}>Создать папку</button>
-            </div>
+            {/*<div className="disk__btns">*/}
+            {/*    <button className="disk__back" onClick={() => backClickHandler()}>Назад</button>*/}
+            {/*    <button className="disk__create" onClick={()=>showPopupHandler()}>Создать папку</button>*/}
+            {/*</div>*/}
             Disk
-            <FileList/>
-            <Popup/>
+            {/*<FileList/>*/}
+            {/*<Popup/>*/}
         </div>
     );
 });

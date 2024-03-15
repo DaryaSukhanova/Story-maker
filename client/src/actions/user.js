@@ -24,8 +24,6 @@ export const login = async (email, password)=>{
         })
         // console.log(response.data)
 		userState.setUser(response.data.user)
-		console.log(userState.currentUser)
-        console.log("isAuth", userState.isAuth)
         // alert(response.data.message)
         localStorage.setItem('token', response.data.token)
         // console.log(response.data.message)
@@ -40,10 +38,9 @@ export const login = async (email, password)=>{
 export const auth = async ()=>{
     try {
         const response = await axios.get(`http://localhost:5000/api/v1/auth`, {headers:{Authorization:`Bearer ${localStorage.getItem("token")}`}})
-        console.log(localStorage.getItem("token"))
+        // console.log(localStorage.getItem("token"))
 		userState.setUser(response.data.user)
-		console.log(userState.currentUser)
-        console.log("isAuth", userState.isAuth)
+
         // alert(response.data.message)
         localStorage.setItem('token', response.data.token)
         // console.log(response.data.message)

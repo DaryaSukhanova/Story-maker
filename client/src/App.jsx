@@ -32,12 +32,11 @@ const App =  observer(() => {
                     </div>
                 }
                 {userState.isAuth &&
-                    
                     <div>
                         <div className="home-navbar">
                             <div className="navbar__logout" onClick={()=>userState.logout()}>Log Out</div>                                           
                         </div>
-                        <Disk/> 
+
                     </div>
                     
                 }

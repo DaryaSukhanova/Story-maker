@@ -15,6 +15,7 @@ class FileState {
     };
 
     setCurrentDir = (dir) => {
+        console.log("dir", dir)
         this.currentDir = dir;
     };
 

@@ -6,9 +6,9 @@ export const getFiles = async (dirId) => {
         const response = await axios.get(`http://localhost:5000/api/v1/files${dirId ? '?parent=' + dirId : ''}`, {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
-
+        console.log(response.data)
         // Установка файлов в хранилище
-        setFiles(response.data);
+        // setFiles(response.data);
     } catch (error) {
         alert(error.response.data.message);
     }
