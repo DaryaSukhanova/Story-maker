@@ -37,3 +37,26 @@
   }
 
 }
+.layer-buttons{
+  border: solid #ddd 1px;
+  border-radius: 7px;
+  display: flex;
+  justify-content: space-around;
+  width: 80px;
+  padding: 5px;
+  &__btn{
+    height: 25px;
+    width: 25px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-size: cover;
+
+  }
+  .add-layer{
+    background: url('../assets/img/addLayerIcon.png') no-repeat center center;
+  }
+  .remove-layer{
+    background: url('../assets/img/removeLayerIcon.png') no-repeat center center;
+  }
+}
