@@ -1,10 +1,14 @@
-import { observable, action } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 
 class FileState {
     files = [];
-    currentDir = null;
+    currentDir = "";
     popupDisplay = 'none';
     dirStack = [];
+
+	constructor() {
+		makeAutoObservable(this)
+	}
 
     setFiles = (files) => {
         this.files = files;

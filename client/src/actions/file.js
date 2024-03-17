@@ -8,14 +8,10 @@ export const getFiles = async (dirId) => {
         });
         console.log(response.data)
         // Установка файлов в хранилище
-        setFiles(response.data);
+        fileState.setFiles(response.data);
     } catch (error) {
         alert(error.response.data.message);
     }
-};
-
-const setFiles = (files) => {
-    fileState.setFiles(files); // Предположим, что у хранилища есть метод setFiles для установки файлов
 };
 
 export const createDir = async (dirId, name) => {
