@@ -16,9 +16,13 @@ export const getFiles = async (dirId) => {
 
 export const createDir = async (dirId, name) => {
     try {
-        const response = await axios.post(`http://localhost:5000/api/v1/files`, {
+        const response = await axios.post(`http://localhost:5000/api/v1/files`, dirId ? {
             name,
             parent: dirId,
+            type: 'dir'
+        } :
+		{
+            name,
             type: 'dir'
         } , {
             headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
