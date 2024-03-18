@@ -24,12 +24,8 @@ export const createDir = async (dirId, name) => {
             headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
         });
 
-        addFile(response.data);
+        fileState.addFile(response.data);
     } catch (error) {
         alert(error.response.data.message);
     }
-};
-
-const addFile = (file) => {
-    fileState.addFile(file); 
 };

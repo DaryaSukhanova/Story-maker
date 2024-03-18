@@ -8,9 +8,7 @@ import Popup from "./Popup";
 
 const Disk = observer(() => {
 
-    // const currentDir = fileState.currentDir
-    // const dirStack = fileState.dirStack
-    const currentDir= fileState.currentDir;
+    const currentDir = fileState.currentDir;
 
     useEffect(() => {
         getFiles(currentDir) // Вызываем метод получения файлов при изменении текущей директории
@@ -33,7 +31,7 @@ const Disk = observer(() => {
             </div>
             Disk
             <FileList/>
-            {/*<Popup/>*/}
+            <Popup/>
         </div>
     );
 });

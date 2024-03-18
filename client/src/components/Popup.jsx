@@ -11,6 +11,8 @@ const Popup = observer(() => {
 
     const createHandler = () =>{  
         createDir(currentDir, dirName)
+        fileState.setPopupDisplay('none')
+  
     }
 
     return (
