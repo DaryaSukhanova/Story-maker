@@ -45,6 +45,8 @@ export default class BoxSelectNew extends SvgTool {
             this.startBBox = clickedElement.getBBox()
             console.log(clickedElement); // Выводим информацию о кликнутом элементе
             console.log(clickedElement.getBBox())
+
+            // this.createBoundingBox(this.startBBox)
             this.createHandles(this.startBBox);
         }
 
@@ -92,25 +94,29 @@ export default class BoxSelectNew extends SvgTool {
         svgPoint.y = y;
         const transformedPoint = svgPoint.matrixTransform(this.svgCanvas.getScreenCTM().inverse());
 
-        console.log("transformedPoint",transformedPoint)
+
         switch (this.selectedHandle.id) {
             case 'top-left':
                 scalePointX = bbox.x + bbox.width;
                 scalePointY = bbox.y + bbox.height;
                 bbox.width = bbox.width - (transformedPoint.x - bbox.x)
                 bbox.height = bbox.height - (transformedPoint.y - bbox.y);
+                bbox.x = transformedPoint.x;
+                bbox.y = transformedPoint.y;
                 break;
             case 'top-right':
                 scalePointX = bbox.x;
                 scalePointY = bbox.y + bbox.height;
                 bbox.width = transformedPoint.x - bbox.x
                 bbox.height = bbox.height - (transformedPoint.y - bbox.y)
+                bbox.y = transformedPoint.y;
                 break;
             case 'bottom-left':
                 scalePointX = bbox.x + bbox.width;
                 scalePointY = bbox.y;
                 bbox.width = bbox.width - (transformedPoint.x - bbox.x)
                 bbox.height = transformedPoint.y - bbox.y
+                bbox.x = transformedPoint.x;
                 break;
             case 'bottom-right':
                 scalePointX = bbox.x
@@ -120,12 +126,49 @@ export default class BoxSelectNew extends SvgTool {
                 break;
         }
 
+        this.updateHandlesCoordinates(bbox);
         const scaleX = bbox.width / this.startBBox.width;
-        const scaleY = bbox.height / this.startBBox.width;
+        const scaleY = bbox.height / this.startBBox.height;
         console.log(scaleX, scaleY)
         this.svgElement.setAttribute('transform',
             `translate(${scalePointX}, ${scalePointY}) scale(${scaleX}, ${scaleY}) translate(${-scalePointX}, ${-scalePointY})`);
 
+    }
+    updateHandlesCoordinates(bbox) {
+        console.log("bbox", bbox)
+        // Обновляем координаты ручек в соответствии с новым bbox
+        this.handles.forEach(handle => {
+            switch (handle.id) {
+                case 'top-left':
+                    handle.setAttribute('cx', bbox.x);
+                    handle.setAttribute('cy', bbox.y);
+                    break;
+                case 'top-right':
+                    handle.setAttribute('cx', bbox.x + bbox.width);
+                    handle.setAttribute('cy', bbox.y);
+                    break;
+                case 'bottom-left':
+                    handle.setAttribute('cx', bbox.x);
+                    handle.setAttribute('cy', bbox.y + bbox.height);
+                    break;
+                case 'bottom-right':
+                    handle.setAttribute('cx', bbox.x + bbox.width);
+                    handle.setAttribute('cy', bbox.y + bbox.height);
+                    break;
+            }
+        });
+    }
+
+    createBoundingBox(bbox) {
+        const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        rect.setAttribute("x", bbox.x);
+        rect.setAttribute("y", bbox.y);
+        rect.setAttribute("width", bbox.width);
+        rect.setAttribute("height", bbox.height);
+        rect.setAttribute("stroke", "#6189ef");
+        rect.setAttribute("stroke-width", "2");
+        rect.setAttribute("fill", "none");
+        this.bBoxGroup.appendChild(rect);
     }
 
 }
