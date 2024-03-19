@@ -3,6 +3,7 @@ import Input from "./Input";
 import {login} from "../actions/user";
 import userState from "../store/userState";
 import {observer} from "mobx-react-lite";
+import "../styles/registration.scss"
 
 const Login = observer(() => {
     const isAuth = userState.isAuth
