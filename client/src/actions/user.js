@@ -47,7 +47,7 @@ export const auth = async ()=>{
 
     } catch (e){
         // console.log(e.response.data)
-        alert(e.response.data.message)
+        console.log(e.response.data.message)
 		localStorage.removeItem("token")
     }
 }

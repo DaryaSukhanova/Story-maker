@@ -1,8 +1,11 @@
 @import "./variables";
+@font-face {
+  font-family: 'MyCustomFont';
+  src: url('../../../client/src/assets/fonts/MarkerFelt/markerfelt_wide.ttf') format('truetype');
+}
 .home{
   //background: $background-color;
   width: 100%;
-  height: calc(100vh - 47px);
   display: flex;
   flex-direction: column;
 }
@@ -22,3 +25,42 @@
     cursor: pointer;
   }
 }
+.home-workspace{
+  display: flex;
+  //justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  padding: 0 50px;
+
+  &__info{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    padding: 10%;
+    &__title{
+      font-size: 56px;
+      font-family: 'MyCustomFont', sans-serif;
+      margin-bottom: 35px;
+    }
+    &__description{
+      font-size: 36px;
+    }
+  }
+  &__image{
+    width: 50%;
+
+    //padding-right: 10%;
+    color: red;
+    text-align: center;
+
+    &__item{
+      width: 50vw;
+      height: 100vh;
+      background: url('../assets/img/home-picture.png') no-repeat center center;
+    }
+  }
+
+}
+
+
