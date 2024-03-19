@@ -3,7 +3,7 @@
 .book-editor {
   background: $background-color;
   width: 100%;
-  height: calc(100vh - 47px);
+  //height: calc(100vh - 47px);
   display: block;
   justify-content: center;
   align-items: center;
@@ -12,7 +12,12 @@
 
 .book-editor-workspace {
   display: flex;
-  margin-left: 20px;
+  //margin-left: 20px;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.block-container{
+  margin-top: 40px;
 }
 
 .file-manager {
@@ -36,7 +41,7 @@ ul{
   padding-left: 0;
 }
 .folder-list li{
-  padding: 10px;
+  //padding: 10px;
 }
 
 .folder-list {
@@ -73,11 +78,11 @@ ul.folder-list li:nth-child(odd){
 
 .action-buttons{
   // height: 58px;
-   width: 1400px;
+   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  margin-top: 100px;
+  margin-top: 40px;
   z-index: 99;
 
 
@@ -98,7 +103,7 @@ ul.folder-list li:nth-child(odd){
     background: $purple-color-buttons;
     color: #FFF;
     text-align: center;
-    font-family: Montserrat;
+    //font-family: Montserrat;
     font-size: 20.265px; 
   }
 
@@ -107,7 +112,7 @@ ul.folder-list li:nth-child(odd){
     background: $blue-color-buttons;
     color: #FFF;
     text-align: center;
-    font-family: Montserrat;
+    //font-family: Montserrat;
     font-size: 20.265px; 
   }
 
@@ -116,7 +121,7 @@ ul.folder-list li:nth-child(odd){
     background: $save-button-book-editor;
     color: #FFF;
     text-align: center;
-    font-family: Montserrat;
+    //font-family: Montserrat;
     font-size: 20.265px;
     margin-top: 20px;
   }
@@ -127,5 +132,7 @@ ul.folder-list li:nth-child(odd){
 }
 .right-buttons {
    margin-left: 140px;
+  display: flex;
+  flex-direction: column;
 
 }
