@@ -18,7 +18,6 @@ class SvgToolState{
     }
     setFillStroke(color){
         if(this.tool){
-            console.log("svg Tool State", color)
             this.tool.svgFillStroke = color
         }
 
@@ -32,9 +31,12 @@ class SvgToolState{
         this.tool.svgLineWidth = width
     }
     clearBoundingBox() {
-        const boundingBoxGroup = document.getElementById("boundingBoxGroup");
+        // const boundingBoxGroup = document.getElementById("boundingBoxGroup");
+        const boundingBoxGroup = document.getElementById("bBoxGroup");
+
         if (boundingBoxGroup && boundingBoxGroup.parentNode) {
-            boundingBoxGroup.parentNode.removeChild(boundingBoxGroup);
+            // boundingBoxGroup.parentNode.removeChild(boundingBoxGroup);
+            boundingBoxGroup.remove();
         }
     }
 }

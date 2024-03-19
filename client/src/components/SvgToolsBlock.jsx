@@ -3,6 +3,7 @@ import svgToolState from "../store/svgToolState";
 import "../styles/toolbar.scss";
 import BoxSelect from "../tools/BoxSelect";
 import svgCanvasState from "../store/svgCanvasState";
+import BoxSelectNew from "../tools/BoxSelectNew";
 
 const SvgToolsBlock = ({ currentColor }) => {
     const [isFill, setIsFill] = useState(true);
@@ -27,7 +28,6 @@ const SvgToolsBlock = ({ currentColor }) => {
 
     useEffect(() => {
         changeColor()
-        console.log(isFill, isStroke);
     }, [currentColor]);
 
     const handleSvgToolClick = (svgTool) => {
@@ -45,6 +45,9 @@ const SvgToolsBlock = ({ currentColor }) => {
                         boundingBox.parentNode.removeChild(boundingBox);
                     }
                     handleSvgToolClick(new BoxSelect(svgCanvasState.canvas));
+                }} />
+                <button className="tool-bar__btn boxSelect" onClick={() => {
+                    new BoxSelectNew(svgCanvasState.canvas);
                 }} />
                 <input
                     className="tool-bar__btn stroke"

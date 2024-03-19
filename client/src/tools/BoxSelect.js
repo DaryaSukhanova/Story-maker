@@ -13,6 +13,7 @@ export default class BoxSelect extends SvgTool {
         this.initialHeight = 0;
         this.shiftRotationHandle = 15
         this.svgGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+        this.svgElement = null
     }
 
     listen() {
@@ -43,9 +44,9 @@ export default class BoxSelect extends SvgTool {
                 // console.log(rectBBox.width)
                 switch (this.selectedHandle.id) {
                     case 'top-left':
-                        let newWidthTL = (rectBBox.width - (transformedPoint.x - rectBBox.x));
+                        let newWidthTL = rectBBox.width - (transformedPoint.x - rectBBox.x);
                         // console.log(rectBBox.width, "-", "(",transformedPoint.x, "-", rectBBox.x,")")
-                        let newHeightTL = (rectBBox.height - (transformedPoint.y - rectBBox.y));
+                        let newHeightTL = rectBBox.height - (transformedPoint.y - rectBBox.y);
                         console.log(newWidthTL)
                         if(newWidthTL<0){
                             this.boundingBoxRect.setAttribute('x', transformedPoint.x + newWidthTL);
@@ -53,8 +54,8 @@ export default class BoxSelect extends SvgTool {
                         } else {
                             this.boundingBoxRect.setAttribute('x', transformedPoint.x);
                             this.boundingBoxRect.setAttribute('y', transformedPoint.y);
-                            this.boundingBoxRect.setAttribute('width', newWidthTL);
-                            this.boundingBoxRect.setAttribute('height', newHeightTL);
+                            this.boundingBoxRect.setAttribute('width', Math.abs(newWidthTL));
+                            this.boundingBoxRect.setAttribute('height', Math.abs(newHeightTL));
                         }
                         break;
                     case 'top-right':
@@ -62,25 +63,25 @@ export default class BoxSelect extends SvgTool {
                         let newHeightTR = (rectBBox.height - (transformedPoint.y - rectBBox.y));
                         // if (newWidthTR >= 0 && newHeightTR >= 0) {
                             this.boundingBoxRect.setAttribute('y', transformedPoint.y);
-                            this.boundingBoxRect.setAttribute('width', newWidthTR);
-                            this.boundingBoxRect.setAttribute('height', newHeightTR);
+                            this.boundingBoxRect.setAttribute('width', Math.abs(newWidthTR));
+                            this.boundingBoxRect.setAttribute('height', Math.abs(newHeightTR));
                         // }
                         break;
                     case 'bottom-left':
-                        let newWidthBL = Math.abs(rectBBox.width - (transformedPoint.x - rectBBox.x));
-                        let newHeightBL = Math.abs(transformedPoint.y - rectBBox.y);
+                        let newWidthBL = rectBBox.width - (transformedPoint.x - rectBBox.x);
+                        let newHeightBL = transformedPoint.y - rectBBox.y;
                         // if (newWidthBL >= 0 && newHeightBL >= 0) {
                             this.boundingBoxRect.setAttribute('x', transformedPoint.x);
-                            this.boundingBoxRect.setAttribute('width', newWidthBL);
-                            this.boundingBoxRect.setAttribute('height', newHeightBL);
+                            this.boundingBoxRect.setAttribute('width', Math.abs(newWidthBL));
+                            this.boundingBoxRect.setAttribute('height', Math.abs(newHeightBL));
                         // }
                         break;
                     case 'bottom-right':
-                        let newWidthBR = Math.abs(transformedPoint.x - rectBBox.x);
-                        let newHeightBR = Math.abs(transformedPoint.y - rectBBox.y);
+                        let newWidthBR = transformedPoint.x - rectBBox.x;
+                        let newHeightBR = transformedPoint.y - rectBBox.y;
                         // if (newWidthBR >= 0 && newHeightBR >= 0) {
-                            this.boundingBoxRect.setAttribute('width', newWidthBR);
-                            this.boundingBoxRect.setAttribute('height', newHeightBR);
+                            this.boundingBoxRect.setAttribute('width', Math.abs(newWidthBR));
+                            this.boundingBoxRect.setAttribute('height', Math.abs(newHeightBR));
                         // }
                         break;
                 }
@@ -202,6 +203,8 @@ export default class BoxSelect extends SvgTool {
         // }
         if(clickedElement.getAttribute('data-tool') === 'true'){
             if(!this.boundingBoxRect){
+                this.svgElement = clickedElement
+
                 this.getBoundingBox(clickedElement);
             }
         }
