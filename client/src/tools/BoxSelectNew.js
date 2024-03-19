@@ -103,16 +103,20 @@ export default class BoxSelectNew extends SvgTool {
             case 'top-right':
                 scalePointX = bbox.x;
                 scalePointY = bbox.y + bbox.height;
+                bbox.width = transformedPoint.x - bbox.x
+                bbox.height = bbox.height - (transformedPoint.y - bbox.y)
                 break;
             case 'bottom-left':
                 scalePointX = bbox.x + bbox.width;
                 scalePointY = bbox.y;
+                bbox.width = bbox.width - (transformedPoint.x - bbox.x)
+                bbox.height = transformedPoint.y - bbox.y
                 break;
             case 'bottom-right':
                 scalePointX = bbox.x
                 scalePointY = bbox.y;
-
-                bbox.width = 300
+                bbox.width = transformedPoint.x - bbox.x;
+                bbox.height = transformedPoint.y - bbox.y
                 break;
         }
 
