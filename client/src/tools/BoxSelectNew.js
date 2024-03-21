@@ -26,6 +26,7 @@ export default class BoxSelectNew extends SvgTool {
         if(this.isScale){
             if (this.selectedHandle) {
                 this.resizeElement(this.svgElement.getBBox(), event);
+
             }
         }
 
@@ -50,7 +51,9 @@ export default class BoxSelectNew extends SvgTool {
             this.svgElement = clickedElement
             this.startBBox = clickedElement.getBBox()
             // this.createHandles(this.startBBox);
+
             this.createHandles(this.getBoundingBox(this.svgElement));
+            this.createBoundingBoxBorder()
         }
         console.log("clickedElement", this.svgElement)
 
@@ -145,6 +148,8 @@ export default class BoxSelectNew extends SvgTool {
         }
 
         this.updateHandlesCoordinates(bbox);
+        this.updateBoundingBoxBorder()
+
         const scaleX = bbox.width / this.startBBox.width;
         const scaleY = bbox.height / this.startBBox.height;
 
@@ -175,18 +180,60 @@ export default class BoxSelectNew extends SvgTool {
                     break;
             }
         });
+
+
     }
 
-    createBoundingBox(bbox) {
-        const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-        rect.setAttribute("x", bbox.x);
-        rect.setAttribute("y", bbox.y);
-        rect.setAttribute("width", bbox.width);
-        rect.setAttribute("height", bbox.height);
-        rect.setAttribute("stroke", "#6189ef");
-        rect.setAttribute("stroke-width", "2");
-        rect.setAttribute("fill", "none");
-        this.bBoxGroup.appendChild(rect);
+    createBoundingBoxBorder() {
+
+        // Создаем линии между ручками для формирования рамки
+        this.topLeft = this.bBoxGroup.querySelector('#top-left');
+        this.topRight = this.bBoxGroup.querySelector('#top-right');
+        this.bottomLeft = this.bBoxGroup.querySelector('#bottom-left');
+        this.bottomRight = this.bBoxGroup.querySelector('#bottom-right');
+
+        // Создаем линии
+        this.topLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        this.createLine(this.topLine, this.topLeft, this.topRight)
+        this.bBoxGroup.appendChild(this.topLine);
+
+        this.rightLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        this.createLine(this.rightLine, this.topRight, this.bottomRight)
+        this.bBoxGroup.appendChild(this.rightLine)
+
+        this.bottomLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        this.createLine(this.bottomLine, this.bottomRight, this.bottomLeft)
+        this.bBoxGroup.appendChild(this.bottomLine)
+
+        this.leftLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        this.createLine(this.leftLine, this.bottomLeft, this.topLeft)
+        this.bBoxGroup.appendChild(this.leftLine)
     }
+    createLine(line, startPoint, lastPoint){
+        line.setAttribute('x1', startPoint.getAttribute('cx'));
+        line.setAttribute('y1', startPoint.getAttribute('cy'));
+        line.setAttribute('x2', lastPoint.getAttribute('cx'));
+        line.setAttribute('y2', lastPoint.getAttribute('cy'));
+        line.setAttribute('stroke', '#6189ef');
+        line.setAttribute('stroke-width', '2');
+
+    }
+    updateBoundingBoxBorder(){
+
+        this.updateLine(this.topLine, this.topLeft, this.topRight)
+
+        this.updateLine(this.rightLine, this.topRight, this.bottomRight)
+
+        this.updateLine(this.bottomLine, this.bottomRight, this.bottomLeft)
+
+        this.updateLine(this.leftLine, this.bottomLeft, this.topLeft)
+    }
+    updateLine(line, startPoint, lastPoint){
+        line.setAttribute('x1', startPoint.getAttribute('cx'));
+        line.setAttribute('y1', startPoint.getAttribute('cy'));
+        line.setAttribute('x2', lastPoint.getAttribute('cx'));
+        line.setAttribute('y2', lastPoint.getAttribute('cy'));
+    }
+
 
 }
