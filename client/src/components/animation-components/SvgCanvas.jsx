@@ -1,16 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react';
-import "../styles/svg-canvas.scss"
+import "../../styles/svg-canvas.scss"
 import {observer} from "mobx-react-lite";
-import canvasState from "../store/canvasState";
-import svgToolState from "../store/svgToolState";
-import SvgRect from "../tools/SvgRect";
-import SvgBrush from "../tools/SvgBrush";
-import SvgCircle from "../tools/SvgCircle";
-import SvgLine from "../tools/SvgLine";
-import SvgPolyline from "../tools/SvgPolyline";
-import SvgPolygon from "../tools/SvgPolygon";
+import canvasState from "../../store/canvasState";
+import svgToolState from "../../store/svgToolState";
+import SvgRect from "../../tools/SvgRect";
+import SvgBrush from "../../tools/SvgBrush";
+import SvgCircle from "../../tools/SvgCircle";
+import SvgLine from "../../tools/SvgLine";
+import SvgPolyline from "../../tools/SvgPolyline";
+import SvgPolygon from "../../tools/SvgPolygon";
 
-import svgCanvasState from "../store/svgCanvasState";
+import svgCanvasState from "../../store/svgCanvasState";
 
 const SvgCanvas = observer (() => {
 

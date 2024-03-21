@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import '../styles/timeline-block.scss';
-import animationToolState from '../store/animationToolState';
+import '../../styles/timeline-block.scss';
+import animationToolState from '../../store/animationToolState';
 import {observer} from "mobx-react-lite";
 
 const TimelineBlock = observer (() => {

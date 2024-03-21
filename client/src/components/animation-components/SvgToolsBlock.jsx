@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import svgToolState from "../store/svgToolState";
-import "../styles/toolbar.scss";
-import BoxSelect from "../tools/BoxSelect";
-import svgCanvasState from "../store/svgCanvasState";
-import BoxSelectNew from "../tools/BoxSelectNew";
+import svgToolState from "../../store/svgToolState";
+import "../../styles/toolbar.scss";
+import BoxSelect from "../../tools/BoxSelect";
+import svgCanvasState from "../../store/svgCanvasState";
+import BoxSelectNew from "../../tools/BoxSelectNew";
 
 const SvgToolsBlock = ({ currentColor }) => {
     const [isFill, setIsFill] = useState(true);

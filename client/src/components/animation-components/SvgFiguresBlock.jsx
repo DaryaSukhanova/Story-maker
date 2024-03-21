@@ -1,19 +1,19 @@
 import React from 'react';
-import toolState from "../store/toolState";
-import Rect from "../tools/Rect";
-import canvasState from "../store/canvasState";
-import Circle from "../tools/Cirlcle";
-import Triangle from "../tools/Triangle";
-import Line from "../tools/Line";
-import SvgBrush from "../tools/SvgBrush";
-import svgCanvasState from "../store/svgCanvasState";
-import SvgLine from "../tools/SvgLine";
-import SvgPolyline from "../tools/SvgPolyline";
-import SvgRect from "../tools/SvgRect";
-import SvgCircle from "../tools/SvgCircle";
-import SvgPolygon from "../tools/SvgPolygon";
-import svgToolState from "../store/svgToolState";
-import "../styles/toolbar.scss";
+import toolState from "../../store/toolState";
+import Rect from "../../tools/Rect";
+import canvasState from "../../store/canvasState";
+import Circle from "../../tools/Cirlcle";
+import Triangle from "../../tools/Triangle";
+import Line from "../../tools/Line";
+import SvgBrush from "../../tools/SvgBrush";
+import svgCanvasState from "../../store/svgCanvasState";
+import SvgLine from "../../tools/SvgLine";
+import SvgPolyline from "../../tools/SvgPolyline";
+import SvgRect from "../../tools/SvgRect";
+import SvgCircle from "../../tools/SvgCircle";
+import SvgPolygon from "../../tools/SvgPolygon";
+import svgToolState from "../../store/svgToolState";
+import "../../styles/toolbar.scss";
 const handleSvgToolClick = (svgTool) => {
     svgToolState.setSvgTool(svgTool);
     svgToolState.setIsDrawnSvg(true)

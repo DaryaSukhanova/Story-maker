@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import "../styles/toolbar.scss"
-import toolState from "../store/toolState";
+import "../../styles/toolbar.scss"
+import toolState from "../../store/toolState";
 import {SketchPicker} from "react-color";
 const SettingBar = () => {
 

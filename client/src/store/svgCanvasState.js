@@ -1,6 +1,6 @@
 import {makeAutoObservable} from "mobx";
 import animationToolState from "./animationToolState";
-import TimelineBlock from "../components/TimelineBlock";
+import TimelineBlock from "../components/animation-components/TimelineBlock";
 import svgToolState from "./svgToolState";
 import SvgBrush from "../tools/SvgBrush";
 

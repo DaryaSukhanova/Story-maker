@@ -1,16 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react';
-import "../styles/canvas.scss"
+import "../../styles/canvas.scss"
 import {observe} from "mobx";
 import {observer} from "mobx-react-lite";
-import canvasState from "../store/canvasState";
-import toolState from "../store/toolState";
-import Brush from "../tools/Brush";
+import canvasState from "../../store/canvasState";
+import toolState from "../../store/toolState";
+import Brush from "../../tools/Brush";
 import {Button, Modal} from "react-bootstrap";
 import axios from 'axios'
 import {forEach} from "react-bootstrap/ElementChildren";
-import Tool from "../tools/Tool";
+import Tool from "../../tools/Tool";
 import Layer from "./Layer";
-import layerState from "../store/layerState";
+import layerState from "../../store/layerState";
 const Canvas = observer(() => {
 
     let layers = layerState.layers

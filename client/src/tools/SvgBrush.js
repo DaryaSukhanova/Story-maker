@@ -1,4 +1,4 @@
-import svgCanvas from "../components/SvgCanvas";
+import svgCanvas from "../components/animation-components/SvgCanvas";
 
 import SvgTool from "./SvgTool";
 export default class SvgBrush extends SvgTool{

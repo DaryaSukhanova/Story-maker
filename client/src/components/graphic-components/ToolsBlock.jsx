@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import canvasState from "../store/canvasState";
-import toolState from "../store/toolState";
-import Eraser from "../tools/Eraser";
+import canvasState from "../../store/canvasState";
+import toolState from "../../store/toolState";
+import Eraser from "../../tools/Eraser";
 import { Button, Modal } from "react-bootstrap";
 import axios from "axios";
 import { SketchPicker } from "react-color";

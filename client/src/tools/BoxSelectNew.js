@@ -1,5 +1,8 @@
 import SvgTool from "./SvgTool";
-import svgCanvas from "../components/SvgCanvas";
+import svgCanvas from "../components/animation-components/SvgCanvas";
+import * as bBoxGroup from "mobx";
+import circle from "react-color/lib/components/circle/Circle";
+import svgToolState from "../store/svgToolState";
 
 export default class BoxSelectNew extends SvgTool {
     constructor(svgCanvas) {
@@ -29,24 +32,21 @@ export default class BoxSelectNew extends SvgTool {
 
             }
         }
-
     }
 
     mouseUpHandler(event) {
         this.isScale = false
-        if(this.newStartBBox){
-            this.startBBox = this.newStartBBox
-        }
-
+        // if(this.newStartBBox){
+        //     this.startBBox = this.newStartBBox
+        // }
     }
 
     mouseDownHandler(event) {
-        console.log("down")
-        this.isScale = true
-        const clickedElement = event.target;
 
+        const clickedElement = event.target;
         // Проверяем, имеет ли элемент атрибут data-tool="true"
         if (clickedElement.getAttribute('data-tool') === 'true') {
+            console.log(clickedElement)
             // Если да, то элемент удовлетворяет условию
             this.svgElement = clickedElement
             this.startBBox = clickedElement.getBBox()
@@ -55,12 +55,17 @@ export default class BoxSelectNew extends SvgTool {
             this.createHandles(this.getBoundingBox(this.svgElement));
             this.createBoundingBoxBorder()
         }
-        console.log("clickedElement", this.svgElement)
 
-        console.log("this.svgElement.getBBox()",this.svgElement.getBBox())
         if (clickedElement.classList.contains('resize-handle')) {
+            this.isScale = true
             this.selectedHandle = clickedElement;
         }
+        if(clickedElement === this.svgCanvas && (!clickedElement.classList.contains('resize-handle') )){
+            svgToolState.clearBoundingBox()
+            this.isScale = false
+
+        }
+
     }
     getBoundingBox(element){
         const canvasRect = this.svgCanvas.getBoundingClientRect();
@@ -78,6 +83,8 @@ export default class BoxSelectNew extends SvgTool {
     }
 
     createHandles(bbox){
+        const existingHandles = this.bBoxGroup.querySelectorAll('circle');
+        existingHandles.forEach(handle => this.bBoxGroup.removeChild(handle));
         const x = bbox.x;
         const y = bbox.y;
         const width = bbox.width;
@@ -155,7 +162,7 @@ export default class BoxSelectNew extends SvgTool {
 
         this.svgElement.setAttribute('transform',
             `translate(${scalePointX}, ${scalePointY}) scale(${scaleX}, ${scaleY}) translate(${-scalePointX}, ${-scalePointY})`);
-        this.newStartBBox = bbox
+        // this.newStartBBox = bbox
 
     }
     updateHandlesCoordinates(bbox) {
@@ -185,7 +192,8 @@ export default class BoxSelectNew extends SvgTool {
     }
 
     createBoundingBoxBorder() {
-
+        const existingLines = this.bBoxGroup.querySelectorAll('line');
+        existingLines.forEach(line => this.bBoxGroup.removeChild(line));
         // Создаем линии между ручками для формирования рамки
         this.topLeft = this.bBoxGroup.querySelector('#top-left');
         this.topRight = this.bBoxGroup.querySelector('#top-right');
@@ -220,20 +228,13 @@ export default class BoxSelectNew extends SvgTool {
     }
     updateBoundingBoxBorder(){
 
-        this.updateLine(this.topLine, this.topLeft, this.topRight)
+        this.createLine(this.topLine, this.topLeft, this.topRight)
 
-        this.updateLine(this.rightLine, this.topRight, this.bottomRight)
+        this.createLine(this.rightLine, this.topRight, this.bottomRight)
 
-        this.updateLine(this.bottomLine, this.bottomRight, this.bottomLeft)
+        this.createLine(this.bottomLine, this.bottomRight, this.bottomLeft)
 
-        this.updateLine(this.leftLine, this.bottomLeft, this.topLeft)
+        this.createLine(this.leftLine, this.bottomLeft, this.topLeft)
     }
-    updateLine(line, startPoint, lastPoint){
-        line.setAttribute('x1', startPoint.getAttribute('cx'));
-        line.setAttribute('y1', startPoint.getAttribute('cy'));
-        line.setAttribute('x2', lastPoint.getAttribute('cx'));
-        line.setAttribute('y2', lastPoint.getAttribute('cy'));
-    }
-
 
 }

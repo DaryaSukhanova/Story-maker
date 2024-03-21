@@ -1,8 +1,8 @@
 import React, {useRef, useState} from 'react';
-import svgCanvasState from "../store/svgCanvasState";
-import animationToolState from "../store/animationToolState";
+import svgCanvasState from "../../store/svgCanvasState";
+import animationToolState from "../../store/animationToolState";
 import {Button, Modal} from "react-bootstrap";
-import canvasState from "../store/canvasState";
+import canvasState from "../../store/canvasState";
 import axios from "axios";
 
 const SvgActionPanel = () => {

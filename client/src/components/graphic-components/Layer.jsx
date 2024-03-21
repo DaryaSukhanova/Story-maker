@@ -1,7 +1,7 @@
 import React from 'react';
-import canvasState from "../store/canvasState";
+import canvasState from "../../store/canvasState";
 import {observer} from "mobx-react-lite";
-import layerState from "../store/layerState";
+import layerState from "../../store/layerState";
 
 const Layer = observer(({id, canvasRef, style}) => {
     // const isVisible = canvasState.layerVisibility[id];

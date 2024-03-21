@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import toolState from "../store/toolState";
-import Line from "../tools/Line";
-import canvasState from "../store/canvasState";
+import toolState from "../../store/toolState";
+import Line from "../../tools/Line";
+import canvasState from "../../store/canvasState";
 import {logDOM} from "@testing-library/react";
 import {observer} from "mobx-react-lite";
-import layerState from "../store/layerState";
+import layerState from "../../store/layerState";
 
 const LayerButton = observer(({id, layerName, func, isActive, isVisible}) => {
     // const [layerVisibility, setLayerVisibility] = useState({ [id]: true });

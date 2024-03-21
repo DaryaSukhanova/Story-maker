@@ -1,9 +1,9 @@
 import React from 'react';
-import '../styles/animation-setting-block.scss'
-import animationToolState from "../store/animationToolState";
-import MotionCurve from "../tools/MotionCurve";
-import svgCanvasState from "../store/svgCanvasState";
-import svgToolState from "../store/svgToolState";
+import '../../styles/animation-setting-block.scss'
+import animationToolState from "../../store/animationToolState";
+import MotionCurve from "../../tools/MotionCurve";
+import svgCanvasState from "../../store/svgCanvasState";
+import svgToolState from "../../store/svgToolState";
 
 const AnimationSettingBlock = () => {
     const handleMotionCurveClick = () => {

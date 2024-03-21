@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import canvasState from "../store/canvasState";
 import toolState from "../store/toolState";
 import Tool from "../tools/Tool";
-import LayerButton from "./LayerButton";
+import LayerButton from "./graphic-components/LayerButton";
 import layerState from "../store/layerState";
 import {observer} from "mobx-react-lite";
 

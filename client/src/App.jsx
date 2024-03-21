@@ -1,8 +1,8 @@
 import React from 'react'
 import "./styles/app.scss"
-import Toolbar from "./components/Toolbar";
-import SettingBar from "./components/SettingBar";
-import Canvas from "./components/Canvas";
+import Toolbar from "./components/graphic-components/Toolbar";
+import SettingBar from "./components/graphic-components/SettingBar";
+import Canvas from "./components/graphic-components/Canvas";
 import GraphicEditor from "./GraphicEditor";
 import {BrowserRouter, Link, Navigate, Route, Routes} from "react-router-dom";
 import AnimationEditor from "./AnimationEditor";

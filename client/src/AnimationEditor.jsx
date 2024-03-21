@@ -1,10 +1,10 @@
 import React from 'react';
-import SvgCanvas from "./components/SvgCanvas";
-import AnimationSettingBlock from "./components/AnimationSettingBlock";
+import SvgCanvas from "./components/animation-components/SvgCanvas";
+import AnimationSettingBlock from "./components/animation-components/AnimationSettingBlock";
 import './styles/animation-editor.scss'
-import SvgDrawingBlock from "./components/SvgDrawingBlock";
-import TimelineBlock from "./components/TimelineBlock";
-import SvgActionPanel from "./components/SvgActionPanel";
+import SvgDrawingBlock from "./components/animation-components/SvgDrawingBlock";
+import TimelineBlock from "./components/animation-components/TimelineBlock";
+import SvgActionPanel from "./components/animation-components/SvgActionPanel";
 const AnimationEditor = () => {
     return (
         <div className="animation-editor">

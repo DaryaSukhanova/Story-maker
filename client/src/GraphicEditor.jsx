@@ -1,13 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react';
-import Toolbar from "./components/Toolbar";
-import SettingBar from "./components/SettingBar";
-import Canvas from "./components/Canvas";
-import DrawingBlock from "./components/DrawingBlock";
+import Toolbar from "./components/graphic-components/Toolbar";
+import SettingBar from "./components/graphic-components/SettingBar";
+import Canvas from "./components/graphic-components/Canvas";
+import DrawingBlock from "./components/graphic-components/DrawingBlock";
 import './styles/graphic-editor.scss'
 import './styles/animation-editor.scss'
-import SvgActionPanel from "./components/SvgActionPanel";
+import SvgActionPanel from "./components/animation-components/SvgActionPanel";
 import ActionPanel from "./components/ActionPanel";
-import LayersBlock from "./components/LayersBlock";
+import LayersBlock from "./components/graphic-components/LayersBlock";
 import {observer} from "mobx-react-lite";
 import layerState from "./store/layerState";
 const GraphicEditor = observer(() => {
