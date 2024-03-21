@@ -8,6 +8,7 @@ export default class BoxSelectNew extends SvgTool {
         this.listen();
         this.svgElement = null
         this.startBBox = null
+        this.newStartBBox = null
         this.handles = [];
         this.isScale = false;
         this.selectedHandle = null
@@ -32,9 +33,14 @@ export default class BoxSelectNew extends SvgTool {
 
     mouseUpHandler(event) {
         this.isScale = false
+        if(this.newStartBBox){
+            this.startBBox = this.newStartBBox
+        }
+
     }
 
     mouseDownHandler(event) {
+        console.log("down")
         this.isScale = true
         const clickedElement = event.target;
 
@@ -43,17 +49,29 @@ export default class BoxSelectNew extends SvgTool {
             // Если да, то элемент удовлетворяет условию
             this.svgElement = clickedElement
             this.startBBox = clickedElement.getBBox()
-            console.log(clickedElement); // Выводим информацию о кликнутом элементе
-            console.log(clickedElement.getBBox())
-
-            // this.createBoundingBox(this.startBBox)
-            this.createHandles(this.startBBox);
+            // this.createHandles(this.startBBox);
+            this.createHandles(this.getBoundingBox(this.svgElement));
         }
+        console.log("clickedElement", this.svgElement)
 
+        console.log("this.svgElement.getBBox()",this.svgElement.getBBox())
         if (clickedElement.classList.contains('resize-handle')) {
             this.selectedHandle = clickedElement;
-            console.log(clickedElement)
         }
+    }
+    getBoundingBox(element){
+        const canvasRect = this.svgCanvas.getBoundingClientRect();
+
+        // Получаем координаты элемента относительно окна браузера
+        const elementRect = element.getBoundingClientRect();
+
+        // Координаты элемента относительно SVG-канваса
+        return {
+            x: elementRect.left - canvasRect.left,
+            y: elementRect.top - canvasRect.top,
+            width: elementRect.width,
+            height: elementRect.height
+        };
     }
 
     createHandles(bbox){
@@ -129,13 +147,13 @@ export default class BoxSelectNew extends SvgTool {
         this.updateHandlesCoordinates(bbox);
         const scaleX = bbox.width / this.startBBox.width;
         const scaleY = bbox.height / this.startBBox.height;
-        console.log(scaleX, scaleY)
+
         this.svgElement.setAttribute('transform',
             `translate(${scalePointX}, ${scalePointY}) scale(${scaleX}, ${scaleY}) translate(${-scalePointX}, ${-scalePointY})`);
+        this.newStartBBox = bbox
 
     }
     updateHandlesCoordinates(bbox) {
-        console.log("bbox", bbox)
         // Обновляем координаты ручек в соответствии с новым bbox
         this.handles.forEach(handle => {
             switch (handle.id) {
