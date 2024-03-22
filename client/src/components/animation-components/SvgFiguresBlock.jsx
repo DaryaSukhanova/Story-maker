@@ -41,12 +41,12 @@ const SvgFiguresBlock = () => {
         <div className="figures-block-container">
             <div className="tool-bar-item-title">Figures</div>
             <div className="tool-bar-item">
-                {/*<button className="tool-bar__btn svgBrush" onClick={() => handleSvgToolClick(new SvgBrush(svgCanvasState.canvas))} />*/}
-                {/*<button className="tool-bar__btn line" onClick={() => handleSvgToolClick(new SvgLine(svgCanvasState.canvas))} />*/}
-                {/*<button className="tool-bar__btn svgPolyline" onClick={() => handleSvgToolClick(new SvgPolyline(svgCanvasState.canvas))} />*/}
-                {/*<button className="tool-bar__btn rect" onClick={() => handleSvgToolClick(new SvgRect(svgCanvasState.canvas))} />*/}
-                {/*<button className="tool-bar__btn circle" onClick={() => handleSvgToolClick(new SvgCircle(svgCanvasState.canvas))} />*/}
-                {/*<button className="tool-bar__btn triangle" onClick={() => handleSvgToolClick(new SvgPolygon(svgCanvasState.canvas))} />*/}
+                <button className="tool-bar__btn line" onClick={() => handleSvgToolClick(new SvgLine(svgCanvasState.canvas))} />
+                <button className="tool-bar__btn svgPolyline" onClick={() => handleSvgToolClick(new SvgPolyline(svgCanvasState.canvas))} />
+                <button className="tool-bar__btn svgBrush" onClick={() => handleSvgToolClick(new SvgBrush(svgCanvasState.canvas))} />
+                <button className="tool-bar__btn rect" onClick={() => handleSvgToolClick(new SvgRect(svgCanvasState.canvas))} />
+                <button className="tool-bar__btn circle" onClick={() => handleSvgToolClick(new SvgCircle(svgCanvasState.canvas))} />
+                <button className="tool-bar__btn triangle" onClick={() => handleSvgToolClick(new SvgPolygon(svgCanvasState.canvas))} />
                 {tools.map((tool, index) => (
                     <button key={index} onClick={() => selectTool(tool.name)}>
                         {tool.name}

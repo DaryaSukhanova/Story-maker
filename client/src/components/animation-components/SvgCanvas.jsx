@@ -16,46 +16,47 @@ import Rect from "../../tools/animation-tools/Rect";
 
 const SvgCanvas = observer(() => {
     const svgCanvasRef = useRef();
-    const [circle, setCircle] = useState(null); // Состояние круга
-    const [rect, setRect] = useState(null);
-
-    const [startX, setStartX] = useState(0); // Начальная координата X
-    const [startY, setStartY] = useState(0); // Начальная координата Y
-    const [isDrawing, setIsDrawing] = useState(false); // Флаг рисования
+    const [shapes, setShapes] = useState([]); // Массив для хранения всех нарисованных фигур
+    const [currentShape, setCurrentShape] = useState(null);
+    const [startX, setStartX] = useState(0);
+    const [startY, setStartY] = useState(0);
+    const [isDrawing, setIsDrawing] = useState(false);
 
     useEffect(() => {
         svgCanvasState.setSvgCanvas(svgCanvasRef.current);
     }, []);
 
-    // Обработчик нажатия кнопки мыши
     const handleMouseDown = (e) => {
-        setIsDrawing(true); // Устанавливаем флаг рисования
+        setIsDrawing(true);
         const svgCanvasRect = svgCanvasRef.current.getBoundingClientRect();
         const x = e.clientX - svgCanvasRect.left;
         const y = e.clientY - svgCanvasRect.top;
-        setStartX(x); // Устанавливаем начальную координату X
-        setStartY(y); // Устанавливаем начальную координату Y
+        setStartX(x);
+        setStartY(y);
+        setCurrentShape({ type: svgToolState.tool, x, y, width: 0, height: 0 });
     };
 
-    // Обработчик движения мыши
     const handleMouseMove = (e) => {
-        if (!isDrawing) return; // Если не рисуем, выходим
+        if (!isDrawing) return;
         const svgCanvasRect = svgCanvasRef.current.getBoundingClientRect();
         const x = e.clientX - svgCanvasRect.left;
         const y = e.clientY - svgCanvasRect.top;
+
         if (svgToolState.tool === 'circle') {
             const radius = Math.sqrt(Math.pow(x - startX, 2) + Math.pow(y - startY, 2));
-            setCircle({ cx: startX, cy: startY, r: radius });
+            setCurrentShape(prevShape => ({ ...prevShape, r: radius }));
         } else if (svgToolState.tool === 'rect') {
             const width = Math.abs(x - startX);
             const height = Math.abs(y - startY);
-            setRect({ x: startX, y: startY, width, height });
+            setCurrentShape(prevShape => ({ ...prevShape, width, height }));
         }
     };
 
-    // Обработчик отжатия кнопки мыши
     const handleMouseUp = () => {
-        setIsDrawing(false); // Сбрасываем флаг рисования
+        setIsDrawing(false);
+        if (!currentShape) return; // Если нет текущей фигуры, выходим
+        setShapes(prevShapes => [...prevShapes, currentShape]); // Добавляем текущую фигуру в массив shapes
+        setCurrentShape(null); // Сбрасываем текущую фигуру
     };
 
     return (
@@ -66,13 +67,22 @@ const SvgCanvas = observer(() => {
                 id="drawingCanvas"
                 width={1100}
                 height={644}
-                onMouseDown={handleMouseDown} // Обработчик нажатия кнопки мыши
-                onMouseMove={handleMouseMove} // Обработчик движения мыши
-                onMouseUp={handleMouseUp} // Обработчик отжатия кнопки мыши
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
             >
-                {/*{circle && <Circle cx={circle.cx} cy={circle.cy} r={circle.r} />}*/}
-                {svgToolState.tool === 'circle' && circle && <Circle cx={circle.cx} cy={circle.cy} r={circle.r} />}
-                {svgToolState.tool === 'rect' && rect && <Rect x={rect.x} y={rect.y} width={rect.width} height={rect.height} />}
+                {shapes.map((shape, index) => {
+                    if (shape.type === 'circle') {
+                        return <Circle key={index} cx={shape.x} cy={shape.y} r={shape.r} />;
+                    } else if (shape.type === 'rect') {
+                        return <Rect key={index} x={shape.x} y={shape.y} width={shape.width} height={shape.height} />;
+                    }
+                })}
+                {currentShape && ( // Рендерим текущий элемент в процессе рисования
+                    currentShape.type === 'circle' ?
+                        <Circle cx={currentShape.x} cy={currentShape.y} r={currentShape.r} /> :
+                        <Rect x={currentShape.x} y={currentShape.y} width={currentShape.width} height={currentShape.height}  />
+                )}
             </svg>
         </div>
     );
