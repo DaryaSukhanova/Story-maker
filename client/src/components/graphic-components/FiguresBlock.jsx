@@ -1,11 +1,11 @@
 import React from 'react';
 import toolState from "../../store/toolState";
-import Rect from "../../tools/Rect";
+import Rect from "../../tools/graphic-tools/Rect";
 import canvasState from "../../store/canvasState";
-import Circle from "../../tools/Cirlcle";
-import Eraser from "../../tools/Eraser";
-import Line from "../../tools/Line";
-import Triangle from "../../tools/Triangle";
+import Circle from "../../tools/graphic-tools/Cirlcle";
+import Eraser from "../../tools/graphic-tools/Eraser";
+import Line from "../../tools/graphic-tools/Line";
+import Triangle from "../../tools/graphic-tools/Triangle";
 
 const FiguresBlock = () => {
     return (

@@ -1,4 +1,4 @@
-import canvasState from "../store/canvasState";
+import canvasState from "../../store/canvasState";
 
 export default class Tool{
     constructor(canvas) {

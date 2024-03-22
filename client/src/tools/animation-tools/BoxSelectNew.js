@@ -1,8 +1,8 @@
 import SvgTool from "./SvgTool";
-import svgCanvas from "../components/animation-components/SvgCanvas";
+import svgCanvas from "../../components/animation-components/SvgCanvas";
 import * as bBoxGroup from "mobx";
 import circle from "react-color/lib/components/circle/Circle";
-import svgToolState from "../store/svgToolState";
+import svgToolState from "../../store/svgToolState";
 
 export default class BoxSelectNew extends SvgTool {
     constructor(svgCanvas) {

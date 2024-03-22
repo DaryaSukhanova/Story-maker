@@ -8,6 +8,7 @@ class SvgToolState{
         makeAutoObservable(this)
     }
     setSvgTool(tool){
+        console.log(tool)
         this.tool = tool
     }
     setFillColor(color){

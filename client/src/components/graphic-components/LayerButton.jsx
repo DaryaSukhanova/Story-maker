@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import toolState from "../../store/toolState";
-import Line from "../../tools/Line";
+import Line from "../../tools/graphic-tools/Line";
 import canvasState from "../../store/canvasState";
 import {logDOM} from "@testing-library/react";
 import {observer} from "mobx-react-lite";

@@ -1,10 +1,10 @@
 import AnimationTool from "./AnimationTool";
 import axios from "axios";
-import animationToolState from "../store/animationToolState";
-import svgToolState from "../store/svgToolState";
-import {saveAnimatedSvg, savedJson} from "../actions/animation";
-import svgCanvas from "../components/animation-components/SvgCanvas";
-import canvasState from "../store/canvasState";
+import animationToolState from "../../store/animationToolState";
+import svgToolState from "../../store/svgToolState";
+import {saveAnimatedSvg, savedJson} from "../../actions/animation";
+import svgCanvas from "../../components/animation-components/SvgCanvas";
+import canvasState from "../../store/canvasState";
 
 let distanceCovered = null
 let isAnimationSaved = animationToolState.isAnimationSaved;

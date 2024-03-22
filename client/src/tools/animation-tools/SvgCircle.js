@@ -25,8 +25,6 @@ export default class SvgCircle extends SvgTool{
     }
 
     mouseDownHandler(e) {
-
-
         const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
         this.mouseDown = true;
         this.startX = e.pageX - svgCanvasRect.left;

@@ -1,4 +1,4 @@
-import svgToolState from "../store/svgToolState";
+import svgToolState from "../../store/svgToolState";
 
 export default class SvgTool {
     constructor(svgCanvas) {

@@ -1,10 +1,10 @@
 import React from 'react';
 import toolState from "../../store/toolState";
-import Brush from "../../tools/Brush";
+import Brush from "../../tools/graphic-tools/Brush";
 import canvasState from "../../store/canvasState";
-import Scratch from "../../tools/Scratch";
-import Bubbles from "../../tools/Bubbles";
-import Pencil from "../../tools/Pencil";
+import Scratch from "../../tools/graphic-tools/Scratch";
+import Bubbles from "../../tools/graphic-tools/Bubbles";
+import Pencil from "../../tools/graphic-tools/Pencil";
 
 const BrushBlock = () => {
     return (

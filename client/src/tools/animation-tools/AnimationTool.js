@@ -1,4 +1,5 @@
-import animationToolState from "../store/animationToolState";
+import animationToolState from "../../store/animationToolState";
+import svgToolState from "../../store/svgToolState";
 
 export default class AnimationTool {
     constructor(svgCanvas) {
@@ -8,9 +9,11 @@ export default class AnimationTool {
         this.destroyEvents();
         this.currentTime = 0
         this.currentName = null
+        this.destroyEvents();
     }
 
     destroyEvents() {
+        console.log("destroy")
         this.svgCanvas.onmousemove = null;
         this.svgCanvas.onmousedown = null;
         this.svgCanvas.onmouseup = null;
@@ -23,4 +26,5 @@ export default class AnimationTool {
     set animationName(name){
         this.currentName = name
     }
+
 }

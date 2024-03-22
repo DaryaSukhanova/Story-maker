@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import toolState from "../../store/toolState";
 import svgToolState from "../../store/svgToolState";
 import "../../styles/svg-toolbar.scss"
-import SvgTool from "../../tools/SvgTool";
+import SvgTool from "../../tools/animation-tools/SvgTool";
 import {SketchPicker} from "react-color";
 import ColorPicker from "../ColorPicker";
 

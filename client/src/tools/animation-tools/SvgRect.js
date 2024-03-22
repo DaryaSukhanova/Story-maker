@@ -1,6 +1,6 @@
 import React from "react";
 import SvgTool from "./SvgTool";
-import toolState from "../store/toolState";
+import toolState from "../../store/toolState";
 
 export default class SvgRect extends SvgTool {
     constructor(svgCanvas) {

@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import canvasState from "../../store/canvasState";
 import toolState from "../../store/toolState";
-import Tool from "../../tools/Tool";
+import Tool from "../../tools/graphic-tools/Tool";
 import LayerSelector from "../LayerSelector";
 import '../../styles/layers-block.scss'
 import layerState from "../../store/layerState";

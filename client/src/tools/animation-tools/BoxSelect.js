@@ -1,5 +1,5 @@
 import SvgTool from "./SvgTool";
-import svgCanvas from "../components/animation-components/SvgCanvas";
+import svgCanvas from "../../components/animation-components/SvgCanvas";
 
 export default class BoxSelect extends SvgTool {
     constructor(svgCanvas) {
