@@ -11,10 +11,14 @@ const SvgToolsBlock = ({ currentColor }) => {
     const changeColor = () => {
         if (isFill) {
             svgToolState.setFillColor(currentColor);
-            svgToolState.setFillStroke(currentColor);
+            svgToolState.setStrokeColor(currentColor)
+            // svgToolState.setFillStroke(currentColor);
+
         }
         if (isStroke) {
-            svgToolState.setFillStroke(currentColor);
+            // svgToolState.setFillStroke(currentColor);
+
+            svgToolState.setStrokeColor(currentColor)
         }
     }
     const changeFillColorBtn = () => {

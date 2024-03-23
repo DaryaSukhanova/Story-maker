@@ -28,7 +28,6 @@ const SvgToolbar = () => {
     return (
         <div className="tool-bar svg-tool-bar">
             {/*<div className="svg-tool-bar-title">Drawing Tools</div>*/}
-
                 <SvgFiguresBlock/>
                 <SvgToolsBlock currentColor={currentColor}/>
                 <ColorPicker currentColor={currentColor} handleColorChange={handleColorChange} />

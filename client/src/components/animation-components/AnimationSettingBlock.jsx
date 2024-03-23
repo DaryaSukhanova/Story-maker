@@ -22,7 +22,7 @@ const AnimationSettingBlock = () => {
                     Animation Settings
                 </div>
                 <div className="animation-setting-block-btns">
-                    <button className="animation-setting-block-btns__btn motionCurve" onClick={handleMotionCurveClick} />
+                    <button className="animation-setting-block-btns__btn motionCurve" onClick={()=>{animationToolState.setAnimationTool(new MotionCurve(svgCanvasState.canvas))}} />
                     <button className="animation-setting-block-btns__btn motionCurve" onClick={()=> {animationToolState.setAnimationTool(new RotateElement(svgCanvasState.canvas))}} />
                 </div>
             </div>

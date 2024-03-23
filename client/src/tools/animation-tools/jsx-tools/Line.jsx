@@ -1,8 +1,9 @@
 import React from 'react';
+import svgToolState from "../../../store/svgToolState";
 
-const Line = ({ d, stroke }) => {
+const Line = ({d}) => {
     return (
-        <path d={d} fill="none" strokeWidth={stroke} stroke="black" strokeLinejoin="round" strokeLinecap="round"/>
+        <path d={d} stroke={svgToolState.strokeColor} strokeWidth={svgToolState.stroke} fill={svgToolState.fillColor} strokeLinejoin="round" strokeLinecap="round" />
 
     );
 };

@@ -27,11 +27,11 @@ const SvgFiguresBlock = () => {
     };
 
     const tools = [
-        { name: "circle" },
-        { name: "rect" },
-        {name:"brush"},
-        {name: "line"},
-        {name: "polyline"},
+        {name:"brush", style: 'tool-bar__btn svgBrush'},
+        { name: "circle", style: 'tool-bar__btn circle' },
+        { name: "rect", style: 'tool-bar__btn rect' },
+        {name: "line", style: 'tool-bar__btn line'},
+        {name: "polyline", style: 'tool-bar__btn svgPolyline'},
         // {name: "polygon"}
         // Другие инструменты рисования
     ];
@@ -45,16 +45,14 @@ const SvgFiguresBlock = () => {
         <div className="figures-block-container">
             <div className="tool-bar-item-title">Figures</div>
             <div className="tool-bar-item">
-                {/*<button className="tool-bar__btn line" onClick={() => handleSvgToolClick(new SvgLine(svgCanvasState.canvas))} />*/}
-                <button className="tool-bar__btn svgPolyline" onClick={() => handleSvgToolClick(new SvgPolyline(svgCanvasState.canvas))} />
+                <button className="tool-bar__btn line" onClick={() => handleSvgToolClick(new SvgLine(svgCanvasState.canvas))} />
+                {/*<button className="tool-bar__btn svgPolyline" onClick={() => handleSvgToolClick(new SvgPolyline(svgCanvasState.canvas))} />*/}
                 {/*<button className="tool-bar__btn svgBrush" onClick={() => handleSvgToolClick(new SvgBrush(svgCanvasState.canvas))} />*/}
                 {/*<button className="tool-bar__btn rect" onClick={() => handleSvgToolClick(new SvgRect(svgCanvasState.canvas))} />*/}
                 {/*<button className="tool-bar__btn circle" onClick={() => handleSvgToolClick(new SvgCircle(svgCanvasState.canvas))} />*/}
                 {/*<button className="tool-bar__btn triangle" onClick={() => handleSvgToolClick(new SvgPolygon(svgCanvasState.canvas))} />*/}
                 {tools.map((tool, index) => (
-                    <button key={index} onClick={() => selectTool(tool.name)}>
-                        {tool.name}
-                    </button>
+                    <button key={index} onClick={() => selectTool(tool.name)} className={tool.style}></button>
                 ))}
             </div>
 

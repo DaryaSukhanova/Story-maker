@@ -46,7 +46,8 @@ const SvgCanvas = observer(() => {
         // if(svgToolState.tool === 'polygon' ){
         //     setDataPoints(dataPoints + ` ${x},${y}`)
         // }
-        setCurrentShape({ type: svgToolState.tool, x, y, width: 0, height: 0, d:`M ${x} ${y}`,points:"", stroke: `${svgToolState.stroke}` });
+
+        setCurrentShape({ type: svgToolState.tool, x, y, width: 0, height: 0, d:`M ${x} ${y}`,points:"" });
     };
 
     const handleMouseMove = (e) => {
@@ -84,8 +85,13 @@ const SvgCanvas = observer(() => {
         if (!currentShape) return; // Если нет текущей фигуры, выходим
         setShapes(prevShapes => [...prevShapes, currentShape]); // Добавляем текущую фигуру в массив shapes
         setCurrentShape(null); // Сбрасываем текущую фигуру
+        console.log(animationToolState.tool)
 
     };
+
+    // handleMouseDown = animationToolState.tool === 'motionCurve' ?  () => {} : handleMouseDown;
+    // handleMouseMove = animationToolState.tool === 'motionCurve' ? handleMouseMove : () => {};
+    // handleMouseUp = animationToolState.tool === 'motionCurve' ? handleMouseUp : () => {};
 
     return (
         <div className="block-container">
@@ -101,16 +107,15 @@ const SvgCanvas = observer(() => {
             >
                 {[...shapes, currentShape].map((shape, index) => (
                     shape && (shape.type === 'circle' ? (
-                        <Circle key={index} cx={shape.x} cy={shape.y} r={shape.r} stroke={shape.stroke} />
+                        <Circle key={index} cx={shape.x} cy={shape.y} r={shape.r} />
                     ) : shape.type === 'rect' ? (
-                        <Rect key={index} x={shape.x} y={shape.y} width={shape.width} height={shape.height} stroke={shape.stroke} />
+                        <Rect key={index} x={shape.x} y={shape.y} width={shape.width} height={shape.height}  />
                     ) : shape.type === 'brush' ?(
-                        <Brush key={index} d={shape.d} stroke={shape.stroke}/>
-                    ) : shape.type === 'line' ?(
-                        <Line key={index} d={shape.d} stroke={shape.stroke}/>
-
+                        <Brush key={index} d={shape.d}/>
+                    ) : shape.type === 'brush' ?(
+                        <Line key={index} d={shape.d} />
                     ) :
-                       <Polyline key={index} points={shape.points} stroke={shape.stroke}/>
+                        null
                     )
 
                 ))}
