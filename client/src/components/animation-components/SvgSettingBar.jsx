@@ -14,7 +14,8 @@ const SvgSettingBar = () => {
                 <div className="tool-bar-item-title">Line width</div>
                 <div className="tool-bar-item">
                     <input className="slider-line-width"
-                           onChange={e => svgToolState.setLineWidth(e.target.value)}
+                           onChange={e => svgToolState.setStroke(e.target.value)}
+                           // onChange={e => svgToolState.setLineWidth(e.target.value)}
                            id="line-width" type="range"
                            defaultValue={1} min={1} max={50}/>
                 </div>

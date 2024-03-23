@@ -4,7 +4,7 @@ import svgToolState from "../../store/svgToolState";
 import SvgBrush from "../../tools/animation-tools/SvgBrush";
 import SvgRect from "../../tools/animation-tools/SvgRect";
 import SvgLine from "../../tools/animation-tools/SvgLine";
-import Circle from "../../tools/animation-tools/Circle";
+import Circle from "../../tools/animation-tools/jsx-tools/Circle";
 import SvgPolyline from "../../tools/animation-tools/SvgPolyline";
 import SvgPolygon from "../../tools/animation-tools/SvgPolygon";
 import svgCanvasState from "../../store/svgCanvasState";

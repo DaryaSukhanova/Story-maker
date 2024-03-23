@@ -4,6 +4,7 @@ import {logDOM} from "@testing-library/react";
 class SvgToolState{
     tool = null
     isDrawn = false
+    stroke = "1"
     constructor() {
         makeAutoObservable(this)
     }
@@ -22,6 +23,10 @@ class SvgToolState{
             this.tool.svgFillStroke = color
         }
 
+    }
+    setStroke(stroke){
+        console.log(stroke)
+        this.stroke = stroke
     }
 
     setIsDrawnSvg(bool){

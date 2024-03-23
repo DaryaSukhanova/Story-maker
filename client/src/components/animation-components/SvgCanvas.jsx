@@ -5,14 +5,19 @@ import canvasState from "../../store/canvasState";
 import svgToolState from "../../store/svgToolState";
 import SvgRect from "../../tools/animation-tools/SvgRect";
 import SvgBrush from "../../tools/animation-tools/SvgBrush";
-import Circle from "../../tools/animation-tools/Circle";
+import Circle from "../../tools/animation-tools/jsx-tools/Circle";
 import SvgLine from "../../tools/animation-tools/SvgLine";
 import SvgPolyline from "../../tools/animation-tools/SvgPolyline";
 import SvgPolygon from "../../tools/animation-tools/SvgPolygon";
 
 import svgCanvasState from "../../store/svgCanvasState";
 import animationToolState from "../../store/animationToolState";
-import Rect from "../../tools/animation-tools/Rect";
+import Rect from "../../tools/animation-tools/jsx-tools/Rect";
+import Brush from "../../tools/animation-tools/jsx-tools/Brush";
+import Line from "../../tools/animation-tools/jsx-tools/Line";
+import Polyline from "../../tools/animation-tools/jsx-tools/Polyline";
+import Polygon from "../../tools/animation-tools/jsx-tools/Polygon";
+import {set} from "mobx";
 
 const SvgCanvas = observer(() => {
     const svgCanvasRef = useRef();
@@ -21,7 +26,7 @@ const SvgCanvas = observer(() => {
     const [startX, setStartX] = useState(0);
     const [startY, setStartY] = useState(0);
     const [isDrawing, setIsDrawing] = useState(false);
-
+    const [dataPoints, setDataPoints] = useState("")
     useEffect(() => {
         svgCanvasState.setSvgCanvas(svgCanvasRef.current);
     }, []);
@@ -33,11 +38,19 @@ const SvgCanvas = observer(() => {
         const y = e.clientY - svgCanvasRect.top;
         setStartX(x);
         setStartY(y);
-        setCurrentShape({ type: svgToolState.tool, x, y, width: 0, height: 0 });
+
+        // if (svgToolState.tool === 'polyline') {
+        //     setDataPoints(`${x},${y}`);
+        //     setCurrentShape({ type: svgToolState.tool, points: `${x},${y}`, stroke: svgToolState.stroke });
+        // }
+        // if(svgToolState.tool === 'polygon' ){
+        //     setDataPoints(dataPoints + ` ${x},${y}`)
+        // }
+        setCurrentShape({ type: svgToolState.tool, x, y, width: 0, height: 0, d:`M ${x} ${y}`,points:"", stroke: `${svgToolState.stroke}` });
     };
 
     const handleMouseMove = (e) => {
-        if (!isDrawing) return;
+        // if (!isDrawing) return;
         const svgCanvasRect = svgCanvasRef.current.getBoundingClientRect();
         const x = e.clientX - svgCanvasRect.left;
         const y = e.clientY - svgCanvasRect.top;
@@ -49,7 +62,21 @@ const SvgCanvas = observer(() => {
             const width = Math.abs(x - startX);
             const height = Math.abs(y - startY);
             setCurrentShape(prevShape => ({ ...prevShape, width, height }));
+        } else if(svgToolState.tool === 'brush'){
+            if (currentShape) {
+                currentShape.d += ` L ${x} ${y}`;
+                const d = currentShape.d;
+                setCurrentShape(prevShape => ({ ...prevShape, d }));
+            }
+        } else if (svgToolState.tool === 'line'){
+            const d = `M ${startX} ${startY} L ${x} ${y}`;
+            setCurrentShape(prevShape => ({ ...prevShape,  d}));
         }
+        // else if (svgToolState.tool === 'polyline') {
+        //     setDataPoints(prevPoints => `${prevPoints} ${x},${y}`);
+        //     const points = dataPoints
+        //     setCurrentShape(prevShape => ({ ...prevShape, points}));
+        // }
     };
 
     const handleMouseUp = () => {
@@ -57,6 +84,7 @@ const SvgCanvas = observer(() => {
         if (!currentShape) return; // Если нет текущей фигуры, выходим
         setShapes(prevShapes => [...prevShapes, currentShape]); // Добавляем текущую фигуру в массив shapes
         setCurrentShape(null); // Сбрасываем текущую фигуру
+
     };
 
     return (
@@ -71,18 +99,21 @@ const SvgCanvas = observer(() => {
                 onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp}
             >
-                {shapes.map((shape, index) => {
-                    if (shape.type === 'circle') {
-                        return <Circle key={index} cx={shape.x} cy={shape.y} r={shape.r} />;
-                    } else if (shape.type === 'rect') {
-                        return <Rect key={index} x={shape.x} y={shape.y} width={shape.width} height={shape.height} />;
-                    }
-                })}
-                {currentShape && ( // Рендерим текущий элемент в процессе рисования
-                    currentShape.type === 'circle' ?
-                        <Circle cx={currentShape.x} cy={currentShape.y} r={currentShape.r} /> :
-                        <Rect x={currentShape.x} y={currentShape.y} width={currentShape.width} height={currentShape.height}  />
-                )}
+                {[...shapes, currentShape].map((shape, index) => (
+                    shape && (shape.type === 'circle' ? (
+                        <Circle key={index} cx={shape.x} cy={shape.y} r={shape.r} stroke={shape.stroke} />
+                    ) : shape.type === 'rect' ? (
+                        <Rect key={index} x={shape.x} y={shape.y} width={shape.width} height={shape.height} stroke={shape.stroke} />
+                    ) : shape.type === 'brush' ?(
+                        <Brush key={index} d={shape.d} stroke={shape.stroke}/>
+                    ) : shape.type === 'line' ?(
+                        <Line key={index} d={shape.d} stroke={shape.stroke}/>
+
+                    ) :
+                       <Polyline key={index} points={shape.points} stroke={shape.stroke}/>
+                    )
+
+                ))}
             </svg>
         </div>
     );

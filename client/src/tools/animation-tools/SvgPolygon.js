@@ -66,24 +66,5 @@ export default class SvgPolygon extends SvgTool{
             this.pathData = "";
         }
     }
-    // draw(p) {
-    //     this.svgCanvas.innerHTML = "";
-    //     this.polygons.forEach((polygonData) =>{
-    //         const polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-    //         polygon.setAttribute("stroke", "black");
-    //         polygon.setAttribute("stroke-width", "2");
-    //         polygon.setAttribute("fill", "none");
-    //         polygon.setAttribute("points", polygonData.p);
-    //         this.svgCanvas.appendChild(polygon);
-    //     })
-    //     console.log(this.polygons)
-    //     // if (this.drawingLine) {
-    //         const line = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-    //         line.setAttribute("stroke", "black");
-    //         line.setAttribute("stroke-width", "2");
-    //         line.setAttribute("fill", "none");
-    //         line.setAttribute("points", p);
-    //         this.svgCanvas.appendChild(line);
-    //     // }
-    // }
+
 }
