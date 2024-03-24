@@ -15,6 +15,7 @@ import svgToolState from "../../store/svgToolState";
 import "../../styles/toolbar.scss";
 import Circle from "../../tools/animation-tools/jsx-tools/Circle";
 import SvgCircle from "../../tools/animation-tools/SvgCircle";
+import {Svg} from "@svgdotjs/svg.js";
 
 
 const SvgFiguresBlock = () => {
@@ -40,7 +41,6 @@ const SvgFiguresBlock = () => {
         svgToolState.setSvgTool(toolComponent);
     };
 
-
     return (
         <div className="figures-block-container">
             <div className="tool-bar-item-title">Figures</div>
@@ -49,11 +49,11 @@ const SvgFiguresBlock = () => {
                 {/*<button className="tool-bar__btn svgPolyline" onClick={() => handleSvgToolClick(new SvgPolyline(svgCanvasState.canvas))} />*/}
                 {/*<button className="tool-bar__btn svgBrush" onClick={() => handleSvgToolClick(new SvgBrush(svgCanvasState.canvas))} />*/}
                 {/*<button className="tool-bar__btn rect" onClick={() => handleSvgToolClick(new SvgRect(svgCanvasState.canvas))} />*/}
-                {/*<button className="tool-bar__btn circle" onClick={() => handleSvgToolClick(new SvgCircle(svgCanvasState.canvas))} />*/}
-                {/*<button className="tool-bar__btn triangle" onClick={() => handleSvgToolClick(new SvgPolygon(svgCanvasState.canvas))} />*/}
-                {tools.map((tool, index) => (
-                    <button key={index} onClick={() => selectTool(tool.name)} className={tool.style}></button>
-                ))}
+                <button className="tool-bar__btn circle" onClick={() => handleSvgToolClick(new SvgCircle(svgCanvasState.canvas))} />
+                <button className="tool-bar__btn triangle" onClick={() => handleSvgToolClick(new SvgPolygon(svgCanvasState.canvas))} />
+                {/*{tools.map((tool, index) => (*/}
+                {/*    <button key={index} onClick={() => selectTool(tool.name)} className={tool.style}></button>*/}
+                {/*))}*/}
             </div>
 
         </div>

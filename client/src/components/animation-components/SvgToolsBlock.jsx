@@ -43,13 +43,13 @@ const SvgToolsBlock = ({ currentColor }) => {
             <div className="tool-bar-item-title">Tools</div>
 
             <div className="tool-bar-item">
-                <button className="tool-bar__btn boxSelect" onClick={() => {
-                    const boundingBox = document.getElementById('boundingBoxGroup');
-                    if (boundingBox) {
-                        boundingBox.parentNode.removeChild(boundingBox);
-                    }
-                    handleSvgToolClick(new BoxSelect(svgCanvasState.canvas));
-                }} />
+                {/*<button className="tool-bar__btn boxSelect" onClick={() => {*/}
+                {/*    const boundingBox = document.getElementById('boundingBoxGroup');*/}
+                {/*    if (boundingBox) {*/}
+                {/*        boundingBox.parentNode.removeChild(boundingBox);*/}
+                {/*    }*/}
+                {/*    handleSvgToolClick(new BoxSelect(svgCanvasState.canvas));*/}
+                {/*}} />*/}
                 <button className="tool-bar__btn boxSelect" onClick={() => {
                     new BoxSelectNew(svgCanvasState.canvas);
                 }} />

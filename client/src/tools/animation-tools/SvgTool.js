@@ -5,7 +5,7 @@ export default class SvgTool {
         this.svgCanvas = svgCanvas;
         this.currentStroke = '#000000';
         this.currentFillColor = 'none';
-        this.currentLineWidth = '2';
+        this.currentLineWidth = svgToolState.stroke;
         this.destroyEvents();
 
     }

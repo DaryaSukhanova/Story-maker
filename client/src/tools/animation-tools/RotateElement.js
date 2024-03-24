@@ -26,52 +26,34 @@ export default class RotateElement extends AnimationTool {
             this.runAnimation(this.clickedElement);
         }
 
-        console.log("down")
-        const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        const svgNS = this.svgCanvas.namespaceURI;
-        const mouseX = e.clientX - this.svgCanvas.getBoundingClientRect().left;
-        const mouseY = e.clientY - this.svgCanvas.getBoundingClientRect().top;
-
-        circle.setAttributeNS(null, "cx", "500");
-        circle.setAttributeNS(null, "cy", "300");
-        circle.setAttributeNS(null, "r", "200");
-        circle.setAttributeNS(null, "stroke", "blue");
-        circle.setAttributeNS(null, "fill", "none");
-        circle.setAttributeNS(null, "stroke-width", "10");
-        // this.svgCanvas.appendChild(circle);
     }
 
     mouseMoveHandler(e) {
-
     }
 
     runAnimation(element) {
-        const pathData = element.getAttribute('d');
-        const pathCoordinates = pathData.match(/(\d+)/g);
-        const startX = pathCoordinates[0];
-        const startY = pathCoordinates[1];
-        const endX = pathCoordinates[2];
-        const endY = pathCoordinates[3];
+        const x1 = parseFloat(element.getAttribute('x1'));
+        const y1 = parseFloat(element.getAttribute('y1'));
+        const x2 = parseFloat(element.getAttribute('x2'));
+        const y2 = parseFloat(element.getAttribute('y2'));
 
-        const centerX = (parseInt(startX) + parseInt(endX)) / 2;
-        const centerY = (parseInt(startY) + parseInt(endY)) / 2;
+        const centerX = (x1 + x2) / 2;
+        const centerY = (y1 + y2) / 2;
 
         const style = document.createElement('style');
         style.textContent = `
-    @keyframes rotatePath {
-        0% {
-            transform-origin: ${centerX}px ${centerY}px; 
-            transform: rotate(0deg);
+        @keyframes rotatePath {
+            0% {
+                transform-origin: ${centerX}px ${centerY}px; 
+                transform: rotate(0deg);
+            }
+            100% {
+                transform-origin: ${centerX}px ${centerY}px; 
+                transform: rotate(180deg);
+            }
         }
-        100% {
-            transform-origin: ${centerX}px ${centerY}px; 
-            transform: rotate(180deg);
-        }
-    }
     `;
-
         document.head.appendChild(style);
-
         element.style.animation = "rotatePath 2s forwards";
     }
 
