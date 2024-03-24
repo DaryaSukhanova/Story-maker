@@ -17,7 +17,7 @@ const TimeLineBlock = () => {
         const pad = (num) => (num < 10 ? `0${num}` : num);
         const minutes = Math.floor((time / 1000 / 60) % 60);
         const seconds = Math.floor((time / 1000) % 60);
-        const milliseconds = Math.floor(time % 100);
+        const milliseconds = Math.floor(time % 1000);
         return `${pad(minutes)}:${pad(seconds)}:${pad(milliseconds)}`;
     };
 
@@ -35,7 +35,7 @@ const TimeLineBlock = () => {
                 } else {
                     setElapsedTime(newElapsedTime);
                 }
-                console.log(elapsedTime, (elapsedTime*150))
+
                 // setThumbTime((elapsedTime / 150)*1000);
 
             }, 10);
@@ -61,7 +61,8 @@ const TimeLineBlock = () => {
             const leftPosition = i * 150;
                 ticks.push(
                 <div key={i} className="tick" style={{ left: `${leftPosition}px` }}>
-                    {i}s
+                    <span style={{marginLeft: 5}}>{i}s</span>
+
                 </div>
             );
             // Добавляем дополнительные метки между основными делениями
@@ -86,7 +87,6 @@ const TimeLineBlock = () => {
         const boundingRect = timelineRef.current.getBoundingClientRect();
         const newPosition = event.clientX - boundingRect.left;
         setTotalTime((newPosition / 150)*1000);
-        console.log(totalTime)
         setThumbPosition(newPosition);
         thumbEndTimeRef.current.style.left = `${newPosition}px`;
     };
@@ -98,7 +98,7 @@ const TimeLineBlock = () => {
     return (
         <div className="timeline-block">
             <div className="timeline-player">
-                <div>
+                <div >
                     <button className="btn left-stop-button" id="leftStopBtn" onClick={handleStopButtonClick}></button>
                     <button className={isRunning ? 'btn pause-button' : 'btn play-button'} id="playBtn" onClick={handleStartButtonClick}></button>
                 </div>

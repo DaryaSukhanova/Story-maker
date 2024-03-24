@@ -85,7 +85,6 @@ const SvgCanvas = observer(() => {
         if (!currentShape) return; // Если нет текущей фигуры, выходим
         setShapes(prevShapes => [...prevShapes, currentShape]); // Добавляем текущую фигуру в массив shapes
         setCurrentShape(null); // Сбрасываем текущую фигуру
-        console.log(animationToolState.tool)
 
     };
 

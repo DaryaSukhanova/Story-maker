@@ -6,6 +6,9 @@ class AnimationToolState{
     newTime = 0
     startTime = Date.now()
     isAnimationSaved = false
+    isMotionCurve = false
+    isRotateElement = false
+
     constructor() {
         makeAutoObservable(this)
     }
@@ -36,6 +39,8 @@ class AnimationToolState{
     setAnimationName(name){
         this.tool.animationName = name
     }
+
+
 
 }
 export default new AnimationToolState()

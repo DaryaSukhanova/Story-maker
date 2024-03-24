@@ -12,7 +12,11 @@
 }
 
 .animation-setting-block-btns{
-
+  display: flex;
+  justify-content: space-evenly;
+  padding: 6px;
+  border: solid #ddd 1px;
+  border-radius: 7px;
   &__btn {
     height: 30px;
     width: 30px;
@@ -24,6 +28,10 @@
 
   }
   .motionCurve{
+    background: url('../assets/img/motionCurve.svg') no-repeat center center;
+    background-size: 100% 100%;
+  }
+  .rotateElement{
     background: url('../assets/img/motionCurve.svg') no-repeat center center;
     background-size: 100% 100%;
   }

@@ -13,7 +13,6 @@ export default class AnimationTool {
     }
 
     destroyEvents() {
-        console.log("destroy")
         this.svgCanvas.onmousemove = null;
         this.svgCanvas.onmousedown = null;
         this.svgCanvas.onmouseup = null;

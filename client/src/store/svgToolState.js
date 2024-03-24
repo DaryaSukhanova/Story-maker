@@ -11,11 +11,9 @@ class SvgToolState{
         makeAutoObservable(this)
     }
     setSvgTool(tool){
-        console.log(tool)
         this.tool = tool
     }
     setFillColor(color){
-        console.log(color)
         // if(this.tool){
             // this.tool.svgFillColor = color
             this.fillColor = color
@@ -32,7 +30,6 @@ class SvgToolState{
         this.stroke = stroke
     }
     setStrokeColor(color){
-        console.log(color)
         this.strokeColor = color
     }
 

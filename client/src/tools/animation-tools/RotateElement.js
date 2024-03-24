@@ -9,7 +9,6 @@ export default class RotateElement extends AnimationTool {
     }
 
     listen() {
-        console.log("listen")
         this.svgCanvas.onmousemove = this.mouseMoveHandler.bind(this);
         this.svgCanvas.onmousedown = this.mouseDownHandler.bind(this);
         this.svgCanvas.onmouseup = this.mouseUpHandler.bind(this);
