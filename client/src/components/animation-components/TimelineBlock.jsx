@@ -16,7 +16,6 @@ const TimeLineBlock = observer (() => {
     const timelineRef = useRef(null);
     const thumbEndTimeRef = useRef(null);
     const thumbCurrent = useRef(null);
-    const keyRef = useRef(null);
     const timelineKeyRef = useRef(null);
 
     const formatTime = (time) => {
@@ -85,7 +84,7 @@ const TimeLineBlock = observer (() => {
         return ticks;
     };
     const handleThumbDragStart = (event) => {
-        // event.preventDefault();
+        event.preventDefault();
         setIsRunningThumb(false); // Остановить таймер во время перемещения ползунка
         document.addEventListener('mousemove', handleThumbDrag);
         document.addEventListener('mouseup', handleThumbDragEnd);
@@ -114,40 +113,59 @@ const TimeLineBlock = observer (() => {
         };
         toolBlockState.addKey(); // Увеличиваем счетчик ключей в toolBlockState
         setKeys([...keys, newKey]); // Добавляем новый ключ в состояние
+        console.log(toolBlockState.keys)
     };
 
     const [draggingKeyId, setDraggingKeyId]= useState(null)
     const handleKeyMouseDown = (event, keyId) => {
+        event.preventDefault();
         setIsDraggingKey(true); // Устанавливаем флаг, что началось перетаскивание ключа
         setDraggingKeyId(keyId); // Устанавливаем id перетаскиваемого ключа
-        const updatedKeys = keys.map(key => {
+        const updatedKeys = toolBlockState.keys.map(key => {
             if (key.id === keyId) {
                 return { ...key, isActive: true };
             }
             return { ...key, isActive: false }; // Сбрасываем все остальные ключи в неактивное состояние
         });
-
+        toolBlockState.keys = updatedKeys;
         // Обновляем состояние keys новым массивом
-        setKeys(updatedKeys);
+        setKeys([...updatedKeys]);
     };
 
     const handleKeyDrag = (event) => {
-        console.log(isDraggingKey)
         if (isDraggingKey) {
             const boundingRect = timelineKeyRef.current.getBoundingClientRect();
             const newPosition = event.clientX - boundingRect.left;
-            // Обновляем позицию перетаскиваемого ключа
-            const updatedKeys = keys.map(key => {
+
+            // Обновляем позицию перетаскиваемого ключа в toolBlockState.keys
+            const updatedToolBlockKeys = toolBlockState.keys.map(key => {
                 if (key.id === draggingKeyId) {
                     return { ...key, position: newPosition };
                 }
                 return key;
             });
-            setKeys(updatedKeys);
+
+            // Обновляем состояние toolBlockState.keys новым массивом с обновленными позициями
+            toolBlockState.keys = updatedToolBlockKeys;
+
+            // Обновляем состояние keys из toolBlockState.keys
+            setKeys([...updatedToolBlockKeys]);
         }
     };
 
-    const handleKeyEnd = () => {
+    const handleKeyEnd = (event) => {
+        console.log(draggingKeyId)
+        const boundingRect = timelineKeyRef.current.getBoundingClientRect();
+        const newPosition = event.clientX - boundingRect.left;
+        const updatedToolBlockKeys = toolBlockState.keys.map(key => {
+            if (key.id === draggingKeyId) {
+                return { ...key, duration: (newPosition / 150)};
+            }
+            return key;
+        });
+        toolBlockState.keys = updatedToolBlockKeys;
+        setKeys([...updatedToolBlockKeys]);
+
         setIsDraggingKey(false); // Сбрасываем флаг перетаскивания ключа
         document.removeEventListener('mousemove', handleKeyDrag);
     };
