@@ -57,8 +57,10 @@ class FileController {
 			const parentDir = path.dirname(__dirname);
 			if (parent) {
 				Path = `${path.join(`${parentDir}`, `/files/${user.id}/${parent.path}/${file.name}`).replace(/^\\/, '')}`
+				console.log(Path);
 			} else {
 				Path = `${path.join(`${parentDir}`, `/files/${user.id}/${file.name}`).replace(/^\\/, '')}`
+				console.log(Path);
 			}
 
 			if (fs.existsSync(Path)) {
@@ -85,6 +87,26 @@ class FileController {
 			return res.status(500).json({message: "Upload error"})
 		}
 	}
+
+	async downloadFile(req, res) {
+        try {
+			let Path;
+			const __dirname = path.dirname(new URL(import.meta.url).pathname);
+			const parentDir = path.dirname(__dirname);
+			console.log(parentDir);
+            const file = await File.findOne({_id: req.query.id, user: req.user.id})
+            //const path = config.get('filePath') + '\\' + req.user.id + '\\' + file.path + '\\' + file.name
+             Path = `${path.join(`${parentDir}`, `/files/${req.user.id}/${file.path}/${file.name}`).replace(/^\\/, '')}`
+			 console.log(Path);
+			 if (fs.existsSync(path)) {
+                return res.download(Path, file.name)
+            }
+            return res.status(400).json({message: "Download error"})
+        } catch (e) {
+            console.log(e)
+            res.status(500).json({message: "Download error"})
+        }
+    }
 }
 
 export default FileController

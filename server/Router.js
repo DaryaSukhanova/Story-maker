@@ -26,4 +26,5 @@ router.get('/auth', authMiddleware, BackgroundController.authMiddleware)
 router.post("/files", authMiddleware, fileController.createDir)
 router.get("/files", authMiddleware, fileController.getFiles)
 router.post("/files/upload", authMiddleware, fileController.uploadFile)
+router.get("/files/download", authMiddleware, fileController.downloadFile)
 export default router;
