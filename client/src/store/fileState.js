@@ -30,6 +30,10 @@ class FileState {
     pushToStack(dir) {
         this.dirStack.push(dir);
     }
+
+	deleteFile(fileId) {
+		this.files = this.files.filter(file => file._id != fileId)
+	}
 }
 
 const fileState = new FileState();

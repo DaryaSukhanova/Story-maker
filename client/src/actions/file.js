@@ -82,3 +82,17 @@ export const downloadFile = async (file) => {
         link.remove()
     }
 }
+
+export const deleteFile = async (file) => {
+	try {
+		const response = await axios.delete(`http://localhost:5000/api/v1/files?id=${file._id}`,{
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		})
+		fileState.deleteFile(file._id)
+		alert(response.data.message)
+	} catch (e) {
+		alert(e?.response?.data?.message)
+	}
+};
