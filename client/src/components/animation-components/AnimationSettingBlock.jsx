@@ -6,6 +6,8 @@ import svgCanvasState from "../../store/svgCanvasState";
 import svgToolState from "../../store/svgToolState";
 import RotateElement from "../../tools/animation-tools/RotateElement";
 import {observer} from "mobx-react-lite";
+import TransformBlock from "./TransformBlock";
+import toolBlockState from "../../store/toolBlockState";
 
 const AnimationSettingBlock = observer(() => {
     const handleMotionCurveClick = () => {
@@ -23,7 +25,7 @@ const AnimationSettingBlock = observer(() => {
     if (animationToolState.tool instanceof MotionCurve) {
         selectedToolContent = <div>Содержимое для MotionCurve</div>;
     } else if (animationToolState.tool instanceof RotateElement) {
-        selectedToolContent = <div>Содержимое для RotateElement</div>;
+        selectedToolContent = <TransformBlock/>
     }
 
     return (

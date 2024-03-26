@@ -3,6 +3,9 @@ import '../../styles/timeline-block.scss';
 import toolBlockState from "../../store/toolBlockState";
 import {observer} from "mobx-react-lite";
 import {logDOM} from "@testing-library/react";
+import RotateElement from "../../tools/animation-tools/RotateElement";
+import svgCanvasState from "../../store/svgCanvasState";
+import canvasState from "../../store/canvasState";
 const TimeLineBlock = observer (() => {
     const [elapsedTime, setElapsedTime] = useState(0);
     const [isRunningThumb, setIsRunningThumb] = useState(false);
@@ -10,6 +13,7 @@ const TimeLineBlock = observer (() => {
     const [totalTime, setTotalTime] = useState(0);
     const [keys, setKeys] = useState([])
     const [isDraggingKey, setIsDraggingKey] = useState(true);
+    const [rotationCenter, setRotationCenter] = useState({ x: null, y: null });
 
     const intervalIdRef = useRef(null);
     const startTimeRef = useRef(null);
@@ -53,8 +57,55 @@ const TimeLineBlock = observer (() => {
     }, [isRunningThumb, elapsedTime, totalTime]);
 
 
+    const applyRotationAnimationStyle = (element) => {
+        const rect = element.getBoundingClientRect();
+        const canvasRect = document.getElementById("drawingCanvas").getBoundingClientRect();
+        const x = rotationCenter.x !== null ? rotationCenter.x : rect.left - canvasRect.left + rect.width / 2;
+        const y = rotationCenter.y !== null ? rotationCenter.y : rect.top - canvasRect.top + rect.height;
+
+        setRotationCenter({ x, y });
+
+        const prevStyle = document.querySelector('style[data-animation="rotatePath"]');
+        if (prevStyle) {
+            prevStyle.remove();
+        }
+
+        // Создание нового элемента <style>
+        const style = document.createElement('style');
+        style.setAttribute('data-animation', 'rotatePath');
+        style.textContent = `
+        @keyframes rotatePath {
+            0% {
+                transform-origin: ${x}px ${y}px; 
+                transform: rotate(${toolBlockState.keys[0].rotate}deg);
+            }
+            100% {
+                transform-origin: ${x}px ${y}px; 
+                transform: rotate(${toolBlockState.keys[1].rotate}deg);
+            }
+        }
+    `;
+        document.head.appendChild(style);
+    };
+
+    const startAnimations = () => {
+        const selectedElement = toolBlockState.activeElement;
+        console.log(totalTime)
+        if (selectedElement) {
+
+            applyRotationAnimationStyle(selectedElement);
+            selectedElement.style.animationName = 'rotatePath';
+            selectedElement.style.animationDuration = `${totalTime/1000}s`;
+            selectedElement.style.animationIterationCount = 'infinite';
+            selectedElement.style.animationPlayState = isRunningThumb ? 'paused' : 'running'; // Устанавливаем состояние анимации в зависимости от значения isRunningThumb
+            // Другие свойства анимации, если нужно
+        }
+    };
+
     const handleStartButtonClick = () => {
         setIsRunningThumb(prevIsRunning => !prevIsRunning);
+        startAnimations()
+
     };
     const handleStopButtonClick = () => {
         clearInterval(intervalIdRef.current);
@@ -113,7 +164,6 @@ const TimeLineBlock = observer (() => {
         };
         toolBlockState.addKey(); // Увеличиваем счетчик ключей в toolBlockState
         setKeys([...keys, newKey]); // Добавляем новый ключ в состояние
-        console.log(toolBlockState.keys)
     };
 
     const [draggingKeyId, setDraggingKeyId]= useState(null)
@@ -197,7 +247,7 @@ const TimeLineBlock = observer (() => {
                                 onMouseDown={(event) => handleKeyMouseDown(event, key.id)}
                                 key={key.name}
                                 id={key.name}
-                                className={`btn-key frame ${key.isActive ? 'active' : ''}`}
+                                className={`btn-key frame ${key.isActive ? 'active-frame' : ''}`}
                                 style={{ left: `${key.position}px` }} // Используем позицию из состояния
                             ></div>
                         ))}
