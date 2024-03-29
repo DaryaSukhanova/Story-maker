@@ -1,9 +1,9 @@
 import AnimationTool from "./AnimationTool";
 import animationToolState from "../../store/animationToolState";
-import toolBlockState from "../../store/toolBlockState";
+import timelineBlockState from "../../store/timelineBlockState";
 
 
-export default class RotateElement extends AnimationTool {
+export default class KeyFrames extends AnimationTool {
     constructor(svgCanvas) {
         super(svgCanvas);
         this.listen();
@@ -23,8 +23,8 @@ export default class RotateElement extends AnimationTool {
         this.clickedElement = document.elementFromPoint(e.clientX, e.clientY);
         if(this.clickedElement.getAttribute('data-tool') === 'true'){
             console.log(this.clickedElement);
-            toolBlockState.setActiveElement(this.clickedElement)
-            console.log(toolBlockState.activeElement)
+            timelineBlockState.setActiveElement(this.clickedElement)
+            console.log(timelineBlockState.activeElement)
         }
 
     }

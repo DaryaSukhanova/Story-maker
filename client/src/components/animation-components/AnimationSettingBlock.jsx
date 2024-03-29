@@ -4,10 +4,10 @@ import animationToolState from "../../store/animationToolState";
 import MotionCurve from "../../tools/animation-tools/MotionCurve";
 import svgCanvasState from "../../store/svgCanvasState";
 import svgToolState from "../../store/svgToolState";
-import RotateElement from "../../tools/animation-tools/RotateElement";
+import KeyFrames from "../../tools/animation-tools/KeyFrames";
 import {observer} from "mobx-react-lite";
 import TransformBlock from "./TransformBlock";
-import toolBlockState from "../../store/toolBlockState";
+import toolBlockState from "../../store/timelineBlockState";
 
 const AnimationSettingBlock = observer(() => {
     const handleMotionCurveClick = () => {
@@ -16,7 +16,7 @@ const AnimationSettingBlock = observer(() => {
     };
 
     const handleRotateClick = () => {
-        const rotateElementTool = new RotateElement(svgCanvasState.canvas);
+        const rotateElementTool = new KeyFrames(svgCanvasState.canvas);
         animationToolState.setAnimationTool(rotateElementTool);
     };
 
@@ -24,7 +24,7 @@ const AnimationSettingBlock = observer(() => {
     let selectedToolContent = null;
     if (animationToolState.tool instanceof MotionCurve) {
         selectedToolContent = <div>Содержимое для MotionCurve</div>;
-    } else if (animationToolState.tool instanceof RotateElement) {
+    } else if (animationToolState.tool instanceof KeyFrames) {
         selectedToolContent = <TransformBlock/>
     }
 
@@ -38,7 +38,7 @@ const AnimationSettingBlock = observer(() => {
                     <button className="animation-setting-block-btns__btn motionCurve" onClick={handleMotionCurveClick} />
                     <button className="animation-setting-block-btns__btn rotateElement" onClick={handleRotateClick} />
                 </div>
-                <div>
+                <div className="animation-setting-block-data">
                     {selectedToolContent}
                 </div>
             </div>

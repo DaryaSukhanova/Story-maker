@@ -17,10 +17,6 @@ import SvgToolsBlock from "./SvgToolsBlock";
 const SvgToolbar = () => {
     const [currentColor, setCurrentColor] = useState("rgba(0, 0, 0, 1)")
 
-    const [isFill, setIsFill] = useState(true);
-    const [isStroke, setIsStroke] = useState(false);
-
-
     const handleColorChange = (color) => {
         setCurrentColor(`rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`);
     };

@@ -75,6 +75,7 @@
   height: 100%;
   //background: $main-color-animation-editor;
   border-radius: 5px;
+  padding: 0px 10px;
 }
 .timeline-ticks{
   position: relative;
@@ -99,10 +100,10 @@
 .thumb-end-time{
   position: absolute;
   //display: inline-block;
-  background: white;
-  width: 12px;
-  border-left: solid 3px $main-color-animation-editor;
-  border-right: solid 3px $main-color-animation-editor;
+  background: #2E50A6;
+  width: 4px;
+  //border-left: solid 3px $main-color-animation-editor;
+  //border-right: solid 3px $main-color-animation-editor;
   height: 100%;
   cursor: ew-resize;
 
@@ -111,15 +112,21 @@
   position: absolute;
   display: inline-block;
   background: white;
-  width: 10px;
-  border-left: solid 3px $main-color-animation-editor;
-  border-right: solid 3px $main-color-animation-editor;
+  width: 4px;
+  //border-left: solid 3px $main-color-animation-editor;
+  //border-right: solid 3px $main-color-animation-editor;
   height: 100%;
   bottom: 0;
 }
+.thumb-current-head{
+  position: absolute;
+  bottom: 0;
+  transform: translateX(-25%);
+
+}
 .timeline-animation-tool{
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 30px;
@@ -138,22 +145,22 @@
 
 }
 .btn-key{
-  width: 20px;
-  height: 20px;
-  //background: white;
-  //transform: translateX(-50%) rotate(45deg);
+  width: 12px;
+  height: 12px;
+  background: white;
+  transform: translateX(-50%) rotate(45deg);
 
   cursor: pointer;
 }
-.add{
+.key-add{
   background: url('../assets/img/keyframe-add.svg') no-repeat center center;
 }
 .frame{
   position: absolute;
-  background: url('../assets/img/keyframes.svg') no-repeat center center;
+  //background: url('../assets/img/keyframes.svg') no-repeat center center;
 }
 .active-frame{
-  border: solid #6792ff 2px;
+  background: #c1e0ff;
 }
 .timeline-key-frames{
   position: relative;

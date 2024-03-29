@@ -1,6 +1,5 @@
 import {SVG} from "@svgdotjs/svg.js";
 import SvgTool from "./SvgTool";
-import {logDOM} from "@testing-library/react";
 import canvas from "../../components/graphic-components/Canvas";
 import svgToolState from "../../store/svgToolState";
 
@@ -8,7 +7,6 @@ export default class SvgCircle extends SvgTool {
     constructor(svgCanvas) {
         super(svgCanvas);
         this.svgCanvas = svgCanvas;
-        this.circles = [];
         this.listen();
         this.DrawingCanvas = SVG(document.getElementById("drawingCanvas"))
     }
@@ -41,7 +39,6 @@ export default class SvgCircle extends SvgTool {
             "data-tool": true,
             "type-tool": "circle",
         });
-        console.log(this.currentLineWidth)
     }
 
     mouseMoveHandler(e) {
@@ -56,31 +53,4 @@ export default class SvgCircle extends SvgTool {
         }
     }
 
-    // draw(x, y, r) {
-    //     this.DrawingCanvas.clear(); // Очищаем холст
-    //
-    //     this.circles.forEach((circleData) => {
-    //         const circle = this.svgCanvas.circle(circleData.r * 2);
-    //         circle.attr({
-    //             id: "svgCircle",
-    //             cx: circleData.x,
-    //             cy: circleData.y,
-    //             fill: "none",
-    //             stroke: this.currentStroke,
-    //             "stroke-width": this.currentLineWidth,
-    //         });
-    //     });
-    //
-    //     if (this.drawingCircle) {
-    //         const circle = this.svgCanvas.circle(r * 2);
-    //         circle.attr({
-    //             id: "svgCircle",
-    //             cx: x,
-    //             cy: y,
-    //             fill: "none",
-    //             stroke: this.currentStroke,
-    //             "stroke-width": this.currentLineWidth,
-    //         });
-    //     }
-    // }
 }

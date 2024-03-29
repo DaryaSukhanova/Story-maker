@@ -5,7 +5,8 @@ import './styles/animation-editor.scss'
 import SvgDrawingBlock from "./components/animation-components/SvgDrawingBlock";
 import TimelineBlock from "./components/animation-components/TimelineBlock";
 import SvgActionPanel from "./components/animation-components/SvgActionPanel";
-const AnimationEditor = () => {
+import {observer} from "mobx-react-lite";
+const AnimationEditor =observer (() => {
     return (
         <div className="animation-editor">
             <div className="animation-editor-workspace">
@@ -18,6 +19,6 @@ const AnimationEditor = () => {
         </div>
 
     );
-};
+});
 
 export default AnimationEditor;

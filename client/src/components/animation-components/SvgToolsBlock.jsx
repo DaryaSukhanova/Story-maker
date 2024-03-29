@@ -6,32 +6,45 @@ import svgCanvasState from "../../store/svgCanvasState";
 import BoxSelectNew from "../../tools/animation-tools/BoxSelectNew";
 
 const SvgToolsBlock = ({ currentColor }) => {
-    const [isFill, setIsFill] = useState(true);
+    const [isFill, setIsFill] = useState(false);
     const [isStroke, setIsStroke] = useState(false);
     const changeColor = () => {
+
         if (isFill) {
             svgToolState.setFillColor(currentColor);
-            svgToolState.setStrokeColor(currentColor)
-            // svgToolState.setFillStroke(currentColor);
-
         }
         if (isStroke) {
-            // svgToolState.setFillStroke(currentColor);
-
             svgToolState.setStrokeColor(currentColor)
         }
+        console.log("isFill, isStroke",isFill, isStroke)
     }
     const changeFillColorBtn = () => {
-        setIsFill(true);
-        setIsStroke(false);
-    }
+        setIsFill(prevIsFill => {
+            const newIsFill = !prevIsFill;
+            if (!newIsFill) {
+                svgToolState.setFillColor("none");
+            } else {
+                svgToolState.setFillColor(currentColor);
+            }
+            return newIsFill;
+        });
+    };
+
     const changeStrokeColorBtn = () => {
-        setIsFill(false);
-        setIsStroke(true);
-    }
+        setIsStroke(prevIsStroke => {
+            const newIsStroke = !prevIsStroke;
+            if (!newIsStroke) {
+                svgToolState.setStrokeColor("none");
+            } else {
+                svgToolState.setStrokeColor(currentColor);
+            }
+            return newIsStroke;
+        });
+    };
 
     useEffect(() => {
         changeColor()
+
     }, [currentColor]);
 
     const handleSvgToolClick = (svgTool) => {

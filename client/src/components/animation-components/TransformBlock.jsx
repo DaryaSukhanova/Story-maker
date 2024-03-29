@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {observer} from "mobx-react-lite";
 import '../../styles/transform-block.scss';
 import {logDOM} from "@testing-library/react";
-import toolBlockState from "../../store/toolBlockState";
+import toolBlockState from "../../store/timelineBlockState";
 
 const TransformBlock = observer(() => {
     const [angle, setAngle] = useState(0); // Состояние для хранения значения угла
@@ -33,6 +33,7 @@ const TransformBlock = observer(() => {
                     max={360}
                     step={1}
                 />
+                <span className="deg-label">deg</span>
             </div>
 
         </div>

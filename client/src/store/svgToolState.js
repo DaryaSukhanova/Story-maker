@@ -26,7 +26,6 @@ class SvgToolState{
 
     }
     setStroke(stroke){
-        console.log(stroke)
         this.stroke = stroke
     }
     setStrokeColor(color){
