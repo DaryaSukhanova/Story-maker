@@ -9,10 +9,9 @@ class timelineBlockState{
     isRunningThumb = false
     elapsedTime = 0
     thumbCurrentPosition = 0
+    roundedElapsedTime = 0
     constructor() {
         makeAutoObservable(this)
-
-
     }
 
     addKey(){
@@ -32,9 +31,11 @@ class timelineBlockState{
     setElapsedTime(time){
         this.elapsedTime = time;
         this.setThumbCurrentPosition((time / 1000) * 150);
-
+        this.setRoundedElapsedTime(time)
     }
-
+    setRoundedElapsedTime(time){
+        this.roundedElapsedTime = Math.ceil(time / 100) * 100
+    }
 
     setThumbCurrentPosition(position) {
         this.thumbCurrentPosition = position;

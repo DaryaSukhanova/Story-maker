@@ -27,39 +27,7 @@ const TimeLineBlock = observer (() => {
 
 
     useEffect(() => {
-        if (isRunningThumb) {
-            startTimeRef.current = Date.now() - elapsedTime;
-            intervalIdRef.current = setInterval(() => {
-                const currentTime = Date.now();
-                const newElapsedTime = currentTime - startTimeRef.current;
-                setRoundedElapsedTime(Math.ceil(newElapsedTime / 100) * 100) ;
-
-                if (roundedElapsedTime >= totalTime*1000) {
-
-                    setElapsedTime(0); // Если достигло, сбрасываем таймер на 0
-                    setRoundedElapsedTime(0)
-                    clearInterval(intervalIdRef.current);
-                    setIsRunningThumb(true);
-                    // const prevStyle = document.querySelector('style[data-animation="rotatePath"]');
-                    // if (prevStyle) {
-                    //     prevStyle.remove();
-                    // }
-                    // applyRotationAnimationStyle(timelineBlockState.activeElement, timelineBlockState);
-                } else {
-                    setElapsedTime(newElapsedTime);
-
-                }
-
-                // setThumbTime((elapsedTime / 150)*1000);
-
-            }, 10);
-        } else {
-            clearInterval(intervalIdRef.current);
-        }
-
-        return () => clearInterval(intervalIdRef.current);
-
-    }, [isRunningThumb, timelineBlockState.elapsedTime, totalTime]);
+    }, []);
 
 
     const renderTimelineTicks = () => {
@@ -216,12 +184,12 @@ const TimeLineBlock = observer (() => {
                      onMouseUp={handleThumbDragEnd}>
                     {renderTimelineTicks()}
                     <div className="thumb-end-time" ref={thumbEndTimeRef} style={{ left: `${thumbPosition}px` }}></div>
-                    <svg className="thumb-current-head" width="10" height="15" xmlns="http://www.w3.org/2000/svg" style={{ transform: `translateX(${roundedElapsedTime * (150 / 1000)-4}px)` }} >
+                    <svg className="thumb-current-head" width="10" height="15" xmlns="http://www.w3.org/2000/svg" style={{ transform: `translateX(${timelineBlockState.roundedElapsedTime * (150 / 1000)-4}px)` }} >
                         <polygon points="0,0 10,0 10,10 5,15 0,10" fill="white" />
                     </svg>
                 </div>
                 <div className="timeline-key-frames">
-                    <div className="thumb-current" ref={thumbCurrent} style={{ transform: `translateX(${timelineBlockState.elapsedTime * (150 / 1000)-1}px)` }}></div>
+                    <div className="thumb-current" ref={thumbCurrent} style={{ transform: `translateX(${timelineBlockState.roundedElapsedTime * (150 / 1000)-1}px)` }}></div>
                     <div className="timeline-line" ref={timelineKeyRef}
                          onMouseMove={handleKeyDrag}
                          onMouseUp={handleKeyEnd}>
