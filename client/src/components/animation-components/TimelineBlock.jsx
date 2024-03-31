@@ -53,7 +53,7 @@ const TimeLineBlock = observer (() => {
                     // }
                     // applyRotationAnimationStyle(timelineBlockState.activeElement, timelineBlockState);
                 } else {
-                    setElapsedTime(newElapsedTime); // Округляем до ближайшего кратного 100
+                    setElapsedTime(newElapsedTime);
 
                 }
 
@@ -210,6 +210,7 @@ const TimeLineBlock = observer (() => {
             thumbPositionRef.current = nearestTickPosition; // Обновляем значение ref
             setThumbPosition(nearestTickPosition); // Обновляем состояние позиции ползунка
             setTotalTime(nearestTickPosition / 150);
+            timelineBlockState.setTotalTime(totalTime)
             console.log(thumbPosition)
         }
 
@@ -305,19 +306,7 @@ const TimeLineBlock = observer (() => {
     return (
         <div className="timeline-block">
             <div className="timeline-left">
-                <TimelineControls
-                    isRunning={isRunningThumb}
-                    elapsedTime={formatTime(elapsedTime)}
-                    handleStopButtonClick={handleStopButtonClick}
-                    handleStartButtonClick={handleStartButtonClick}/>
-                {/*<div className="timeline-controls">*/}
-                {/*    <div className="timeline-player">*/}
-                {/*        <button className="btn left-stop-button" id="leftStopBtn" onClick={handleStopButtonClick}></button>*/}
-                {/*        <button className={isRunningThumb ? 'btn pause-button' : 'btn play-button'} id="playBtn" onClick={handleStartButtonClick}></button>*/}
-                {/*    </div>*/}
-                {/*    <div className="timer">{formatTime(elapsedTime)} </div>*/}
-                {/*</div>*/}
-
+                <TimelineControls/>
                 {animationToolState.tool instanceof KeyFrames && (
                     <div className="timeline-animation-tool">
                         <div>Rotate</div>
@@ -338,7 +327,7 @@ const TimeLineBlock = observer (() => {
                     </svg>
                 </div>
                 <div className="timeline-key-frames">
-                    <div className="thumb-current" ref={thumbCurrent} style={{ transform: `translateX(${roundedElapsedTime * (150 / 1000)-1}px)` }}></div>
+                    <div className="thumb-current" ref={thumbCurrent} style={{ transform: `translateX(${timelineBlockState.elapsedTime * (150 / 1000)-1}px)` }}></div>
                     <div className="timeline-line" ref={timelineKeyRef}
                          onMouseMove={handleKeyDrag}
                          onMouseUp={handleKeyEnd}>

@@ -31,6 +31,7 @@ class timelineBlockState{
     setElapsedTime(time){
         this.elapsedTime = time;
         this.setThumbCurrentPosition((time / 1000) * 150);
+        console.log(this.elapsedTime)
     }
 
 
