@@ -7,7 +7,7 @@ import BoxSelectNew from "../../tools/animation-tools/BoxSelectNew";
 
 const SvgToolsBlock = ({ currentColor }) => {
     const [isFill, setIsFill] = useState(false);
-    const [isStroke, setIsStroke] = useState(false);
+    const [isStroke, setIsStroke] = useState(true);
     const changeColor = () => {
 
         if (isFill) {

@@ -2,15 +2,16 @@ import {action, makeAutoObservable} from "mobx";
 import {useRef} from "react";
 
 class timelineBlockState{
+    keyCount = 0
+    keys = []
+    activeElement = null
+    totalTime  = 0
+    isRunningThumb = false
+    elapsedTime = 0
+    thumbCurrentPosition = 0
     constructor() {
         makeAutoObservable(this)
-        this.keyCount = 0
-        this.keys = []
-        this.activeElement = null
-        this.totalTime  = 0
-        this.isRunningThumb = false
-        this.elapsedTime = 0
-        this.thumbCurrentPosition = 0
+
 
     }
 
@@ -31,7 +32,7 @@ class timelineBlockState{
     setElapsedTime(time){
         this.elapsedTime = time;
         this.setThumbCurrentPosition((time / 1000) * 150);
-        console.log(this.elapsedTime)
+
     }
 
 
