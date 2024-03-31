@@ -19,6 +19,9 @@ class timelineBlockState{
         this.keyCount++
         // console.log(keys)
     }
+    setKeys(arr){
+        this.keys = arr
+    }
     setActiveElement(element){
         this.activeElement = element
     }

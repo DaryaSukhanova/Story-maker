@@ -28,7 +28,6 @@ const TimelineControls = observer( () => {
         intervalIdRef.current = setInterval(() => {
             const currentTime = Date.now();
             const newElapsedTime = currentTime - startTimeRef.current;
-            console.log(roundedElapsedTime)
             if (roundedElapsedTime >= timelineBlockState.totalTime * 1000) {
                 timelineBlockState.setElapsedTime(0); // Если достигло, сбрасываем таймер на 0
 

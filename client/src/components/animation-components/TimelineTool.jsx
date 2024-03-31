@@ -8,7 +8,6 @@ const TimelineTool = observer(() => {
     const [keys, setKeys] = useState([])
 
     const handleAddKeyClick = () => {
-
         const newKey = {
             id: timelineBlockState.keyCount,
             name: `Key${timelineBlockState.keyCount}`,
