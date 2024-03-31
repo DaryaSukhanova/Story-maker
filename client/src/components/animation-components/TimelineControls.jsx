@@ -15,31 +15,30 @@ const TimelineControls = observer( () => {
 
     useEffect(() => {
         if (isRunningThumb) {
-            startTimeRef.current = Date.now() - elapsedTime;
-            intervalIdRef.current = setInterval(() => {
-                const currentTime = Date.now();
-                const newElapsedTime = currentTime - startTimeRef.current;
-                setRoundedElapsedTime(Math.ceil(newElapsedTime / 100) * 100) ;
-                console.log(elapsedTime)
-                if (newElapsedTime >= timelineBlockState.totalTime*1000) {
-                    timelineBlockState.setElapsedTime(0); // Если достигло, сбрасываем таймер на 0
-                    setRoundedElapsedTime(0)
-                    clearInterval(intervalIdRef.current);
-                    timelineBlockState.setIsRunningThumb(true);
-
-                } else {
-                    timelineBlockState.setElapsedTime(newElapsedTime);
-                }
-
-            }, 10);
+            updateTimer();
         } else {
             clearInterval(intervalIdRef.current);
         }
-
         return () => clearInterval(intervalIdRef.current);
-
     }, [isRunningThumb, elapsedTime, timelineBlockState.totalTime]);
 
+    const updateTimer = () => {
+        startTimeRef.current = Date.now() - elapsedTime;
+        intervalIdRef.current = setInterval(() => {
+            const currentTime = Date.now();
+            const newElapsedTime = currentTime - startTimeRef.current;
+            setRoundedElapsedTime(Math.ceil(newElapsedTime / 100) * 100);
+            console.log(elapsedTime);
+            if (newElapsedTime >= timelineBlockState.totalTime * 1000) {
+                timelineBlockState.setElapsedTime(0); // Если достигло, сбрасываем таймер на 0
+                setRoundedElapsedTime(0);
+                clearInterval(intervalIdRef.current);
+                timelineBlockState.setIsRunningThumb(true);
+            } else {
+                timelineBlockState.setElapsedTime(newElapsedTime);
+            }
+        }, 10);
+    };
     const handleStartButtonClick = () => {
         timelineBlockState.setIsRunningThumb(!isRunningThumb)
         startAnimations()

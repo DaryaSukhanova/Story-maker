@@ -25,13 +25,6 @@ const TimeLineBlock = observer (() => {
     const thumbCurrent = useRef(null);
     const timelineKeyRef = useRef(null);
 
-    // const formatTime = (time) => {
-    //     const pad = (num) => (num < 10 ? `0${num}` : num);
-    //     const minutes = Math.floor((time / 1000 / 60) % 60);
-    //     const seconds = Math.floor((time / 1000) % 60);
-    //     const milliseconds = Math.floor(time % 1000);
-    //     return `${pad(minutes)}:${pad(seconds)}:${pad(milliseconds)}`;
-    // };
 
     useEffect(() => {
         if (isRunningThumb) {
@@ -67,105 +60,6 @@ const TimeLineBlock = observer (() => {
         return () => clearInterval(intervalIdRef.current);
 
     }, [isRunningThumb, timelineBlockState.elapsedTime, totalTime]);
-
-
-//     const applyRotationAnimationStyle = (element, timelineBlockState) => {
-//         const rect = element.getBoundingClientRect();
-//         const canvasRect = document.getElementById("drawingCanvas").getBoundingClientRect();
-//         const x = rotationCenter.x !== null ? rotationCenter.x : rect.left - canvasRect.left + rect.width / 2;
-//         const y = rotationCenter.y !== null ? rotationCenter.y : rect.top - canvasRect.top + rect.height;
-//
-//
-//         setRotationCenter({ x, y });
-//
-//         const prevStyle = document.querySelector('style[data-animation="rotatePath"]');
-//         if (prevStyle) {
-//             prevStyle.remove();
-//         }
-//
-//         // Создание нового элемента <style>
-//         const style = document.createElement('style');
-//         style.setAttribute('data-animation', 'rotatePath');
-//         //
-//         // style.textContent = `
-//         // @keyframes rotatePath {
-//         //     0% {
-//         //         transform-origin: ${x}px ${y}px;
-//         //         transform: rotate(${timelineBlockState.keys[0].rotate}deg);
-//         //     }
-//         //     100% {
-//         //         transform-origin: ${x}px ${y}px;
-//         //         transform: rotate(${timelineBlockState.keys[timelineBlockState.keys.length-1].rotate}deg);
-//         //     }
-//         // }`;
-//         let keyframes = `
-//         0% {
-//             transform-origin: ${x}px ${y}px;
-//             transform: rotate(${0}deg);
-//         }
-//     `;
-//
-//         timelineBlockState.keys.forEach((key, index) => {
-//             console.log(key.position, thumbPosition)
-//             const percent = (key.position / thumbPosition)*100;
-//             keyframes += `
-//             ${percent}% {
-//                 transform-origin: ${x}px ${y}px;
-//                 transform: rotate(${key.rotate}deg);
-//             }
-//         `;
-//         });
-//
-//         const maxDurationKey = timelineBlockState.keys.reduce((maxKey, currentKey) => {
-//             return currentKey.duration > maxKey.duration ? currentKey : maxKey;
-//         }, timelineBlockState.keys[0]); // Начальное значение - первый ключ
-//
-//         keyframes += `
-//     100% {
-//         transform-origin: ${x}px ${y}px;
-//         transform: rotate(${maxDurationKey.rotate}deg);
-//     }
-// `;
-//
-//         style.textContent = `
-//         @keyframes rotatePath {
-//             ${keyframes}
-//         }
-//     `;
-//
-//
-//         document.head.appendChild(style);
-//     };
-
-    // const startAnimations = () => {
-    //     const selectedElement = timelineBlockState.activeElement;
-    //
-    //     if (selectedElement) {
-    //         // const remainingTime = (totalTime * 1000) - elapsedTime;
-    //         applyRotationAnimationStyle(selectedElement, timelineBlockState);
-    //         selectedElement.style.animationName = 'rotatePath';
-    //         selectedElement.style.animationDuration = `${totalTime}s`;
-    //         selectedElement.style.animationIterationCount = 'infinite';
-    //         selectedElement.style.animationPlayState = isRunningThumb ? 'paused' : 'running'; // Устанавливаем состояние анимации в зависимости от значения isRunningThumb
-    //         // Другие свойства анимации, если нужно
-    //     }
-    // };
-
-    // const handleStartButtonClick = () => {
-    //     setIsRunningThumb(prevIsRunning => !prevIsRunning);
-    //     startAnimations()
-    //
-    // };
-    // const handleStopButtonClick = () => {
-    //     clearInterval(intervalIdRef.current);
-    //     setIsRunningThumb(false);
-    //     setElapsedTime(0);
-    //     setRoundedElapsedTime(0)
-    //     const prevStyle = document.querySelector('style[data-animation="rotatePath"]');
-    //     if (prevStyle) {
-    //         prevStyle.remove();
-    //     }
-    // };
 
 
     const renderTimelineTicks = () => {
