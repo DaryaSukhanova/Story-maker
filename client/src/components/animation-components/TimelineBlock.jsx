@@ -8,10 +8,11 @@ import KeyFrames from "../../tools/animation-tools/KeyFrames";
 import TimelineLine from "./TimelineLine";
 import TimelineTool from "./TimelineTool";
 import TimelineTicks from "./TimelineTicks";
+import TimelineKeyframes from "./TimelineKeyframes";
 
 const TimeLineBlock = observer (() => {
 
-    const thumbCurrent = useRef(null);
+
 
     const findNearestTickPosition = (position) => {
         const ticksPositions = [];
@@ -39,10 +40,7 @@ const TimeLineBlock = observer (() => {
             </div>
             <div className="timeline-right" >
                 <TimelineTicks findNearestTickPosition={findNearestTickPosition}/>
-                <div className="timeline-key-frames">
-                    <div className="thumb-current" ref={thumbCurrent} style={{ transform: `translateX(${timelineBlockState.roundedElapsedTime * (150 / 1000)-1}px)` }}></div>
-                    <TimelineLine findNearestTickPosition={findNearestTickPosition}/>
-                </div>
+                <TimelineKeyframes findNearestTickPosition={findNearestTickPosition}/>
             </div>
 
 
