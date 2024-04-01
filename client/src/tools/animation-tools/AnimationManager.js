@@ -4,7 +4,7 @@ export default class AnimationManager {
     constructor(element) {
         this.element = element
     }
-
+    thumbPosition = timelineBlockState.thumbEndPosition
     startAnimations(isRunningThumb, x, y) {
         if (this.element) {
             this.applyRotationAnimationStyle( x, y);
@@ -31,18 +31,25 @@ export default class AnimationManager {
             transform: rotate(${0}deg);
         }
         `;
-
+        timelineBlockState.keys.forEach((key, index) => {
+            console.log(key.position, this.thumbPosition)
+            const percent = (key.position / this.thumbPosition)*100;
+            keyframes += `
+            ${percent}% {
+                transform-origin: ${x}px ${y}px;
+                transform: rotate(${key.rotate}deg);
+            }
+        `;
+        });
         const maxDurationKey = timelineBlockState.keys.reduce((maxKey, currentKey) => {
             return currentKey.duration > maxKey.duration ? currentKey : maxKey;
         }, timelineBlockState.keys[0]); // Начальное значение - первый ключ
-
         keyframes += `
         100% {
             transform-origin: ${x}px ${y}px;
             transform: rotate(${maxDurationKey.rotate}deg);
         }
         `;
-
         style.textContent = `
         @keyframes rotatePath {
             ${keyframes}

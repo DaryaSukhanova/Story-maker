@@ -9,6 +9,7 @@ class timelineBlockState{
     isRunningThumb = false
     elapsedTime = 0
     thumbCurrentPosition = 0
+    thumbEndPosition = 0
     roundedElapsedTime = 0
     constructor() {
         makeAutoObservable(this)
@@ -42,6 +43,10 @@ class timelineBlockState{
 
     setThumbCurrentPosition(position) {
         this.thumbCurrentPosition = position;
+    }
+
+    setThumbEndPosition(position){
+        this.thumbEndPosition = position
     }
 
 }
