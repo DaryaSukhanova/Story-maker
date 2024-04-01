@@ -1,6 +1,7 @@
 import svgCanvas from "../../components/animation-components/SvgCanvas";
 
 import SvgTool from "./SvgTool";
+import svgToolState from "../../store/svgToolState";
 export default class SvgBrush extends SvgTool{
     constructor(svgCanvas) {
         super(svgCanvas)
@@ -18,6 +19,8 @@ export default class SvgBrush extends SvgTool{
     mouseUpHandler(e) {
         if (this.drawingPath) {
             // this.getBoundingBox(this.drawingPath)
+            svgToolState.pushToSvgElements(this.drawingPath);
+
             this.drawingPath = null;
         }
     }

@@ -42,17 +42,25 @@ const TimelineControls = observer( () => {
     const animationManager = new AnimationManager(timelineBlockState.activeElement);
 
     const handleStartButtonClick = () => {
-        timelineBlockState.setIsRunningThumb(!isRunningThumb)
-        if(timelineBlockState.activeElement){
-            const rect = timelineBlockState.activeElement.getBoundingClientRect();
-            const canvasRect = document.getElementById("drawingCanvas").getBoundingClientRect();
-            const x = rotationCenter.x !== null ? rotationCenter.x : rect.left - canvasRect.left + rect.width / 2;
-            const y = rotationCenter.y !== null ? rotationCenter.y : rect.top - canvasRect.top + rect.height;
+        timelineBlockState.setIsRunningThumb(!isRunningThumb);
+        if (timelineBlockState.activeElement) {
+            const rect = timelineBlockState.activeElement.bbox();
 
+            // Получаем границы холста
+            const canvasRect = document.getElementById("drawingCanvas").getBoundingClientRect();
+
+            // Вычисляем x и y координаты центральной точки в нижней части границы элемента
+            const x = rect.cx;
+            const y = rect.y2;
+
+            console.log("Center point coordinates:", x, y);
+
+            // Устанавливаем координаты центральной точки в состояние
             setRotationCenter({ x, y });
+
+            // Запускаем анимации
             animationManager.startAnimations(isRunningThumb, x, y);
         }
-
     };
     const handleStopButtonClick = () => {
         clearInterval(intervalIdRef.current);

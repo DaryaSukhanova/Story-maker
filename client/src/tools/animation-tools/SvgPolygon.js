@@ -1,5 +1,6 @@
 import React from "react";
 import SvgTool from "./SvgTool";
+import svgToolState from "../../store/svgToolState";
 
 export default class SvgPolygon extends SvgTool{
     constructor(svgCanvas) {
@@ -21,15 +22,12 @@ export default class SvgPolygon extends SvgTool{
     keyDownHandler(e) {
         if (e.key === "Escape") {
             this.cancelDrawing();
+
         }
     }
 
     mouseUpHandler(e) {
         this.mouseDown = false;
-        if(this.drawingPolygon){
-            // this.getBoundingBox(this.drawingPolygon)
-        }
-
     }
 
     mouseDownHandler(e) {
@@ -61,6 +59,9 @@ export default class SvgPolygon extends SvgTool{
     }
     cancelDrawing() {
         this.mouseDown = false;
+        if(this.drawingPolygon){
+            svgToolState.pushToSvgElements(this.drawingPolygon);
+        }
         if (this.drawingPolygon) {
             this.drawingPolygon = null;
             this.pathData = "";

@@ -26,8 +26,6 @@ const TimelineTicks = observer(({findNearestTickPosition}) => {
             thumbPositionRef.current = nearestTickPosition; // Обновляем значение ref
             timelineBlockState.setThumbEndPosition(nearestTickPosition); // Обновляем состояние позиции ползунка
             timelineBlockState.setTotalTime(nearestTickPosition / 150);
-
-            console.log(thumbPosition)
         }
 
     };

@@ -1,5 +1,6 @@
 import {makeAutoObservable} from "mobx";
 import {logDOM} from "@testing-library/react";
+import timelineBlockState from "./timelineBlockState";
 
 class SvgToolState{
     tool = null
@@ -7,6 +8,7 @@ class SvgToolState{
     stroke = "1"
     strokeColor: "black"
     fillColor: "black"
+    svgElements = []
     constructor() {
         makeAutoObservable(this)
     }
@@ -23,7 +25,6 @@ class SvgToolState{
         if(this.tool){
             this.tool.svgFillStroke = color
         }
-
     }
     setStroke(stroke){
         this.stroke = stroke
@@ -47,6 +48,16 @@ class SvgToolState{
             // boundingBoxGroup.parentNode.removeChild(boundingBoxGroup);
             boundingBoxGroup.remove();
         }
+    }
+    pushToSvgElements(element) {
+        this.svgElements.push(element);
+
+        // Добавляем обработчик события клика для каждого элемента
+        element.on('click', () => {
+            // Выполняем действия при клике на элемент
+            timelineBlockState.setActiveElement(element);
+            console.log(timelineBlockState.activeElement);
+        });
     }
 }
 

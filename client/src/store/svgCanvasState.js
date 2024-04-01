@@ -22,7 +22,7 @@ class SvgCanvasState{
         if(animationToolState.currentPlay){
             animationToolState.setPlay();
         }
-
+        svgToolState.svgElements = [];
         svgToolState.setIsDrawnSvg(false)
     };
 

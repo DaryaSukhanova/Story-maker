@@ -23,8 +23,8 @@ export default class KeyFrames extends AnimationTool {
         this.clickedElement = document.elementFromPoint(e.clientX, e.clientY);
         if(this.clickedElement.getAttribute('data-tool') === 'true'){
             console.log(this.clickedElement);
-            timelineBlockState.setActiveElement(this.clickedElement)
-            console.log(timelineBlockState.activeElement)
+            // timelineBlockState.setActiveElement(this.clickedElement)
+
         }
 
     }

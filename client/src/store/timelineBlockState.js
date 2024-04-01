@@ -16,7 +16,20 @@ class timelineBlockState{
     }
 
     addKey(){
-        this.keys.push({id: this.keyCount, name: `Key${this.keyCount}`, isActive: false, position: 0, duration: 0, rotate: 0});
+        this.keys.push({
+            id: this.keyCount,
+            name: `Key${this.keyCount}`,
+            isActive: false,
+            position: 0,
+            duration: 0,
+            rotate: 0,
+            scaleX: 1,
+            scaleY: 1,
+            translateX: 0,
+            translateY: 0,
+            skewX: 0,
+            skewY: 0
+        });
         this.keyCount++
         // console.log(keys)
     }

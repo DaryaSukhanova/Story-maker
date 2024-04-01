@@ -7,31 +7,43 @@
     align-items: center;
     padding: 25px 0;
   }
+  &__options{
+    width: 100%;
+    border: 1px solid #ddd ;
+    border-radius: 7px;
+
+  }
 
   &__entry{
     font-size: 16px;
     display: flex;
     width: 100%;
-    justify-content: center;
     align-items: center;
 
     label{
       padding: 10px;
     }
   }
+
+}
+.transform-block__entry > * {
+  flex: 1; /* Равномерно распределяет пространство между дочерними элементами */
 }
 input[type="number"] {
   -moz-appearance: textfield;
   -webkit-appearance: textfield;
   appearance: textfield;
-  //background-color: #eee;
+  background-color: #eee;
   vertical-align: top;
   outline: none;
-  border: 1px solid #ddd;
+  border: none;
   display: inline-block;
   padding: 2px;
-  border-radius: 3px;
+  margin: 5px;
   width: 80px;
+}
+input[type="number"]:focus {
+  outline: 2px solid $main-color-animation-editor;
 }
 
 input[type="number"]::-webkit-outer-spin-button,

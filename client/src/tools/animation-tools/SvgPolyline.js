@@ -1,5 +1,6 @@
 import React from "react";
 import SvgTool from "./SvgTool";
+import svgToolState from "../../store/svgToolState";
 
 export default class SvgPolyline extends SvgTool {
     constructor(svgCanvas) {
@@ -20,14 +21,15 @@ export default class SvgPolyline extends SvgTool {
     keyDownHandler(e) {
         if (e.key === "Escape") {
             this.cancelDrawing();
+            if(this.drawingPolyline){
+                svgToolState.pushToSvgElements(this.drawingPolyline);
+            }
         }
     }
 
     mouseUpHandler(e) {
         this.mouseDown = false;
-        if(this.drawingPolyline){
-            // this.getBoundingBox(this.drawingPolyline)
-        }
+
     }
 
     mouseDownHandler(e) {

@@ -20,7 +20,7 @@ const TimelineTool = observer(() => {
 
     return (
         <div className="timeline-animation-tool">
-            <div>Rotate</div>
+            <div className="timeline-animation-tool__title">Keyframes</div>
             <div className="btn-key add"  onClick={handleAddKeyClick}></div>
         </div>
     );

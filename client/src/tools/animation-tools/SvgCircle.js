@@ -20,7 +20,7 @@ export default class SvgCircle extends SvgTool {
     mouseUpHandler(e) {
         this.mouseDown = false;
         if (this.drawingCircle) {
-            // this.getBoundingBox(this.drawingCircle)
+            svgToolState.pushToSvgElements(this.drawingCircle);
         }
         this.drawingCircle = null;
     }

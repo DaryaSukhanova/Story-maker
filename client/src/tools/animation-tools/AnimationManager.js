@@ -1,5 +1,6 @@
 import timelineBlockState from "../../store/timelineBlockState";
 
+
 export default class AnimationManager {
     constructor(element) {
         this.element = element
@@ -7,12 +8,14 @@ export default class AnimationManager {
     thumbPosition = timelineBlockState.thumbEndPosition
     startAnimations(isRunningThumb, x, y) {
         if (this.element) {
-            this.applyRotationAnimationStyle( x, y);
-            this.element.style.animationName = 'rotatePath';
-            this.element.style.animationDuration = `${timelineBlockState.totalTime}s`;
-            this.element.style.animationIterationCount = 'infinite';
-            this.element.style.animationPlayState = isRunningThumb ? 'paused' : 'running'; // Устанавливаем состояние анимации в зависимости от значения isRunningThumb
-            // Другие свойства анимации, если нужно
+             this.applyRotationAnimationStyle( x, y);
+
+            this.element.css({
+                'animation': 'rotatePath', // Устанавливаем имя анимации
+                'animation-duration': `${timelineBlockState.totalTime}s`, // Устанавливаем длительность анимации
+                'animation-iteration-count': 'infinite', // Устанавливаем бесконечное повторение анимации
+                'animation-play-state': isRunningThumb ? 'paused' : 'running' // Устанавливаем состояние анимации
+            });
         }
     }
     applyRotationAnimationStyle (x, y) {
@@ -28,16 +31,15 @@ export default class AnimationManager {
         let keyframes = `
         0% {
             transform-origin: ${x}px ${y}px;
-            transform: rotate(${0}deg);
+            transform: rotate(${0}deg) scale(1, 1) translate(0px, 0px) skew(0deg, 0deg);
         }
         `;
         timelineBlockState.keys.forEach((key, index) => {
-            console.log(key.position, this.thumbPosition)
             const percent = (key.position / this.thumbPosition)*100;
             keyframes += `
             ${percent}% {
                 transform-origin: ${x}px ${y}px;
-                transform: rotate(${key.rotate}deg);
+                transform: rotate(${key.rotate}deg) scale(${key.scaleX}, ${key.scaleY}) translate(${key.translateX}px, ${key.translateY}px) skew(${key.skewX}deg, ${key.skewY}deg);
             }
         `;
         });
@@ -47,7 +49,7 @@ export default class AnimationManager {
         keyframes += `
         100% {
             transform-origin: ${x}px ${y}px;
-            transform: rotate(${maxDurationKey.rotate}deg);
+            transform: rotate(${maxDurationKey.rotate}deg) scale(${maxDurationKey.scaleX}, ${maxDurationKey.scaleY}) translate(${maxDurationKey.translateX}px, ${maxDurationKey.translateY}px) skew(${maxDurationKey.skewX}deg, ${maxDurationKey.skewY}deg);
         }
         `;
         style.textContent = `

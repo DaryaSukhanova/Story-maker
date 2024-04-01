@@ -20,6 +20,9 @@ export default class SvgLine extends SvgTool{
 
     mouseUpHandler(e) {
         this.mouseDown = false;
+        if (this.drawingLine) {
+            svgToolState.pushToSvgElements(this.drawingLine);
+        }
         this.drawingLine = null;
     }
 

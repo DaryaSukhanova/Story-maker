@@ -100,9 +100,9 @@ const SvgCanvas = observer(() => {
                 id="drawingCanvas"
                 width={1100}
                 height={644}
-                onMouseDown={handleMouseDown}
-                onMouseMove={handleMouseMove}
-                onMouseUp={handleMouseUp}
+                // onMouseDown={handleMouseDown}
+                // onMouseMove={handleMouseMove}
+                // onMouseUp={handleMouseUp}
             >
                 {[...shapes, currentShape].map((shape, index) => (
                     shape && (shape.type === 'circle' ? (
