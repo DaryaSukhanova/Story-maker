@@ -1,6 +1,7 @@
 import React from "react";
 import SvgTool from "./SvgTool";
 import svgToolState from "../../store/svgToolState";
+import svgCanvasState from "../../store/svgCanvasState";
 
 export default class SvgPolygon extends SvgTool{
     constructor(svgCanvas) {
@@ -60,7 +61,7 @@ export default class SvgPolygon extends SvgTool{
     cancelDrawing() {
         this.mouseDown = false;
         if(this.drawingPolygon){
-            svgToolState.pushToSvgElements(this.drawingPolygon);
+            svgCanvasState.pushToSvgElements(this.drawingPolygon);
         }
         if (this.drawingPolygon) {
             this.drawingPolygon = null;

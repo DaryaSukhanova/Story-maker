@@ -8,7 +8,7 @@ class SvgToolState{
     stroke = "1"
     strokeColor: "black"
     fillColor: "black"
-    svgElements = []
+
     constructor() {
         makeAutoObservable(this)
     }
@@ -48,17 +48,6 @@ class SvgToolState{
             // boundingBoxGroup.parentNode.removeChild(boundingBoxGroup);
             boundingBoxGroup.remove();
         }
-    }
-    pushToSvgElements(element) {
-        this.svgElements.push(element);
-
-        // Добавляем обработчик события клика для каждого элемента
-        element.on('click', () => {
-            // Выполняем действия при клике на элемент
-            timelineBlockState.setActiveElement(element);
-            console.log(this.svgElements);
-            console.log("activeElement", timelineBlockState.activeElement)
-        });
     }
 }
 

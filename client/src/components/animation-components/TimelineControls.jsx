@@ -54,8 +54,7 @@ const TimelineControls = observer( () => {
     const handleStartButtonClick = () => {
         timelineBlockState.setIsRunningThumb(!isRunningThumb);
         if (timelineBlockState.activeElement) {
-            const rect = timelineBlockState.activeElement.bbox();
-
+            const rect = timelineBlockState.activeElement.svgElement.bbox();
             // Получаем границы холста
             const canvasRect = document.getElementById("drawingCanvas").getBoundingClientRect();
 
@@ -69,7 +68,14 @@ const TimelineControls = observer( () => {
             setRotationCenter({ x, y });
 
             // Запускаем анимации
-            keyframeManagerRef.current.startAnimations(isRunningThumb, x, y);
+            if(timelineBlockState.keys && timelineBlockState.keys.length > 0){
+                keyframeManagerRef.current.startAnimations(isRunningThumb, x, y, timelineBlockState.activeElement.svgElement);
+            } else{
+                alert("Create key points for keyframes")
+            }
+
+        } else{
+            alert("Select the active element")
         }
     };
     const handleStopButtonClick = () => {

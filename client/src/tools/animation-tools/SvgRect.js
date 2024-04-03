@@ -2,6 +2,7 @@ import React from "react";
 import SvgTool from "./SvgTool";
 import toolState from "../../store/toolState";
 import svgToolState from "../../store/svgToolState";
+import svgCanvasState from "../../store/svgCanvasState";
 
 export default class SvgRect extends SvgTool {
     constructor(svgCanvas) {
@@ -20,7 +21,7 @@ export default class SvgRect extends SvgTool {
     mouseUpHandler(e) {
         this.mouseDown = false;
         if(this.drawingRect){
-            svgToolState.pushToSvgElements(this.drawingRect);
+            svgCanvasState.pushToSvgElements(this.drawingRect);
         }
         this.drawingRect = null; // Сбрасываем текущий рисуемый прямоугольник
     }

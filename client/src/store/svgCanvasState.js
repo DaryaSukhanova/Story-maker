@@ -12,8 +12,26 @@ class SvgCanvasState{
     undoList = [] //содержит все действие,которые мы делали
     redoList = [] //содержит те действия, которые мы отменили
     backgroundName = ""
+    svgElements = []
     constructor() {
         makeAutoObservable(this)
+    }
+    pushToSvgElements(element) {
+        const svgElementWrapper = {
+            svgElement: element,
+            isAnimated: false
+        };
+        this.svgElements.push(svgElementWrapper);
+        console.log(this.svgElements)
+        // Добавляем обработчик события клика для каждого элемента
+        element.on('click', () => {
+            // Выполняем действия при клике на элемент
+            timelineBlockState.setActiveElement(svgElementWrapper);
+            console.log(this.svgElements);
+        });
+    }
+    setSvgElements(arr){
+        this.svgElements = arr
     }
 
     setSvgCanvas(canvas){

@@ -2,6 +2,7 @@ import React from "react";
 import SvgTool from "./SvgTool";
 import {SVG} from "@svgdotjs/svg.js";
 import svgToolState from "../../store/svgToolState";
+import svgCanvasState from "../../store/svgCanvasState";
 
 export default class SvgLine extends SvgTool{
     constructor(svgCanvas) {
@@ -21,7 +22,7 @@ export default class SvgLine extends SvgTool{
     mouseUpHandler(e) {
         this.mouseDown = false;
         if (this.drawingLine) {
-            svgToolState.pushToSvgElements(this.drawingLine);
+            svgCanvasState.pushToSvgElements(this.drawingLine);
         }
         this.drawingLine = null;
     }

@@ -38,6 +38,7 @@ class timelineBlockState{
     }
     setActiveElement(element){
         this.activeElement = element
+        console.log("this.activeElement", this.activeElement)
     }
     setTotalTime(time){
         this.totalTime = time

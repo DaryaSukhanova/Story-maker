@@ -7,23 +7,28 @@ export default class KeyFrameManager extends AnimationTool{
         super(svgCanvas);
         this.svgCanvas = svgCanvas
         this.element = null;
+        this.thumbPosition = null
     }
-    thumbPosition = timelineBlockState.thumbEndPosition
-    startAnimations(isRunningThumb, x, y) {
-        this.element = timelineBlockState.activeElement;
-        console.log(this.element)
-        if (this.element) {
+
+    startAnimations(isRunningThumb, x, y, activeElement) {
+        this.element = timelineBlockState.activeElement.svgElement;
+        console.log("activeElement", activeElement)
+        if (activeElement) {
              this.applyRotationAnimationStyle( x, y);
 
-            this.element.css({
-                'animation': 'rotatePath', // Устанавливаем имя анимации
-                'animation-duration': `${timelineBlockState.totalTime}s`, // Устанавливаем длительность анимации
-                'animation-iteration-count': 'infinite', // Устанавливаем бесконечное повторение анимации
-                'animation-play-state': isRunningThumb ? 'paused' : 'running' // Устанавливаем состояние анимации
-            });
+            activeElement.attr(
+                { 'style': `
+                        animation: rotatePath; 
+                        animation-duration: ${timelineBlockState.totalTime}s; 
+                        animation-iteration-count: infinite; 
+                        animation-play-state: ${isRunningThumb ? 'paused' : 'running'};`
+                }
+                );
         }
     }
     applyRotationAnimationStyle (x, y) {
+        this.thumbPosition = timelineBlockState.thumbEndPosition
+
         const prevStyle = document.querySelector('style[data-animation="rotatePath"]');
         if (prevStyle) {
             prevStyle.remove();
@@ -39,7 +44,9 @@ export default class KeyFrameManager extends AnimationTool{
             transform: rotate(${0}deg) scale(1, 1) translate(0px, 0px) skew(0deg, 0deg);
         }
         `;
+
         timelineBlockState.keys.forEach((key, index) => {
+            console.log(this.thumbPosition)
             const percent = (key.position / this.thumbPosition)*100;
             keyframes += `
             ${percent}% {

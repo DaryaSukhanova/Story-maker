@@ -2,6 +2,7 @@ import {SVG} from "@svgdotjs/svg.js";
 import SvgTool from "./SvgTool";
 import canvas from "../../components/graphic-components/Canvas";
 import svgToolState from "../../store/svgToolState";
+import svgCanvasState from "../../store/svgCanvasState";
 
 export default class SvgCircle extends SvgTool {
     constructor(svgCanvas) {
@@ -20,7 +21,7 @@ export default class SvgCircle extends SvgTool {
     mouseUpHandler(e) {
         this.mouseDown = false;
         if (this.drawingCircle) {
-            svgToolState.pushToSvgElements(this.drawingCircle);
+            svgCanvasState.pushToSvgElements(this.drawingCircle);
         }
         this.drawingCircle = null;
     }
