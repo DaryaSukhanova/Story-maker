@@ -1,12 +1,17 @@
 import timelineBlockState from "../../store/timelineBlockState";
+import AnimationTool from "./AnimationTool";
 
 
-export default class AnimationManager {
-    constructor(element) {
-        this.element = element
+export default class KeyFrameManager extends AnimationTool{
+    constructor(svgCanvas) {
+        super(svgCanvas);
+        this.svgCanvas = svgCanvas
+        this.element = null;
     }
     thumbPosition = timelineBlockState.thumbEndPosition
     startAnimations(isRunningThumb, x, y) {
+        this.element = timelineBlockState.activeElement;
+        console.log(this.element)
         if (this.element) {
              this.applyRotationAnimationStyle( x, y);
 
@@ -59,4 +64,13 @@ export default class AnimationManager {
         `;
         document.head.appendChild(style);
     };
+
+    stopAnimations() {
+        if (this.element) {
+            this.element.css({
+                'animation': 'none' // Останавливаем анимацию
+            });
+            timelineBlockState.setKeys([])
+        }
+    }
 }

@@ -2,7 +2,8 @@ import React, {useEffect, useRef, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import timelineBlockState from "../../store/timelineBlockState";
 import timelineBlock from "./TimelineBlock";
-import AnimationManager from "../../tools/animation-tools/AnimationManager";
+import KeyFrameManager from "../../tools/animation-tools/KeyFrameManager";
+import svgCanvasState from "../../store/svgCanvasState";
 
 const TimelineControls = observer( () => {
 
@@ -13,6 +14,15 @@ const TimelineControls = observer( () => {
     const timelineKeyRef = useRef(null);
     const intervalIdRef = useRef(null);
     const startTimeRef = useRef(null);
+    const keyframeManagerRef = useRef(null); // Добавляем ref для хранения экземпляра AnimationManager
+
+    useEffect(() => {
+        keyframeManagerRef.current = new KeyFrameManager(svgCanvasState.canvas);
+        return () => {
+            // Очищаем экземпляр AnimationManager при размонтировании компонента
+            keyframeManagerRef.current = null;
+        };
+    }, []);
 
     useEffect(() => {
         if (isRunningThumb) {
@@ -39,7 +49,7 @@ const TimelineControls = observer( () => {
         }, 10);
     };
 
-    const animationManager = new AnimationManager(timelineBlockState.activeElement);
+
 
     const handleStartButtonClick = () => {
         timelineBlockState.setIsRunningThumb(!isRunningThumb);
@@ -59,7 +69,7 @@ const TimelineControls = observer( () => {
             setRotationCenter({ x, y });
 
             // Запускаем анимации
-            animationManager.startAnimations(isRunningThumb, x, y);
+            keyframeManagerRef.current.startAnimations(isRunningThumb, x, y);
         }
     };
     const handleStopButtonClick = () => {

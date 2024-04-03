@@ -56,7 +56,8 @@ class SvgToolState{
         element.on('click', () => {
             // Выполняем действия при клике на элемент
             timelineBlockState.setActiveElement(element);
-            console.log(timelineBlockState.activeElement);
+            console.log(this.svgElements);
+            console.log("activeElement", timelineBlockState.activeElement)
         });
     }
 }

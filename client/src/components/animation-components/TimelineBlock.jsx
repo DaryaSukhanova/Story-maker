@@ -4,15 +4,12 @@ import timelineBlockState from "../../store/timelineBlockState";
 import {observer} from "mobx-react-lite";
 import TimelineControls from "./TimelineControls";
 import animationToolState from "../../store/animationToolState";
-import KeyFrames from "../../tools/animation-tools/KeyFrames";
 import TimelineLine from "./TimelineLine";
 import TimelineTool from "./TimelineTool";
 import TimelineTicks from "./TimelineTicks";
 import TimelineKeyframes from "./TimelineKeyframes";
 
 const TimeLineBlock = observer (() => {
-
-
 
     const findNearestTickPosition = (position) => {
         const ticksPositions = [];
@@ -34,7 +31,7 @@ const TimeLineBlock = observer (() => {
         <div className="timeline-block">
             <div className="timeline-left">
                 <TimelineControls/>
-                {animationToolState.tool instanceof KeyFrames && (
+                {animationToolState.tool === 'keyframeElement' && (
                     <TimelineTool/>
                 )}
             </div>

@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {observer} from "mobx-react-lite";
 import '../../styles/transform-block.scss';
-import {logDOM} from "@testing-library/react";
 import toolBlockState from "../../store/timelineBlockState";
 
 const TransformBlock = observer(() => {
@@ -16,15 +15,24 @@ const TransformBlock = observer(() => {
     const [skewY, setSkewY] = useState(1);
 
     const handleAngleChange = (event) => {
-        const newAngle = parseFloat(event.target.value);
-        setAngle(isNaN(newAngle) ? 0 : newAngle); // Парсим значение в число, если возможно, иначе устанавливаем 0
-
-        const activeKeyIndex = toolBlockState.keys.findIndex(key => key.isActive); // Находим индекс активного ключа
-        if (activeKeyIndex !== -1) {
-            console.log(toolBlockState.keys[activeKeyIndex].rotate)
-            toolBlockState.keys[activeKeyIndex].rotate = newAngle; // Присваиваем новое значение угла в поле rotate активного ключа
+        const newValue = parseFloat(event.target.value);
+        const inputType = event.target.id; // Получаем ID измененного поля ввода
+        console.log(inputType)
+        // Устанавливаем новое значение в зависимости от типа ввода
+        if (inputType === 'angleInputDeg') {
+            setAngle(isNaN(newValue) ? 0 : newValue);
+        } else if (inputType === 'angleInputTurn') {
+            // Переводим повороты в градусы
+            const degrees = newValue * 360; // 1 поворот = 360 градусов
+            setAngle(isNaN(degrees) ? 0 : degrees);
         }
-        console.log(toolBlockState.keys)
+
+        // Обновляем состояние активного ключа
+        const activeKeyIndex = toolBlockState.keys.findIndex(key => key.isActive);
+        if (activeKeyIndex !== -1) {
+             // Если угол в градусах, то оставляем newValue, иначе умножаем на 360
+            toolBlockState.keys[activeKeyIndex].rotate = (inputType === 'angleInputDeg') ? newValue : newValue * 360;
+        }
     };
 
     const handleScaleXChange = (event) => {
@@ -103,58 +111,91 @@ const TransformBlock = observer(() => {
             <div className="transform-block__options">
                 <div className="transform-block__entry">
                     <label htmlFor="angleInput">Angle</label>
-                    <input
-                        type="number"
-                        id="angleInput"
-                        value={angle}
-                        onChange={handleAngleChange}
-                        min={0}
-                        max={360}
-                        step={1}
-                    />
+                    <div className="transform-block__entry__input">
+                        <input
+                            type="number"
+                            id="angleInputTurn"
+                            onChange={handleAngleChange}
+                            min={0}
+                            max={10}
+                            step={0.1}
+                        />
+                        <span className="transform-block__entry__type">turn</span>
+                    </div>
+
+                    <div className="transform-block__entry__input">
+                        <input
+                            type="number"
+                            id="angleInputDeg"
+                            onChange={handleAngleChange}
+                            min={0}
+                            max={360}
+                            step={1}
+                        />
+                        <span className="transform-block__entry__type">deg</span>
+                    </div>
                 </div>
                 <div className="transform-block__entry">
                     <label htmlFor="scaleInput">Scale</label>
-                    <input type="number"
-                           id="scaleInputX"
-                           step="0.01"
-                           onChange={handleScaleXChange}
-                    />
-                    <input type="number"
-                           id="scaleInputY"
-                           step="0.01"
-                           onChange={handleScaleYChange}
-                    />
+                    <div className="transform-block__entry__input">
+                        <input type="number"
+                               id="scaleInputX"
+                               step="0.01"
+                               onChange={handleScaleXChange}
+                        />
+                        <span className="transform-block__entry__type">X</span>
+                    </div>
+                    <div className="transform-block__entry__input">
+                        <input type="number"
+                               id="scaleInputY"
+                               step="0.01"
+                               onChange={handleScaleYChange}
+                        />
+                        <span className="transform-block__entry__type">Y</span>
+                    </div>
                 </div>
                 <div className="transform-block__entry">
-                    <label htmlFor="scaleInput">Position</label>
-                    <input type="number"
-                           id="positionInputX"
-                           step="0.01"
-                           onChange={handlePositionXChange}
-                    />
-                    <input type="number"
-                           id="positionInputY"
-                           step="0.01"
-                           onChange={handlePositionYChange}
-                    />
+                    <label htmlFor="positionInput">Position</label>
+                    <div className="transform-block__entry__input">
+                        <input type="number"
+                               id="positionInputX"
+                               step="0.01"
+                               onChange={handlePositionXChange}
+                        />
+                        <span className="transform-block__entry__type">X</span>
+                    </div>
+                    <div className="transform-block__entry__input">
+                        <input type="number"
+                               id="positionInputY"
+                               step="0.01"
+                               onChange={handlePositionYChange}
+                        />
+                        <span className="transform-block__entry__type">Y</span>
+                    </div>
                 </div>
                 <div className="transform-block__entry">
-                    <label htmlFor="scaleInput">Skew</label>
-                    <input type="number"
-                           id="skewInputX"
-                           min={0}
-                           max={360}
-                           step={1}
-                           onChange={handleSkewXChange}
-                    />
-                    <input type="number"
-                           id="skewInputY"
-                           min={0}
-                           max={360}
-                           step={1}
-                           onChange={handleSkewYChange}
-                    />
+                    <label htmlFor="skewInput">Skew</label>
+                    <div className="transform-block__entry__input">
+                        <input type="number"
+                               id="skewInputX"
+                               min={0}
+                               max={360}
+                               step={1}
+                               onChange={handleSkewXChange}
+                        />
+                        <span className="transform-block__entry__type">X</span>
+                    </div>
+                    <div className="transform-block__entry__input">
+                        <input type="number"
+                               id="skewInputY"
+                               min={0}
+                               max={360}
+                               step={1}
+                               onChange={handleSkewYChange}
+                        />
+                        <span className="transform-block__entry__type">Y</span>
+                    </div>
+
                 </div>
             </div>
         </div>

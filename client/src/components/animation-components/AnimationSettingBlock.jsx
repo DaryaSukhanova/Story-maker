@@ -1,30 +1,33 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import '../../styles/animation-setting-block.scss'
 import animationToolState from "../../store/animationToolState";
 import MotionCurve from "../../tools/animation-tools/MotionCurve";
 import svgCanvasState from "../../store/svgCanvasState";
 import svgToolState from "../../store/svgToolState";
-import KeyFrames from "../../tools/animation-tools/KeyFrames";
 import {observer} from "mobx-react-lite";
 import TransformBlock from "./TransformBlock";
 import toolBlockState from "../../store/timelineBlockState";
+import KeyFrameManager from "../../tools/animation-tools/KeyFrameManager";
+import timelineBlockState from "../../store/timelineBlockState";
 
 const AnimationSettingBlock = observer(() => {
+    const keyframeManagerRef = useRef(null); // Добавляем ref для хранения экземпляра AnimationManager
     const handleMotionCurveClick = () => {
-        const motionCurveTool = new MotionCurve(svgCanvasState.canvas);
-        animationToolState.setAnimationTool(motionCurveTool);
+        animationToolState.setAnimationTool('motionCurve')
     };
 
-    const handleRotateClick = () => {
-        const rotateElementTool = new KeyFrames(svgCanvasState.canvas);
-        animationToolState.setAnimationTool(rotateElementTool);
+    const handleKeyframeClick = () => {
+        svgCanvasState.canvas.onmousemove = null;
+        svgCanvasState.canvas.onmousedown = null;
+        svgCanvasState.canvas.onmouseup = null;
+        animationToolState.setAnimationTool('keyframeElement')
     };
 
     // Определяем, какой инструмент анимации сейчас выбран
     let selectedToolContent = null;
-    if (animationToolState.tool instanceof MotionCurve) {
+    if (animationToolState.tool === 'motionCurve') {
         selectedToolContent = <div>Содержимое для MotionCurve</div>;
-    } else if (animationToolState.tool instanceof KeyFrames) {
+    } else if (animationToolState.tool === 'keyframeElement') {
         selectedToolContent = <TransformBlock/>
     }
 
@@ -35,8 +38,12 @@ const AnimationSettingBlock = observer(() => {
                     Animation Settings
                 </div>
                 <div className="animation-setting-block-btns">
-                    <button className="animation-setting-block-btns__btn motionCurve" onClick={handleMotionCurveClick} />
-                    <button className="animation-setting-block-btns__btn rotateElement" onClick={handleRotateClick} />
+                    <button
+                        className={`animation-setting-block-btns__btn motionCurve ${animationToolState.tool === 'motionCurve' ? 'active-animation-setting-btn' : ''}`}
+                        onClick={handleMotionCurveClick} />
+                    <button
+                        className={`animation-setting-block-btns__btn keyframeElement ${animationToolState.tool === 'keyframeElement' ? 'active-animation-setting-btn' : ''}`}
+                        onClick={handleKeyframeClick} />
                 </div>
                 <div className="animation-setting-block-data">
                     {selectedToolContent}

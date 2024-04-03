@@ -11,7 +11,7 @@
     width: 100%;
     border: 1px solid #ddd ;
     border-radius: 7px;
-
+    padding: 10px;
   }
 
   &__entry{
@@ -22,6 +22,17 @@
 
     label{
       padding: 10px;
+    }
+    &__input{
+      position: relative;
+    }
+    &__type{
+      font-size: 11px;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      padding: 8px;
+      color: #8c8c8c;
     }
   }
 

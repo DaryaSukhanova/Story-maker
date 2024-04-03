@@ -16,7 +16,6 @@ const SvgToolsBlock = ({ currentColor }) => {
         if (isStroke) {
             svgToolState.setStrokeColor(currentColor)
         }
-        console.log("isFill, isStroke",isFill, isStroke)
     }
     const changeFillColorBtn = () => {
         setIsFill(prevIsFill => {
