@@ -18,7 +18,7 @@ const TransformBlock = observer(() => {
     const handleAngleChange = (event) => {
         const newValue = parseFloat(event.target.value);
         const inputType = event.target.id; // Получаем ID измененного поля ввода
-        console.log(inputType)
+
         // Устанавливаем новое значение в зависимости от типа ввода
         if (inputType === 'angleInputDeg') {
             setAngle(isNaN(newValue) ? 0 : newValue);
@@ -106,123 +106,49 @@ const TransformBlock = observer(() => {
 
     };
 
-    const inputFields = [
-        { id: "angleInputTurn", label: "Angle", min: 0, max: 10, step: 0.1, type: "turn", OnChange: handleAngleChange },
-        { id: "angleInputDeg", label: "Angle", min: 0, max: 360, step: 1, type: "deg", OnChange: handleAngleChange },
-        { id: "scaleInputX", label: "Scale", step: "0.01", type: "X", OnChange: handleScaleXChange },
-        { id: "scaleInputY", label: "Scale", step: "0.01", type: "Y", OnChange: handleScaleYChange },
-        { id: "positionInputX", label: "Position", step: "0.01", type: "X", OnChange: handlePositionXChange },
-        { id: "positionInputY", label: "Position", step: "0.01", type: "Y", OnChange: handlePositionYChange },
-        { id: "skewInputX", label: "Skew", min: 0, max: 360, step: 1, type: "X", OnChange: handleSkewXChange },
-        { id: "skewInputY", label: "Skew", min: 0, max: 360, step: 1, type: "Y", OnChange: handleSkewYChange }
-    ];
+        const inputFields = [
+            [
+                { id: "angleInputTurn", label: "Angle", min: 0, max: 10, step: 0.1, type: "turn", OnChange: handleAngleChange },
+                { id: "angleInputDeg", label: "Angle", min: 0, max: 360, step: 1, type: "deg", OnChange: handleAngleChange },
+            ],
+            [
+                { id: "scaleInputX", label: "Scale", step: "0.01", type: "X", OnChange: handleScaleXChange },
+                { id: "scaleInputY", label: "Scale", step: "0.01", type: "Y", OnChange: handleScaleYChange },
+            ],
+            [
+                { id: "positionInputX", label: "Position", step: "0.01", type: "X", OnChange: handlePositionXChange },
+                { id: "positionInputY", label: "Position", step: "0.01", type: "Y", OnChange: handlePositionYChange },
+            ],
+            [
+                { id: "skewInputX", label: "Skew", min: 0, max: 360, step: 1, type: "X", OnChange: handleSkewXChange },
+                { id: "skewInputY", label: "Skew", min: 0, max: 360, step: 1, type: "Y", OnChange: handleSkewYChange }
+            ]
+        ];
 
     return (
         <div className="transform-block__container">
             <div className="transform-block__title">Transforms</div>
             <div className="transform-block__options">
-                <div className="transform-block__entry">
-                    <label htmlFor="angleInput">Angle</label>
-                    <div className="transform-block__entry__input">
-                        <input
-                            type="number"
-                            id="angleInputTurn"
-                            onChange={handleAngleChange}
-                            min={0}
-                            max={10}
-                            step={0.1}
-                        />
-                        <span className="transform-block__entry__type">turn</span>
-                    </div>
-
-                    <div className="transform-block__entry__input">
-                        <input
-                            type="number"
-                            id="angleInputDeg"
-                            onChange={handleAngleChange}
-                            min={0}
-                            max={360}
-                            step={1}
-                        />
-                        <span className="transform-block__entry__type">deg</span>
-                    </div>
-                </div>
-                <div className="transform-block__entry">
-                    <label htmlFor="scaleInput">Scale</label>
-                    <div className="transform-block__entry__input">
-                        <input type="number"
-                               id="scaleInputX"
-                               step="0.01"
-                               onChange={handleScaleXChange}
-                        />
-                        <span className="transform-block__entry__type">X</span>
-                    </div>
-                    <div className="transform-block__entry__input">
-                        <input type="number"
-                               id="scaleInputY"
-                               step="0.01"
-                               onChange={handleScaleYChange}
-                        />
-                        <span className="transform-block__entry__type">Y</span>
-                    </div>
-                </div>
-                <div className="transform-block__entry">
-                    <label htmlFor="positionInput">Position</label>
-                    <div className="transform-block__entry__input">
-                        <input type="number"
-                               id="positionInputX"
-                               step="0.01"
-                               onChange={handlePositionXChange}
-                        />
-                        <span className="transform-block__entry__type">X</span>
-                    </div>
-                    <div className="transform-block__entry__input">
-                        <input type="number"
-                               id="positionInputY"
-                               step="0.01"
-                               onChange={handlePositionYChange}
-                        />
-                        <span className="transform-block__entry__type">Y</span>
-                    </div>
-                </div>
-                <div className="transform-block__entry">
-                    <label htmlFor="skewInput">Skew</label>
-                    <div className="transform-block__entry__input">
-                        <input type="number"
-                               id="skewInputX"
-                               min={0}
-                               max={360}
-                               step={1}
-                               onChange={handleSkewXChange}
-                        />
-                        <span className="transform-block__entry__type">X</span>
-                    </div>
-                    <div className="transform-block__entry__input">
-                        <input type="number"
-                               id="skewInputY"
-                               min={0}
-                               max={360}
-                               step={1}
-                               onChange={handleSkewYChange}
-                        />
-                        <span className="transform-block__entry__type">Y</span>
-                    </div>
-                </div>
+                {inputFields.map((input, index) => (
+                    <TransformInput
+                        key={index} // Уникальный ключ
+                        id1={input[0].id}
+                        label1={input[0].label}
+                        min1={input[0].min}
+                        max1={input[0].max}
+                        step1={input[0].step}
+                        type1={input[0].type}
+                        onChange1={input[0].OnChange}
+                        id2={input[1].id}
+                        label2={input[1].label}
+                        min2={input[1].min}
+                        max2={input[1].max}
+                        step2={input[1].step}
+                        type2={input[1].type}
+                        onChange2={input[1].OnChange}
+                    />
+                ))}
             </div>
-            {/*<div className="transform-block__options">*/}
-            {/*    {inputFields.map(input => (*/}
-            {/*        <TransformInput*/}
-            {/*            key={input.id}*/}
-            {/*            id={input.id}*/}
-            {/*            label={input.label}*/}
-            {/*            min={input.min}*/}
-            {/*            max={input.max}*/}
-            {/*            step={input.step}*/}
-            {/*            type={input.type}*/}
-            {/*            onChange={input.onChange} // Передаем функцию onChange из объекта input*/}
-            {/*        />*/}
-            {/*    ))}*/}
-            {/*</div>*/}
         </div>
     );
 });

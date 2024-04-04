@@ -12,7 +12,6 @@ export default class KeyFrameManager extends AnimationTool{
 
     startAnimations(isRunningThumb, x, y, activeElement) {
         this.element = timelineBlockState.activeElement.svgElement;
-        console.log("activeElement", activeElement)
         if (activeElement) {
              this.applyRotationAnimationStyle( x, y);
 
@@ -46,7 +45,6 @@ export default class KeyFrameManager extends AnimationTool{
         `;
 
         timelineBlockState.keys.forEach((key, index) => {
-            console.log(this.thumbPosition)
             const percent = (key.position / this.thumbPosition)*100;
             keyframes += `
             ${percent}% {

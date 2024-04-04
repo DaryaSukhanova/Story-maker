@@ -62,7 +62,6 @@ const TimelineControls = observer( () => {
             const x = rect.cx;
             const y = rect.y2;
 
-            console.log("Center point coordinates:", x, y);
 
             // Устанавливаем координаты центральной точки в состояние
             setRotationCenter({ x, y });
