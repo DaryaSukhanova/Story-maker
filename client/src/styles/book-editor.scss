@@ -16,6 +16,13 @@
   justify-content: space-between;
   margin-top: 20px;
 }
+
+.disk {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
 .block-container{
   margin-top: 40px;
 }

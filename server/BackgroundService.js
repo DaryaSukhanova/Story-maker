@@ -20,15 +20,29 @@ class BackgroundService{7
     //     }
     //     return id
     // }
-    async create(background){
+    async create(background, userId){
+		const user = await User.findOne({_id: userId})
         const data = background.backgroundImage.replace(`data:image/png;base64,`, '')
-        fs.writeFileSync(path.resolve('files/backgrounds', `${background.backgroundName}.png`), data, 'base64')
-        const createdBackground = await Background.create({backgroundName: `${background.backgroundName}.png`})
+		const parent = await File.findOne({user: userId, name: "Backgrounds"})
+        fs.writeFileSync(path.resolve(`files/${userId}/Backgrounds`, `${background.backgroundName}.png`), data, 'base64')
+        const createdBackground = await File.create({
+			name: `${background.backgroundName}.png`,
+			type: "png",
+			size: background.backgroundImage.size,
+			path: `Backgrounds\\${background.backgroundName}.png`,
+			parent: parent.id,
+			user: userId
+		})
         if (createdBackground === null){
             throw createError(500, `Server error`)
         }
-        return createdBackground
-
+		if (user.usedSpace + createdBackground.size > user.diskSpace) {
+			return res.status(400).json({message: "There no space on the disk"})
+		}
+		user.usedSpace = user.usedSpace + createdBackground.size
+		user.save()
+		createdBackground.save()
+		return createdBackground
     }
     async getAll(){
         const backgroundNames = await Background.find()
@@ -130,7 +144,7 @@ class BackgroundService{7
         return fs.lstatSync(path).isDirectory() && fs.existsSync(path)
     }
     async getFiles(req){
-        const base = './files/'
+        const base = `./files/${req.user.id}`
         let path = ''
         if('path' in req.query){
             path = req.query.path
@@ -176,6 +190,12 @@ class BackgroundService{7
             const user = new User({email, password: hashPassword})
             await user.save()
 			await FileService.createDir(new File({user: user.id, name: ""}))
+			const backgrounds = new File({user: user.id, name: "Backgrounds", type: "dir", path: "Backgrounds"})
+			await FileService.createDir(backgrounds)
+			await backgrounds.save()
+			const animations = new File({user: user.id, name: "Animations", type: "dir", path: "Animations"})
+			await FileService.createDir(animations)
+			await animations.save()
             return res.json({message:"User was created"})
         } catch (error) {
             console.error('Error:', error);

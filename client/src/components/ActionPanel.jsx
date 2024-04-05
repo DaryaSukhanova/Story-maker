@@ -13,7 +13,9 @@ const ActionPanel = () => {
         setModal(false)
         const dataUrl = canvasState.canvas.toDataURL()
         console.log(dataUrl)
-        axios.post(`http://localhost:5000/api/v1/backgrounds`, {backgroundName: `${backgroundNameRef.current.value}`, backgroundImage: dataUrl})
+        axios.post(`http://localhost:5000/api/v1/backgrounds`, {backgroundName: `${backgroundNameRef.current.value}`, backgroundImage: dataUrl}, {headers: {
+			Authorization: `Bearer ${localStorage.getItem('token')}`
+		}})
             .then(response => console.log(response.data))
     }
 

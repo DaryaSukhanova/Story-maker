@@ -9,13 +9,13 @@ import fC from './controllers/fileController.js'
 const router = new Router()
 const fileController = new fC()
 
-router.post('/backgrounds', BackgroundController.create)
+router.post('/backgrounds', authMiddleware, BackgroundController.create)
 router.get('/backgrounds', BackgroundController.getAll)
 router.get('/backgrounds/:name', BackgroundController.getOne)
 router.put('/backgrounds', BackgroundController.update)
 router.delete('/backgrounds/:name', BackgroundController.delete)
 router.post('/animations', BackgroundController.saveAnimation);
-router.get('/fileManager', BackgroundController.getFiles)
+router.get('/fileManager', authMiddleware, BackgroundController.getFiles)
 router.post('/registration',         [
     check('email', "Uncorrected email").isEmail(),
     check('password', "Password must be longer than 3 and shorter than 12").isLength({min:3, max:12})

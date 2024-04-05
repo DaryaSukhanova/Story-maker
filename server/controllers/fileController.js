@@ -98,11 +98,11 @@ class FileController {
 			const __dirname = path.dirname(new URL(import.meta.url).pathname);
 			const parentDir = path.dirname(__dirname);
 			const file = await File.findOne({_id: req.query.id, user: req.user.id})
-			if (file.path) {
-				Path = `${path.join(`${parentDir}`, `/files/${req.user.id}/${file.path}/${file.name}`).replace(/^\\/, '')}`
-			} else {
-				Path = `${path.join(`${parentDir}`, `/files/${req.user.id}/${file.name}`).replace(/^\\/, '')}`
-			}
+			// if (file.path) {
+				Path = `${path.join(`${parentDir}`, `/files/${req.user.id}/${file.path}`).replace(/^\\/, '')}`
+			// } else {
+				// Path = `${path.join(`${parentDir}`, `/files/${req.user.id}/${file.name}`).replace(/^\\/, '')}`
+			// }
 			console.log(Path);
 			if (fs.existsSync(Path)) {
                 return res.download(Path, file.name)
