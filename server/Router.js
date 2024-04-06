@@ -10,8 +10,8 @@ const router = new Router()
 const fileController = new fC()
 
 router.post('/backgrounds', authMiddleware, BackgroundController.create)
-router.get('/backgrounds', BackgroundController.getAll)
-router.get('/backgrounds/:name', BackgroundController.getOne)
+// router.get('/backgrounds', BackgroundController.getAll)
+router.get('/backgrounds', authMiddleware, BackgroundController.getBackground)
 router.put('/backgrounds', BackgroundController.update)
 router.delete('/backgrounds/:name', BackgroundController.delete)
 router.post('/animations', BackgroundController.saveAnimation);

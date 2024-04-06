@@ -29,11 +29,15 @@
   .file:hover .file__size {
     grid-column-start: 4;
   }
+  .file:hover .file__add {
+	grid-column-start: 5;
+	display: block;
+  }
   .file:hover .file__download {
-    grid-column-start: 5;
+    grid-column-start: 6;
     display: block;
   }
   .file:hover .file__delete {
-    grid-column-start: 6;
+    grid-column-start: 7;
     display: block;
   }

@@ -12,19 +12,19 @@ class BackgroundController{
             res.status(e.status).json(e.message)
         }
     }
-    async getAll(req, res){
+    // async getAll(req, res){
+    //     try{
+    //         const background = await BackgroundService.getAll()
+    //         return res.status(200).json(background);
+    //     } catch (e){
+    //         const status = e.status || 500;
+    //         const message = e.message || 'Internal Server Error';
+    //         res.status(status).json(message);
+    //     }
+    // }
+    async getBackground(req, res){
         try{
-            const background = await BackgroundService.getAll()
-            return res.status(200).json(background);
-        } catch (e){
-            const status = e.status || 500;
-            const message = e.message || 'Internal Server Error';
-            res.status(status).json(message);
-        }
-    }
-    async getOne(req, res, error){
-        try{
-            const background = await BackgroundService.getOne(req.params.name);
+            const background = await BackgroundService.getBackground(req, res);
             return res.status(200).send(background)
         } catch (e){
             console.log(e)

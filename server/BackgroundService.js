@@ -24,11 +24,13 @@ class BackgroundService{7
 		const user = await User.findOne({_id: userId})
         const data = background.backgroundImage.replace(`data:image/png;base64,`, '')
 		const parent = await File.findOne({user: userId, name: "Backgrounds"})
-        fs.writeFileSync(path.resolve(`files/${userId}/Backgrounds`, `${background.backgroundName}.png`), data, 'base64')
+		const filePath = path.resolve(`files/${userId}/Backgrounds`, `${background.backgroundName}.png`)
+        fs.writeFileSync(filePath, data, 'base64')
+		const size = fs.statSync(filePath).size
         const createdBackground = await File.create({
 			name: `${background.backgroundName}.png`,
 			type: "png",
-			size: background.backgroundImage.size,
+			size: size,
 			path: `Backgrounds\\${background.backgroundName}.png`,
 			parent: parent.id,
 			user: userId
@@ -44,54 +46,52 @@ class BackgroundService{7
 		createdBackground.save()
 		return createdBackground
     }
-    async getAll(){
-        const backgroundNames = await Background.find()
-        const backgrounds = []
-        backgroundNames.forEach((file) =>{
-            const picture = fs.readFileSync(path.resolve('files/backgrounds', file.backgroundName))
-            const image = `data:image/png;base64,` + picture.toString('base64')
-            backgrounds.push(
-                {
-                    backgroundId: file._id,
-                    backgroundName: file.backgroundName,
-                    backgroundImage: image
-                }
-            )
-        })
+    // async getAll(){
+    //     const backgroundNames = await Background.find() //Необходимо переделать обращение к таблице(графика лежит в files)
+    //     const backgrounds = []
+    //     backgroundNames.forEach((file) =>{
+    //         const picture = fs.readFileSync(path.resolve('files/backgrounds', file.backgroundName))
+    //         const image = `data:image/png;base64,` + picture.toString('base64')
+    //         backgrounds.push(
+    //             {
+    //                 backgroundId: file._id,
+    //                 backgroundName: file.backgroundName,
+    //                 backgroundImage: image
+    //             }
+    //         )
+    //     })
 
-        return backgrounds
-    }
-    async getOne(name){
-        if (!name){
-            throw createError(400, `Bad Request`)
-        }
-        const backgroundNames = await Background.find()
-        let background = 0
-        backgroundNames.forEach((file) =>{
-            if (name === file.backgroundName){
-                const picture = fs.readFileSync(path.resolve('files/backgrounds', file.backgroundName))
-                const image = `data:image/png;base64,` + picture.toString('base64')
-                background =
-                    {
-                        backgroundId: file._id,
-                        backgroundName: file.backgroundName,
-                        backgroundImage: image
-                    }
-            }
+    //     return backgrounds
+    // }
+    async getBackground(req, res){
+		let backgroundNames = null
+		if (req.query.id) {
+			backgroundNames = await File.find({user: req.user.id, _id: req.query.id})
+		} else {
+			backgroundNames = await File.find({user: req.user.id})
+		}
+        let backgrounds = []
+        backgroundNames.forEach((data) =>{
+			const picture = fs.readFileSync(path.resolve(`files/${req.user.id}/backgrounds`, data.name))
+			const image = `data:image/png;base64,` + picture.toString('base64')
+			backgrounds.push(
+				{
+					backgroundId: data._id,
+					backgroundName: data.name,
+					backgroundImage: image
+				})
         })
-        console.log(background)
-        if (background === 0){
-            // throw new Error('background is not found')
-            throw createError(404, `Background not found`)
+        if (backgrounds === 0){
+			res.status(400).json({message: "background not found"})
         }
-        return background
+        return backgrounds
 
     }
     async update(background){
         if (!background.backgroundId){
             throw createError(400, `Bad Request`)
         }
-        const updatedBackground = await Background.findByIdAndUpdate(
+        const updatedBackground = await Background.findByIdAndUpdate( //Необходимо переделать обращение к таблице(графика лежит в files)
             background.backgroundId,
             {
                 backgroundId: background.backgroundId,
@@ -112,7 +112,7 @@ class BackgroundService{7
         if (!name) {
             throw createError(400, `Bad Request`)
         }
-        const backgroundNames = await Background.find();
+        const backgroundNames = await Background.find(); //Необходимо переделать обращение к таблице(графика лежит в files)
         let background = 0;
         for (const file of backgroundNames) {
             if (name === file.backgroundName) {

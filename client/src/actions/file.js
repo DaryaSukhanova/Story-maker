@@ -1,4 +1,5 @@
 import fileState from "../store/fileState.js";
+import svgCanvasState from "../store/svgCanvasState.js";
 // import {addUploadFile, changeUploadFile, showUploader} from "../store/uploadState.js";
 import uploadState from "../store/uploadState.js";
 import axios from "axios";
@@ -81,6 +82,25 @@ export const downloadFile = async (file) => {
         link.click()
         link.remove()
     }
+}
+
+export const addFile = async (file) => {
+	try {
+		const response = await axios.get(`http://localhost:5000/api/v1/backgrounds?id=${file._id}`, {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		})
+		const canvas = svgCanvasState.canvas
+		const img = new Image()
+		img.src = response.data[0].backgroundImage
+		img.onload = () => {
+			canvas.append(img)
+		}
+		console.log(img)
+	} catch (e) {
+		console.log(e?.response?.data?.message)
+	}
 }
 
 export const deleteFile = async (file) => {
