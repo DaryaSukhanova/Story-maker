@@ -54,24 +54,22 @@ const TimelineControls = observer( () => {
     const handleStartButtonClick = () => {
         timelineBlockState.setIsRunningThumb(!isRunningThumb);
         if (timelineBlockState.activeElement) {
-            const rect = timelineBlockState.activeElement.svgElement.bbox();
+            const rect = timelineBlockState.activeElement.shape.bbox();
             // Получаем границы холста
             const canvasRect = document.getElementById("drawingCanvas").getBoundingClientRect();
 
             // Вычисляем x и y координаты центральной точки в нижней части границы элемента
             const x = rect.cx;
             const y = rect.y2;
-
-
             // Устанавливаем координаты центральной точки в состояние
             setRotationCenter({ x, y });
 
             // Запускаем анимации
-            if(timelineBlockState.keys && timelineBlockState.keys.length > 0){
+            // if(timelineBlockState.keys && timelineBlockState.keys.length > 0){
                 keyframeManagerRef.current.startAnimations(isRunningThumb, x, y, timelineBlockState.activeElement.svgElement);
-            } else{
-                alert("Create key points for keyframes")
-            }
+            // } else{
+            //     alert("Create key points for keyframes")
+            // }
 
         } else{
             alert("Select the active element")

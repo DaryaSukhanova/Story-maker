@@ -1,5 +1,6 @@
 import timelineBlockState from "../../store/timelineBlockState";
 import AnimationTool from "./AnimationTool";
+import svgCanvasState from "../../store/svgCanvasState";
 
 
 export default class KeyFrameManager extends AnimationTool{
@@ -11,19 +12,22 @@ export default class KeyFrameManager extends AnimationTool{
     }
 
     startAnimations(isRunningThumb, x, y, activeElement) {
-        this.element = timelineBlockState.activeElement.svgElement;
-        if (activeElement) {
-             this.applyRotationAnimationStyle( x, y);
+        this.element = timelineBlockState.activeElement.shape;
+        const animatedElements = svgCanvasState.svgElements.filter(svgElement => svgElement.isAnimated);
 
-            activeElement.attr(
-                { 'style': `
-                        animation: rotatePath; 
-                        animation-duration: ${timelineBlockState.totalTime}s; 
-                        animation-iteration-count: infinite; 
-                        animation-play-state: ${isRunningThumb ? 'paused' : 'running'};`
-                }
-                );
-        }
+        animatedElements.forEach(animatedElement => {
+            this.element = animatedElement.shape;
+            this.applyRotationAnimationStyle(x, y);
+
+            animatedElement.shape.attr({
+                'style': `
+                animation: rotatePath; 
+                animation-duration: ${timelineBlockState.totalTime}s; 
+                animation-iteration-count: infinite; 
+                animation-play-state: ${isRunningThumb ? 'paused' : 'running'};
+            `
+            });
+        });
     }
     applyRotationAnimationStyle (x, y) {
         this.thumbPosition = timelineBlockState.thumbEndPosition
@@ -75,7 +79,7 @@ export default class KeyFrameManager extends AnimationTool{
             this.element.css({
                 'animation': 'none' // Останавливаем анимацию
             });
-            timelineBlockState.setKeys([])
+            // timelineBlockState.setKeys([])
         }
     }
 }

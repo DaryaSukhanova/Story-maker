@@ -35,7 +35,7 @@
   display: flex;
   text-align: center;
   align-items: center;
-
+  height: 40%;
 }
 
 .timer{
@@ -80,7 +80,7 @@
 .timeline-ticks{
   position: relative;
   width: 1500px;
-  height: 50%;
+  height: 40%;
 }
 .tick{
   position: absolute;
@@ -116,7 +116,6 @@
   //border-left: solid 3px $main-color-animation-editor;
   //border-right: solid 3px $main-color-animation-editor;
   height: 100%;
-  bottom: 0;
 }
 .thumb-current-head{
   position: absolute;
@@ -130,7 +129,7 @@
   align-items: center;
   width: 100%;
   height: 30px;
-  margin-top: 30px;
+  //margin-top: 30px;
   border: solid 2px white;
   &__title{
     font-size: 16px;
@@ -169,6 +168,6 @@
 .timeline-keyframes{
   position: relative;
   width: 1500px;
-  height: 50%;
+  height: 60%;
 }
 

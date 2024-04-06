@@ -3,7 +3,7 @@ import {useRef} from "react";
 
 class timelineBlockState{
     keyCount = 0
-    keys = []
+    // keys = []
     activeElement = null
     totalTime  = 0
     isRunningThumb = false
@@ -11,6 +11,7 @@ class timelineBlockState{
     thumbCurrentPosition = 0
     thumbEndPosition = 0
     roundedElapsedTime = 0
+    activeTimeline = null
     constructor() {
         makeAutoObservable(this)
     }
@@ -60,6 +61,10 @@ class timelineBlockState{
 
     setThumbEndPosition(position){
         this.thumbEndPosition = position
+    }
+
+    setActiveTimeline(timelineId) {
+        this.activeTimeline = timelineId;
     }
 
 }

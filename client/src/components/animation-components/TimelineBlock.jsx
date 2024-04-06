@@ -1,13 +1,12 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 import '../../styles/timeline-block.scss';
-import timelineBlockState from "../../store/timelineBlockState";
 import {observer} from "mobx-react-lite";
 import TimelineControls from "./TimelineControls";
 import animationToolState from "../../store/animationToolState";
-import TimelineLine from "./TimelineLine";
 import TimelineTool from "./TimelineTool";
 import TimelineTicks from "./TimelineTicks";
 import TimelineKeyframes from "./TimelineKeyframes";
+import svgCanvasState from "../../store/svgCanvasState";
 
 const TimeLineBlock = observer (() => {
 
@@ -31,16 +30,36 @@ const TimeLineBlock = observer (() => {
         <div className="timeline-block">
             <div className="timeline-left">
                 <TimelineControls/>
-                {animationToolState.tool === 'keyframeElement' && (
-                    <TimelineTool/>
-                )}
+                {svgCanvasState.svgElements.map((svgElement, index) => (
+                    svgElement.isAnimated && animationToolState.tool === 'keyframeElement' && (
+                        <TimelineTool
+                            key={index}
+                            toolType={svgElement.shape.type}
+                            keyframesKeys={svgElement.keys}
+                            onAddKey={(newKey) => {
+                                // Обновляем массив ключей для конкретного элемента SVG
+                                // svgElement.keys = [...svgElement.keys, newKey];
+                                svgCanvasState.setSvgElements(
+                                    svgCanvasState.svgElements.map((elem, i) => {
+                                        if (i === index) {
+                                            // Обновляем массив ключей для конкретного элемента SVG
+                                            return {
+                                                ...elem,
+                                                keys: [...elem.keys, newKey]
+                                            };
+                                        }
+                                        return elem;
+                                    })
+                                );
+                            }}
+                        />
+                    )
+                ))}
             </div>
             <div className="timeline-right" >
                 <TimelineTicks findNearestTickPosition={findNearestTickPosition}/>
                 <TimelineKeyframes findNearestTickPosition={findNearestTickPosition}/>
             </div>
-
-
         </div>
     );
 });

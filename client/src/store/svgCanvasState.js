@@ -18,20 +18,17 @@ class SvgCanvasState{
     }
     pushToSvgElements(element) {
         const svgElementWrapper = {
-            svgElement: element,
-            isAnimated: false
+            shape: element,
+            isAnimated: false,
+            keys: []
         };
         this.svgElements.push(svgElementWrapper);
-        console.log(this.svgElements)
+        timelineBlockState.setActiveElement(svgElementWrapper)
         // Добавляем обработчик события клика для каждого элемента
-        element.on('click', () => {
-            // Выполняем действия при клике на элемент
-            timelineBlockState.setActiveElement(svgElementWrapper);
-            console.log(this.svgElements);
-        });
     }
     setSvgElements(arr){
         this.svgElements = arr
+        console.log("canvasState set",this.svgElements)
     }
 
     setSvgCanvas(canvas){

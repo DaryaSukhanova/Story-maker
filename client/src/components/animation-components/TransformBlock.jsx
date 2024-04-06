@@ -3,6 +3,9 @@ import {observer} from "mobx-react-lite";
 import '../../styles/transform-block.scss';
 import toolBlockState from "../../store/timelineBlockState";
 import TransformInput from "./TransformInput";
+import svgCanvasState from "../../store/svgCanvasState";
+import timelineBlockState from "../../store/timelineBlockState";
+import canvasState from "../../store/canvasState";
 
 const TransformBlock = observer(() => {
     const [angle, setAngle] = useState(0); // Состояние для хранения значения угла
@@ -27,24 +30,26 @@ const TransformBlock = observer(() => {
             const degrees = newValue * 360; // 1 поворот = 360 градусов
             setAngle(isNaN(degrees) ? 0 : degrees);
         }
-
+        updateSvgElement(timelineBlockState.activeTimeline, 'rotate', newValue);
         // Обновляем состояние активного ключа
-        const activeKeyIndex = toolBlockState.keys.findIndex(key => key.isActive);
-        if (activeKeyIndex !== -1) {
-             // Если угол в градусах, то оставляем newValue, иначе умножаем на 360
-            toolBlockState.keys[activeKeyIndex].rotate = (inputType === 'angleInputDeg') ? newValue : newValue * 360;
-        }
+        // const activeKeyIndex = toolBlockState.keys.findIndex(key => key.isActive);
+        // if (activeKeyIndex !== -1) {
+        //      // Если угол в градусах, то оставляем newValue, иначе умножаем на 360
+        //     toolBlockState.keys[activeKeyIndex].rotate = (inputType === 'angleInputDeg') ? newValue : newValue * 360;
+        // }
+
     };
 
     const handleScaleXChange = (event) => {
         const newScaleX = parseFloat(event.target.value);
         setScaleX(isNaN(newScaleX) ? 1 : newScaleX);
-        const activeKeyIndex = toolBlockState.keys.findIndex(key => key.isActive); // Находим индекс активного ключа
-        if (activeKeyIndex !== -1) {
-            console.log(toolBlockState.keys[activeKeyIndex].scaleX)
-            toolBlockState.keys[activeKeyIndex].scaleX = newScaleX; // Присваиваем новое значение угла в поле rotate активного ключа
-        }
-        console.log(toolBlockState.keys)
+        // updateSvgElement(elementIndex, 'rotate', newValue);
+        // const activeKeyIndex = toolBlockState.keys.findIndex(key => key.isActive); // Находим индекс активного ключа
+        // if (activeKeyIndex !== -1) {
+        //     console.log(toolBlockState.keys[activeKeyIndex].scaleX)
+        //     toolBlockState.keys[activeKeyIndex].scaleX = newScaleX; // Присваиваем новое значение угла в поле rotate активного ключа
+        // }
+        // console.log(toolBlockState.keys)
 
     };
     const handleScaleYChange = (event) => {
@@ -105,6 +110,30 @@ const TransformBlock = observer(() => {
         console.log(toolBlockState.keys)
 
     };
+    const updateSvgElement = (elementIndex, field, value) => {
+        svgCanvasState.setSvgElements(svgCanvasState.svgElements.map((element, index) => {
+            if (index === elementIndex) {
+                // Поиск активного ключа в массиве keys
+                const updatedKeys = element.keys.map(key => {
+                    if (key.isActive) {
+                        // Если ключ активный, обновляем поле field
+                        return {
+                            ...key,
+                            [field]: value
+                        };
+                    }
+                    return key;
+                });
+
+                // Возвращаем обновленный элемент
+                return {
+                    ...element,
+                    keys: updatedKeys
+                };
+            }
+            return element;
+        }));
+    };
 
         const inputFields = [
             [
@@ -138,7 +167,7 @@ const TransformBlock = observer(() => {
                         max1={input[0].max}
                         step1={input[0].step}
                         type1={input[0].type}
-                        onChange1={input[0].OnChange}
+                        onChange1= {input[0].OnChange}
                         id2={input[1].id}
                         label2={input[1].label}
                         min2={input[1].min}

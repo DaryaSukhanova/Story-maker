@@ -104,20 +104,20 @@ const SvgCanvas = observer(() => {
                 // onMouseMove={handleMouseMove}
                 // onMouseUp={handleMouseUp}
             >
-                {[...shapes, currentShape].map((shape, index) => (
-                    shape && (shape.type === 'circle' ? (
-                        <Circle key={index} cx={shape.x} cy={shape.y} r={shape.r} />
-                    ) : shape.type === 'rect' ? (
-                        <Rect key={index} x={shape.x} y={shape.y} width={shape.width} height={shape.height}  />
-                    ) : shape.type === 'brush' ?(
-                        <Brush key={index} d={shape.d}/>
-                    ) : shape.type === 'brush' ?(
-                        <Line key={index} d={shape.d} />
-                    ) :
-                        null
-                    )
+                {/*{[...shapes, currentShape].map((shape, index) => (*/}
+                {/*    shape && (shape.type === 'circle' ? (*/}
+                {/*        <Circle key={index} cx={shape.x} cy={shape.y} r={shape.r} />*/}
+                {/*    ) : shape.type === 'rect' ? (*/}
+                {/*        <Rect key={index} x={shape.x} y={shape.y} width={shape.width} height={shape.height}  />*/}
+                {/*    ) : shape.type === 'brush' ?(*/}
+                {/*        <Brush key={index} d={shape.d}/>*/}
+                {/*    ) : shape.type === 'brush' ?(*/}
+                {/*        <Line key={index} d={shape.d} />*/}
+                {/*    ) :*/}
+                {/*        null*/}
+                {/*    )*/}
 
-                ))}
+                {/*))}*/}
             </svg>
         </div>
     );
