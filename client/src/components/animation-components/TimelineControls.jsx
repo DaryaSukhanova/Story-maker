@@ -80,10 +80,13 @@ const TimelineControls = observer( () => {
         timelineBlockState.setIsRunningThumb(false);
         timelineBlockState.setElapsedTime(0);
         // setRoundedElapsedTime(0)
-        const prevStyle = document.querySelector('style[data-animation="rotatePath"]');
-        if (prevStyle) {
-            prevStyle.remove();
-        }
+        svgCanvasState.setSvgElements(svgCanvasState.svgElements.map((element, index) => {
+            const prevStyle = document.querySelector(`style[data-animation="rotatePath_${index}"]`);
+            if (prevStyle) {
+                prevStyle.remove();
+            }
+            return element;
+        }));
     };
 
     const formatTime = (time) => {

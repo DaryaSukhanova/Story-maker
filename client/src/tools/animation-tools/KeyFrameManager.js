@@ -12,16 +12,16 @@ export default class KeyFrameManager extends AnimationTool{
     }
 
     startAnimations(isRunningThumb, x, y, activeElement) {
-        this.element = timelineBlockState.activeElement.shape;
+        // this.element = timelineBlockState.activeElement.shape;
         const animatedElements = svgCanvasState.svgElements.filter(svgElement => svgElement.isAnimated);
 
-        animatedElements.forEach(animatedElement => {
+        animatedElements.forEach((animatedElement, index) => {
             this.element = animatedElement.shape;
-            this.applyRotationAnimationStyle(x, y);
+            this.applyRotationAnimationStyle(x, y, animatedElement.keys, index);
 
             animatedElement.shape.attr({
                 'style': `
-                animation: rotatePath; 
+                animation: rotatePath_${index}; 
                 animation-duration: ${timelineBlockState.totalTime}s; 
                 animation-iteration-count: infinite; 
                 animation-play-state: ${isRunningThumb ? 'paused' : 'running'};
@@ -29,17 +29,17 @@ export default class KeyFrameManager extends AnimationTool{
             });
         });
     }
-    applyRotationAnimationStyle (x, y) {
+    applyRotationAnimationStyle (x, y, keys, index) {
         this.thumbPosition = timelineBlockState.thumbEndPosition
 
-        const prevStyle = document.querySelector('style[data-animation="rotatePath"]');
+        const prevStyle = document.querySelector(`style[data-animation="rotatePath_${index}"]`);
         if (prevStyle) {
             prevStyle.remove();
         }
 
         // Создание нового элемента <style>
         const style = document.createElement('style');
-        style.setAttribute('data-animation', 'rotatePath');
+        style.setAttribute('data-animation', `rotatePath_${index}`);
 
         let keyframes = `
         0% {
@@ -48,7 +48,7 @@ export default class KeyFrameManager extends AnimationTool{
         }
         `;
 
-        timelineBlockState.keys.forEach((key, index) => {
+        keys.forEach((key, index) => {
             const percent = (key.position / this.thumbPosition)*100;
             keyframes += `
             ${percent}% {
@@ -57,9 +57,9 @@ export default class KeyFrameManager extends AnimationTool{
             }
         `;
         });
-        const maxDurationKey = timelineBlockState.keys.reduce((maxKey, currentKey) => {
+        const maxDurationKey = keys.reduce((maxKey, currentKey) => {
             return currentKey.duration > maxKey.duration ? currentKey : maxKey;
-        }, timelineBlockState.keys[0]); // Начальное значение - первый ключ
+        }, keys[0]); // Начальное значение - первый ключ
         keyframes += `
         100% {
             transform-origin: ${x}px ${y}px;
@@ -67,7 +67,7 @@ export default class KeyFrameManager extends AnimationTool{
         }
         `;
         style.textContent = `
-        @keyframes rotatePath {
+        @keyframes rotatePath_${index} {
             ${keyframes}
         }
         `;
@@ -79,6 +79,10 @@ export default class KeyFrameManager extends AnimationTool{
             this.element.css({
                 'animation': 'none' // Останавливаем анимацию
             });
+            svgCanvasState.setSvgElements(svgCanvasState.svgElements.map(element => ({
+                ...element,
+                keys: []  // Очищаем массив keys
+            })));
             // timelineBlockState.setKeys([])
         }
     }

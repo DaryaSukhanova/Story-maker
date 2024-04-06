@@ -31,84 +31,41 @@ const TransformBlock = observer(() => {
             setAngle(isNaN(degrees) ? 0 : degrees);
         }
         updateSvgElement(timelineBlockState.activeTimeline, 'rotate', newValue);
-        // Обновляем состояние активного ключа
-        // const activeKeyIndex = toolBlockState.keys.findIndex(key => key.isActive);
-        // if (activeKeyIndex !== -1) {
-        //      // Если угол в градусах, то оставляем newValue, иначе умножаем на 360
-        //     toolBlockState.keys[activeKeyIndex].rotate = (inputType === 'angleInputDeg') ? newValue : newValue * 360;
-        // }
-
     };
 
     const handleScaleXChange = (event) => {
         const newScaleX = parseFloat(event.target.value);
         setScaleX(isNaN(newScaleX) ? 1 : newScaleX);
-        // updateSvgElement(elementIndex, 'rotate', newValue);
-        // const activeKeyIndex = toolBlockState.keys.findIndex(key => key.isActive); // Находим индекс активного ключа
-        // if (activeKeyIndex !== -1) {
-        //     console.log(toolBlockState.keys[activeKeyIndex].scaleX)
-        //     toolBlockState.keys[activeKeyIndex].scaleX = newScaleX; // Присваиваем новое значение угла в поле rotate активного ключа
-        // }
-        // console.log(toolBlockState.keys)
-
+        updateSvgElement(timelineBlockState.activeTimeline, 'scaleX', newScaleX);
     };
     const handleScaleYChange = (event) => {
         const newScaleY = parseFloat(event.target.value);
         setScaleY(isNaN(newScaleY) ? 1 : newScaleY);
-        const activeKeyIndex = toolBlockState.keys.findIndex(key => key.isActive); // Находим индекс активного ключа
-        if (activeKeyIndex !== -1) {
-            console.log(toolBlockState.keys[activeKeyIndex].scaleY)
-            toolBlockState.keys[activeKeyIndex].scaleY = newScaleY; // Присваиваем новое значение угла в поле rotate активного ключа
-        }
-        console.log(toolBlockState.keys)
-
+        updateSvgElement(timelineBlockState.activeTimeline, 'scaleY', newScaleY);
     };
 
     const handlePositionXChange = (event) => {
         const newPositionX = parseFloat(event.target.value);
         setPositionX(isNaN(newPositionX) ? 1 : newPositionX);
-        const activeKeyIndex = toolBlockState.keys.findIndex(key => key.isActive); // Находим индекс активного ключа
-        if (activeKeyIndex !== -1) {
-            console.log(toolBlockState.keys[activeKeyIndex].translateX)
-            toolBlockState.keys[activeKeyIndex].translateX = newPositionX; // Присваиваем новое значение угла в поле rotate активного ключа
-        }
-        console.log(toolBlockState.keys)
+        updateSvgElement(timelineBlockState.activeTimeline, 'translateX', newPositionX);
 
     };
     const handlePositionYChange = (event) => {
         const newPositionY = parseFloat(event.target.value);
         setPositionY(isNaN(newPositionY) ? 1 : newPositionY);
-        const activeKeyIndex = toolBlockState.keys.findIndex(key => key.isActive); // Находим индекс активного ключа
-        if (activeKeyIndex !== -1) {
-            console.log(toolBlockState.keys[activeKeyIndex].translateX)
-            toolBlockState.keys[activeKeyIndex].translateY = newPositionY; // Присваиваем новое значение угла в поле rotate активного ключа
-        }
-        console.log(toolBlockState.keys)
-
+        updateSvgElement(timelineBlockState.activeTimeline, 'translateY', newPositionY);
     };
 
     const handleSkewXChange = (event) => {
         const newSkewX = parseFloat(event.target.value);
         setPositionX(isNaN(newSkewX) ? 1 : newSkewX);
-        const activeKeyIndex = toolBlockState.keys.findIndex(key => key.isActive); // Находим индекс активного ключа
-        if (activeKeyIndex !== -1) {
-            console.log(toolBlockState.keys[activeKeyIndex].skewX)
-            toolBlockState.keys[activeKeyIndex].skewX = newSkewX; // Присваиваем новое значение угла в поле rotate активного ключа
-        }
-        console.log(toolBlockState.keys)
-
+        updateSvgElement(timelineBlockState.activeTimeline, 'skewX', newSkewX);
     };
 
     const handleSkewYChange = (event) => {
         const newSkewY = parseFloat(event.target.value);
         setPositionX(isNaN(newSkewY) ? 1 : newSkewY);
-        const activeKeyIndex = toolBlockState.keys.findIndex(key => key.isActive); // Находим индекс активного ключа
-        if (activeKeyIndex !== -1) {
-            console.log(toolBlockState.keys[activeKeyIndex].skewY)
-            toolBlockState.keys[activeKeyIndex].skewY = newSkewY; // Присваиваем новое значение угла в поле rotate активного ключа
-        }
-        console.log(toolBlockState.keys)
-
+        updateSvgElement(timelineBlockState.activeTimeline, 'skewY', newSkewY);
     };
     const updateSvgElement = (elementIndex, field, value) => {
         svgCanvasState.setSvgElements(svgCanvasState.svgElements.map((element, index) => {

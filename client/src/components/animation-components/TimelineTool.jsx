@@ -11,7 +11,6 @@ const TimelineTool = observer(({toolType, keyframesKeys, onAddKey }) => {
     const [keyCount, setKeyCount] = useState(0);
 
     const handleAddKeyClick = () => {
-        console.log(svgCanvasState.svgElements[0].keys)
         const newKey = {
             id: keyCount,
             name: `Key${keyCount}`,
