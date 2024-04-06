@@ -1,6 +1,7 @@
 import {makeAutoObservable} from "mobx";
 import {logDOM} from "@testing-library/react";
 import timelineBlockState from "./timelineBlockState";
+import animationToolState from "./animationToolState";
 
 class SvgToolState{
     tool = null
@@ -14,6 +15,7 @@ class SvgToolState{
     }
     setSvgTool(tool){
         this.tool = tool
+        animationToolState.tool = null
     }
     setFillColor(color){
         // if(this.tool){

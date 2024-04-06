@@ -74,12 +74,12 @@ const TimelineControls = observer( () => {
         } else{
             alert("Select the active element")
         }
+
     };
     const handleStopButtonClick = () => {
         clearInterval(intervalIdRef.current);
         timelineBlockState.setIsRunningThumb(false);
         timelineBlockState.setElapsedTime(0);
-        // setRoundedElapsedTime(0)
         svgCanvasState.setSvgElements(svgCanvasState.svgElements.map((element, index) => {
             const prevStyle = document.querySelector(`style[data-animation="rotatePath_${index}"]`);
             if (prevStyle) {

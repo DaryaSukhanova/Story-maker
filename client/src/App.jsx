@@ -10,7 +10,9 @@ import Navbar from "./components/Navbar";
 import BookEditor from "./BookEditor";
 import Home from "./Home";
 import Registration from "./components/Registration";
+
 const App = () => {
+    console.log("app")
     return (
         <div className="app">
             <BrowserRouter>

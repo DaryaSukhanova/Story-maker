@@ -79,11 +79,13 @@ export default class KeyFrameManager extends AnimationTool{
             this.element.css({
                 'animation': 'none' // Останавливаем анимацию
             });
-            svgCanvasState.setSvgElements(svgCanvasState.svgElements.map(element => ({
-                ...element,
-                keys: []  // Очищаем массив keys
-            })));
+
             // timelineBlockState.setKeys([])
         }
+        svgCanvasState.setSvgElements(svgCanvasState.svgElements.map(element => ({
+            ...element,
+            keys: []  // Очищаем массив keys
+        })));
+        console.log(svgCanvasState.svgElements)
     }
 }
