@@ -9,7 +9,7 @@ import TimelineKeyframes from "./TimelineKeyframes";
 import svgCanvasState from "../../store/svgCanvasState";
 
 const TimeLineBlock = observer (() => {
-
+    console.log("timelineblock")
     const findNearestTickPosition = (position) => {
         const ticksPositions = [];
         for (let i = 0; i <= 10; i++) {
@@ -30,15 +30,15 @@ const TimeLineBlock = observer (() => {
         <div className="timeline-block">
             <div className="timeline-left">
                 <TimelineControls/>
-                {svgCanvasState.svgElements.map((svgElement, index) => (
-                    svgElement.isAnimated && animationToolState.tool === 'keyframeElement' && (
+                {   animationToolState.tool === 'keyframeElement' &&
+                    svgCanvasState.svgElements.map((svgElement, index) => (
+                    svgElement.isAnimated && (
                         <TimelineTool
                             key={index}
                             toolType={svgElement.shape.type}
                             keyframesKeys={svgElement.keys}
                             onAddKey={(newKey) => {
-                                // Обновляем массив ключей для конкретного элемента SVG
-                                // svgElement.keys = [...svgElement.keys, newKey];
+
                                 svgCanvasState.setSvgElements(
                                     svgCanvasState.svgElements.map((elem, i) => {
                                         if (i === index) {

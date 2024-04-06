@@ -17,7 +17,8 @@ export default class KeyFrameManager extends AnimationTool{
 
         animatedElements.forEach((animatedElement, index) => {
             this.element = animatedElement.shape;
-            this.applyRotationAnimationStyle(x, y, animatedElement.keys, index);
+            const rect = animatedElement.shape.bbox();
+            this.applyRotationAnimationStyle(rect.cx, rect.y2, animatedElement.keys, index);
 
             animatedElement.shape.attr({
                 'style': `

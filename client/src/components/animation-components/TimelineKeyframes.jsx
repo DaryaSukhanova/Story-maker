@@ -9,7 +9,6 @@ import {logDOM} from "@testing-library/react";
 
 const TimelineKeyframes = observer(({findNearestTickPosition})  => {
     const thumbCurrent = useRef(null);
-
     // Функция обновления ключей в элементе svgElements
     const updateKeysInSvgElement = (elementIndex, updatedKeys) => {
         svgCanvasState.setSvgElements(svgCanvasState.svgElements.map((element, index) => {

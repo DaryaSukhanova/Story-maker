@@ -12,7 +12,7 @@ import Home from "./Home";
 import Registration from "./components/Registration";
 
 const App = () => {
-    console.log("app")
+
     return (
         <div className="app">
             <BrowserRouter>
