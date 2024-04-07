@@ -6,7 +6,10 @@ import FileList from "./FileList";
 import '../styles/disk.scss'
 import Popup from "./Popup";
 import Uploader from './Uploader.jsx';
-
+import userState from "../store/userState";
+import {NavLink} from "react-router-dom";
+// import { ReactComponent as IconSM } from '../src/assets/img/icon-story-maker.svg'
+import { ReactComponent as IconSM } from '../assets/img/icon-story-maker.svg'
 const Disk = observer(() => {
 
     const currentDir = fileState.currentDir;
@@ -51,7 +54,26 @@ const Disk = observer(() => {
     }
 
     return ( !dragEnter ?
+
         <div className="disk" onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
+            {!userState.isAuth &&
+                <div className="home-navbar">
+                    {/*<NavLink to="/" activeClassName="active-link" className="home-icon">*/}
+                    {/*    <IconSM activeClassName="home-icon"></IconSM>*/}
+                    {/*</NavLink>*/}
+                    <div className="navbar__login"><NavLink to="/login">Log In</NavLink></div>
+                    <div className="navbar__registration"><NavLink to="/registration">Sign In</NavLink></div>
+                </div>
+            }
+            {userState.isAuth &&
+
+                <div>
+                    <div className="home-navbar">
+                        <div className="navbar__logout" onClick={()=>userState.logout()}>Log Out</div>
+                    </div>
+                </div>
+
+            }
             <div className="disk__btns">
                 <button className="disk__back" onClick={() => backClickHandler()}>Назад</button>
                 <button className="disk__create" onClick={()=>showPopupHandler()}>Создать папку</button>

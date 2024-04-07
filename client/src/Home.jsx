@@ -16,11 +16,13 @@ const Home = () => {
                             StoryMaker for kids
                         </div>
                         <div className="home-workspace__info__description">
-                            Creating your own comics.
-                            The embodiment of children's ideas and the development of creativity.
+                            Создание собственных комиксов.
+                            Воплощение детских идей и развитие творческих способностей.
+
                         </div>
                         <div className="home-workspace__info__buttons">
-
+                            <div className="action-button"><NavLink to="/login">Log In</NavLink></div>
+                            <div className="action-button"><NavLink to="/registration">Sign In</NavLink></div>
                         </div>
                     </div>
                     <div className="home-workspace__image">

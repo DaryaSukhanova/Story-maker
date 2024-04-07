@@ -16,7 +16,7 @@ import userState from "./store/userState";
 import {observer} from "mobx-react-lite";
 import { auth } from './actions/user';
 import Disk from "./components/Disk";
-import { ReactComponent as IconSM } from '../src/assets/img/icon-story-maker.svg'
+
 const App =  observer(() => {
 
 	useEffect(() => {
@@ -29,26 +29,6 @@ const App =  observer(() => {
             <BrowserRouter>
                 {userState.isAuth &&
                     <Navbar/>
-                }
-
-                {!userState.isAuth &&
-                    <div className="home-navbar">
-                        <NavLink to="/" activeClassName="active-link" className="home-icon">
-                            <IconSM activeClassName="home-icon"></IconSM>
-                        </NavLink>
-                        <div className="navbar__login"><NavLink to="/login">Log In</NavLink></div>
-                        <div className="navbar__registration"><NavLink to="/registration">Sign In</NavLink></div>
-                    </div>
-                }
-                {userState.isAuth &&
-
-                    <div>
-                        <div className="home-navbar">
-                            <div className="navbar__logout" onClick={()=>userState.logout()}>Log Out</div>
-                        </div>
-
-                    </div>
-
                 }
                 <Routes>
                     {!userState.isAuth &&
