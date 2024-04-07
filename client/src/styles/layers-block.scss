@@ -3,6 +3,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  &__layer-btn{
+    height: 28px;
+    width: 28px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-size: cover;
+    background: url('../assets/img/layerIcon.svg') no-repeat center center;
+  }
 
   &__item{
     display: flex;
@@ -12,12 +21,13 @@
     justify-content: space-around;
     border: solid #ddd 1px;
     min-width: 100%;
-    margin-top: 10px;
+    margin-top: 15px;
     border-radius: 7px;
     cursor: pointer;
 
     &.active {
-      background-color: #ddd;
+      background-color: #f1f1f1;
+      border: none;
     }
     .visible{
       background: url('../assets/img/visible.svg') no-repeat center center;
@@ -54,9 +64,12 @@
 
   }
   .add-layer{
-    background: url('../assets/img/addLayerIcon.png') no-repeat center center;
+    background: url('../assets/img/plus.svg') no-repeat center center;
   }
   .remove-layer{
-    background: url('../assets/img/removeLayerIcon.png') no-repeat center center;
+    background: url('../assets/img/minus.svg') no-repeat center center;
   }
+}
+.google-icon {
+  font-size: 24px; /* Размер иконки */
 }

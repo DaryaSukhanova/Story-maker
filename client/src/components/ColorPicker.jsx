@@ -4,7 +4,7 @@ import {SketchPicker} from "react-color";
 const ColorPicker = ({ currentColor, handleColorChange }) => {
     return (
         <div>
-            <div className="tool-bar-item-title">Color</div>
+            <div className="tool-bar-item-title">Цвет</div>
             <div className="color-picker-container">
                 <SketchPicker
                     color={currentColor}

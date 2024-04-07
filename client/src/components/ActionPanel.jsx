@@ -42,8 +42,8 @@ const ActionPanel = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-            <button className="action-button" onClick={()=> setModal(true)}> Save</button>
-            <button className="action-button" onClick={()=>clearCanvas()}>Clear</button>
+            <button className="action-button" onClick={()=> setModal(true)}> Сохранить</button>
+            <button className="action-button" onClick={()=>clearCanvas()}>Очистить холст</button>
         </div>
     );
 };

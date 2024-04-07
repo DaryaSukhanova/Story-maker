@@ -1,6 +1,8 @@
 @import "./variables";
 .animation-editor{
-  background: $background-color;
+  //background: $background-color;
+  background: rgba(246, 246, 246, 0.51) url('../assets/img/BG-repeat.png') repeat center center;
+
   height: calc(100vh - 47px);
   font-size: 18px;
 }
@@ -34,10 +36,11 @@
   justify-content: center;
 }
 .action-button{
+  width: 250px;
   margin: 0 20px;
   font-size: 20px;
-  padding: 10px 40px;
-  border-radius: 8px;
+  padding: 15px 40px;
+  border-radius: 15px;
   border: none;
   text-align: center;
   cursor: pointer;

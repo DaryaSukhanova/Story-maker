@@ -19,7 +19,8 @@ const LayerButton = observer(({id, layerName, func, isActive, isVisible}) => {
             id={id}
             onClick={handleClick}
         >
-            <span>{layerName}</span>
+            <div className="layer-selector__layer-btn"></div>
+            <span>Слой {id+1}</span>
             <button className={`layer-selector__btn ${isVisible ? 'visible' : 'invisibleIcon'}`} onClick={()=> layerState.setVisibleLayer(id)}/>
         </div>
     );

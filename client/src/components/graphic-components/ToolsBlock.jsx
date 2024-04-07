@@ -36,15 +36,16 @@ const ToolsBlock = ({ currentColor }) => {
 
     return (
         <div className="tools-block-container">
-            <div className="tool-bar-item-title">Tools</div>
+            <div className="tool-bar-item-title">Инструменты</div>
             <div className="tool-bar-item">
-                <input className="tool-bar__btn fill" type="button" onClick={changeFillColorBtn} />
-                <input className="tool-bar__btn stroke" type="button" onClick={changeStrokeColorBtn} />
+                <input className="tool-bar__btn-tools select" type="button"  />
+                <input className="tool-bar__btn-tools fill" type="button" onClick={changeFillColorBtn} />
+                <input className="tool-bar__btn-tools stroke" type="button" onClick={changeStrokeColorBtn} />
                 <div className="undo-redo-container">
-                    <button className="tool-bar__btn undo" onClick={() => canvasState.undo()} />
-                    <button className="tool-bar__btn redo" onClick={() => canvasState.redo()} />
+                    <button className="tool-bar__btn-tools undo" onClick={() => canvasState.undo()} />
+                    <button className="tool-bar__btn-tools redo" onClick={() => canvasState.redo()} />
                 </div>
-                <button className="tool-bar__btn eraser" onClick={() => toolState.setTool(new Eraser(canvasState.canvas))} />
+                <button className="tool-bar__btn-tools eraser" onClick={() => toolState.setTool(new Eraser(canvasState.canvas))} />
             </div>
         </div>
     );
