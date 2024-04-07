@@ -1,4 +1,5 @@
 import fileState from "../store/fileState.js";
+import pageState from "../store/pageState.js";
 import svgCanvasState from "../store/svgCanvasState.js";
 // import {addUploadFile, changeUploadFile, showUploader} from "../store/uploadState.js";
 import uploadState from "../store/uploadState.js";
@@ -92,12 +93,12 @@ export const addFile = async (file) => {
 			}
 		})
 		const canvas = svgCanvasState.canvas
-		const img = new Image()
-		img.src = response.data[0].backgroundImage
-		img.onload = () => {
-			canvas.append(img)
-		}
-		console.log(img)
+		const svgImageElement = document.createElementNS('http://www.w3.org/2000/svg', 'image')
+		svgImageElement.setAttribute('width', '1100')
+		svgImageElement.setAttribute('height', '644')
+		svgImageElement.setAttribute('href', response.data[0].backgroundImage)
+		canvas.appendChild(svgImageElement)
+		pageState.addBackground(file)
 	} catch (e) {
 		console.log(e?.response?.data?.message)
 	}
