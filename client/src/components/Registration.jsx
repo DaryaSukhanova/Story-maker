@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Input from "./Input";
 import {registration} from "../actions/user";
+import "../styles/registration.scss"
 
 const Registration = () => {
     const [email, setEmail] = useState("")

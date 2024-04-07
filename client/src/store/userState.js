@@ -1,6 +1,6 @@
 import { makeObservable, observable, action } from 'mobx';
+class UserState {
 
-class UserStore {
     currentUser = {};
     isAuth = false;
 
@@ -25,5 +25,7 @@ class UserStore {
     }
 }
 
-const userStore = new UserStore();
-export default userStore;
+
+const userState = new UserState();
+export default userState;
+

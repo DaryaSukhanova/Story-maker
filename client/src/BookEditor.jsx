@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react';
+import BookActivePanel from "./components/BookActivePanel";
 import './styles/book-editor.scss'
+import Disk from "./components/Disk"
+import SvgCanvas from "./components/animation-components/SvgCanvas";
 const BookEditor = () => {
     const [data, setData] = useState({
         path: "",
@@ -8,7 +11,11 @@ const BookEditor = () => {
     const [parent, setParent] = useState('')
 
     useEffect(()=>{
-        fetch("http://localhost:5000/api/v1/fileManager")
+        fetch("http://localhost:5000/api/v1/fileManager", {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		})
             .then(res=>res.json())
             .then(
                 (result)=>{
@@ -24,7 +31,11 @@ const BookEditor = () => {
     const clickHandler = event => {
         event.preventDefault()
         console.log(event.target.attributes.href.value)
-        fetch("http://localhost:5000/api/v1/fileManager/?path="+event.target.attributes.href.value)
+        fetch("http://localhost:5000/api/v1/fileManager/?path="+event.target.attributes.href.value, {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		})
             .then(res=>res.json())
             .then(
                 (result)=>{
@@ -42,7 +53,9 @@ const BookEditor = () => {
 
     return (
         <div className="book-editor">
-            <div className="file-manager">
+            <div className="book-editor-workspace">
+            <SvgCanvas/>
+            {/* <div className="file-manager">
                 <div className="book-editor-title">
                     File Manager
                 </div>
@@ -74,7 +87,10 @@ const BookEditor = () => {
                         }
                     })}
                 </ul>
+            </div> */}
+			<Disk/>
             </div>
+            <BookActivePanel/>
         </div>
 
     );

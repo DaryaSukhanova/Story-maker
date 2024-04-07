@@ -12,7 +12,6 @@ const ActionPanel = () => {
 
     const backgroundNameRef = useRef()
     const [modal,setModal] = useState(false)
-
     // const download = () =>{
     //     setModal(false)
     //     const dataUrl = canvasState.canvas.toDataURL()
@@ -20,6 +19,17 @@ const ActionPanel = () => {
     //     axios.post(`http://localhost:5000/api/v1/backgrounds`, {backgroundName: `${backgroundNameRef.current.value}`, backgroundImage: dataUrl})
     //         .then(response => console.log(response.data))
     // }
+
+    const download = () =>{
+        setModal(false)
+        const dataUrl = canvasState.canvas.toDataURL()
+        console.log(dataUrl)
+        axios.post(`http://localhost:5000/api/v1/backgrounds`, {backgroundName: `${backgroundNameRef.current.value}`, backgroundImage: dataUrl}, {headers: {
+			Authorization: `Bearer ${localStorage.getItem('token')}`
+		}})
+            .then(response => console.log(response.data))
+    }
+
 
     const clearCanvas = () =>{
         const canvas = canvasState.canvas;
@@ -37,7 +47,7 @@ const ActionPanel = () => {
                     <input type="text" ref={backgroundNameRef}/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={()=> saveBackground(backgroundNameRef, () => setModal(false))}>
+                    <Button variant="secondary" onClick={()=> download()}>
                         Save
                     </Button>
                 </Modal.Footer>
