@@ -28,6 +28,7 @@ class SvgCanvasState{
     }
     setSvgElements(arr){
         this.svgElements = arr
+        console.log(this.svgElements)
     }
 
     setSvgCanvas(canvas){

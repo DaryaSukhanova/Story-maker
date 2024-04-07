@@ -13,10 +13,6 @@ export const saveBackground = async (name, closeModal) => {
     containerCanvas.width = 1100;
     containerCanvas.height = 644;
 
-    // Отрисовываем содержимое каждого холста на холсте-контейнере
-    // for (let layer in layerState.layers) {
-    //
-    // }
     Object.values(layerState.layers).map((layer, index) => {
         const layerCanvas = layer.ref.current;
         containerCtx.drawImage(layerCanvas, 0, 0);
@@ -27,9 +23,10 @@ export const saveBackground = async (name, closeModal) => {
 
     // Отправляем данные на сервер
     axios.post(`http://localhost:5000/api/v1/backgrounds`, {
-        backgroundName: name.current.value,
-        backgroundImage: dataUrl
-    })
+            backgroundName: `${name.current.value}`,
+            backgroundImage: dataUrl},
+        {headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }})
         .then(response => console.log(response.data))
-        .catch(error => console.error(error));
 };

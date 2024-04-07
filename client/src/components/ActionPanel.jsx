@@ -20,15 +20,18 @@ const ActionPanel = () => {
     //         .then(response => console.log(response.data))
     // }
 
-    const download = () =>{
-        setModal(false)
-        const dataUrl = canvasState.canvas.toDataURL()
-        console.log(dataUrl)
-        axios.post(`http://localhost:5000/api/v1/backgrounds`, {backgroundName: `${backgroundNameRef.current.value}`, backgroundImage: dataUrl}, {headers: {
-			Authorization: `Bearer ${localStorage.getItem('token')}`
-		}})
-            .then(response => console.log(response.data))
-    }
+    // const download = () =>{
+    //     setModal(false)
+    //     const dataUrl = canvasState.canvas.toDataURL()
+    //     console.log(dataUrl)
+    //     axios.post(`http://localhost:5000/api/v1/backgrounds`, {
+    //         backgroundName: `${backgroundNameRef.current.value}`,
+    //         backgroundImage: dataUrl},
+    //         {headers: {
+	// 		Authorization: `Bearer ${localStorage.getItem('token')}`
+	// 	}})
+    //         .then(response => console.log(response.data))
+    // }
 
 
     const clearCanvas = () =>{
@@ -47,7 +50,7 @@ const ActionPanel = () => {
                     <input type="text" ref={backgroundNameRef}/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={()=> download()}>
+                    <Button variant="secondary" onClick={()=> saveBackground(backgroundNameRef, () => setModal(false))}>
                         Save
                     </Button>
                 </Modal.Footer>

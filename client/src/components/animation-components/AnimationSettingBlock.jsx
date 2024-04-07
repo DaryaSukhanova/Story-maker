@@ -43,7 +43,7 @@ const AnimationSettingBlock = observer(() => {
         <div className="block-container">
             <div className="setting-block">
                 <div className="animation-setting-block-title">
-                    Animation Settings
+                    Настройки анимации
                 </div>
                 <div className="animation-setting-block-btns">
                     <button

@@ -52,7 +52,7 @@ const SvgToolsBlock = ({ currentColor }) => {
     };
     return (
         <div className="tools-block-container">
-            <div className="tool-bar-item-title">Tools</div>
+            <div className="tool-bar-item-title">Инструменты</div>
 
             <div className="tool-bar-item">
                 {/*<button className="tool-bar__btn boxSelect" onClick={() => {*/}

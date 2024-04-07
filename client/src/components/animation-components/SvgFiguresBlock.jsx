@@ -43,7 +43,7 @@ const SvgFiguresBlock = () => {
 
     return (
         <div className="figures-block-container">
-            <div className="tool-bar-item-title">Figures</div>
+            <div className="tool-bar-item-title">Фигуры</div>
             <div className="tool-bar-item">
                 <button className="tool-bar__btn line" onClick={() => handleSvgToolClick(new SvgLine(svgCanvasState.canvas))} />
                 {/*<button className="tool-bar__btn svgPolyline" onClick={() => handleSvgToolClick(new SvgPolyline(svgCanvasState.canvas))} />*/}
