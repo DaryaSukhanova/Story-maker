@@ -66,7 +66,7 @@ const TimelineControls = observer( () => {
 
             // Запускаем анимации
             // if(timelineBlockState.keys && timelineBlockState.keys.length > 0){
-                keyframeManagerRef.current.startAnimations(isRunningThumb, x, y, timelineBlockState.activeElement.svgElement);
+                keyframeManagerRef.current.startAnimations(isRunningThumb);
             // } else{
             //     alert("Create key points for keyframes")
             // }

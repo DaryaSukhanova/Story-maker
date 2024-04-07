@@ -5,7 +5,7 @@
   background-color: white;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
   height: 100%;
   //align-items: center;
   //position: absolute;
@@ -116,6 +116,7 @@
 .tool-bar-item-title{
   text-align: center;
   //padding: 8px;
+  margin-bottom: 8px;
 }
 .tool-bar-item{
   display: flex;
@@ -123,4 +124,5 @@
   padding: 6px;
   border: solid #ddd 1px;
   border-radius: 7px;
+
 }

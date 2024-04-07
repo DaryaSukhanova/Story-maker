@@ -11,7 +11,7 @@ export default class KeyFrameManager extends AnimationTool{
         this.thumbPosition = null
     }
 
-    startAnimations(isRunningThumb, x, y, activeElement) {
+    startAnimations(isRunningThumb) {
         // this.element = timelineBlockState.activeElement.shape;
         const animatedElements = svgCanvasState.svgElements.filter(svgElement => svgElement.isAnimated);
 
@@ -45,7 +45,7 @@ export default class KeyFrameManager extends AnimationTool{
         let keyframes = `
         0% {
             transform-origin: ${x}px ${y}px;
-            transform: rotate(${0}deg) scale(1, 1) translate(0px, 0px) skew(0deg, 0deg);
+            transform: rotate(0deg) scale(1, 1) translate(0px, 0px) skew(0deg, 0deg);
         }
         `;
 

@@ -113,7 +113,7 @@ const TransformBlock = observer(() => {
 
     return (
         <div className="transform-block__container">
-            <div className="transform-block__title">Transforms</div>
+            <div className="animation-setting-block-title">Transforms</div>
             <div className="transform-block__options">
                 {inputFields.map((input, index) => (
                     <TransformInput

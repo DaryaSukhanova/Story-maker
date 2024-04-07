@@ -29,7 +29,9 @@ class timelineBlockState{
             translateX: 0,
             translateY: 0,
             skewX: 0,
-            skewY: 0
+            skewY: 0,
+            originX: 0,
+            originY: 0
         });
         this.keyCount++
         // console.log(keys)
