@@ -72,8 +72,6 @@ const LayersBlock = () => {
                     </div>
                 </div>
 
-
-
                 {/*<input type="file" id="fileInput" accept="image/*">*/}
                 {/*<button className="tool-bar__btn-tools line" onClick={()=> toolState.setTool(new CustomImage(canvasState.canvas))}/>*/}
             </div>

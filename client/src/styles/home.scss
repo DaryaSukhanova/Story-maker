@@ -4,6 +4,7 @@
   src: url('../../../client/src/assets/fonts/MarkerFelt/markerfelt_wide.ttf') format('truetype');
 }
 .home{
+  background: url('../assets/img/Main.png') no-repeat;
   //background: $background-color;
   width: 100%;
   display: flex;
@@ -76,6 +77,16 @@
     }
   }
 
+}
+.logo{
+  display: flex;
+  align-items: end;
+  width: 150px;
+  justify-content: space-around;
+  margin-left: 15%;
+
+  &__main-icon{
+  }
 }
 
 

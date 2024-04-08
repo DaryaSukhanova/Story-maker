@@ -4,12 +4,14 @@ import Registration from "./components/Registration";
 import {NavLink} from "react-router-dom";
 import Login from "./components/Login";
 import Disk from './components/Disk';
+import { ReactComponent as IconSM } from '../src/assets/img/home.svg'
 const Home = () => {
     return (
-        <div className="home">
-
-            {/*<Disk/>*/}
             <div className="home">
+                {/*<NavLink to="/" className="logo">*/}
+                {/*        <IconSM className="logo__main-icon"></IconSM>*/}
+                {/*    <div className="main-title">StoryMaker</div>*/}
+                {/*</NavLink>*/}
                 <div className="home-workspace">
                     <div className="home-workspace__info">
                         <div className="home-workspace__info__title">
@@ -30,7 +32,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-        </div>
+
     );
 };
 
