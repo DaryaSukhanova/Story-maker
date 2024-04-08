@@ -11,10 +11,10 @@ const Login = observer(() => {
     const [password, setPassword] = useState("")
     return (
         <div className="authorization">
-            <div className="authorization__header">Authorization</div>
+            <div className="authorization__header">Авторизация</div>
             <Input value={email} setValue={setEmail} type="text" placeholder="Enter email"/>
             <Input value={password} setValue={setPassword} type="password" placeholder="Enter password"/>
-            <button onClick={()=> login(email, password)} className="authorization__btn">Log In</button>
+            <button onClick={()=> login(email, password)} className="authorization__btn">Войти</button>
 
         </div>
     );

@@ -3,11 +3,31 @@
 .disk {
     margin-top: 20px;
   }
+  .navbar__logout {
+    width: 150px;
+    border: none;
+    border-radius: 8px; 
+    outline: none;
+    cursor: pointer;
+  }
   .disk__btns {
     display: flex;
   }
   .disk__create {
-    margin-left: 10px;
+    width: 150px;
+    border: none;
+    border-radius: 8px; 
+    outline: none;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  .disk__back{
+    width:100px;
+    border: none;
+    border-radius: 8px; 
+    outline: none;
+    cursor: pointer;
+    margin-right: 10px;
   }
 
   .disk__upload-input {

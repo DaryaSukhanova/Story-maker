@@ -21,7 +21,13 @@
   }
 
   .file__btn {
+    width: 90px;
     display: none;
+    border: none;
+    border-radius: 8px; 
+    outline: none;
+    cursor: pointer;
+    margin-right: 10px;
   }
   .file:hover .file__date {
     grid-column-start: 3;

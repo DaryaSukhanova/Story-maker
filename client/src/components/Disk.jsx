@@ -61,15 +61,15 @@ const Disk = observer(() => {
                     {/*<NavLink to="/" activeClassName="active-link" className="home-icon">*/}
                     {/*    <IconSM activeClassName="home-icon"></IconSM>*/}
                     {/*</NavLink>*/}
-                    <div className="navbar__login"><NavLink to="/login">Log In</NavLink></div>
-                    <div className="navbar__registration"><NavLink to="/registration">Sign In</NavLink></div>
+                    <div className="navbar__login"><NavLink to="/login">Войти</NavLink></div>
+                    <div className="navbar__registration"><NavLink to="/registration">Зарегестрироваться</NavLink></div>
                 </div>
             }
             {userState.isAuth &&
 
                 <div>
                     <div className="home-navbar">
-                        <div className="navbar__logout" onClick={()=>userState.logout()}>Log Out</div>
+                        <div className="navbar__logout" onClick={()=>userState.logout()}>Выйти</div>
                     </div>
                 </div>
 
@@ -82,7 +82,6 @@ const Disk = observer(() => {
                     <input multiple={true} onChange={(event)=> fileUploadHandler(event)} type="file" id="disk__upload-input" className="disk__upload-input"/>
                 </div>
             </div>
-            Disk
             <FileList/>
             <Popup/>
             <Uploader/>
