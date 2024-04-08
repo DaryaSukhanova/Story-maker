@@ -21,8 +21,8 @@ const Home = () => {
 
                         </div>
                         <div className="home-workspace__info__buttons">
-                            <div className="action-button"><NavLink to="/login">Log In</NavLink></div>
-                            <div className="action-button"><NavLink to="/registration">Sign In</NavLink></div>
+                            <div className="action-button"><NavLink to="/login">Войти</NavLink></div>
+                            <div className="action-button"><NavLink to="/registration">Регистрация</NavLink></div>
                         </div>
                     </div>
                     <div className="home-workspace__image">

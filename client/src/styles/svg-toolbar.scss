@@ -3,29 +3,29 @@
 .svg-tool-bar{
   height: 100%;
   .svgRect{
-    background: url('../assets/img/svgRect.svg') no-repeat center center;
+    background: url('../assets/img/svgRect.svg') no-repeat 0 0/cover;
   }
 
   .svgBrush{
-    background: url('../assets/img/svgBrush.svg') no-repeat center center;
+    background: url('../assets/img/svgBrush.svg') no-repeat 0 0/cover;
 
   }
   .svgLine{
-    background: url('../assets/img/svgLine.svg') no-repeat center center;
+    background: url('../assets/img/svgLine.svg') no-repeat 0 0/cover;
   }
 
   .svgCircle{
-    background: url('../assets/img/svgCircle.svg') no-repeat center center;
+    background: url('../assets/img/svgCircle.svg') no-repeat 0 0/cover;
   }
   .svgPolygon{
-    background: url('../assets/img/svgPolygon.svg') no-repeat center center;
+    background: url('../assets/img/svgPolygon.svg') no-repeat 0 0/cover;
   }
   .svgPolyline{
-    background: url('../assets/img/svgPolyline.svg') no-repeat center center;
+    background: url('../assets/img/svgPolyline.svg') no-repeat 0 0/cover;
   }
   .boxSelect{
     margin-top: 1px;
-    background: url('../assets/img/BoxSelect.svg') no-repeat center center;
+    background: url('../assets/img/BoxSelect.svg')no-repeat 0 0/cover;
 
   }
 
