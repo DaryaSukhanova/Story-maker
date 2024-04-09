@@ -10,6 +10,12 @@
     outline: none;
     cursor: pointer;
   }
+  .title{
+    display: flex;
+    margin-top: 10px;
+    padding-right: 170px;
+  }
+
   .disk__btns {
     display: flex;
   }
@@ -20,14 +26,16 @@
     outline: none;
     cursor: pointer;
     margin-right: 10px;
+    background-color: $blue-color-buttons;
   }
   .disk__back{
-    width:100px;
+    // width:100px;
     border: none;
     border-radius: 8px; 
     outline: none;
     cursor: pointer;
     margin-right: 10px;
+    background-color: white;
   }
 
   .disk__upload-input {
@@ -73,12 +81,27 @@
     flex-direction: column;
   }
   .popup__create {
+    width: 100px;
+    height: 36px;
     align-self: flex-end;
+    border: none;
+    border-radius: 8px; 
+    outline: none;
+    cursor: pointer;
+    background-color: $blue-color-buttons;
+  }
+  .popup__close {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: white;
+    // background: url('../assets/img/close.svg') no-repeat center center;
   }
   .popup__header {
     display: flex;
     justify-content: space-between;
   }
   .popup input {
+    width: 250px;
     margin: 20px 0px;
   }

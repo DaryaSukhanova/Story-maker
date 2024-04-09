@@ -10,6 +10,7 @@ import userState from "../store/userState";
 import {NavLink} from "react-router-dom";
 // import { ReactComponent as IconSM } from '../src/assets/img/icon-story-maker.svg'
 import { ReactComponent as IconSM } from '../assets/img/icon-story-maker.svg'
+import ar from '../assets/img/arrow-left.svg'
 const Disk = observer(() => {
 
     const currentDir = fileState.currentDir;
@@ -61,8 +62,8 @@ const Disk = observer(() => {
                     {/*<NavLink to="/" activeClassName="active-link" className="home-icon">*/}
                     {/*    <IconSM activeClassName="home-icon"></IconSM>*/}
                     {/*</NavLink>*/}
-                    <div className="navbar__login"><NavLink to="/login">Войти</NavLink></div>
-                    <div className="navbar__registration"><NavLink to="/registration">Зарегестрироваться</NavLink></div>
+                    <div className="navbar__login"><NavLink to="/login">Log In</NavLink></div>
+                    <div className="navbar__registration"><NavLink to="/registration">Sign In</NavLink></div>
                 </div>
             }
             {userState.isAuth &&
@@ -75,13 +76,18 @@ const Disk = observer(() => {
 
             }
             <div className="disk__btns">
-                <button className="disk__back" onClick={() => backClickHandler()}>Назад</button>
+                {/* <button className="disk__back" onClick={() => backClickHandler()}>Назад</button> */}
                 <button className="disk__create" onClick={()=>showPopupHandler()}>Создать папку</button>
                 <div className="disk__upload">
-                    <label htmlFor="disk__upload-input" className="disk__upload-label">Загрузить файл</label>
+                    <label htmlFor="disk__upload-input" className="disk__upload-label">Загрузить</label>
                     <input multiple={true} onChange={(event)=> fileUploadHandler(event)} type="file" id="disk__upload-input" className="disk__upload-input"/>
                 </div>
             </div>
+            <div className="title">
+                <button className="disk__back" onClick={() => backClickHandler()}><img src={ar}/></button>
+                <div className="filelist__name">Название</div>
+            </div>
+            
             <FileList/>
             <Popup/>
             <Uploader/>

@@ -4,6 +4,7 @@
     display: grid;
     grid-template-columns: 1fr 4fr repeat(4, 1fr);
     align-items: center;
+    cursor: pointer;
   }
   .file:hover {
     transform: scale(1.02);
@@ -21,29 +22,35 @@
   }
 
   .file__btn {
-    width: 90px;
     display: none;
     border: none;
-    border-radius: 8px; 
     outline: none;
     cursor: pointer;
     margin-right: 10px;
   }
-  .file:hover .file__date {
+   .file__date {
     grid-column-start: 3;
   }
-  .file:hover .file__size {
+  .file__size {
     grid-column-start: 4;
   }
   .file:hover .file__add {
-	grid-column-start: 5;
-	display: block;
+    width: 50px;
+    border-radius: 6px; 
+	  grid-column-start: 5;
+	  display: block;
   }
-  .file:hover .file__download {
+   .file__download {
+    width: 40px;
     grid-column-start: 6;
     display: block;
+    background-color: white;
+    // background: url('../assets/img/download.svg') no-repeat center center;
   }
-  .file:hover .file__delete {
+ .file__delete {
+    width: 20px;
     grid-column-start: 7;
     display: block;
+    background-color: white;
+    // background: url('../assets/img/trash.svg') no-repeat center center;
   }

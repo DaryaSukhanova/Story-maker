@@ -12,8 +12,8 @@ const Login = observer(() => {
     return (
         <div className="authorization">
             <div className="authorization__header">Авторизация</div>
-            <Input value={email} setValue={setEmail} type="text" placeholder="Enter email"/>
-            <Input value={password} setValue={setPassword} type="password" placeholder="Enter password"/>
+            <Input value={email} setValue={setEmail} type="text" placeholder="Введите email"/>
+            <Input value={password} setValue={setPassword} type="password" placeholder="Введите пароль"/>
             <button onClick={()=> login(email, password)} className="authorization__btn">Войти</button>
 
         </div>

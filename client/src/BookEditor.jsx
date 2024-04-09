@@ -3,6 +3,7 @@ import BookActivePanel from "./components/BookActivePanel";
 import './styles/book-editor.scss'
 import Disk from "./components/Disk"
 import SvgCanvas from "./components/animation-components/SvgCanvas";
+import DiskBlock from './components/DiskBlock';
 const BookEditor = () => {
     const [data, setData] = useState({
         path: "",
@@ -88,7 +89,7 @@ const BookEditor = () => {
                     })}
                 </ul>
             </div> */}
-			<Disk/>
+			<DiskBlock/>
             </div>
             <BookActivePanel/>
         </div>
