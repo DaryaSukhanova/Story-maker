@@ -11,6 +11,8 @@ import {NavLink} from "react-router-dom";
 // import { ReactComponent as IconSM } from '../src/assets/img/icon-story-maker.svg'
 import { ReactComponent as IconSM } from '../assets/img/icon-story-maker.svg'
 import ar from '../assets/img/arrow-left.svg'
+import pl from '../assets/img/plus-solid.svg'
+import ul from '../assets/img/upload.svg'
 const Disk = observer(() => {
 
     const currentDir = fileState.currentDir;
@@ -77,9 +79,10 @@ const Disk = observer(() => {
             }
             <div className="disk__btns">
                 {/* <button className="disk__back" onClick={() => backClickHandler()}>Назад</button> */}
-                <button className="disk__create" onClick={()=>showPopupHandler()}>Создать папку</button>
+                {/* <img src={pl}/> */}
+                <button className="disk__create" onClick={()=>showPopupHandler()}><img className="img" src={pl}/>  Создать папку</button>
                 <div className="disk__upload">
-                    <label htmlFor="disk__upload-input" className="disk__upload-label">Загрузить</label>
+                    <label htmlFor="disk__upload-input" className="disk__upload-label"><img className="img2" src={ul}/>  Загрузить</label>
                     <input multiple={true} onChange={(event)=> fileUploadHandler(event)} type="file" id="disk__upload-input" className="disk__upload-input"/>
                 </div>
             </div>

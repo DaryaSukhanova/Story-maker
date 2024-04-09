@@ -1,10 +1,15 @@
 .file {
+  height: 40px;
     margin: 10px 0;
-    border-bottom: solid 2px #566885;
+    // border-bottom: solid 2px #566885;
     display: grid;
     grid-template-columns: 1fr 4fr repeat(4, 1fr);
     align-items: center;
     cursor: pointer;
+    border: none;
+    border-radius: 8px; 
+    outline: none;
+    background-color: #ECF2FF;
   }
   .file:hover {
     transform: scale(1.02);
@@ -35,22 +40,23 @@
     grid-column-start: 4;
   }
   .file:hover .file__add {
-    width: 50px;
+    width: 100px;
     border-radius: 6px; 
 	  grid-column-start: 5;
 	  display: block;
+    background-color: white;
   }
-   .file__download {
+  .file:hover .file__download {
     width: 40px;
     grid-column-start: 6;
     display: block;
-    background-color: white;
+    background-color: #ECF2FF;
     // background: url('../assets/img/download.svg') no-repeat center center;
   }
  .file__delete {
     width: 20px;
     grid-column-start: 7;
     display: block;
-    background-color: white;
+    background-color: #ECF2FF;
     // background: url('../assets/img/trash.svg') no-repeat center center;
   }

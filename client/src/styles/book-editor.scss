@@ -2,7 +2,7 @@
 
 .book-editor {
   background: rgb(250, 250, 250) url('../assets/img/BG-repeat.png') repeat center center;
-  // width: 100%;
+  width: 100%;
   height: calc(100vh - 47px);
   font-size: 17px;
   // display: block;
@@ -20,7 +20,7 @@
 .disk {
 	display: flex;
 	flex-direction: column;
-	align-items: flex-end;
+	// align-items: flex-end;
 }
 
 .block-container{
