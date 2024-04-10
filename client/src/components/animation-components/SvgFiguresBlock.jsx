@@ -16,6 +16,7 @@ import "../../styles/toolbar.scss";
 import Circle from "../../tools/animation-tools/jsx-tools/Circle";
 import SvgCircle from "../../tools/animation-tools/SvgCircle";
 import {Svg} from "@svgdotjs/svg.js";
+import SvgModel from "../../tools/animation-tools/SvgModel";
 
 
 const SvgFiguresBlock = () => {
@@ -51,6 +52,7 @@ const SvgFiguresBlock = () => {
                 <button className="tool-bar__btn-tools rect" onClick={() => handleSvgToolClick(new SvgRect(svgCanvasState.canvas))} />
                 <button className="tool-bar__btn-tools circle" onClick={() => handleSvgToolClick(new SvgCircle(svgCanvasState.canvas))} />
                 <button className="tool-bar__btn-tools triangle" onClick={() => handleSvgToolClick(new SvgPolygon(svgCanvasState.canvas))} />
+                <button className="tool-bar__btn-tools model" onClick={() => handleSvgToolClick(new SvgModel(svgCanvasState.canvas))} />
                 {/*{tools.map((tool, index) => (*/}
                 {/*    <button key={index} onClick={() => selectTool(tool.name)} className={tool.style}></button>*/}
                 {/*))}*/}

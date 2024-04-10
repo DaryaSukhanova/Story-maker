@@ -10,6 +10,7 @@ import toolBlockState from "../../store/timelineBlockState";
 import KeyFrameManager from "../../tools/animation-tools/KeyFrameManager";
 import timelineBlockState from "../../store/timelineBlockState";
 import {action} from "mobx";
+import {logDOM} from "@testing-library/react";
 
 const AnimationSettingBlock = observer(() => {
     const keyframeManagerRef = useRef(null); // Добавляем ref для хранения экземпляра AnimationManager
@@ -22,11 +23,15 @@ const AnimationSettingBlock = observer(() => {
         svgCanvasState.canvas.onmousedown = null;
         svgCanvasState.canvas.onmouseup = null;
         animationToolState.setAnimationTool('keyframeElement')
-
+        console.log(svgCanvasState.svgElements)
         svgCanvasState.svgElements.forEach(svgElement => {
-            svgElement.shape.on('click', action(() => {
-                svgElement.isAnimated = !svgElement.isAnimated;
-            }));
+            if (svgElement.shape) { // Проверяем, существует ли svgElement.shape
+                svgElement.shape.on('click', action(() => {
+                    svgElement.isAnimated = !svgElement.isAnimated;
+                }));
+            } else {
+                console.error("svgElement.shape is null or undefined");
+            }
         });
 
     };

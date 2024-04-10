@@ -47,9 +47,9 @@ export default class SvgBrush extends SvgTool{
 
     createPath() {
         const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-        path.setAttribute("stroke", this.currentStroke);
-        path.setAttribute("stroke-width", this.currentLineWidth);
-        path.setAttribute("fill", "none");
+        path.setAttribute("stroke", svgToolState.strokeColor);
+        path.setAttribute("stroke-width", svgToolState.stroke);
+        path.setAttribute("fill", svgToolState.fillColor);
         path.setAttribute("d", this.pathData);
         path.setAttribute("stroke-linejoin", "round");
         path.setAttribute("stroke-linecap", "round");

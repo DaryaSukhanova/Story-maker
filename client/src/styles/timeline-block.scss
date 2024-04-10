@@ -10,7 +10,7 @@
   color: white;
 
 }
-.btn{
+.btn-time-block{
   width: 30px;
   height: 30px;
   border: none;
@@ -170,4 +170,24 @@
   width: 1500px;
   height: 60%;
 }
-
+.modal-container{
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+.input-modal{
+  font-size: 20px;
+  text-decoration: none;
+  width: 100%;
+  border-bottom: solid 2px #ddd;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+.input-modal:focus {
+  outline: none;
+  border-bottom: solid 2px #ddd; /* Возврат к исходному стилю при фокусировке */
+}
+.button-modal{
+  background: #8DADFF;
+  border: none;
+}

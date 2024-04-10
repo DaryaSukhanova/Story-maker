@@ -101,8 +101,8 @@ const TimelineControls = observer( () => {
     return (
         <div className="timeline-controls">
             <div className="timeline-player">
-                <button className="btn left-stop-button" id="leftStopBtn" onClick={handleStopButtonClick}></button>
-                <button className={isRunningThumb ? 'btn pause-button' : 'btn play-button'} id="playBtn" onClick={handleStartButtonClick}></button>
+                <button className="btn-time-block left-stop-button" id="leftStopBtn" onClick={handleStopButtonClick}></button>
+                <button className={isRunningThumb ? 'btn-time-block pause-button' : 'btn-time-block play-button'} id="playBtn" onClick={handleStartButtonClick}></button>
             </div>
             <div className="timer">{formatTime(elapsedTime)} </div>
         </div>
