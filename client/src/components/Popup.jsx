@@ -3,6 +3,7 @@ import Input from "./Input";
 import {observer} from "mobx-react-lite";
 import {createDir} from '../actions/file.js';
 import fileState from '../store/fileState.js';
+import cl from '../assets/img/close.svg'
 
 const Popup = observer(() => {
     const [dirName, setDirName] = useState('')
@@ -20,7 +21,7 @@ const Popup = observer(() => {
             <div className="popup__content" onClick={(event => event.stopPropagation())}>
                 <div className="popup__header">
                     <div className="popup__title">Создать новую папку</div>
-                    <button className="popup__close" onClick={() => fileState.setPopupDisplay('none')}>X</button>
+                    <button className="popup__close" onClick={() => fileState.setPopupDisplay('none')}><img src={cl}/></button>
                 </div>
                 <Input type="text" placeholder="Введите название папки..." value={dirName} setValue={setDirName}/>
                 <button className="popup__create" onClick={() => createHandler()}>Создать</button>

@@ -5,6 +5,8 @@ import {addFile, deleteFile, downloadFile} from '../actions/file.js';
 import '../styles/file.scss'
 import dirLogo from '../assets/img/dir.svg'
 import fileLogo from '../assets/img/file.svg'
+import tr from '../assets/img/trash.svg'
+import dl from '../assets/img/download.svg'
 
 const File = observer(({file}) => {
 
@@ -33,14 +35,14 @@ const File = observer(({file}) => {
 	}
 
     return (
-        <div className='file' onClick={()=> openDirHandler(file)}>
+        <div className='file' style = {file.type !== 'dir' ? {marginLeft:22}: {marginLeft:10}} onClick={()=> openDirHandler(file)}>
             <img src={file.type === 'dir' ? dirLogo : fileLogo} alt="" className="file__img"/>
             <div className="file__name">{file.name}</div>
-            <div className="file__date">{file.date.slice(0,10)}</div>
-            <div className="file__size">{file.size}</div>
-			{file.type === 'png' && <button onClick={(e) => addClickHandler(e)} className="file__btn file__add">add</button>}
-            {file.type !== 'dir' && <button onClick={(e) => downloadClickHandler(e)} className="file__btn file__download">download</button>}
-            <button onClick={(e) => deleteClickHandler(e)} className="file__btn file__delete">delete</button>
+            {/* <div className="file__date">{file.date.slice(0,10)}</div>
+            <div className="file__size">{file.size}</div> */}
+			{file.type === 'png' && <button className="file__btn file__add" onClick={(e) => addClickHandler(e)}>На холст</button>}
+            {file.type !== 'dir' && <button className="file__btn file__download" onClick={(e) => downloadClickHandler(e)}><img src={dl}/></button>}
+            <button className="file__btn file__delete" onClick={deleteClickHandler}><img src={tr}/></button>
         </div>
     );
 });
