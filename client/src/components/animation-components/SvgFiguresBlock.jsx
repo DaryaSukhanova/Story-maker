@@ -16,6 +16,7 @@ import "../../styles/toolbar.scss";
 import Circle from "../../tools/animation-tools/jsx-tools/Circle";
 import SvgCircle from "../../tools/animation-tools/SvgCircle";
 import {Svg} from "@svgdotjs/svg.js";
+import SvgModel from "../../tools/animation-tools/SvgModel";
 
 
 const SvgFiguresBlock = () => {
@@ -45,12 +46,13 @@ const SvgFiguresBlock = () => {
         <div className="figures-block-container">
             <div className="tool-bar-item-title">Фигуры</div>
             <div className="tool-bar-item">
+                <button className="tool-bar__btn-tools svgBrush" onClick={() => handleSvgToolClick(new SvgBrush(svgCanvasState.canvas))} />
                 <button className="tool-bar__btn line" onClick={() => handleSvgToolClick(new SvgLine(svgCanvasState.canvas))} />
                 {/*<button className="tool-bar__btn svgPolyline" onClick={() => handleSvgToolClick(new SvgPolyline(svgCanvasState.canvas))} />*/}
-                <button className="tool-bar__btn svgBrush" onClick={() => handleSvgToolClick(new SvgBrush(svgCanvasState.canvas))} />
-                <button className="tool-bar__btn rect" onClick={() => handleSvgToolClick(new SvgRect(svgCanvasState.canvas))} />
-                <button className="tool-bar__btn circle" onClick={() => handleSvgToolClick(new SvgCircle(svgCanvasState.canvas))} />
-                <button className="tool-bar__btn triangle" onClick={() => handleSvgToolClick(new SvgPolygon(svgCanvasState.canvas))} />
+                <button className="tool-bar__btn-tools rect" onClick={() => handleSvgToolClick(new SvgRect(svgCanvasState.canvas))} />
+                <button className="tool-bar__btn-tools circle" onClick={() => handleSvgToolClick(new SvgCircle(svgCanvasState.canvas))} />
+                <button className="tool-bar__btn-tools triangle" onClick={() => handleSvgToolClick(new SvgPolygon(svgCanvasState.canvas))} />
+                <button className="tool-bar__btn-tools model" onClick={() => handleSvgToolClick(new SvgModel(svgCanvasState.canvas))} />
                 {/*{tools.map((tool, index) => (*/}
                 {/*    <button key={index} onClick={() => selectTool(tool.name)} className={tool.style}></button>*/}
                 {/*))}*/}

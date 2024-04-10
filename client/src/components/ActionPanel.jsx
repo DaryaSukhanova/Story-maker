@@ -42,15 +42,15 @@ const ActionPanel = () => {
 
     return (
         <div className="action-panel-container">
-            <Modal show={modal} onHide={()=>{setModal(false)}}>
+            <Modal className="modal-container" show={modal} onHide={()=>{setModal(false)}}>
                 <Modal.Header closeButton >
-                    <Modal.Title>Enter the name of the background</Modal.Title>
+                    <Modal.Title>Введите название фона</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <input type="text" ref={backgroundNameRef}/>
+                    <input className="input-modal" type="text" ref={backgroundNameRef}/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={()=> saveBackground(backgroundNameRef, () => setModal(false))}>
+                    <Button className="button-modal" variant="secondary" onClick={()=> saveBackground(backgroundNameRef, () => setModal(false))}>
                         Save
                     </Button>
                 </Modal.Footer>

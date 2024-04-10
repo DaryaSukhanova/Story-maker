@@ -5,6 +5,7 @@ import User from "./models/User.js";
 
 class BackgroundController{
     async create(req, res){
+
         try{
             const background = await BackgroundService.create(req.body, req.user.id)
             res.status(200).json(background)

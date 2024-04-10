@@ -12,15 +12,15 @@ const SvgActionPanel = () => {
 
     return (
         <div className="action-panel-container">
-            <Modal show={modal} onHide={()=>{setModal(false)}}>
+            <Modal className="modal-container" show={modal} onHide={()=>{setModal(false)}}>
                 <Modal.Header closeButton >
-                    <Modal.Title>Enter the name of the animation</Modal.Title>
+                    <Modal.Title>Введите название анимации</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                         <input type="text" ref={animationNameRef}/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={()=> saveAnimation(animationNameRef, () => setModal(false))}>
+                    <Button className="button-modal" variant="secondary" onClick={()=> saveAnimation(animationNameRef, () => setModal(false))}>
                         Save
                     </Button>
                 </Modal.Footer>

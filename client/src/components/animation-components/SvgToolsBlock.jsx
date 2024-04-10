@@ -62,16 +62,24 @@ const SvgToolsBlock = ({ currentColor }) => {
                 {/*    }*/}
                 {/*    handleSvgToolClick(new BoxSelect(svgCanvasState.canvas));*/}
                 {/*}} />*/}
-                <button className="tool-bar__btn boxSelect" onClick={() => {
+                <button className="tool-bar__btn-tools boxSelect" onClick={() => {
                     new BoxSelectNew(svgCanvasState.canvas);
                 }} />
                 <input
-                    className="tool-bar__btn stroke"
+                    className="tool-bar__btn-tools move"
+                    type="button"
+                />
+                <input
+                    className="tool-bar__btn-tools color-picker"
+                    type="button"
+                />
+                <input
+                    className="tool-bar__btn-tools stroke"
                     type="button"
                     onClick={changeStrokeColorBtn}
                 />
                 <input
-                    className="tool-bar__btn fill"
+                    className="tool-bar__btn-tools fill"
                     type="button"
                     onClick={changeFillColorBtn}
                 />

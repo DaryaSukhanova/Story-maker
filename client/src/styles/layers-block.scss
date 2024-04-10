@@ -73,3 +73,24 @@
 .google-icon {
   font-size: 24px; /* Размер иконки */
 }
+input[type="file"] {
+  display: none; /* Скрываем элемент */
+}
+.upload-img-container{
+  margin-top: 10px;
+  text-align: center;
+}
+.upload-img{
+  border-radius: 7px;
+  display: inline-block;
+  padding: 10px 12px;
+  cursor: pointer;
+  width: 100%;
+  background-color: #f0f0f0;
+  color: #333;
+}
+.layer{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

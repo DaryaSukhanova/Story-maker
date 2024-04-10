@@ -41,9 +41,9 @@ export default class SvgPolygon extends SvgTool{
             // Создать новую полилинию, если еще не рисуется
             this.pathData = `${this.currentX},${this.currentY}`;
             this.drawingPolygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-            this.drawingPolygon.setAttribute("stroke", this.currentStroke);
-            this.drawingPolygon.setAttribute("stroke-width", this.currentLineWidth);
-            this.drawingPolygon.setAttribute("fill", this.currentFillColor);
+            this.drawingPolygon.setAttribute("stroke", svgToolState.strokeColor);
+            this.drawingPolygon.setAttribute("stroke-width", svgToolState.stroke);
+            this.drawingPolygon.setAttribute("fill",svgToolState.fillColor);
             this.drawingPolygon.setAttribute("points", this.pathData);
             this.drawingPolygon.setAttribute('data-tool', 'true');
             this.drawingPolygon.setAttribute('type-tool', 'polygon');
