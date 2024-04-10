@@ -9,17 +9,20 @@ export const saveAnimation = async(name, closeModal) => {
 
 	const animationArray = []
 	svgCanvasState.svgElements.map((element, index) => {
-		animationArray.push({
-			id: index,
-			svg: element.shape.node ? (element.shape.node) : (element.shape),
-			keys: element.keys
-		})
+		const {isAnimated, keys, shape} = element
+		console.log(shape.node ? shape.node : shape)
+		
+		// animationArray.push({
+		// 	id: index,
+		// 	svg: shape.node ? toJSON(shape.node) : shape,
+		// 	keys: keys
+		// })
 	})
 
-	console.log(animationArray)
+	// console.log(animationArray)
 
-	// const response = axios.post("http://localhost:5000/api/v1/animations", {
-	// 		pageName: name,
+	// const response = await axios.post("http://localhost:5000/api/v1/animations", {
+	// 		pageName: name.current.value,
 	// 		elements: animationArray,
 	// 	},
 	// 	{
