@@ -4,32 +4,42 @@ import svgCanvasState from "../store/svgCanvasState"
 import { fromJSON, parse, stringify, toJSON } from "flatted"
 
 export const saveAnimation = async(name, closeModal) => {
-	closeModal()
-	animationToolState.isAnimationSaved = true
+    closeModal();
+    animationToolState.isAnimationSaved = true;
 
-	const animationArray = []
-	svgCanvasState.svgElements.map((element, index) => {
-		animationArray.push({
-			id: index,
-			svg: element.shape.node ? (element.shape.node) : (element.shape),
-			keys: element.keys
-		})
-	})
+    const animationArray = [];
+    svgCanvasState.svgElements.forEach((element, index) => {
+        // Выполняем глубокое клонирование объекта element.shape
+        const clonedShape = JSON.parse(JSON.stringify(element.shape));
 
-	console.log(animationArray)
+        // Добавляем скопированный объект в массив animationArray
+        animationArray.push({
+            id: index,
+            svg: clonedShape,
+            keys: element.keys
+        });
+    });
 
-	// const response = axios.post("http://localhost:5000/api/v1/animations", {
-	// 		pageName: name,
-	// 		elements: animationArray,
-	// 	},
-	// 	{
-	// 		headers: {
-	// 			Authorization: `Bearer ${localStorage.getItem("token")}`
-	// 		}
-	// 	}
-	// )
-	// console.log(response)
-}
+    console.log(animationArray);
+
+    try {
+        const response = await axios.post(
+            "http://localhost:5000/api/v1/animations",
+            {
+                pageName: name.current.value,
+                elements: animationArray,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`
+                }
+            }
+        );
+        console.log(response.data); // Если вы хотите получить данные из ответа, используйте response.data
+    } catch (error) {
+        console.error('Error while saving animation:', error);
+    }
+};
 
 export const saveAnimatedSvg = async(path, svg, speed, func, name)=>{
 
