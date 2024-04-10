@@ -1,4 +1,35 @@
-import axios from "axios";
+import axios from "axios"
+import animationToolState from "../store/animationToolState"
+import svgCanvasState from "../store/svgCanvasState"
+import { fromJSON, parse, stringify, toJSON } from "flatted"
+
+export const saveAnimation = async(name, closeModal) => {
+	closeModal()
+	animationToolState.isAnimationSaved = true
+
+	const animationArray = []
+	svgCanvasState.svgElements.map((element, index) => {
+		animationArray.push({
+			id: index,
+			svg: element.shape.node ? (element.shape.node) : (element.shape),
+			keys: element.keys
+		})
+	})
+
+	console.log(animationArray)
+
+	// const response = axios.post("http://localhost:5000/api/v1/animations", {
+	// 		pageName: name,
+	// 		elements: animationArray,
+	// 	},
+	// 	{
+	// 		headers: {
+	// 			Authorization: `Bearer ${localStorage.getItem("token")}`
+	// 		}
+	// 	}
+	// )
+	// console.log(response)
+}
 
 export const saveAnimatedSvg = async(path, svg, speed, func, name)=>{
 

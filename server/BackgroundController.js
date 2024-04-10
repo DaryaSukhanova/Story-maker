@@ -50,19 +50,6 @@ class BackgroundController{
         }
     }
 
-    async saveAnimation(req, res) {
-        // console.log(req.body)
-        try{
-            const post = await BackgroundService.saveAnimation(req.body)
-            return res.status(200).json(post)
-
-        } catch (e){
-            res.status(e.status).json(e.message)
-        }
-
-    }
-
-
     async getFiles(req, res){
         try{
             const files = await BackgroundService.getFiles(req)

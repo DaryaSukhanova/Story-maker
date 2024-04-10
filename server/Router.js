@@ -5,6 +5,7 @@ import authMiddleware from './middleware/auth.middleware.js'
 import FileService from './services/fileService.js'
 import File from './models/File.js'
 import fC from './controllers/fileController.js'
+import animationController from './controllers/animationController.js'
 
 const router = new Router()
 const fileController = new fC()
@@ -14,7 +15,6 @@ router.post('/backgrounds', authMiddleware, BackgroundController.create)
 router.get('/backgrounds', authMiddleware, BackgroundController.getBackground)
 router.put('/backgrounds', BackgroundController.update)
 router.delete('/backgrounds/:name', BackgroundController.delete)
-router.post('/animations', BackgroundController.saveAnimation);
 router.get('/fileManager', authMiddleware, BackgroundController.getFiles)
 router.post('/registration',         [
     check('email', "Uncorrected email").isEmail(),
@@ -28,4 +28,5 @@ router.get("/files", authMiddleware, fileController.getFiles)
 router.post("/files/upload", authMiddleware, fileController.uploadFile)
 router.get("/files/download", authMiddleware, fileController.downloadFile)
 router.delete("/files", authMiddleware, fileController.deleteFile)
+router.post('/animations', authMiddleware, animationController.saveAnimation)
 export default router;

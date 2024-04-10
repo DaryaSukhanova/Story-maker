@@ -37,7 +37,7 @@ class SvgCanvasState{
 
     handleClearCanvas = () => {
         this.canvas.innerHTML = '';
-        svgToolState.svgElements = [];
+        this.svgElements = [];
         svgToolState.setIsDrawnSvg(false)
         timelineBlockState.setIsRunningThumb(false)
         timelineBlockState.setTotalTime(0)

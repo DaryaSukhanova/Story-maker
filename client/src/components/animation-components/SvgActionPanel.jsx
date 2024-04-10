@@ -4,13 +4,11 @@ import animationToolState from "../../store/animationToolState";
 import {Button, Modal} from "react-bootstrap";
 import canvasState from "../../store/canvasState";
 import axios from "axios";
+import { saveAnimation } from '../../actions/animation';
 
 const SvgActionPanel = () => {
-    const [modal,setModal] = useState(false)
-    const download = () =>{
-        setModal(false)
-        saveSvg()
-    }
+	const animationNameRef = useRef()
+	const [modal,setModal] = useState(false)
 
     return (
         <div className="action-panel-container">
@@ -19,10 +17,10 @@ const SvgActionPanel = () => {
                     <Modal.Title>Enter the name of the animation</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                        <input type="text" onChange={(e) => animationToolState.setAnimationName(e.target.value)}/>
+                        <input type="text" ref={animationNameRef}/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={()=> download()}>
+                    <Button variant="secondary" onClick={()=> saveAnimation(animationNameRef, () => setModal(false))}>
                         Save
                     </Button>
                 </Modal.Footer>
@@ -32,9 +30,5 @@ const SvgActionPanel = () => {
         </div>
     );
 };
-
-function saveSvg(){
-    animationToolState.isAnimationSaved = true
-}
 
 export default SvgActionPanel;

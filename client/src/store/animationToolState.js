@@ -36,10 +36,6 @@ class AnimationToolState{
         this.startTime = time;
     }
 
-    setAnimationName(name){
-        this.tool.animationName = name
-    }
-
 
 
 }

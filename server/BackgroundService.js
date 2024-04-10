@@ -130,14 +130,6 @@ class BackgroundService{
         return background;
     }
 
-    async saveAnimation(json) {
-        try {
-            const filePath = `./files/animations/${json.name}.json`;
-            fs.writeFileSync(filePath, JSON.stringify(json.data), 'utf-8');
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    }
     async isFolder(path){
         console.log(fs.lstatSync(path).isDirectory())
         return fs.lstatSync(path).isDirectory() && fs.existsSync(path)
