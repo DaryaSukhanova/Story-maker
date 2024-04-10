@@ -20,9 +20,22 @@ export default class SvgLine extends SvgTool{
     }
 
     mouseUpHandler(e) {
+
         this.mouseDown = false;
+
         if (this.drawingLine) {
-            svgCanvasState.pushToSvgElements(this.drawingLine);
+            const lineData = {
+                type: 'line',
+                startX: this.startX,
+                startY: this.startY,
+                endX: this.currentX,
+                endY: this.currentY,
+                strokeColor: svgToolState.strokeColor,
+                strokeWidth: svgToolState.stroke
+            };
+
+            svgCanvasState.pushToSvgElements(lineData);
+            console.log(svgCanvasState.svgElements)
         }
         this.drawingLine = null;
     }
@@ -40,9 +53,9 @@ export default class SvgLine extends SvgTool{
     mouseMoveHandler(e) {
         if (this.mouseDown && this.drawingLine) {
             const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
-            const currentX = e.pageX - svgCanvasRect.left;
-            const currentY = e.pageY - svgCanvasRect.top;
-            this.drawingLine.plot(this.startX, this.startY, currentX, currentY);
+            this.currentX = e.pageX - svgCanvasRect.left;
+            this.currentY = e.pageY - svgCanvasRect.top;
+            this.drawingLine.plot(this.startX, this.startY, this.currentX, this.currentY);
         }
     }
 

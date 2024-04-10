@@ -4,8 +4,8 @@ import svgCanvasState from "../store/svgCanvasState"
 import { fromJSON, parse, stringify, toJSON } from "flatted"
 
 export const saveAnimation = async(name, closeModal) => {
-	closeModal()
-	animationToolState.isAnimationSaved = true
+    closeModal();
+    animationToolState.isAnimationSaved = true;
 
 	const animationArray = []
 	svgCanvasState.svgElements.map((element, index) => {
