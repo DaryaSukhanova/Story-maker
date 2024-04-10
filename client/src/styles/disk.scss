@@ -3,12 +3,18 @@
 .disk {
     margin-top: 20px;
   }
-  .navbar__logout {
-    width: 150px;
+  .home-navbar {
+    width: 100%;
+    margin-right: 30px;
     border: none;
     border-radius: 8px; 
     outline: none;
     cursor: pointer;
+    margin-bottom: 30px;
+   background-color: #8DADFF;
+  }
+  .pr {
+   
   }
   .title{
     display: flex;
@@ -68,7 +74,7 @@
     width: 100%;
     height: calc(100vh - 50px - 40px);
     margin: 20px;
-    border: dashed #566885 2px;
+    border: dashed black 2px;
     display: flex;
     justify-content: center;
     align-items: center;

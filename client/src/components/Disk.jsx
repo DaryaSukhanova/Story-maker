@@ -70,11 +70,13 @@ const Disk = observer(() => {
             }
             {userState.isAuth &&
 
-                <div>
+                
                     <div className="home-navbar">
-                        <div className="navbar__logout" onClick={()=>userState.logout()}>Выйти</div>
+                        <div className='pr'>
+                        <div className="navbar__logout" onClick={()=>userState.logout()}>Выйти из аккаунта</div>
+                        </div>
                     </div>
-                </div>
+                
 
             }
             <div className="disk__btns">
@@ -97,7 +99,7 @@ const Disk = observer(() => {
         </div>
         :
         <div className="drop-area" onDrop={dropHandler} onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
-            Перетащите файлы сюда
+            Загрузить файлы
         </div>
     );
 });

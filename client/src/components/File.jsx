@@ -35,7 +35,7 @@ const File = observer(({file}) => {
 	}
 
     return (
-        <div className='file'  onClick={()=> openDirHandler(file)}>
+        <div className='file' style = {file.type !== 'dir' ? {marginLeft:22}: {marginLeft:10}} onClick={()=> openDirHandler(file)}>
             <img src={file.type === 'dir' ? dirLogo : fileLogo} alt="" className="file__img"/>
             <div className="file__name">{file.name}</div>
             {/* <div className="file__date">{file.date.slice(0,10)}</div>
