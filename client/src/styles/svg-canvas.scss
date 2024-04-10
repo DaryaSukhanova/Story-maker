@@ -7,3 +7,21 @@
   stroke: red; /* Измените цвет рамки */
 
 }
+.path-3{
+  animation: rotatePath_0 3s ease-in-out infinite;
+}
+@keyframes rotatePath_0 {
+  0% {
+    transform-origin: 500px 200px;
+    transform: rotate(0deg) scale(1, 1) translate(0px, 0px) skew(0deg, 0deg);
+  }
+  20% {
+    transform: rotate(10deg) scale(1, 1) translate(0px, 0px) skew(0deg, 0deg);
+  }
+  75% {
+    transform: rotate(0deg) scale(1, 1) translate(0px, 0px) skew(0deg, 0deg);
+  }
+  100% {
+    transform: rotate(0deg) scale(1, 1) translate(0px, 0px) skew(0deg, 0deg);
+  }
+}
