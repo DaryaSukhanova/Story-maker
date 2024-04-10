@@ -71,11 +71,11 @@ const Disk = observer(() => {
             {userState.isAuth &&
 
                 
-                    <div className="home-navbar">
+                    // <div className="home-navbar">
                         <div className='pr'>
-                        <div className="navbar__logout" onClick={()=>userState.logout()}>Выйти из аккаунта</div>
-                        </div>
-                    </div>
+                            <div className="navbar__logout" onClick={()=>userState.logout()}>Выйти из аккаунта</div>
+                       </div>
+                    // </div>
                 
 
             }

@@ -2,6 +2,7 @@
   height: 40px;
     margin: 18px 0;
     font-size: 15px;
+    padding-left: 10px;
     // border-bottom: solid 2px #566885;
     display: grid;
     grid-template-columns: 1fr 4fr repeat(4, 1fr);
@@ -29,11 +30,12 @@
   }
 
   .file__btn {
+    padding-right: 8px;
     display: none;
     border: none;
     outline: none;
     cursor: pointer;
-    margin-right: 10px;
+    margin-right: 6px;
   }
    .file__date {
     grid-column-start: 3;
@@ -42,7 +44,7 @@
     grid-column-start: 4;
   }
   .file:hover .file__add {
-    width: 100px;
+    width: 90px;
     border-radius: 6px; 
 	  grid-column-start: 5;
 	  display: block;
