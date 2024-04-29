@@ -13,11 +13,11 @@ export default class SvgLine extends SvgTool{
         this.DrawingCanvas = SVG(document.getElementById("drawingCanvas"))
     }
 
-    listen() {
-        this.svgCanvas.onmousemove = this.mouseMoveHandler.bind(this);
-        this.svgCanvas.onmousedown = this.mouseDownHandler.bind(this);
-        this.svgCanvas.onmouseup = this.mouseUpHandler.bind(this);
-    }
+    // listen() {
+    //     this.svgCanvas.onmousemove = this.mouseMoveHandler.bind(this);
+    //     this.svgCanvas.onmousedown = this.mouseDownHandler.bind(this);
+    //     this.svgCanvas.onmouseup = this.mouseUpHandler.bind(this);
+    // }
 
     mouseUpHandler(e) {
 
@@ -34,7 +34,7 @@ export default class SvgLine extends SvgTool{
                 strokeWidth: svgToolState.stroke
             };
 
-            svgCanvasState.pushToSvgElements(lineData);
+            svgCanvasState.pushToSvgElements(this.drawingLine);
             console.log(svgCanvasState.svgElements)
         }
         this.drawingLine = null;
@@ -46,7 +46,7 @@ export default class SvgLine extends SvgTool{
         this.startX = e.pageX - svgCanvasRect.left;
         this.startY = e.pageY - svgCanvasRect.top;
         this.drawingLine = this.DrawingCanvas.line(this.startX, this.startY, this.startX, this.startY)
-            .stroke({ color: svgToolState.strokeColor, width: svgToolState.stroke })
+            .stroke({ color: this.currentStroke, width:this.currentLineWidth })
             .attr({ 'data-tool': true, 'type-tool': 'line', 'stroke-linecap': 'round' });
     }
 

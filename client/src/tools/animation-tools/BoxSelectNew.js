@@ -34,11 +34,8 @@ export default class BoxSelectNew extends SvgTool {
         }
     }
 
-    mouseUpHandler(event) {
+    mouseUpHandler() {
         this.isScale = false
-        // if(this.newStartBBox){
-        //     this.startBBox = this.newStartBBox
-        // }
     }
 
     mouseDownHandler(event) {
@@ -122,7 +119,6 @@ export default class BoxSelectNew extends SvgTool {
         svgPoint.y = y;
         const transformedPoint = svgPoint.matrixTransform(this.svgCanvas.getScreenCTM().inverse());
 
-
         switch (this.selectedHandle.id) {
             case 'top-left':
                 scalePointX = bbox.x + bbox.width;
@@ -162,8 +158,6 @@ export default class BoxSelectNew extends SvgTool {
 
         this.svgElement.setAttribute('transform',
             `translate(${scalePointX}, ${scalePointY}) scale(${scaleX}, ${scaleY}) translate(${-scalePointX}, ${-scalePointY})`);
-        // this.newStartBBox = bbox
-
     }
     updateHandlesCoordinates(bbox) {
         // Обновляем координаты ручек в соответствии с новым bbox

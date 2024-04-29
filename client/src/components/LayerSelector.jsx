@@ -36,8 +36,6 @@ const LayerSelector = observer(() => {
         }
     };
 
-
-
     return (
         <div className="layer-selector">
             {Object.keys(layers).map((layer, index) => (

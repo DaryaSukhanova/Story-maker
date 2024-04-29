@@ -17,31 +17,35 @@ class SvgToolState{
         this.tool = tool
         animationToolState.tool = null
     }
+
+    // setFillStroke(color){
+    //     if(this.tool){
+    //         this.tool.svgFillStroke = color
+    //     }
+    // }
     setFillColor(color){
-        // if(this.tool){
-            // this.tool.svgFillColor = color
-            this.fillColor = color
-        // }
+        // this.fillColor = color
+        this.tool.svgFillColor = color
     }
-    setFillStroke(color){
+    setStroke(stroke){
+        // this.stroke = stroke
+        this.tool.svgLineWidth = stroke
+    }
+    setStrokeColor(color){
+        // this.strokeColor = color
         if(this.tool){
             this.tool.svgFillStroke = color
         }
-    }
-    setStroke(stroke){
-        this.stroke = stroke
-    }
-    setStrokeColor(color){
-        this.strokeColor = color
+
     }
 
     setIsDrawnSvg(bool){
         this.isDrawn = bool
     }
 
-    setLineWidth(width){
-        this.tool.svgLineWidth = width
-    }
+    // setLineWidth(width){
+    //     this.tool.svgLineWidth = width
+    // }
     clearBoundingBox() {
         // const boundingBoxGroup = document.getElementById("boundingBoxGroup");
         const boundingBoxGroup = document.getElementById("bBoxGroup");

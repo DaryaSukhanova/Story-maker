@@ -137,7 +137,7 @@ export default class MotionCurve extends AnimationTool {
         }
 
         const convertToObject = Object.fromEntries(listSvgConfigs);
-        savedJson(convertToObject, this.currentName)
+        // savedJson(convertToObject, this.currentName)
     }
 
     animate(element) {

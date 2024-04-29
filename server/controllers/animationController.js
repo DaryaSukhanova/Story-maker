@@ -5,14 +5,14 @@ import { fromJSON, parse, stringify, toJSON } from "flatted"
 
 class animationController {
 	async saveAnimation(req, res) {
+
 		try {
-			req.body.elements.map(el => {
-				// const log = el.node ? el.node : el
-				console.log(el)
-			})
-			res.status(200)
+			console.log("req.body", req.body)
+			res.status(200).json({ message: "Animation saved successfully" });
 		} catch (e) {
-			res.status(e.status).json(e.message)
+			// Лучше устанавливать статус 500 если e.status не определен
+			const status = e.status || 500;
+			res.status(status).json({ error: e.message || "Internal server error" });
 		}
 	}
 }

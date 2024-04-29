@@ -1,5 +1,5 @@
 .file {
-  height: 40px;
+  height: 50px;
     margin: 18px 0;
     font-size: 15px;
     padding-left: 10px;
@@ -12,11 +12,12 @@
     border-radius: 8px; 
     outline: none;
     background-color: #ECF2FF;
+    width: 100%;
     
   }
-  .file:hover {
-    transform: scale(1.02);
-  }
+  //.file:hover {
+  //  transform: scale(1.02);
+  //}
   .file__img {
     justify-self: center;
   }

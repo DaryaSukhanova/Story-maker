@@ -2,28 +2,28 @@ import React from "react";
 import SvgTool from "./SvgTool";
 import svgToolState from "../../store/svgToolState";
 import svgCanvasState from "../../store/svgCanvasState";
+import {SVG} from "@svgdotjs/svg.js";
 
-export default class SvgPolygon extends SvgTool{
+export default class SvgPolygon extends SvgTool {
     constructor(svgCanvas) {
-        super(svgCanvas)
+        super(svgCanvas);
         this.svgCanvas = svgCanvas;
-        this.drawingPolygon = null
+        this.drawingPolygon = null;
+        this.pathData = [];
         this.listen();
-        this.pathData = ""
-
+        this.drawingCanvas = SVG(this.svgCanvas).group(); // Создаем группу для управления всеми элементами
     }
 
-    listen() {
-        this.svgCanvas.onmousemove = this.mouseMoveHandler.bind(this);
-        this.svgCanvas.onmousedown = this.mouseDownHandler.bind(this);
-        this.svgCanvas.onmouseup = this.mouseUpHandler.bind(this);
-        document.addEventListener("keydown", this.keyDownHandler.bind(this));
-    }
+    // listen() {
+    //     this.svgCanvas.addEventListener('mousemove', this.mouseMoveHandler.bind(this));
+    //     this.svgCanvas.addEventListener('mousedown', this.mouseDownHandler.bind(this));
+    //     this.svgCanvas.addEventListener('mouseup', this.mouseUpHandler.bind(this));
+    //     document.addEventListener("keydown", this.keyDownHandler.bind(this));
+    // }
 
     keyDownHandler(e) {
         if (e.key === "Escape") {
             this.cancelDrawing();
-
         }
     }
 
@@ -32,41 +32,37 @@ export default class SvgPolygon extends SvgTool{
     }
 
     mouseDownHandler(e) {
-        this.mouseDown = true;
         const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
-        this.currentX = e.pageX - svgCanvasRect.left;
-        this.currentY = e.pageY - svgCanvasRect.top;
+        const x = e.pageX - svgCanvasRect.left;
+        const y = e.pageY - svgCanvasRect.top;
 
         if (!this.drawingPolygon) {
-            // Создать новую полилинию, если еще не рисуется
-            this.pathData = `${this.currentX},${this.currentY}`;
-            this.drawingPolygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-            this.drawingPolygon.setAttribute("stroke", svgToolState.strokeColor);
-            this.drawingPolygon.setAttribute("stroke-width", svgToolState.stroke);
-            this.drawingPolygon.setAttribute("fill",svgToolState.fillColor);
-            this.drawingPolygon.setAttribute("points", this.pathData);
-            this.drawingPolygon.setAttribute('data-tool', 'true');
-            this.drawingPolygon.setAttribute('type-tool', 'polygon');
-            this.svgCanvas.appendChild(this.drawingPolygon);
+            // Создаем новый полигон, если ранее он не был создан
+            this.pathData.push([x, y]);
+            this.drawingPolygon = this.drawingCanvas.polygon(this.pathData)
+                .attr({
+                    'data-tool': 'true',
+                    'type-tool': 'polygon',
+                    fill: this.currentFillColor,
+                    stroke: this.currentStroke,
+                    "stroke-width": this.currentLineWidth,
+                });
         } else {
-            // Обновить существующую полилинию, если уже рисуется
-            this.pathData += ` ${this.currentX},${this.currentY}`;
-            this.drawingPolygon.setAttribute("points", this.pathData);
+            // Добавляем точки к полигону, если он уже рисуется
+            this.pathData.push([x, y]);
+            this.drawingPolygon.plot(this.pathData);
         }
     }
 
     mouseMoveHandler(e) {
-
+        // Обработчик движения мыши, можно добавить логику для предварительного просмотра положения следующей точки
     }
+
     cancelDrawing() {
-        this.mouseDown = false;
-        if(this.drawingPolygon){
-            svgCanvasState.pushToSvgElements(this.drawingPolygon);
-        }
         if (this.drawingPolygon) {
+            svgCanvasState.pushToSvgElements(this.drawingPolygon);
             this.drawingPolygon = null;
-            this.pathData = "";
+            this.pathData = [];
         }
     }
-
 }

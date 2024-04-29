@@ -15,7 +15,7 @@ import Scratch from "../../tools/graphic-tools/Scratch";
 import Bubbles from "../../tools/graphic-tools/Bubbles";
 import Pencil from "../../tools/graphic-tools/Pencil";
 import BrushBlock from "./BrushBlock";
-import FiguresBlock from "./FiguresBlock";
+import ShapesBlock from "./ShapesBlock";
 import ToolsBlock from "./ToolsBlock";
 import {SketchPicker} from "react-color";
 import ColorPicker from "../ColorPicker";
@@ -28,7 +28,7 @@ const Toolbar = () => {
     return (
         <div className="tool-bar">
             <BrushBlock></BrushBlock>
-            <FiguresBlock></FiguresBlock>
+            <ShapesBlock></ShapesBlock>
             <ToolsBlock currentColor={currentColor}></ToolsBlock>
             <ColorPicker currentColor={currentColor} handleColorChange={handleColorChange} />
             <SettingBar></SettingBar>

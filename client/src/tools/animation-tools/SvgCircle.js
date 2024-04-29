@@ -12,11 +12,11 @@ export default class SvgCircle extends SvgTool {
         this.DrawingCanvas = SVG(document.getElementById("drawingCanvas"))
     }
 
-    listen() {
-        this.svgCanvas.onmousemove = this.mouseMoveHandler.bind(this);
-        this.svgCanvas.onmousedown = this.mouseDownHandler.bind(this);
-        this.svgCanvas.onmouseup = this.mouseUpHandler.bind(this);
-    }
+    // listen() {
+    //     this.svgCanvas.onmousemove = this.mouseMoveHandler.bind(this);
+    //     this.svgCanvas.onmousedown = this.mouseDownHandler.bind(this);
+    //     this.svgCanvas.onmouseup = this.mouseUpHandler.bind(this);
+    // }
 
     mouseUpHandler(e) {
         this.mouseDown = false;
@@ -32,11 +32,11 @@ export default class SvgCircle extends SvgTool {
         this.startX = e.pageX - svgCanvasRect.left;
         this.startY = e.pageY - svgCanvasRect.top;
         this.drawingCircle = this.DrawingCanvas.circle();
-        this.drawingCircle.attr({
+        this.currentDrawingTool = this.drawingCircle.attr({
             id: "svgCircle",
-            fill: svgToolState.fillColor,
-            stroke: svgToolState.strokeColor,
-            "stroke-width": svgToolState.stroke,
+            fill: this.currentFillColor,
+            stroke: this.currentStroke,
+            "stroke-width": this.currentLineWidth,
             "data-tool": true,
             "type-tool": "circle",
         });
@@ -55,3 +55,4 @@ export default class SvgCircle extends SvgTool {
     }
 
 }
+

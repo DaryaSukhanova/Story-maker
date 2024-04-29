@@ -2,20 +2,6 @@ import layerState from "../store/layerState";
 import axios from "axios";
 const CHUNK_SIZE = 80 * 1024;
 
-// Функция для разделения Data URL на части
-function splitDataUrlIntoChunks(dataUrl, chunkSize) {
-    const chunks = [];
-    let start = 0;
-
-    while (start < dataUrl.length) {
-        chunks.push(dataUrl.slice(start, start + chunkSize));
-        console.log(start, dataUrl.length)
-        start += chunkSize;
-        console.log(dataUrl.slice(start, start + chunkSize))
-    }
-
-    return chunks;
-}
 export const saveBackground = async (name, closeModal) => {
     closeModal();
 
@@ -47,5 +33,3 @@ export const saveBackground = async (name, closeModal) => {
         console.error('Error saving background:', error);
     }
 };
-
-

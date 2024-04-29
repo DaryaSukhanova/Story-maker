@@ -5,6 +5,7 @@ import animationToolState from "../store/animationToolState";
 import pageState from '../store/pageState';
 
 const BookActivePanel = () => {
+    const pageNameRef = useRef()
     const [modal,setModal] = useState(false)
     const download = () =>{
         setModal(false)
@@ -12,15 +13,15 @@ const BookActivePanel = () => {
     }
     return (
         <div className="action-buttons">
-            <Modal show={modal} onHide={()=>{setModal(false)}}>
+            <Modal className="modal-container" show={modal} onHide={()=>{setModal(false)}}>
                 <Modal.Header>
                     <Modal.Title>Введите название истории</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {/* <input type="text" ref={backgroundNameRef}/> */}
+                     <input className="input-modal" type="text" ref={pageNameRef}/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={()=> download()}>
+                    <Button className="button-modal" variant="secondary" onClick={()=> download()}>
                         Сохранить историю
                     </Button>
                 </Modal.Footer>
