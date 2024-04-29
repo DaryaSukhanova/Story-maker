@@ -20,18 +20,23 @@ export default class SvgPolygon extends SvgTool {
     //     this.svgCanvas.addEventListener('mouseup', this.mouseUpHandler.bind(this));
     //     document.addEventListener("keydown", this.keyDownHandler.bind(this));
     // }
-
+    listen() {
+        super.listen(); // Вызов родительского метода listen
+        this.boundKeyDownHandler = this.keyDownHandler.bind(this);
+        document.addEventListener("keydown", this.boundKeyDownHandler);
+    }
     keyDownHandler(e) {
         if (e.key === "Escape") {
             this.cancelDrawing();
         }
     }
 
-    mouseUpHandler(e) {
-        this.mouseDown = false;
-    }
+    // mouseUpHandler(e) {
+    //     this.mouseDown = false;
+    // }
 
     mouseDownHandler(e) {
+
         const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
         const x = e.pageX - svgCanvasRect.left;
         const y = e.pageY - svgCanvasRect.top;
@@ -39,6 +44,7 @@ export default class SvgPolygon extends SvgTool {
         if (!this.drawingPolygon) {
             // Создаем новый полигон, если ранее он не был создан
             this.pathData.push([x, y]);
+            this.currentDrawingTool = this.drawingPolygon
             this.drawingPolygon = this.drawingCanvas.polygon(this.pathData)
                 .attr({
                     'data-tool': 'true',
@@ -55,7 +61,11 @@ export default class SvgPolygon extends SvgTool {
     }
 
     mouseMoveHandler(e) {
-        // Обработчик движения мыши, можно добавить логику для предварительного просмотра положения следующей точки
+
+    }
+    destroyEvents() {
+        super.destroyEvents(); // Удаляем события мыши, установленные в базовом классе
+        document.removeEventListener("keydown", this.boundKeyDownHandler); // Удаляем обработчик событий клавиатуры
     }
 
     cancelDrawing() {

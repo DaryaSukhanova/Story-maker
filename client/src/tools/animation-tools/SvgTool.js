@@ -1,4 +1,5 @@
 import svgToolState from "../../store/svgToolState";
+import svgCanvasState from "../../store/svgCanvasState";
 
 export default class SvgTool {
     constructor(svgCanvas) {
@@ -6,6 +7,8 @@ export default class SvgTool {
         this.currentStroke = svgToolState.strokeColor;
         this.currentFillColor = svgToolState.fillColor;
         this.currentLineWidth = svgToolState.stroke;
+        this.mouseDown = false
+        this.currentDrawingTool = null;
         this.destroyEvents();
 
     }
@@ -43,17 +46,21 @@ export default class SvgTool {
     }
 
     mouseMoveHandler(e) {
-        // Заглушка: переопределите в наследуемых классах
+        // Заглушка
         console.log('MouseMove Event');
     }
 
     mouseDownHandler(e) {
-        // Заглушка: переопределите в наследуемых классах
+        // Заглушка
         console.log('MouseDown Event');
     }
 
     mouseUpHandler(e) {
-        // Заглушка: переопределите в наследуемых классах
+        this.mouseDown = false
+        if(this.currentDrawingTool){
+            svgCanvasState.pushToSvgElements(this.currentDrawingTool);
+            this.currentDrawingTool = null
+        }
         console.log('MouseUp Event');
     }
 }

@@ -19,32 +19,33 @@ export default class SvgLine extends SvgTool{
     //     this.svgCanvas.onmouseup = this.mouseUpHandler.bind(this);
     // }
 
-    mouseUpHandler(e) {
-
-        this.mouseDown = false;
-
-        if (this.drawingLine) {
-            const lineData = {
-                type: 'line',
-                startX: this.startX,
-                startY: this.startY,
-                endX: this.currentX,
-                endY: this.currentY,
-                strokeColor: svgToolState.strokeColor,
-                strokeWidth: svgToolState.stroke
-            };
-
-            svgCanvasState.pushToSvgElements(this.drawingLine);
-            console.log(svgCanvasState.svgElements)
-        }
-        this.drawingLine = null;
-    }
+    // mouseUpHandler(e) {
+    //
+    //     this.mouseDown = false;
+    //
+    //     if (this.drawingLine) {
+    //         const lineData = {
+    //             type: 'line',
+    //             startX: this.startX,
+    //             startY: this.startY,
+    //             endX: this.currentX,
+    //             endY: this.currentY,
+    //             strokeColor: svgToolState.strokeColor,
+    //             strokeWidth: svgToolState.stroke
+    //         };
+    //
+    //         svgCanvasState.pushToSvgElements(this.drawingLine);
+    //         console.log(svgCanvasState.svgElements)
+    //     }
+    //     this.drawingLine = null;
+    // }
 
     mouseDownHandler(e) {
         this.mouseDown = true;
         const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
         this.startX = e.pageX - svgCanvasRect.left;
         this.startY = e.pageY - svgCanvasRect.top;
+        this.currentDrawingTool = this.drawingLine
         this.drawingLine = this.DrawingCanvas.line(this.startX, this.startY, this.startX, this.startY)
             .stroke({ color: this.currentStroke, width:this.currentLineWidth })
             .attr({ 'data-tool': true, 'type-tool': 'line', 'stroke-linecap': 'round' });

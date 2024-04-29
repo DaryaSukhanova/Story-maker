@@ -18,17 +18,19 @@ export default class SvgBrush extends SvgTool {
     //     this.svgCanvas.addEventListener('mouseup', this.mouseUpHandler.bind(this));
     // }
 
-    mouseUpHandler(e) {
-        if (this.path) {
-            svgCanvasState.pushToSvgElements(this.path);
-            this.path = null;
-        }
-    }
+    // mouseUpHandler(e) {
+    //     if (this.path) {
+    //         svgCanvasState.pushToSvgElements(this.path);
+    //         this.path = null;
+    //     }
+    // }
 
     mouseDownHandler(e) {
+        this.mouseDown = true
         const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
         const startX = e.pageX - svgCanvasRect.left;
         const startY = e.pageY - svgCanvasRect.top;
+        this.currentDrawingTool = this.path
 
         this.path = this.drawingCanvas.path(`M${startX},${startY}`)
             .stroke({
@@ -38,11 +40,11 @@ export default class SvgBrush extends SvgTool {
                 linejoin: 'round'
             })
             .fill('none');
-        this.currentDrawingTool = this.path
+
     }
 
     mouseMoveHandler(e) {
-        if (this.path) {
+        if (this.path && this.mouseDown) {
             const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
             const currentX = e.pageX - svgCanvasRect.left;
             const currentY = e.pageY - svgCanvasRect.top;

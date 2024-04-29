@@ -9,9 +9,9 @@ export default class SvgRect extends SvgTool {
     constructor(svgCanvas) {
         super(svgCanvas);
         this.svgCanvas = svgCanvas;
-        this.drawingRect = null; // Current drawing rectangle
+        this.drawingRect = null;
         this.listen();
-        this.drawingCanvas = SVG(this.svgCanvas).group(); // Creating a group to handle multiple rectangles
+        this.drawingCanvas = SVG(this.svgCanvas).group();
     }
 
     // listen() {
@@ -25,7 +25,7 @@ export default class SvgRect extends SvgTool {
         this.startX = e.pageX - svgCanvasRect.left;
         this.startY = e.pageY - svgCanvasRect.top;
         this.mouseDown = true;
-
+        this.currentDrawingTool = this.drawingRect
         this.drawingRect = this.drawingCanvas.rect()
             .size(0, 0)
             .attr({
@@ -47,7 +47,6 @@ export default class SvgRect extends SvgTool {
             let width = Math.max(0, currentX - this.startX);
             let height = Math.max(0, currentY - this.startY);
 
-            // Adjust the width and height based on current mouse position
             if (width && height) {
                 this.drawingRect.width(width).height(height);
             }
