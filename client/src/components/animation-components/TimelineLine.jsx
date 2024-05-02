@@ -87,13 +87,14 @@ const TimelineLine = observer(({id, findNearestTickPosition, keyframesKeys, upda
     };
 
     const timelineKeyTimeStyles = {
-        marginLeft: `${minDurationKey.position - 10}px`,
+        marginLeft: `${minDurationKey.position}px`,
         width: `${maxDurationKey.position - minDurationKey.position}px`,
-        height: `100%`,
+        height: `50%`,
         backgroundColor: 'rgba(46,80,166,0.67)'
     };
 
     return (
+
         <div className="timeline-line"
              id={`timeline${id}`}
              ref={timelineKeyRef}
@@ -108,10 +109,10 @@ const TimelineLine = observer(({id, findNearestTickPosition, keyframesKeys, upda
                     key={key.name}
                     id={key.name}
                     className={`btn-key frame ${key.isActive ? 'active-frame' : ''}`}
-                    style={{ left: `${key.position}px` }} // Используем позицию из состояния
+                    style={{ left: `${key.position}px` }}
                 ></div>
             ))}
-
+            <div className="thumb-current" style={{ transform: `translateX(${timelineBlockState.roundedElapsedTime * (150 / 1000)-4}px)` }}></div>
         </div>
     );
 });

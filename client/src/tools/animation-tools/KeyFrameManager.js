@@ -1,15 +1,25 @@
 import timelineBlockState from "../../store/timelineBlockState";
 import AnimationTool from "./AnimationTool";
 import svgCanvasState from "../../store/svgCanvasState";
+import {action} from "mobx";
+import animationToolState from "../../store/animationToolState";
 
 
 export default class KeyFrameManager extends AnimationTool{
     constructor(svgCanvas) {
         super(svgCanvas);
+        this.listen();
         this.svgCanvas = svgCanvas
         this.element = null;
         this.thumbPosition = null
     }
+
+    mouseDownHandler = (e) => {
+        const target = e.target;
+        svgCanvasState.toggleAnimation(target)
+        console.log(svgCanvasState.svgElements)
+    }
+
 
     startAnimations(isRunningThumb) {
         // this.element = timelineBlockState.activeElement.shape;

@@ -5,10 +5,13 @@
   width: 100%;
   height: 120px;
   background-color: $main-color-animation-editor;
-  padding: 0 10px;
-  display: flex;
+  //padding: 0 10px;
+  //display: flex;
   color: white;
-
+  display: grid;
+  grid-template-columns: 1fr 9fr; // первый столбец в 3 раза меньше второго
+  grid-template-rows: 1fr 2fr; // две строки, каждая автоматически адаптируется по высоте контента
+  gap: 2px; // расстояние между столбцами и строками
 }
 .btn-time-block{
   width: 30px;
@@ -32,15 +35,41 @@
   flex-direction: column;
 }
 .timeline-controls{
+  background-color: #AAC2FF;
   display: flex;
   text-align: center;
   align-items: center;
-  height: 40%;
+  //height: 40%;
+  grid-column: 1 / 1.5; // Занимает первый столбец
+  justify-content: start;
+  padding: 0 10px;
+
+}
+.timeline-player{
+
+  display: flex;
+  height: 100%;
+  align-items: flex-end;
+}
+.timeline-tools{
+  //max-height: 400px;
+  //overflow-y: auto;
+  grid-column: 1 / -1; // Занимает первый столбец
+  //grid-row: 2 / 3; // Занимает вторую строку
+
+  display: grid;
+  grid-template-columns: 1fr 9fr; // Соотношение ширины столбцов, как в основном Grid
+  grid-row: 2 / 3;
+  width: 100%; // Полная ширина
 }
 
 .timer{
   width: 90px;
-  padding: 0 5px;
+  //padding: 0 5px;
+  display: flex;
+  height: 100%;
+  align-items: flex-end;
+  justify-content: center;
 }
 
 .speed-slider {
@@ -70,17 +99,14 @@
   background: $main-color-animation-editor;
   cursor: pointer;
 }
-.timeline-right{
-  width: 100%;
-  height: 100%;
-  //background: $main-color-animation-editor;
-  border-radius: 5px;
-  padding: 0px 10px;
-}
+
 .timeline-ticks{
+  background-color: #AAC2FF;
   position: relative;
-  width: 1500px;
-  height: 40%;
+  width: 100%;
+  //height: 40%;
+  grid-column: 2 / 3; // Занимает второй столбец
+  grid-row: 1 / 2; // Занимает первую строку
 }
 .tick{
   position: absolute;
@@ -100,7 +126,7 @@
 .thumb-end-time{
   position: absolute;
   //display: inline-block;
-  background: #2E50A6;
+  background: $main-color-animation-editor;
   width: 4px;
   //border-left: solid 3px $main-color-animation-editor;
   //border-right: solid 3px $main-color-animation-editor;
@@ -130,22 +156,48 @@
   width: 100%;
   height: 30px;
   //margin-top: 30px;
-  border: solid 2px white;
+  //border: solid 2px white;
+  background: #AAC2FF;
+  padding: 0 10px;
   &__title{
     font-size: 16px;
     padding: 5px;
   }
 
 }
-.timeline-line{
-  width: 1500px;
-  height: 30px;
-  border: solid 2px white;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 8px;
 
+.timeline-items{
+  display: flex;
+  flex-direction: column;
+  grid-column: 1 / -1;
+  overflow-y: auto; // Добавляет вертикальную полосу прокрутки при необходимости
+  max-height: 100%; // Максимальная высота элемента, для возможности прокрутки
+  gap: 2px;
+}
+.timeline-item{
+  //display: flex;
+  //flex-direction: row;
+  //width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 9fr; // Соотношение ширины столбцов, как в основном Grid
+  width: 100%;
+  gap: 2px; // расстояние между столбцами и строками
+}
+.timeline-line{
+  grid-column: 2;
+  height: 30px;
+  //border: solid 2px white;
+  background: #AAC2FF;
+  //width: 1500px;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.timeline-keyframes{
+  position: relative;
+  width: 1500px;
+  height: 60%;
 }
 .btn-key{
   width: 12px;
@@ -162,13 +214,17 @@
   position: absolute;
   //background: url('../assets/img/keyframes.svg') no-repeat center center;
 }
+.timeline-keytime{
+
+  //position: relative;
+}
 .active-frame{
   background: #c1e0ff;
 }
 .timeline-keyframes{
   position: relative;
   width: 1500px;
-  height: 60%;
+  height: 100%;
 }
 .modal-container{
   font-family: 'Montserrat', sans-serif;

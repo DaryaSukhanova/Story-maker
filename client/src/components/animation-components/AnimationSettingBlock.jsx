@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import '../../styles/animation-setting-block.scss'
 import animationToolState from "../../store/animationToolState";
 import MotionCurve from "../../tools/animation-tools/MotionCurve";
@@ -13,36 +13,55 @@ import {action} from "mobx";
 import {logDOM} from "@testing-library/react";
 
 const AnimationSettingBlock = observer(() => {
-    const keyframeManagerRef = useRef(null); // Добавляем ref для хранения экземпляра AnimationManager
+    const motionCurveRef = useRef(null);
+    const keyFrameManagerRef = useRef(null);
+
+    useEffect(() => {
+        if (svgCanvasState.canvas) {
+            // motionCurveRef.current = new MotionCurve(svgCanvasState.canvas);
+            // keyFrameManagerRef.current = new KeyFrameManager(svgCanvasState.canvas);
+        }
+    }, [svgCanvasState.canvas]);
+
     const handleMotionCurveClick = () => {
-        animationToolState.setAnimationTool('motionCurve')
+        // Вызов метода listen из MotionCurve, если он уже инициализирован
+        if (!motionCurveRef.current) {
+            motionCurveRef.current = new MotionCurve(svgCanvasState.canvas);
+        }
+        animationToolState.setAnimationTool(motionCurveRef.current);
     };
 
+
     const handleKeyframeClick = () => {
-        svgCanvasState.canvas.onmousemove = null;
-        svgCanvasState.canvas.onmousedown = null;
-        svgCanvasState.canvas.onmouseup = null;
-        animationToolState.setAnimationTool('keyframeElement')
+        // svgCanvasState.svgElements.forEach(svgElement => {
+        //     if (svgElement.shape) { // Проверяем, существует ли svgElement.shape
+        //         svgElement.shape.on('click', action(() => {
+        //             svgElement.isAnimated = !svgElement.isAnimated;
+        //         }));
+        //     } else {
+        //         console.error("svgElement.shape is null or undefined");
+        //     }
+        // });
+
+        if (!keyFrameManagerRef.current) {
+            keyFrameManagerRef.current = new KeyFrameManager(svgCanvasState.canvas);
+        }
+        animationToolState.setAnimationTool(keyFrameManagerRef.current);
+        console.log(animationToolState.currentTool)
         console.log(svgCanvasState.svgElements)
-        svgCanvasState.svgElements.forEach(svgElement => {
-            if (svgElement.shape) { // Проверяем, существует ли svgElement.shape
-                svgElement.shape.on('click', action(() => {
-                    svgElement.isAnimated = !svgElement.isAnimated;
-                }));
-            } else {
-                console.error("svgElement.shape is null or undefined");
-            }
-        });
 
     };
 
     // Определяем, какой инструмент анимации сейчас выбран
-    let selectedToolContent = null;
-    if (animationToolState.tool === 'motionCurve') {
+    let selectedToolContent;
+    if (animationToolState.currentTool instanceof MotionCurve) {
         selectedToolContent = <div>Содержимое для MotionCurve</div>;
-    } else if (animationToolState.tool === 'keyframeElement') {
-        selectedToolContent = <TransformBlock/>
+    } else if (animationToolState.currentTool instanceof KeyFrameManager) {
+        selectedToolContent = <TransformBlock />;
+    } else {
+        selectedToolContent = <div>Select a tool</div>; // Или какой-то другой дефолтный контент
     }
+
 
     return (
         <div className="block-container">
@@ -52,10 +71,10 @@ const AnimationSettingBlock = observer(() => {
                 </div>
                 <div className="animation-setting-block-btns">
                     <button
-                        className={`animation-setting-block-btns__btn motionCurve ${animationToolState.tool === 'motionCurve' ? 'active-animation-setting-btn' : ''}`}
+                        className={`animation-setting-block-btns__btn motionCurve `}
                         onClick={handleMotionCurveClick} />
                     <button
-                        className={`animation-setting-block-btns__btn keyframeElement ${animationToolState.tool === 'keyframeElement' ? 'active-animation-setting-btn' : ''}`}
+                        className={`animation-setting-block-btns__btn keyframeElement `}
                         onClick={handleKeyframeClick} />
                 </div>
                 <div className="animation-setting-block-data">

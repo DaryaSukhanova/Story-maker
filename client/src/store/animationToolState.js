@@ -16,6 +16,9 @@ class AnimationToolState{
     setAnimationTool(tool){
         this.tool = tool
     }
+    get currentTool() {
+        return this.tool;
+    }
 
     setSpeed(speed){
         if (this.tool) {
@@ -35,8 +38,6 @@ class AnimationToolState{
     setStartTime(time) {
         this.startTime = time;
     }
-
-
 
 }
 export default new AnimationToolState()

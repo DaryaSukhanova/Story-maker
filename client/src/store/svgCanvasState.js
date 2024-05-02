@@ -26,6 +26,13 @@ class SvgCanvasState{
         timelineBlockState.setActiveElement(svgElementWrapper)
         // Добавляем обработчик события клика для каждого элемента
     }
+    toggleAnimation(element) {
+        const svgElement = this.svgElements.find(el => el.shape.node === element);
+        console.log(svgElement)
+        if (svgElement) {
+            svgElement.isAnimated = !svgElement.isAnimated;
+        }
+    }
     setSvgElements(arr){
         this.svgElements = arr
         console.log(this.svgElements)

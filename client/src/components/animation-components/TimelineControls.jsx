@@ -4,6 +4,7 @@ import timelineBlockState from "../../store/timelineBlockState";
 import timelineBlock from "./TimelineBlock";
 import KeyFrameManager from "../../tools/animation-tools/KeyFrameManager";
 import svgCanvasState from "../../store/svgCanvasState";
+import animationToolState from "../../store/animationToolState";
 
 const TimelineControls = observer( () => {
 
@@ -17,11 +18,11 @@ const TimelineControls = observer( () => {
     const keyframeManagerRef = useRef(null); // Добавляем ref для хранения экземпляра AnimationManager
 
     useEffect(() => {
-        keyframeManagerRef.current = new KeyFrameManager(svgCanvasState.canvas);
-        return () => {
-            // Очищаем экземпляр AnimationManager при размонтировании компонента
-            keyframeManagerRef.current = null;
-        };
+        // keyframeManagerRef.current = new KeyFrameManager(svgCanvasState.canvas);
+        // return () => {
+        //     // Очищаем экземпляр AnimationManager при размонтировании компонента
+        //     keyframeManagerRef.current = null;
+        // };
     }, []);
 
     useEffect(() => {
@@ -66,10 +67,12 @@ const TimelineControls = observer( () => {
 
             // Запускаем анимации
             // if(timelineBlockState.keys && timelineBlockState.keys.length > 0){
-                keyframeManagerRef.current.startAnimations(isRunningThumb);
+            //     keyframeManagerRef.current.startAnimations(isRunningThumb);
             // } else{
             //     alert("Create key points for keyframes")
             // }
+            animationToolState.currentTool.startAnimations(true);
+
 
         } else{
             alert("Select the active element")

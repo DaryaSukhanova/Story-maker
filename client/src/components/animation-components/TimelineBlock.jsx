@@ -7,9 +7,9 @@ import TimelineTool from "./TimelineTool";
 import TimelineTicks from "./TimelineTicks";
 import TimelineKeyframes from "./TimelineKeyframes";
 import svgCanvasState from "../../store/svgCanvasState";
+import TimelineItems from "./TimelineItems";
 
 const TimeLineBlock = observer (() => {
-    console.log("timelineblock")
     const findNearestTickPosition = (position) => {
         const ticksPositions = [];
         for (let i = 0; i <= 10; i++) {
@@ -25,41 +25,52 @@ const TimeLineBlock = observer (() => {
             return (Math.abs(curr - position) < Math.abs(prev - position) ? curr : prev);
         });
     };
+    const updateKeysInSvgElement = (elementIndex, updatedKeys) => {
+        svgCanvasState.setSvgElements(svgCanvasState.svgElements.map((element, index) => {
+            if (index === elementIndex) {
+                return {
+                    ...element,
+                    keys: updatedKeys
+                };
+            }
+            return element;
+        }));
 
+    };
     return (
         <div className="timeline-block">
-            <div className="timeline-left">
-                <TimelineControls/>
-                {   animationToolState.tool === 'keyframeElement' &&
-                    svgCanvasState.svgElements.map((svgElement, index) => (
-                    svgElement.isAnimated && (
-                        <TimelineTool
-                            key={index}
-                            toolType={svgElement.shape.type}
-                            keyframesKeys={svgElement.keys}
-                            onAddKey={(newKey) => {
+            <TimelineControls/>
 
-                                svgCanvasState.setSvgElements(
-                                    svgCanvasState.svgElements.map((elem, i) => {
-                                        if (i === index) {
-                                            // Обновляем массив ключей для конкретного элемента SVG
-                                            return {
-                                                ...elem,
-                                                keys: [...elem.keys, newKey]
-                                            };
-                                        }
-                                        return elem;
-                                    })
-                                );
-                            }}
-                        />
-                    )
-                ))}
-            </div>
-            <div className="timeline-right" >
-                <TimelineTicks findNearestTickPosition={findNearestTickPosition}/>
-                <TimelineKeyframes findNearestTickPosition={findNearestTickPosition}/>
-            </div>
+                {/*{   animationToolState.tool === 'keyframeElement' &&*/}
+                {/*    svgCanvasState.svgElements.map((svgElement, index) => (*/}
+                {/*        svgElement.isAnimated && (*/}
+                {/*            <TimelineTool*/}
+                {/*                key={index}*/}
+                {/*                toolType={svgElement.shape.type}*/}
+                {/*                keyframesKeys={svgElement.keys}*/}
+                {/*                onAddKey={(newKey) => {*/}
+
+                {/*                    svgCanvasState.setSvgElements(*/}
+                {/*                        svgCanvasState.svgElements.map((elem, i) => {*/}
+                {/*                            if (i === index) {*/}
+                {/*                                // Обновляем массив ключей для конкретного элемента SVG*/}
+                {/*                                return {*/}
+                {/*                                    ...elem,*/}
+                {/*                                    keys: [...elem.keys, newKey]*/}
+                {/*                                };*/}
+                {/*                            }*/}
+                {/*                            return elem;*/}
+                {/*                        })*/}
+                {/*                    );*/}
+                {/*                }}*/}
+                {/*            />*/}
+                {/*        )*/}
+
+                {/*    ))}*/}
+            <TimelineItems findNearestTickPosition={findNearestTickPosition} updateKeysInSvgElement={updateKeysInSvgElement}/>
+            <TimelineTicks findNearestTickPosition={findNearestTickPosition}/>
+            {/*<TimelineKeyframes findNearestTickPosition={findNearestTickPosition}/>*/}
+
         </div>
     );
 });

@@ -1,5 +1,6 @@
 import animationToolState from "../../store/animationToolState";
 import svgToolState from "../../store/svgToolState";
+import svgCanvasState from "../../store/svgCanvasState";
 
 export default class AnimationTool {
     constructor(svgCanvas) {
@@ -10,6 +11,25 @@ export default class AnimationTool {
         this.currentTime = 0
         this.currentName = null
         this.destroyEvents();
+    }
+    listen() {
+        // this.svgCanvas.onmousemove = this.mouseMoveHandler.bind(this);
+        this.svgCanvas.onmousedown = this.mouseDownHandler.bind(this);
+        this.svgCanvas.onmouseup = this.mouseUpHandler.bind(this);
+    }
+
+    // mouseMoveHandler(e) {
+    //     // Заглушка
+    //     console.log('MouseMove Event');
+    // }
+
+    mouseDownHandler(e) {
+        // Заглушка
+        console.log('MouseDown Event');
+    }
+
+    mouseUpHandler(e) {
+        console.log('MouseUp Event');
     }
 
     destroyEvents() {
