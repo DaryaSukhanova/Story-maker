@@ -2,9 +2,9 @@ import AnimationTool from "./AnimationTool";
 import axios from "axios";
 import animationToolState from "../../store/animationToolState";
 import svgToolState from "../../store/svgToolState";
-import {saveAnimatedSvg, savedJson} from "../../actions/animation";
 import svgCanvas from "../../components/animation-components/SvgCanvas";
 import canvasState from "../../store/canvasState";
+import svgCanvasState from "../../store/svgCanvasState";
 
 let distanceCovered = null
 let isAnimationSaved = animationToolState.isAnimationSaved;
@@ -44,6 +44,7 @@ export default class MotionCurve extends AnimationTool {
             elementToRemove.parentNode.removeChild(elementToRemove);}
     }
     mouseUpHandler(e) {
+        console.log(svgCanvasState.svgElements)
         if (this.motionPath) {
             this.clickedElement = document.elementFromPoint(e.clientX, e.clientY);
             this.saveSvg = this.clickedElement.cloneNode(true);
@@ -210,8 +211,6 @@ export default class MotionCurve extends AnimationTool {
                     animationToolState.setPlay();
                 }
 
-                // this.play = false;
-                // this.playButton.className = "btn play-button";
                 if (this.clickedElement.hasAttribute("d") || this.clickedElement.hasAttribute("points")){
                     const motionPath = document.getElementById('motionPath');
                     const point = motionPath.getPointAtLength(0);
@@ -233,13 +232,5 @@ export default class MotionCurve extends AnimationTool {
     }
     save() {
         this.saveAlongPath()
-        // const motionPathClone = this.saveMotionPath.cloneNode(true);
-        // saveAnimatedSvg(motionPathClone, this.saveSvg, this.currentSpeed, this.animate, this.currentName)
-        //     .then(response => {
-        //         console.log("Animation saved successfully:", response);
-        //     })
-        //     .catch(error => {
-        //         console.error("Error saving animation:", error);
-        //     });
     }
 }

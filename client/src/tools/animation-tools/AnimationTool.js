@@ -6,10 +6,7 @@ export default class AnimationTool {
     constructor(svgCanvas) {
         this.svgCanvas = svgCanvas;
         this.currentSpeed = 20
-        // this.statePlay = false
-        this.destroyEvents();
-        this.currentTime = 0
-        this.currentName = null
+        animationToolState.tool = null
         this.destroyEvents();
     }
     listen() {

@@ -65,7 +65,7 @@ const TimelineTicks = observer(({findNearestTickPosition}) => {
              onMouseUp={handleThumbDragEnd}>
             {renderTimelineTicks()}
             <div className="thumb-end-time" ref={thumbEndTimeRef} style={{ left: `${thumbPosition}px` }}></div>
-            <svg className="thumb-current-head" width="10" height="15" xmlns="http://www.w3.org/2000/svg" style={{ transform: `translateX(${timelineBlockState.roundedElapsedTime * (150 / 1000)-8}px)` }} >
+            <svg className="thumb-current-head" width="10" height="15" xmlns="http://www.w3.org/2000/svg" style={{ transform: `translateX(${timelineBlockState.roundedElapsedTime * (150 / 1000)-4}px)` }} >
                 <polygon points="0,0 10,0 10,10 5,15 0,10" fill="white" />
             </svg>
         </div>

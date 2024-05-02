@@ -14,7 +14,7 @@ const ShapesBlock = () => {
             <div className="tool-bar-item">
                 <button className="tool-bar__btn-tools rect" onClick={()=> toolState.setTool(new Rect(canvasState.canvas))}/>
                 <button className="tool-bar__btn-tools circle" onClick={()=> toolState.setTool(new Circle(canvasState.canvas))}/>
-                <button className="tool-bar__btn-tools triangle" onClick={()=> toolState.setTool(new Triangle(canvasState.canvas))}/>
+                <button className="tool-bar__btn-tools polygon" onClick={()=> toolState.setTool(new Triangle(canvasState.canvas))}/>
                 <button className="tool-bar__btn-tools line" onClick={()=> toolState.setTool(new Line(canvasState.canvas))}/>
             </div>
 
