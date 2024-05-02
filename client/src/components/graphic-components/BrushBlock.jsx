@@ -13,7 +13,7 @@ const BrushBlock = () => {
         <div className="brush-block-container">
             <div className="tool-bar-item-title">Кисти</div>
             <div className="tool-bar-item brush-block">
-                <button className="tool-bar__btn brush" onClick={()=> toolState.setTool(new Brush(canvasState.canvas))}/>
+                <button className="tool-bar__btn pen" onClick={()=> toolState.setTool(new Brush(canvasState.canvas))}/>
                 <button className="tool-bar__btn scratch" onClick={()=> toolState.setTool(new Scratch(canvasState.canvas))}/>
                 <button className="tool-bar__btn bubbles" onClick={()=> toolState.setTool(new Bubbles(canvasState.canvas))}/>
                 <button className="tool-bar__btn pencil" onClick={()=> toolState.setTool(new Pencil(canvasState.canvas))}/>

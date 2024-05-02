@@ -30,8 +30,11 @@
     background-size: cover;
     //margin-left: 10px;
   }
-  .brush {
+  .pen {
     background: url('../assets/img/brush.svg') no-repeat 0 0/cover;
+  }
+  .brush{
+    background: url('../assets/img/svgBrush.svg') no-repeat 0 0/cover;
   }
   .scratch {
     background: url('../assets/img/scratch.svg') no-repeat 0 0/cover;
@@ -48,15 +51,17 @@
   .circle {
     background: url('../assets/img/circle.svg') no-repeat 0 0/cover;
   }
-  .triangle {
-    background: url('../assets/img/triangle.svg') no-repeat 0 0/cover;
-  }
+
   .eraser {
     background: url('../assets/img/Eraser.svg') no-repeat 0 0/cover ;
   }
   .line {
     background: url('../assets/img/Line.svg')no-repeat 0 0/cover ;
   }
+  .polygon{
+    background: url('../assets/img/triangle.svg') no-repeat 0 0/cover;
+  }
+
   .undo {
     //margin-left: auto;
     background: url('../assets/img/Undo.svg')no-repeat 0 0/cover ;

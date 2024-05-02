@@ -28,7 +28,7 @@ class SvgCanvasState{
     }
     toggleAnimation(element) {
         const svgElement = this.svgElements.find(el => el.shape.node === element);
-        console.log(svgElement)
+        console.log("svgElement", svgElement)
         if (svgElement) {
             svgElement.isAnimated = !svgElement.isAnimated;
         }

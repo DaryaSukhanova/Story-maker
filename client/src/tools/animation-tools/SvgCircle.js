@@ -18,21 +18,13 @@ export default class SvgCircle extends SvgTool {
     //     this.svgCanvas.onmouseup = this.mouseUpHandler.bind(this);
     // }
 
-    // mouseUpHandler(e) {
-    //     this.mouseDown = false;
-    //     if (this.drawingCircle) {
-    //         svgCanvasState.pushToSvgElements(this.drawingCircle);
-    //     }
-    //     this.drawingCircle = null;
-    // }
-
     mouseDownHandler(e) {
         const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
         this.mouseDown = true;
         this.startX = e.pageX - svgCanvasRect.left;
         this.startY = e.pageY - svgCanvasRect.top;
         this.drawingCircle = this.DrawingCanvas.circle();
-        this.currentDrawingTool = this.drawingCircle.attr({
+        this.drawingCircle.attr({
             id: "svgCircle",
             fill: this.currentFillColor,
             stroke: this.currentStroke,
@@ -40,6 +32,7 @@ export default class SvgCircle extends SvgTool {
             "data-tool": true,
             "type-tool": "circle",
         });
+        this.currentDrawingTool = this.drawingCircle
     }
 
     mouseMoveHandler(e) {

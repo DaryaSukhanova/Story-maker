@@ -44,7 +44,7 @@ export default class SvgPolygon extends SvgTool {
         if (!this.drawingPolygon) {
             // Создаем новый полигон, если ранее он не был создан
             this.pathData.push([x, y]);
-            this.currentDrawingTool = this.drawingPolygon
+
             this.drawingPolygon = this.drawingCanvas.polygon(this.pathData)
                 .attr({
                     'data-tool': 'true',
@@ -53,6 +53,7 @@ export default class SvgPolygon extends SvgTool {
                     stroke: this.currentStroke,
                     "stroke-width": this.currentLineWidth,
                 });
+            this.currentDrawingTool = this.drawingPolygon
         } else {
             // Добавляем точки к полигону, если он уже рисуется
             this.pathData.push([x, y]);

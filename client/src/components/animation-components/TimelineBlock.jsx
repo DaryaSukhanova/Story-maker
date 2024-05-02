@@ -40,37 +40,8 @@ const TimeLineBlock = observer (() => {
     return (
         <div className="timeline-block">
             <TimelineControls/>
-
-                {/*{   animationToolState.tool === 'keyframeElement' &&*/}
-                {/*    svgCanvasState.svgElements.map((svgElement, index) => (*/}
-                {/*        svgElement.isAnimated && (*/}
-                {/*            <TimelineTool*/}
-                {/*                key={index}*/}
-                {/*                toolType={svgElement.shape.type}*/}
-                {/*                keyframesKeys={svgElement.keys}*/}
-                {/*                onAddKey={(newKey) => {*/}
-
-                {/*                    svgCanvasState.setSvgElements(*/}
-                {/*                        svgCanvasState.svgElements.map((elem, i) => {*/}
-                {/*                            if (i === index) {*/}
-                {/*                                // Обновляем массив ключей для конкретного элемента SVG*/}
-                {/*                                return {*/}
-                {/*                                    ...elem,*/}
-                {/*                                    keys: [...elem.keys, newKey]*/}
-                {/*                                };*/}
-                {/*                            }*/}
-                {/*                            return elem;*/}
-                {/*                        })*/}
-                {/*                    );*/}
-                {/*                }}*/}
-                {/*            />*/}
-                {/*        )*/}
-
-                {/*    ))}*/}
             <TimelineItems findNearestTickPosition={findNearestTickPosition} updateKeysInSvgElement={updateKeysInSvgElement}/>
             <TimelineTicks findNearestTickPosition={findNearestTickPosition}/>
-            {/*<TimelineKeyframes findNearestTickPosition={findNearestTickPosition}/>*/}
-
         </div>
     );
 });

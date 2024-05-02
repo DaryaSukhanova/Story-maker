@@ -45,10 +45,20 @@ export default class SvgLine extends SvgTool{
         const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
         this.startX = e.pageX - svgCanvasRect.left;
         this.startY = e.pageY - svgCanvasRect.top;
-        this.currentDrawingTool = this.drawingLine
         this.drawingLine = this.DrawingCanvas.line(this.startX, this.startY, this.startX, this.startY)
-            .stroke({ color: this.currentStroke, width:this.currentLineWidth })
-            .attr({ 'data-tool': true, 'type-tool': 'line', 'stroke-linecap': 'round' });
+            // .stroke({ color: this.currentStroke, width:this.currentLineWidth })
+            .attr(
+                {
+                    'data-tool': true,
+                    'type-tool': 'line',
+                    'stroke-linecap': 'round',
+                    fill: this.currentFillColor,
+                    stroke: this.currentStroke,
+                    "stroke-width": this.currentLineWidth,
+                    linecap: 'round',
+                    linejoin: 'round'
+                });
+        this.currentDrawingTool = this.drawingLine;
     }
 
     mouseMoveHandler(e) {
@@ -58,6 +68,7 @@ export default class SvgLine extends SvgTool{
             this.currentY = e.pageY - svgCanvasRect.top;
             this.drawingLine.plot(this.startX, this.startY, this.currentX, this.currentY);
         }
+
     }
 
 }

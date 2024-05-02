@@ -33,16 +33,6 @@ const AnimationSettingBlock = observer(() => {
 
 
     const handleKeyframeClick = () => {
-        // svgCanvasState.svgElements.forEach(svgElement => {
-        //     if (svgElement.shape) { // Проверяем, существует ли svgElement.shape
-        //         svgElement.shape.on('click', action(() => {
-        //             svgElement.isAnimated = !svgElement.isAnimated;
-        //         }));
-        //     } else {
-        //         console.error("svgElement.shape is null or undefined");
-        //     }
-        // });
-
         if (!keyFrameManagerRef.current) {
             keyFrameManagerRef.current = new KeyFrameManager(svgCanvasState.canvas);
         }

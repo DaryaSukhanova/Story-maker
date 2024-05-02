@@ -9,7 +9,9 @@ export default class SvgTool {
         this.currentLineWidth = svgToolState.stroke;
         this.mouseDown = false
         this.currentDrawingTool = null;
+        svgToolState.tool = null
         this.destroyEvents();
+
 
     }
     set svgFillStroke(color) {
@@ -62,5 +64,6 @@ export default class SvgTool {
             this.currentDrawingTool = null
         }
         console.log('MouseUp Event');
+        console.log(svgCanvasState.svgElements)
     }
 }

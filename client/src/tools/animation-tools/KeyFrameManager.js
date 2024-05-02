@@ -16,6 +16,7 @@ export default class KeyFrameManager extends AnimationTool{
 
     mouseDownHandler = (e) => {
         const target = e.target;
+
         svgCanvasState.toggleAnimation(target)
         console.log(svgCanvasState.svgElements)
     }
@@ -36,7 +37,7 @@ export default class KeyFrameManager extends AnimationTool{
                 animation: rotatePath_${index}; 
                 animation-duration: ${timelineBlockState.totalTime}s; 
                 animation-iteration-count: infinite; 
-                animation-play-state: ${isRunningThumb ? 'paused' : 'running'};
+                animation-play-state: ${!isRunningThumb ? 'paused' : 'running'};
             `
             });
         });
@@ -85,6 +86,22 @@ export default class KeyFrameManager extends AnimationTool{
         `;
         document.head.appendChild(style);
     };
+    resetAnimations() {
+        // Удаление стилей для каждой анимации
+        svgCanvasState.svgElements.forEach((element, index) => {
+            const prevStyle = document.querySelector(`style[data-animation="rotatePath_${index}"]`);
+            if (prevStyle) {
+                prevStyle.remove();
+            }
+            // Сброс стилей анимации для каждого элемента
+            if (element.shape) {
+                element.shape.attr({
+                    style: ''  // Очистка инлайн-стилей
+                });
+            }
+        });
+        console.log("Animations reset");
+    }
 
     stopAnimations() {
         if (this.element) {

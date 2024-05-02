@@ -9,14 +9,9 @@ export default class SvgBrush extends SvgTool {
         super(svgCanvas);
         this.path = null;
         this.listen();
-        this.drawingCanvas = SVG(document.getElementById("drawingCanvas")).group();
+        this.drawingCanvas = SVG(document.getElementById("drawingCanvas"))
     }
 
-    // listen() {
-    //     this.svgCanvas.addEventListener('mousemove', this.mouseMoveHandler.bind(this));
-    //     this.svgCanvas.addEventListener('mousedown', this.mouseDownHandler.bind(this));
-    //     this.svgCanvas.addEventListener('mouseup', this.mouseUpHandler.bind(this));
-    // }
 
     // mouseUpHandler(e) {
     //     if (this.path) {
@@ -30,17 +25,21 @@ export default class SvgBrush extends SvgTool {
         const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
         const startX = e.pageX - svgCanvasRect.left;
         const startY = e.pageY - svgCanvasRect.top;
-        this.currentDrawingTool = this.path
+
 
         this.path = this.drawingCanvas.path(`M${startX},${startY}`)
-            .stroke({
-                color: this.currentStroke,
-                width: this.currentLineWidth,
-                linecap: 'round',
-                linejoin: 'round'
-            })
-            .fill('none');
 
+        this.path.attr({
+            'data-tool': true,
+            'type-tool': 'line',
+            'stroke-linecap': 'round',
+            fill: "none",
+            stroke: this.currentStroke,
+            "stroke-width": this.currentLineWidth,
+            linecap: 'round',
+            linejoin: 'round'
+        });
+        this.currentDrawingTool = this.path
     }
 
     mouseMoveHandler(e) {

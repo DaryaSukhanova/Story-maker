@@ -1,4 +1,5 @@
 import {makeAutoObservable} from "mobx";
+import svgToolState from "./svgToolState";
 
 class AnimationToolState{
     tool = null
@@ -13,9 +14,6 @@ class AnimationToolState{
         makeAutoObservable(this)
     }
 
-    setAnimationTool(tool){
-        this.tool = tool
-    }
     get currentTool() {
         return this.tool;
     }
@@ -24,6 +22,20 @@ class AnimationToolState{
         if (this.tool) {
             this.tool.animationSpeed = speed
         }
+    }
+    setAnimationTool(tool) {
+        if (svgToolState.tool) {
+            svgToolState.clearActiveTool();  // Сброс текущего SVG инструмента
+        }
+        this.tool = tool;
+        this.tool.listen();  // Активация событий нового инструмента анимации
+    }
+
+    clearActiveTool() {
+        if (this.tool) {
+            this.tool.destroyEvents();  // Очистка событий текущего инструмента анимации
+        }
+        this.tool = null;
     }
 
     setPlay() {

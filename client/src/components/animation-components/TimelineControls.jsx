@@ -10,12 +10,9 @@ const TimelineControls = observer( () => {
 
     const isRunningThumb = timelineBlockState.isRunningThumb
     const roundedElapsedTime = timelineBlockState.roundedElapsedTime
-    const [rotationCenter, setRotationCenter] = useState({ x: null, y: null });
     let elapsedTime = timelineBlockState.elapsedTime
-    const timelineKeyRef = useRef(null);
     const intervalIdRef = useRef(null);
     const startTimeRef = useRef(null);
-    const keyframeManagerRef = useRef(null); // Добавляем ref для хранения экземпляра AnimationManager
 
     useEffect(() => {
         // keyframeManagerRef.current = new KeyFrameManager(svgCanvasState.canvas);
@@ -53,26 +50,10 @@ const TimelineControls = observer( () => {
 
 
     const handleStartButtonClick = () => {
+
         timelineBlockState.setIsRunningThumb(!isRunningThumb);
         if (timelineBlockState.activeElement) {
-            const rect = timelineBlockState.activeElement.shape.bbox();
-            // Получаем границы холста
-            const canvasRect = document.getElementById("drawingCanvas").getBoundingClientRect();
-
-            // Вычисляем x и y координаты центральной точки в нижней части границы элемента
-            const x = rect.cx;
-            const y = rect.y2;
-            // Устанавливаем координаты центральной точки в состояние
-            setRotationCenter({ x, y });
-
-            // Запускаем анимации
-            // if(timelineBlockState.keys && timelineBlockState.keys.length > 0){
-            //     keyframeManagerRef.current.startAnimations(isRunningThumb);
-            // } else{
-            //     alert("Create key points for keyframes")
-            // }
-            animationToolState.currentTool.startAnimations(true);
-
+            animationToolState.currentTool.startAnimations(timelineBlockState.isRunningThumb);
 
         } else{
             alert("Select the active element")
@@ -80,16 +61,17 @@ const TimelineControls = observer( () => {
 
     };
     const handleStopButtonClick = () => {
-        clearInterval(intervalIdRef.current);
+        // clearInterval(intervalIdRef.current);
         timelineBlockState.setIsRunningThumb(false);
         timelineBlockState.setElapsedTime(0);
-        svgCanvasState.setSvgElements(svgCanvasState.svgElements.map((element, index) => {
-            const prevStyle = document.querySelector(`style[data-animation="rotatePath_${index}"]`);
-            if (prevStyle) {
-                prevStyle.remove();
-            }
-            return element;
-        }));
+        // svgCanvasState.setSvgElements(svgCanvasState.svgElements.map((element, index) => {
+        //     const prevStyle = document.querySelector(`style[data-animation="rotatePath_${index}"]`);
+        //     if (prevStyle) {
+        //         prevStyle.remove();
+        //     }
+        //     return element;
+        // }));
+        animationToolState.currentTool.resetAnimations()
     };
 
     const formatTime = (time) => {
@@ -99,7 +81,6 @@ const TimelineControls = observer( () => {
         const milliseconds = Math.floor(time % 1000);
         return `${pad(minutes)}:${pad(seconds)}:${pad(milliseconds)}`;
     };
-
 
     return (
         <div className="timeline-controls">

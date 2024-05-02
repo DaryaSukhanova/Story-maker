@@ -25,7 +25,7 @@ export default class SvgRect extends SvgTool {
         this.startX = e.pageX - svgCanvasRect.left;
         this.startY = e.pageY - svgCanvasRect.top;
         this.mouseDown = true;
-        this.currentDrawingTool = this.drawingRect
+
         this.drawingRect = this.drawingCanvas.rect()
             .size(0, 0)
             .attr({
@@ -36,7 +36,7 @@ export default class SvgRect extends SvgTool {
                 'data-tool': 'true',
                 'type-tool': 'rect'
             })
-
+        this.currentDrawingTool = this.drawingRect
     }
 
     mouseMoveHandler(e) {

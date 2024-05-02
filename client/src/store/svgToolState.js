@@ -13,16 +13,22 @@ class SvgToolState{
     constructor() {
         makeAutoObservable(this)
     }
-    setSvgTool(tool){
-        this.tool = tool
-        animationToolState.tool = null
+    setSvgTool(tool) {
+        if (animationToolState.tool) {
+            animationToolState.clearActiveTool();  // Сброс текущего инструмента анимации
+        }
+        this.tool = tool;
+        this.tool.listen();  // Активация событий нового SVG инструмента
     }
 
-    // setFillStroke(color){
-    //     if(this.tool){
-    //         this.tool.svgFillStroke = color
-    //     }
-    // }
+    clearActiveTool() {
+        if (this.tool) {
+            this.tool.destroyEvents();  // Очистка событий текущего SVG инструмента
+        }
+        this.tool = null;
+    }
+
+
     setFillColor(color){
         // this.fillColor = color
         this.tool.svgFillColor = color

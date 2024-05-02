@@ -9,7 +9,7 @@ import SvgPolyline from "../../tools/animation-tools/SvgPolyline";
 import SvgPolygon from "../../tools/animation-tools/SvgPolygon";
 import svgCanvasState from "../../store/svgCanvasState";
 import BoxSelect from "../../tools/animation-tools/BoxSelect";
-import SvgFiguresBlock from "./SvgFiguresBlock";
+import SvgShapesBlock from "./SvgShapesBlock";
 import SvgSettingBar from "./SvgSettingBar";
 import ColorPicker from "../ColorPicker";
 import SvgToolsBlock from "./SvgToolsBlock";
@@ -24,7 +24,7 @@ const SvgToolbar = () => {
     return (
         <div className="tool-bar svg-tool-bar">
             {/*<div className="svg-tool-bar-title">Drawing Tools</div>*/}
-                <SvgFiguresBlock/>
+                <SvgShapesBlock/>
                 <SvgToolsBlock currentColor={currentColor}/>
                 <ColorPicker currentColor={currentColor} handleColorChange={handleColorChange} />
                 <SvgSettingBar></SvgSettingBar>
