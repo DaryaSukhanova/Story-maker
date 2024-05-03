@@ -42,6 +42,7 @@ export default class MotionCurve extends AnimationTool {
 
 
 
+
     startAnimations(isRunningThumb) {
         this.isRunningThumb = isRunningThumb; // Сохраняем текущее состояние флага
 

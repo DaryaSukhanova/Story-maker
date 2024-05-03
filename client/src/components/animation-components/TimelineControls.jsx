@@ -53,9 +53,7 @@ const TimelineControls = observer( () => {
 
         timelineBlockState.setIsRunningThumb(!isRunningThumb);
         if (timelineBlockState.activeElement) {
-
             animationToolState.currentTool.startAnimations(timelineBlockState.isRunningThumb);
-
 
         } else{
             alert("Select the active element")
