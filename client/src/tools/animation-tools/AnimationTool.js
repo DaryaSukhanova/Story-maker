@@ -20,9 +20,9 @@ export default class AnimationTool {
 
     mouseMoveHandler(e) {
         if (this.mouseDown){
-
+            console.log('MouseMove Event');
         }
-        console.log('MouseMove Event');
+
     }
 
     mouseDownHandler(e) {

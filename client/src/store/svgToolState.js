@@ -23,6 +23,7 @@ class SvgToolState{
 
     clearActiveTool() {
         if (this.tool) {
+            this.clearBoundingBox()
             this.tool.destroyEvents();  // Очистка событий текущего SVG инструмента
         }
         this.tool = null;
@@ -54,11 +55,12 @@ class SvgToolState{
     // }
     clearBoundingBox() {
         // const boundingBoxGroup = document.getElementById("boundingBoxGroup");
-        const boundingBoxGroup = document.getElementById("bBoxGroup");
+        const boundingBoxGroups = document.querySelectorAll('[data-bBoxGroup]');
 
-        if (boundingBoxGroup && boundingBoxGroup.parentNode) {
-            // boundingBoxGroup.parentNode.removeChild(boundingBoxGroup);
-            boundingBoxGroup.remove();
+        if (boundingBoxGroups) {
+            boundingBoxGroups.forEach(group => {
+                group.remove();
+            });
         }
     }
 }

@@ -26,6 +26,7 @@ class AnimationToolState{
     setAnimationTool(tool) {
         if (svgToolState.tool) {
             svgToolState.clearActiveTool();  // Сброс текущего SVG инструмента
+
         }
         this.tool = tool;
         this.tool.listen();  // Активация событий нового инструмента анимации

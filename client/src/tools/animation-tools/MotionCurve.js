@@ -40,9 +40,6 @@ export default class MotionCurve extends AnimationTool {
 
     }
 
-
-
-
     startAnimations(isRunningThumb) {
         this.isRunningThumb = isRunningThumb; // Сохраняем текущее состояние флага
 
@@ -79,7 +76,27 @@ export default class MotionCurve extends AnimationTool {
 
         if (this.isRunningThumb) {
             this.requestId = requestAnimationFrame(animate); // Запускаем анимацию
+            this.path.attr('visibility', 'hidden');
+        } else{
+            this.path.attr('visibility', 'visible');
         }
+    }
+    resetAnimations() {
+        if (this.requestId) {
+            cancelAnimationFrame(this.requestId); // Отменяем текущую анимацию
+            this.requestId = null;
+        }
+        this.distanceCovered = 0; // Сброс пройденного расстояния
+
+        if (this.path) {
+            const startPoint = this.path.pointAt(0); // Получаем начальную точку пути
+            const element = this.drawingCanvas.findOne('[data-tool="true"]');
+            if (element) {
+                element.center(startPoint.x, startPoint.y); // Перемещаем элемент на начальную точку
+            }
+        }
+
+        console.log("Animations reset and element moved to the start position");
     }
 
     // removeMotionPath (){
