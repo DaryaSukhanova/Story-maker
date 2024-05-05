@@ -17,6 +17,8 @@ export default class BoxSelectNew extends SvgTool {
         this.selectedHandle = null
         this.bBoxGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
         this.bBoxGroup.setAttribute("id", "bBoxGroup");
+        this.bBoxGroup.setAttribute("data-bBoxGroup", "true");
+
         this.svgCanvas.appendChild(this.bBoxGroup)
     }
 

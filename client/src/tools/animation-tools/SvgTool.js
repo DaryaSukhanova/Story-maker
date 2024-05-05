@@ -48,8 +48,9 @@ export default class SvgTool {
     }
 
     mouseMoveHandler(e) {
-        // Заглушка
-        console.log('MouseMove Event');
+        if (this.mouseDown){
+            console.log('MouseMove Event');
+        }
     }
 
     mouseDownHandler(e) {
