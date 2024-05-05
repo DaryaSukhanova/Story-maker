@@ -66,15 +66,16 @@ class BackgroundService{
     //     return backgrounds
     // }
     async getBackground(req, res){
+		const parent = await File.findOne({user: req.user.id, name: "Backgrounds"})
 		let backgroundNames = null
 		if (req.query.id) {
 			backgroundNames = await File.find({user: req.user.id, _id: req.query.id})
 		} else {
-			backgroundNames = await File.find({user: req.user.id})
+			backgroundNames = await File.find({user: req.user.id, parent: parent.id})
 		}
         let backgrounds = []
         backgroundNames.forEach((data) =>{
-			const picture = fs.readFileSync(path.resolve(`files/${req.user.id}/backgrounds`, data.name))
+			const picture = fs.readFileSync(path.resolve(`files/${req.user.id}/${data.path}`))
 			const image = `data:image/png;base64,` + picture.toString('base64')
 			backgrounds.push(
 				{

@@ -29,4 +29,5 @@ router.post("/files/upload", authMiddleware, fileController.uploadFile)
 router.get("/files/download", authMiddleware, fileController.downloadFile)
 router.delete("/files", authMiddleware, fileController.deleteFile)
 router.post('/animations', authMiddleware, animationController.saveAnimation)
+router.get("/animations", authMiddleware, animationController.getAnimation)
 export default router;
