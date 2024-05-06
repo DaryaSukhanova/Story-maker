@@ -5,6 +5,7 @@ import svgCanvasState from "../store/svgCanvasState.js";
 import uploadState from "../store/uploadState.js";
 import axios from "axios";
 import {SVG} from "@svgdotjs/svg.js";
+import { createAnimationStyle } from "../tools/animation-tools/animationStylesManager.js";
 import timelineBlockState from "../store/timelineBlockState";
 
 export const getFiles = async (dirId) => {
@@ -139,7 +140,8 @@ export const addAnimation = async (file) => {
                 // const newOrigin = adjustTransformOrigin(svgElement, canvasRect);
                 const animationName = `animation_${index}`;
                 console.log("origin", item.origin.x + svgElement.bbox().x,item.origin.y+ svgElement.bbox().y, item.origin.x,  item.origin.y)
-                createAnimationStyle(item.keys, animationName, {x: item.origin.x, y: item.origin.y}, response.data.duration);
+                // createAnimationStyle(item.keys, animationName, {x: item.origin.x, y: item.origin.y}, response.data.duration, index);
+                createAnimationStyle({x: item.origin.x, y: item.origin.y}, item.keys, index, response.data.duration, animationName)
                 svgElement.attr({
                     style: `animation: ${animationName} ${response.data.duration}s infinite;`
                 });
@@ -152,49 +154,6 @@ export const addAnimation = async (file) => {
     }
 };
 
-const createAnimationStyle = (keys, animationName, origin, animDuration) => {
-
-
-    const existingStyle = document.querySelector(`style[data-animation="${animationName}"]`);
-    if (existingStyle) {
-        existingStyle.remove();
-    }
-
-    const style = document.createElement('style');
-    style.setAttribute('data-animation', animationName);
-
-    let keyframesCSS = `@keyframes ${animationName} {`;
-    // Ключевой кадр на 0%
-    keyframesCSS += `
-        0% {
-            transform-origin: ${origin.x}px ${origin.y}px;
-            transform: rotate(0deg) scale(1, 1) translate(0px, 0px) skew(0deg, 0deg);
-        }
-    `;
-
-    keys.forEach(key => {
-        const percent = (key.duration / animDuration)*100;
-        keyframesCSS += `
-            ${percent}% {
-                transform-origin: ${origin.x}px ${origin.y}px;
-                transform: rotate(${key.rotate}deg) scale(${key.scaleX}, ${key.scaleY}) translate(${key.translateX}px, ${key.translateY}px) skew(${key.skewX}deg, ${key.skewY}deg);
-            }
-        `;
-    });
-    const maxDurationKey = keys.reduce((maxKey, currentKey) => {
-        return currentKey.duration > maxKey.duration ? currentKey : maxKey;
-    }, keys[0]); // Начальное значение - первый ключ
-
-    keyframesCSS += `
-        100% {
-            transform-origin: ${origin.x}px ${origin.y}px;
-            transform: rotate(${maxDurationKey.rotate}deg) scale(${maxDurationKey.scaleX}, ${maxDurationKey.scaleY}) translate(${maxDurationKey.translateX}px, ${maxDurationKey.translateY}px) skew(${maxDurationKey.skewX}deg, ${maxDurationKey.skewY}deg);
-        }
-    `;
-    keyframesCSS += '}';
-    style.textContent = keyframesCSS;
-    document.head.appendChild(style);
-};
 
 export const deleteFile = async (file) => {
 	try {
