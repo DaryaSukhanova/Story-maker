@@ -3,6 +3,7 @@ import User from "../models/User.js"
 import File from "../models/File.js"
 import path from "path"
 import fs from "fs"
+import Keys from "../models/Keys.js"
 
 const fileService = new FS()
 
@@ -119,6 +120,9 @@ class FileController {
 			const file = await File.findOne({_id: req.query.id, user: req.user.id})
 			if (!file) {
 				return res.status(400).json({message: "file not found"})
+			}
+			if (file.type == "json") {
+				await Keys.deleteOne({svgId: file.id, user: req.user.id, })
 			}
 			fileService.deleteFile(file)
 			await File.deleteOne(file)
