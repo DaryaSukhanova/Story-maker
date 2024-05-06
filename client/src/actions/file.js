@@ -4,6 +4,8 @@ import svgCanvasState from "../store/svgCanvasState.js";
 // import {addUploadFile, changeUploadFile, showUploader} from "../store/uploadState.js";
 import uploadState from "../store/uploadState.js";
 import axios from "axios";
+import {SVG} from "@svgdotjs/svg.js";
+import timelineBlockState from "../store/timelineBlockState";
 
 export const getFiles = async (dirId) => {
     try {
@@ -85,7 +87,7 @@ export const downloadFile = async (file) => {
     }
 }
 
-export const addFile = async (file) => {
+export const addBackground = async (file) => {
 	try {
 		const response = await axios.get(`http://localhost:5000/api/v1/backgrounds?id=${file._id}`, {
 			headers: {
@@ -103,6 +105,79 @@ export const addFile = async (file) => {
 		console.log(e?.response?.data?.message)
 	}
 }
+
+// const adjustTransformOrigin = (element, canvasRect) => {
+//     const bbox = element.getBBox();
+//     const originX = bbox.x + bbox.width / 2;
+//     const originY = bbox.y + bbox.height / 2;
+//
+//     return {
+//         x: originX - canvasRect.left,
+//         y: originY - canvasRect.top
+//     };
+// };
+
+export const addAnimation = async (file) => {
+    try {
+        const response = await axios.get(`http://localhost:5000/api/v1/animations?id=${file._id}`, {
+            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        });
+
+        const canvas = SVG(svgCanvasState.canvas);
+        const canvasRect = canvas.node.getBoundingClientRect();
+
+        response.data.animationData.forEach((item, index) => {
+            let svgElement;
+
+            if (item.attributes['type-tool'] === 'circle') {
+                svgElement = canvas.circle().attr(item.attributes);
+            } else if (item.attributes['type-tool'] === 'rect') {
+                svgElement = canvas.rect().attr(item.attributes);
+            }
+
+            if (item.isAnimated && item.keys.length > 0) {
+                // const newOrigin = adjustTransformOrigin(svgElement, canvasRect);
+                const animationName = `animation_${index}`;
+                createAnimationStyle(item.keys, animationName, {x: item.origin.x, y: item.origin.y});
+                svgElement.attr({
+                    style: `animation: ${animationName} ${response.data.duration}s infinite;`
+                });
+            }
+        });
+
+        console.log("SVG elements successfully added to the canvas");
+    } catch (e) {
+        console.error("Error fetching animation data:", e?.response?.data?.message);
+    }
+};
+
+const createAnimationStyle = (keys, animationName, origin) => {
+
+
+    const existingStyle = document.querySelector(`style[data-animation="${animationName}"]`);
+    if (existingStyle) {
+        existingStyle.remove();
+    }
+
+    const style = document.createElement('style');
+    style.setAttribute('data-animation', animationName);
+
+    let keyframesCSS = `@keyframes ${animationName} {`;
+
+    keys.forEach(key => {
+        const percent = (key.position / Math.max(...keys.map(k => k.position))) * 100;
+        keyframesCSS += `
+            ${percent}% {
+                transform-origin: ${origin.x}px ${origin.y}px;
+                transform: rotate(${key.rotate}deg) scale(${key.scaleX}, ${key.scaleY}) translate(${key.translateX}px, ${key.translateY}px) skew(${key.skewX}deg, ${key.skewY}deg);
+            }
+        `;
+    });
+
+    keyframesCSS += '}';
+    style.textContent = keyframesCSS;
+    document.head.appendChild(style);
+};
 
 export const deleteFile = async (file) => {
 	try {

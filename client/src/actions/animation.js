@@ -2,18 +2,20 @@ import axios from "axios"
 import animationToolState from "../store/animationToolState"
 import svgCanvasState from "../store/svgCanvasState"
 import { fromJSON, parse, stringify, toJSON } from "flatted"
+import timelineBlockState from "../store/timelineBlockState";
 
 export const saveAnimation = async(name, closeModal) => {
     closeModal();
     // animationToolState.isAnimationSaved = true;
     console.log(svgCanvasState.svgElements)
     const serializedData = JSON.stringify(serializeSvgElements());
-    console.log(serializedData)
+    console.log("serializedData", serializedData)
 
     try {
         const response = await axios.post('http://localhost:5000/api/v1/animations', {
             name: name.current.value,
-            animationData: serializedData
+            animationData: serializedData,
+            duration: timelineBlockState.totalTime
         }, {
             headers: {
                 'Content-Type': 'application/json',
@@ -58,17 +60,19 @@ const serializeSvgElements = () => {
         const attributes = svgElement.shape.node.attributes;
         const attrsObj = {};
 
-        // Проходим по каждому атрибуту и сохраняем в объект
+        // Проходим по каждому атрибуту и сохраняем в объект, игнорируя атрибут 'style'
         for (let i = 0; i < attributes.length; i++) {
             const attr = attributes[i];
-            attrsObj[attr.name] = attr.value;
+            if (attr.name !== 'style') { // Проверяем, не является ли атрибут 'style'
+                attrsObj[attr.name] = attr.value;
+            }
         }
 
         return {
             isAnimated: svgElement.isAnimated,
             keys: svgElement.keys,
-            attributes: attrsObj// Сохраняем атрибуты как объект
-            // svgString: new XMLSerializer().serializeToString(svgElement.shape.node) // Сериализация всего SVG элемента
+            attributes: attrsObj,
+            origin: svgElement.origin // Сохраняем дополнительные свойства
         };
     });
 };

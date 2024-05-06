@@ -14,12 +14,13 @@ class animationController {
 			const parent = await File.findOne({user: req.user.id, name: "Animations"})
 			const keyFrames = []
 			const svgAttrs = []
+
 			animationData.forEach(element => {
 				keyFrames.push(element.keys)
-				svgAttrs.push({isAnimated: element.isAnimated, attributes: element.attributes})
+				svgAttrs.push({isAnimated: element.isAnimated, attributes: element.attributes, origin: element.origin})
 			})
 			const filePath = path.resolve(`files/${req.user.id}/Animations`, `${req.body.name}.json`)
-			fs.writeFileSync(filePath, JSON.stringify(svgAttrs))
+			fs.writeFileSync(filePath, JSON.stringify({attr: svgAttrs, duration: req.body.duration}))
 			const svgSize = fs.statSync(filePath).size
 			const keySize = new Blob(keyFrames).size
 			if (user.usedSpace + svgSize + keySize > user.diskSpace) {
@@ -54,15 +55,22 @@ class animationController {
 	}
 
 	async getAnimation(req, res) {
+
 		try {
 			const svgData = await File.findOne({user: req.user.id, _id: req.query.id})
 			const svgAttrs = JSON.parse(fs.readFileSync(path.resolve(`files/${req.user.id}/${svgData.path}`)))
 			const keyData = await Keys.findOne({user: req.user.id, svgId: svgData.id})
 			const keyFrames = JSON.parse(keyData.data)
-			const animations = {name: svgData.name, animationData: []}
-			for (let i = 0; i < svgAttrs.length; i++) {
-				animations.animationData.push({isAnimated: svgAttrs[i].isAnimated, keys: keyFrames[i], attributes: svgAttrs[i].attributes})
+			const animations = {name: svgData.name, animationData: [], duration: svgAttrs.duration}
+			for (let i = 0; i < svgAttrs.attr.length; i++) {
+				animations.animationData.push({
+					isAnimated: svgAttrs.attr[i].isAnimated,
+					keys: keyFrames[i],
+					attributes: svgAttrs.attr[i].attributes,
+					origin:svgAttrs.attr[i].origin
+				})
 			}
+			console.log("animations", animations)
 			return res.status(200).json(animations)
 		} catch (e) {
 			const status = e.status || 500

@@ -17,14 +17,27 @@ class SvgCanvasState{
         makeAutoObservable(this)
     }
     pushToSvgElements(element) {
+        if (!this.canvas) return;
+
+        const canvasRect = this.canvas.getBoundingClientRect();
+        const bbox = element.bbox()
+
+        const originX = (bbox.x + bbox.width / 2);
+        const originY = (bbox.y + bbox.height / 2);
+        console.log("originX, originY", originX, originY, "originX - canvasRect.left, originY-canvasRect.top", originX - canvasRect.left, originY-canvasRect.top)
         const svgElementWrapper = {
             shape: element,
             isAnimated: false,
-            keys: []
+            keys: [],
+            origin: {
+                x: originX,
+                y: originY,
+                svgRect: canvasRect
+            }
         };
+
         this.svgElements.push(svgElementWrapper);
-        timelineBlockState.setActiveElement(svgElementWrapper)
-        // Добавляем обработчик события клика для каждого элемента
+        timelineBlockState.setActiveElement(svgElementWrapper);
     }
     toggleAnimation(element) {
         const svgElement = this.svgElements.find(el => el.shape.node === element);

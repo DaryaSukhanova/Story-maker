@@ -1,7 +1,7 @@
 import React from 'react';
 import {observer} from "mobx-react-lite";
 import fileState from '../store/fileState.js';
-import {addFile, deleteFile, downloadFile} from '../actions/file.js';
+import {addAnimation, addBackground, deleteFile, downloadFile} from '../actions/file.js';
 import '../styles/file.scss'
 import dirLogo from '../assets/img/dir.svg'
 import fileLogo from '../assets/img/file.svg'
@@ -24,10 +24,15 @@ const File = observer(({file}) => {
         downloadFile(file)
     }
 
-	const addClickHandler = (e) => {
+	const addBgClickHandler = (e) => {
 		e.stopPropagation()
-		addFile(file)
+		addBackground(file)
 	}
+
+    const addAnimationClickHandler = (e) => {
+        e.stopPropagation()
+        addAnimation(file)
+    }
 
 	const deleteClickHandler = (e) => {
 		e.stopPropagation()
@@ -40,7 +45,8 @@ const File = observer(({file}) => {
             <div className="file__name">{file.name}</div>
             {/* <div className="file__date">{file.date.slice(0,10)}</div>
             <div className="file__size">{file.size}</div> */}
-			{file.type === 'png' && <button className="file__btn file__add" onClick={(e) => addClickHandler(e)}>На холст</button>}
+			{file.type === 'png' && <button className="file__btn file__add" onClick={(e) => addBgClickHandler(e)}>На холст</button>}
+            {file.type === 'json' && <button className="file__btn file__add" onClick={(e) => addAnimationClickHandler(e)}>На холст</button>}
             {file.type !== 'dir' && <button className="file__btn file__download" onClick={(e) => downloadClickHandler(e)}><img src={dl}/></button>}
             <button className="file__btn file__delete" onClick={deleteClickHandler}><img src={tr}/></button>
         </div>

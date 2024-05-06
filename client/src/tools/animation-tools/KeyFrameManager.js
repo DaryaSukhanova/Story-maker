@@ -16,7 +16,6 @@ export default class KeyFrameManager extends AnimationTool{
 
     mouseDownHandler = (e) => {
         const target = e.target;
-
         svgCanvasState.toggleAnimation(target)
         console.log(svgCanvasState.svgElements)
     }
@@ -25,12 +24,13 @@ export default class KeyFrameManager extends AnimationTool{
     startAnimations(isRunningThumb) {
         // this.element = timelineBlockState.activeElement.shape;
         const animatedElements = svgCanvasState.svgElements.filter(svgElement => svgElement.isAnimated);
-
+        const canvasRect = this.svgCanvas.getBoundingClientRect();
         animatedElements.forEach((animatedElement, index) => {
             this.element = animatedElement.shape;
             const rect = animatedElement.shape.bbox();
             console.log(animatedElement.shape.bbox())
-            this.applyRotationAnimationStyle(rect.x2, rect.y, animatedElement.keys, index);
+
+            this.applyRotationAnimationStyle(animatedElement.origin.x, animatedElement.origin.y, animatedElement.keys, index);
 
             animatedElement.shape.attr({
                 'style': `
