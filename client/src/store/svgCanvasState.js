@@ -7,6 +7,7 @@ import timelineBlockState from "./timelineBlockState";
 import KeyFrameManager from "../tools/animation-tools/KeyFrameManager";
 
 
+
 class SvgCanvasState{
     canvas = null
     undoList = [] //содержит все действие,которые мы делали
@@ -32,13 +33,13 @@ class SvgCanvasState{
             keys: [],
             origin: {
                 x: originX,
-                y: originY,
-                svgRect: canvasRect
+                y: originY
             }
         };
 
         this.svgElements.push(svgElementWrapper);
         timelineBlockState.setActiveElement(svgElementWrapper);
+        console.log("this.svgElements", this.svgElements)
     }
     toggleAnimation(element) {
         const svgElement = this.svgElements.find(el => el.shape.node === element);
@@ -73,5 +74,4 @@ class SvgCanvasState{
     };
 
 }
-
 export default new SvgCanvasState()

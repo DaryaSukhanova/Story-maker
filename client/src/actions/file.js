@@ -119,6 +119,7 @@ export const addBackground = async (file) => {
 // };
 
 export const addAnimation = async (file) => {
+    console.log(file);
     try {
         const response = await axios.get(`http://localhost:5000/api/v1/animations?id=${file._id}`, {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -130,18 +131,32 @@ export const addAnimation = async (file) => {
         response.data.animationData.forEach((item, index) => {
             let svgElement;
 
-            if (item.attributes['type-tool'] === 'circle') {
-                svgElement = canvas.circle().attr(item.attributes);
-            } else if (item.attributes['type-tool'] === 'rect') {
-                svgElement = canvas.rect().attr(item.attributes);
+            // Создание SVG элементов в зависимости от типа инструмента
+            switch (item.attributes['type-tool']) {
+                case 'circle':
+                    svgElement = canvas.circle().attr(item.attributes);
+                    break;
+                case 'rect':
+                    svgElement = canvas.rect().attr(item.attributes);
+                    break;
+                case 'line':
+                    svgElement = canvas.line().attr(item.attributes);
+                    break;
+                case 'polygon':
+                    svgElement = canvas.polygon().attr(item.attributes);
+                    break;
+                case 'path':
+                    svgElement = canvas.path().attr(item.attributes);
+                    break;
+                default:
+                    console.warn("Unsupported SVG element type:", item.attributes['type-tool']);
+                    return; // Пропускаем необрабатываемые типы
             }
 
             if (item.isAnimated && item.keys.length > 0) {
-                // const newOrigin = adjustTransformOrigin(svgElement, canvasRect);
                 const animationName = `animation_${index}`;
-                console.log("origin", item.origin.x + svgElement.bbox().x,item.origin.y+ svgElement.bbox().y, item.origin.x,  item.origin.y)
-                // createAnimationStyle(item.keys, animationName, {x: item.origin.x, y: item.origin.y}, response.data.duration, index);
-                createAnimationStyle({x: item.origin.x, y: item.origin.y}, item.keys, index, response.data.duration, animationName)
+                console.log("origin", item.origin.x + svgElement.bbox().x, item.origin.y + svgElement.bbox().y, item.origin.x, item.origin.y);
+                createAnimationStyle({x: item.origin.x, y: item.origin.y}, item.keys, index, response.data.duration, animationName);
                 svgElement.attr({
                     style: `animation: ${animationName} ${response.data.duration}s infinite;`
                 });
