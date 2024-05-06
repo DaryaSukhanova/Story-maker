@@ -24,7 +24,8 @@ class SvgCanvasState{
 
         const originX = (bbox.x + bbox.width / 2);
         const originY = (bbox.y + bbox.height / 2);
-        console.log("originX, originY", originX, originY, "originX - canvasRect.left, originY-canvasRect.top", originX - canvasRect.left, originY-canvasRect.top)
+        console.log("origin", originX, originY)
+        // console.log("originX, originY", originX, originY, "originX - canvasRect.left, originY-canvasRect.top", originX - canvasRect.left, originY-canvasRect.top)
         const svgElementWrapper = {
             shape: element,
             isAnimated: false,

@@ -30,7 +30,7 @@ export default class KeyFrameManager extends AnimationTool{
             const rect = animatedElement.shape.bbox();
             console.log(animatedElement.shape.bbox())
 
-            this.applyRotationAnimationStyle(animatedElement.origin.x, animatedElement.origin.y, animatedElement.keys, index);
+            this.applyRotationAnimationStyle(animatedElement.origin.x, animatedElement.origin.y, animatedElement.keys, index, this.totalTime);
 
             animatedElement.shape.attr({
                 'style': `
@@ -42,7 +42,7 @@ export default class KeyFrameManager extends AnimationTool{
             });
         });
     }
-    applyRotationAnimationStyle (x, y, keys, index) {
+    applyRotationAnimationStyle (x, y, keys, index, animDuration) {
         this.thumbPosition = timelineBlockState.thumbEndPosition
 
         const prevStyle = document.querySelector(`style[data-animation="rotatePath_${index}"]`);
@@ -62,7 +62,7 @@ export default class KeyFrameManager extends AnimationTool{
         `;
 
         keys.forEach((key, index) => {
-            const percent = (key.position / this.thumbPosition)*100;
+            const percent = (key.duration / animDuration)*100;
             keyframes += `
             ${percent}% {
                 transform-origin: ${x}px ${y}px;

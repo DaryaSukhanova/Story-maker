@@ -138,7 +138,8 @@ export const addAnimation = async (file) => {
             if (item.isAnimated && item.keys.length > 0) {
                 // const newOrigin = adjustTransformOrigin(svgElement, canvasRect);
                 const animationName = `animation_${index}`;
-                createAnimationStyle(item.keys, animationName, {x: item.origin.x, y: item.origin.y});
+                console.log("origin", item.origin.x + svgElement.bbox().x,item.origin.y+ svgElement.bbox().y, item.origin.x,  item.origin.y)
+                createAnimationStyle(item.keys, animationName, {x: item.origin.x, y: item.origin.y}, response.data.duration);
                 svgElement.attr({
                     style: `animation: ${animationName} ${response.data.duration}s infinite;`
                 });
@@ -151,7 +152,7 @@ export const addAnimation = async (file) => {
     }
 };
 
-const createAnimationStyle = (keys, animationName, origin) => {
+const createAnimationStyle = (keys, animationName, origin, animDuration) => {
 
 
     const existingStyle = document.querySelector(`style[data-animation="${animationName}"]`);
@@ -163,9 +164,16 @@ const createAnimationStyle = (keys, animationName, origin) => {
     style.setAttribute('data-animation', animationName);
 
     let keyframesCSS = `@keyframes ${animationName} {`;
+    // Ключевой кадр на 0%
+    keyframesCSS += `
+        0% {
+            transform-origin: ${origin.x}px ${origin.y}px;
+            transform: rotate(0deg) scale(1, 1) translate(0px, 0px) skew(0deg, 0deg);
+        }
+    `;
 
     keys.forEach(key => {
-        const percent = (key.position / Math.max(...keys.map(k => k.position))) * 100;
+        const percent = (key.duration / animDuration)*100;
         keyframesCSS += `
             ${percent}% {
                 transform-origin: ${origin.x}px ${origin.y}px;
@@ -173,7 +181,16 @@ const createAnimationStyle = (keys, animationName, origin) => {
             }
         `;
     });
+    const maxDurationKey = keys.reduce((maxKey, currentKey) => {
+        return currentKey.duration > maxKey.duration ? currentKey : maxKey;
+    }, keys[0]); // Начальное значение - первый ключ
 
+    keyframesCSS += `
+        100% {
+            transform-origin: ${origin.x}px ${origin.y}px;
+            transform: rotate(${maxDurationKey.rotate}deg) scale(${maxDurationKey.scaleX}, ${maxDurationKey.scaleY}) translate(${maxDurationKey.translateX}px, ${maxDurationKey.translateY}px) skew(${maxDurationKey.skewX}deg, ${maxDurationKey.skewY}deg);
+        }
+    `;
     keyframesCSS += '}';
     style.textContent = keyframesCSS;
     document.head.appendChild(style);
