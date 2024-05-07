@@ -17,7 +17,6 @@ export default class KeyFrameManager extends AnimationTool{
     mouseDownHandler = (e) => {
         const target = e.target;
         svgCanvasState.toggleAnimation(target)
-        console.log(svgCanvasState.svgElements)
     }
 
 

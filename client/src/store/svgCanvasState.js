@@ -14,9 +14,24 @@ class SvgCanvasState{
     redoList = [] //содержит те действия, которые мы отменили
     backgroundName = ""
     svgElements = []
+    keyframes = []
+    activeElement = null
+    activeKey = null 
+
     constructor() {
         makeAutoObservable(this)
     }
+    // Установка активного SVG элемента
+    setActiveElement(elementId) {
+        this.activeElement = elementId;
+        console.log(this.activeElement)
+    }
+
+    // Установка активного ключа
+    setActiveKey(keyId) {
+        this.activeKey = keyId;
+    }
+
     pushToSvgElements(element) {
         if (!this.canvas) return;
 
@@ -25,12 +40,15 @@ class SvgCanvasState{
 
         const originX = (bbox.x + bbox.width / 2);
         const originY = (bbox.y + bbox.height / 2);
-        console.log("origin", originX, originY)
-        // console.log("originX, originY", originX, originY, "originX - canvasRect.left, originY-canvasRect.top", originX - canvasRect.left, originY-canvasRect.top)
+        const id = `${element.type}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+        element.attr('id', id);
+
         const svgElementWrapper = {
             shape: element,
+            id: id,
             isAnimated: false,
             keys: [],
+            path: null,
             origin: {
                 x: originX,
                 y: originY
@@ -38,9 +56,116 @@ class SvgCanvasState{
         };
 
         this.svgElements.push(svgElementWrapper);
-        timelineBlockState.setActiveElement(svgElementWrapper);
         console.log("this.svgElements", this.svgElements)
+        timelineBlockState.setActiveElement(svgElementWrapper);
     }
+
+    addKeyframeToElement(elementId) {
+        const elementIndex = this.svgElements.findIndex(el => el.id === elementId);
+        if (elementIndex === -1) {
+            console.error(`Element with ID ${elementId} not found.`);
+            return;
+        }
+
+        // Создание нового ключевого кадра с уникальным идентификатором
+        const newKey = {
+            id: `key-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+            duration: 0,
+            rotate: 0,
+            scaleX: 1,
+            scaleY: 1,
+            translateX: 0,
+            translateY: 0,
+            skewX: 0,
+            skewY: 0
+        };
+
+        // Добавление ключевого кадра в соответствующий элемент SVG
+        this.svgElements[elementIndex] = {
+            ...this.svgElements[elementIndex],
+            keys: [...this.svgElements[elementIndex].keys, newKey]
+        };
+
+        console.log(`Added new keyframe to element ${elementId}`, newKey);
+    }
+
+    updateKeyframeField(elementId, keyId, field, value) {
+        // Ищем индекс элемента в массиве svgElements
+        const elementIndex = this.svgElements.findIndex(el => el.id === elementId);
+        if (elementIndex === -1) {
+            console.error(`Element with ID ${elementId} not found.`);
+            return;
+        }
+
+        // Ищем индекс ключевого кадра в массиве keys элемента
+        const keyIndex = this.svgElements[elementIndex].keys.findIndex(key => key.id === keyId);
+        if (keyIndex === -1) {
+            console.error(`Keyframe with ID ${keyId} not found in element ${elementId}.`);
+            return;
+        }
+
+        // Обновляем конкретное поле у ключевого кадра
+        const updatedKeyframe = {
+            ...this.svgElements[elementIndex].keys[keyIndex],
+            [field]: value
+        };
+
+        // Обновляем массив ключевых кадров в элементе
+        const updatedKeys = [
+            ...this.svgElements[elementIndex].keys.slice(0, keyIndex),
+            updatedKeyframe,
+            ...this.svgElements[elementIndex].keys.slice(keyIndex + 1)
+        ];
+
+        // Обновляем сам элемент в массиве svgElements
+        this.svgElements[elementIndex] = {
+            ...this.svgElements[elementIndex],
+            keys: updatedKeys
+        };
+
+        console.log(`Updated keyframe ${keyId} in element ${elementId}, set ${field} to ${value}`);
+    }
+
+    updateElementOrigin(elementId, position) {
+        const element = this.svgElements.find(el => el.shape.node.id === elementId);
+        console.log(element)
+        if (element) {
+            const bbox = element.shape.bbox();
+            let newOrigin;
+            switch (position) {
+                case 'center':
+                    newOrigin = { x: bbox.x + bbox.width / 2, y: bbox.y + bbox.height / 2 };
+                    break;
+                case 'top-left':
+                    newOrigin = { x: bbox.x, y: bbox.y };
+                    break;
+                case 'top-right':
+                    newOrigin = { x: bbox.x + bbox.width, y: bbox.y };
+                    break;
+                case 'bottom-left':
+                    newOrigin = { x: bbox.x, y: bbox.y + bbox.height };
+                    break;
+                case 'bottom-right':
+                    newOrigin = { x: bbox.x + bbox.width, y: bbox.y + bbox.height };
+                    break;
+                default:
+                    newOrigin = { x: bbox.x + bbox.width / 2, y: bbox.y + bbox.height / 2 };
+                    break;
+            }
+            element.origin = newOrigin;
+
+                // Обновляем поле `origin` непосредственно в элементе
+            const updatedElement = {
+                ...element,
+                origin: newOrigin
+            };
+
+            // Заменяем старый элемент на обновленный
+            this.svgElements[elementId] = updatedElement;
+            console.log(`Updated origin to ${position}:`, newOrigin);
+        }
+    }
+
     toggleAnimation(element) {
         const svgElement = this.svgElements.find(el => el.shape.node === element);
         console.log("svgElement", svgElement)
@@ -72,6 +197,20 @@ class SvgCanvasState{
             keyframeManager.stopAnimations();
         }
     };
+    
+    updateElementPath(elementId, pathData) {
+        const elementIndex = this.svgElements.findIndex(el => el.id === elementId);
+        if (elementIndex === -1) {
+            console.error(`Element with ID ${elementId} not found.`);
+            return;
+        }
+
+        this.svgElements[elementIndex] = {
+            ...this.svgElements[elementIndex],
+            path: pathData
+        };
+        console.log(`Updated path for element ${elementId}`);
+    }
 
 }
 export default new SvgCanvasState()

@@ -89,30 +89,42 @@ export default class MotionCurve extends AnimationTool {
 
         console.log("Animations reset and element moved to the start position");
     }
+    
     mouseDownHandler(e) {
-        super.mouseDownHandler(e)
-        const existingPath = this.drawingCanvas.findOne('#motionPath');
-        if (existingPath) {
-            existingPath.remove();  // Удаление существующего пути
-        }
-        const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
-        const startX = e.pageX - svgCanvasRect.left;
-        const startY = e.pageY - svgCanvasRect.top;
-        this.path = this.drawingCanvas.path(`M${startX},${startY}`)
-            .stroke({
-                color: '#8DADFF',
-                width: 2,
-                linecap: 'round',
-                linejoin: 'round'
-            })
-            .fill('none');
-        this.path.attr({
-            id: 'motionPath',
-            visibility: 'visible'
-        });
+        super.mouseDownHandler(e);
 
+        // Проверка, является ли элемент целевым с атрибутом data-tool="true"
+        const targetElement = e.target;
+        const isToolElement = targetElement.getAttribute('data-tool') === 'true';
+
+        if (isToolElement) {
+            // Устанавливаем активный элемент в хранилище
+            svgCanvasState.setActiveElement(targetElement.id);
+        } else {
+            // Начинаем новый путь, если клик вне элементов с атрибутом `data-tool`
+            const existingPath = this.drawingCanvas.findOne('#motionPath');
+            if (existingPath) {
+                existingPath.remove(); // Удаляем существующий путь
+            }
+
+            const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
+            const startX = e.pageX - svgCanvasRect.left;
+            const startY = e.pageY - svgCanvasRect.top;
+            this.path = this.drawingCanvas.path(`M${startX},${startY}`)
+                .stroke({
+                    color: '#8DADFF',
+                    width: 2,
+                    linecap: 'round',
+                    linejoin: 'round'
+                })
+                .fill('none');
+            this.path.attr({
+                id: 'motionPath',
+                visibility: 'visible'
+            });
+        }
     }
-    //
+    
     mouseMoveHandler(e) {
         if (this.path && this.mouseDown) {
             const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
@@ -127,40 +139,17 @@ export default class MotionCurve extends AnimationTool {
 
     mouseUpHandler(e) {
         super.mouseUpHandler(e);
+
+        const pathData = this.path.attr('d');
+
+        // Используем идентификатор активного элемента из хранилища
+        const activeElementId = svgCanvasState.activeElement;
+        if (activeElementId) {
+            svgCanvasState.updateElementPath(activeElementId, pathData);
+            console.log(svgCanvasState.svgElements)
+        } else {
+            console.error("No active element set in canvas state.");
+        }
     }
-
-    /**
-     * TODO
-     * 1. Сделать key для элементов. У двух и более элементов должен быть одинаковый ключ, ключ положи class/data-attribute, чтобы можно было достать пары и отфильтровать траекториию
-     * 2.
-     */
-
-    // saveAlongPath(){
-    //     const listSvgConfigs = new Map();
-    //     const documentHolst = document.getElementById('drawingCanvas');
-    //     // TODO data-type нужно расширить значения допустимые. data-type должен описывать тип фигуры круг/квадрат
-    //     // TODO Доставать нужно по ключу, ключ и тип являются разными значениями
-    //     const getAllElementsOnAttribute = documentHolst.querySelectorAll('[fill]')
-    //     // Родитель всех элементов на странице
-    //     for(let i = 0; i < 2; i++) {
-    //         const elements = [];
-    //         // TODO for(let itemType of types) { }
-    //         // Тут type
-    //         for (let item of getAllElementsOnAttribute) {
-    //             let config = {}
-    //
-    //             for (let attr of item.attributes) {
-    //                 config[attr.name] = attr.value;
-    //             }
-    //
-    //             elements.push(config);
-    //         }
-    //
-    //         listSvgConfigs.set(i, elements);
-    //     }
-    //
-    //     const convertToObject = Object.fromEntries(listSvgConfigs);
-    //     // savedJson(convertToObject, this.currentName)
-    // }
 
 }

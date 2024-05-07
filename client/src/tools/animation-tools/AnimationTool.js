@@ -20,20 +20,17 @@ export default class AnimationTool {
 
     mouseMoveHandler(e) {
         if (this.mouseDown){
-            console.log('MouseMove Event');
         }
 
     }
 
     mouseDownHandler(e) {
-        console.log('MouseDown Event');
         this.mouseDown = true; // Устанавливаем флаг нажатия кнопки мыши
         // Добавляем слушатель mousemove только после нажатия кнопки мыши
         this.svgCanvas.onmousemove = this.mouseMoveHandler.bind(this);
     }
 
     mouseUpHandler(e) {
-        console.log('MouseUp Event');
         this.mouseDown = false; // Сбрасываем флаг нажатия кнопки мыши
         // Удаляем слушатель mousemove, так как кнопка мыши отпущена
         this.svgCanvas.onmousemove = null;

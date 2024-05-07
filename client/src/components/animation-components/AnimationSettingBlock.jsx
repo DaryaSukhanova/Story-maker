@@ -1,20 +1,16 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../../styles/animation-setting-block.scss'
 import animationToolState from "../../store/animationToolState";
 import MotionCurve from "../../tools/animation-tools/MotionCurve";
 import svgCanvasState from "../../store/svgCanvasState";
-import svgToolState from "../../store/svgToolState";
-import {observer} from "mobx-react-lite";
+import { observer } from "mobx-react-lite";
 import TransformBlock from "./TransformBlock";
-import toolBlockState from "../../store/timelineBlockState";
 import KeyFrameManager from "../../tools/animation-tools/KeyFrameManager";
-import timelineBlockState from "../../store/timelineBlockState";
-import {action} from "mobx";
-import {logDOM} from "@testing-library/react";
 
 const AnimationSettingBlock = observer(() => {
     const motionCurveRef = useRef(null);
     const keyFrameManagerRef = useRef(null);
+    const [activeTool, setActiveTool] = useState(null); // состояние для отслеживания активного инструмента
 
     useEffect(() => {
         if (svgCanvasState.canvas) {
@@ -24,34 +20,29 @@ const AnimationSettingBlock = observer(() => {
     }, [svgCanvasState.canvas]);
 
     const handleMotionCurveClick = () => {
-        // Вызов метода listen из MotionCurve, если он уже инициализирован
         if (!motionCurveRef.current) {
             motionCurveRef.current = new MotionCurve(svgCanvasState.canvas);
         }
         animationToolState.setAnimationTool(motionCurveRef.current);
+        setActiveTool('motionCurve'); // Установка активного инструмента
     };
-
 
     const handleKeyframeClick = () => {
         if (!keyFrameManagerRef.current) {
             keyFrameManagerRef.current = new KeyFrameManager(svgCanvasState.canvas);
         }
         animationToolState.setAnimationTool(keyFrameManagerRef.current);
-        console.log(animationToolState.currentTool)
-        console.log(svgCanvasState.svgElements)
-
+        setActiveTool('keyframe'); // Установка активного инструмента
     };
 
-    // Определяем, какой инструмент анимации сейчас выбран
     let selectedToolContent;
     if (animationToolState.currentTool instanceof MotionCurve) {
-        selectedToolContent = <div>Содержимое для MotionCurve</div>;
+        selectedToolContent = <div className='animation-setting-block-title'>Нарисуйте кривую, по которой будет двигаться элемент</div>;
     } else if (animationToolState.currentTool instanceof KeyFrameManager) {
         selectedToolContent = <TransformBlock />;
     } else {
-        selectedToolContent = <div>Select a tool</div>; // Или какой-то другой дефолтный контент
+        selectedToolContent = <div>Выберите инструмент анимации</div>;
     }
-
 
     return (
         <div className="block-container">
@@ -60,12 +51,16 @@ const AnimationSettingBlock = observer(() => {
                     Настройки анимации
                 </div>
                 <div className="animation-setting-block-btns">
-                    <button
-                        className={`animation-setting-block-btns__btn motionCurve `}
-                        onClick={handleMotionCurveClick} />
-                    <button
-                        className={`animation-setting-block-btns__btn keyframeElement `}
-                        onClick={handleKeyframeClick} />
+                    <button 
+                        className={`animation-setting-block-btns__btn ${activeTool === 'motionCurve' ? 'activeAnimBtn' : ''}`}
+                        onClick={handleMotionCurveClick}>
+                            Кривая
+                    </button>
+                    <button 
+                        className={`animation-setting-block-btns__btn ${activeTool === 'keyframe' ? 'activeAnimBtn' : ''}`}
+                        onClick={handleKeyframeClick}> 
+                            Кадры
+                    </button>
                 </div>
                 <div className="animation-setting-block-data">
                     {selectedToolContent}

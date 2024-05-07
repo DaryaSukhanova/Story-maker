@@ -19,22 +19,13 @@ const TimelineItems = observer(({ findNearestTickPosition, updateKeysInSvgElemen
                         <div className="timeline-item">
                             <TimelineTool
                                 key={`tool-${index}`}
-                                toolType={svgElement.shape.type}
-                                keyframesKeys={svgElement.keys}
-                                onAddKey={(newKey) => {
-                                    svgCanvasState.setSvgElements(
-                                        svgCanvasState.svgElements.map((elem, i) => (
-                                            i === index ? { ...elem, keys: [...elem.keys, newKey] } : elem
-                                        ))
-                                    );
-                                }}
+                                element={svgElement}
                             />
                             <TimelineLine
                                 key={`line-${index}`}
-                                id={index}
+                                id={svgElement.id}
                                 findNearestTickPosition={findNearestTickPosition}
                                 keyframesKeys={svgElement.keys}
-                                updateKeys={(updatedKeys) => updateKeysInSvgElement(index, updatedKeys)}
                             />
                         </div>
                     )}
