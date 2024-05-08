@@ -54,7 +54,7 @@ const AnimationSettingBlock = observer(() => {
                     <button 
                         className={`animation-setting-block-btns__btn ${activeTool === 'motionCurve' ? 'activeAnimBtn' : ''}`}
                         onClick={handleMotionCurveClick}>
-                            Кривая
+                            Путь
                     </button>
                     <button 
                         className={`animation-setting-block-btns__btn ${activeTool === 'keyframe' ? 'activeAnimBtn' : ''}`}
