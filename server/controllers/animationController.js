@@ -37,13 +37,15 @@ class animationController {
 			})
 			svgData.save()
 			svgData = await File.findOne(svgData)
-			const keysData = await Keys.create({
-				data: JSON.stringify(keyFrames),
-				svgId: svgData.id,
-				user: req.user.id,
-				size: keySize
-			})
-			keysData.save()
+			if (keySize != 0) {
+				const keysData = await Keys.create({
+					data: JSON.stringify(keyFrames),
+					svgId: svgData.id,
+					user: req.user.id,
+					size: keySize
+				})
+				keysData.save()
+			}
 			user.save()
 
 			res.status(200).json({ data: svgData, message: "Animation saved successfully" });
@@ -60,7 +62,7 @@ class animationController {
 			const svgData = await File.findOne({user: req.user.id, _id: req.query.id})
 			const svgAttrs = JSON.parse(fs.readFileSync(path.resolve(`files/${req.user.id}/${svgData.path}`)))
 			const keyData = await Keys.findOne({user: req.user.id, svgId: svgData.id})
-			const keyFrames = JSON.parse(keyData.data)
+			const keyFrames = keyData != null ? JSON.parse(keyData.data) : new Array(svgAttrs.attr.length)
 			const animations = {name: svgData.name, animationData: [], duration: svgAttrs.duration}
 			for (let i = 0; i < svgAttrs.attr.length; i++) {
 				animations.animationData.push({
@@ -70,7 +72,6 @@ class animationController {
 					origin:svgAttrs.attr[i].origin
 				})
 			}
-			console.log("animations", animations)
 			return res.status(200).json(animations)
 		} catch (e) {
 			const status = e.status || 500
