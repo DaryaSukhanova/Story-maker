@@ -214,13 +214,15 @@
   position: absolute;
   //background: url('../assets/img/keyframes.svg') no-repeat center center;
 }
+.frame[data-active="true"] {
+  background-color: #c1e0ff; /* Цвет для активного ключевого кадра */
+}
+
 .timeline-keytime{
 
   //position: relative;
 }
-.active-frame{
-  background: #c1e0ff;
-}
+
 .timeline-keyframes{
   position: relative;
   width: 1500px;

@@ -5,7 +5,9 @@ import svgCanvasState from "../store/svgCanvasState.js";
 import uploadState from "../store/uploadState.js";
 import axios from "axios";
 import {SVG} from "@svgdotjs/svg.js";
+import { createAnimationStyle } from "../tools/animation-tools/animationStylesManager.js";
 import timelineBlockState from "../store/timelineBlockState";
+import AnimationMotionCurveController from "../tools/animation-tools/AnimationMotionCurveController.js";
 
 export const getFiles = async (dirId) => {
     try {
@@ -118,6 +120,7 @@ export const addBackground = async (file) => {
 // };
 
 export const addAnimation = async (file) => {
+    
     try {
         const response = await axios.get(`http://localhost:5000/api/v1/animations?id=${file._id}`, {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -125,23 +128,52 @@ export const addAnimation = async (file) => {
 
         const canvas = SVG(svgCanvasState.canvas);
         const canvasRect = canvas.node.getBoundingClientRect();
-
+        console.log(response.data);
+        const animationController = new AnimationMotionCurveController();
         response.data.animationData.forEach((item, index) => {
             let svgElement;
 
-            if (item.attributes['type-tool'] === 'circle') {
-                svgElement = canvas.circle().attr(item.attributes);
-            } else if (item.attributes['type-tool'] === 'rect') {
-                svgElement = canvas.rect().attr(item.attributes);
+            // Создание SVG элементов в зависимости от типа инструмента
+            switch (item.attributes['type-tool']) {
+                case 'circle':
+                    svgElement = canvas.circle().attr(item.attributes);
+                    break;
+                case 'rect':
+                    svgElement = canvas.rect().attr(item.attributes);
+                    break;
+                case 'line':
+                    svgElement = canvas.line().attr(item.attributes);
+                    break;
+                case 'polygon':
+                    svgElement = canvas.polygon().attr(item.attributes);
+                    break;
+                case 'path':
+                    svgElement = canvas.path().attr(item.attributes);
+                    break;
+                default:
+                    console.warn("Unsupported SVG element type:", item.attributes['type-tool']);
+                    return; // Пропускаем необрабатываемые типы
             }
 
             if (item.isAnimated && item.keys.length > 0) {
-                // const newOrigin = adjustTransformOrigin(svgElement, canvasRect);
                 const animationName = `animation_${index}`;
-                createAnimationStyle(item.keys, animationName, {x: item.origin.x, y: item.origin.y});
+                createAnimationStyle({x: item.origin.x, y: item.origin.y}, item.keys, index, response.data.duration, animationName);
                 svgElement.attr({
                     style: `animation: ${animationName} ${response.data.duration}s infinite;`
                 });
+            }
+            if (item.isAnimated) {
+                // Предполагается, что путь известен и находится в `item.path`
+                const path = canvas.path(item.path); // или как-то иначе получаем путь
+
+                // animationController.initializeAnimation(
+                //     svgElement,
+                //     path,
+                //     response.data.duration,
+                //     false, // Используем флаг
+                //     false, // Флаг isRunningThumb
+                //     null // Храним блок с таймлайном
+                // );
             }
         });
 
@@ -151,33 +183,6 @@ export const addAnimation = async (file) => {
     }
 };
 
-const createAnimationStyle = (keys, animationName, origin) => {
-
-
-    const existingStyle = document.querySelector(`style[data-animation="${animationName}"]`);
-    if (existingStyle) {
-        existingStyle.remove();
-    }
-
-    const style = document.createElement('style');
-    style.setAttribute('data-animation', animationName);
-
-    let keyframesCSS = `@keyframes ${animationName} {`;
-
-    keys.forEach(key => {
-        const percent = (key.position / Math.max(...keys.map(k => k.position))) * 100;
-        keyframesCSS += `
-            ${percent}% {
-                transform-origin: ${origin.x}px ${origin.y}px;
-                transform: rotate(${key.rotate}deg) scale(${key.scaleX}, ${key.scaleY}) translate(${key.translateX}px, ${key.translateY}px) skew(${key.skewX}deg, ${key.skewY}deg);
-            }
-        `;
-    });
-
-    keyframesCSS += '}';
-    style.textContent = keyframesCSS;
-    document.head.appendChild(style);
-};
 
 export const deleteFile = async (file) => {
 	try {

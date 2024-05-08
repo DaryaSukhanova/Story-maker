@@ -72,7 +72,8 @@ const serializeSvgElements = () => {
             isAnimated: svgElement.isAnimated,
             keys: svgElement.keys,
             attributes: attrsObj,
-            origin: svgElement.origin // Сохраняем дополнительные свойства
+            origin: svgElement.origin,
+            path: svgElement.path 
         };
     });
 };

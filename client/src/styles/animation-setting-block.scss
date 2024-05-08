@@ -1,7 +1,5 @@
 @import "./variables";
-.animation-setting-block{
 
-}
 .animation-setting-block-container{
   display: flex;
   align-items: center;
@@ -20,40 +18,21 @@
   border: solid #ddd 1px;
   border-radius: 7px;
   &__btn {
-    height: 30px;
-    width: 30px;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: center;
+    width: 100px;
+    height: 35px;
     border: none;
     outline: none;
     cursor: pointer;
     background-size: cover;
-
-
-  }
-  .motionCurve{
-    background: url('../assets/img/motionCurve.svg') no-repeat center center;
-    background-size: 110% 110%;
-  }
-  .keyframeElement{
-    background: url('../assets/img/rotateElement.svg') no-repeat center center;
-    background-size: 100% 100%;
-  }
-  .motionCurve::after {
-    content: "Motion Curve";
-    display: none;
-    position: absolute;
-    padding: 10px 0;
-    font-size: 13px;
-    color: gray;
-  }
-  .active-animation-setting-btn{
-    border: solid 1.5px #8c8c8c;
     border-radius: 5px;
   }
 
-  //.motionCurve:hover::after {
-  //  display: block; /* Показываем текст при наведении */
-  //}
+}
 
-
-
+.activeAnimBtn{
+  background-color: #AAC2FF;
+  color: #ffffffdd;
 }

@@ -1,118 +1,84 @@
-import React, {useEffect, useRef, useState} from 'react';
-import timelineBlockState from "../../store/timelineBlockState";
-import {observer} from "mobx-react-lite";
-import svgCanvasState from "../../store/svgCanvasState";
-import {logDOM} from "@testing-library/react";
+import React, { useState, useRef } from 'react';
+import { observer } from "mobx-react-lite";
+import svgCanvasState from '../../store/svgCanvasState';
 
-const TimelineLine = observer(({id, findNearestTickPosition, keyframesKeys, updateKeys}) => {
+const TimelineLine = observer(({ id, findNearestTickPosition, keyframesKeys, updateKeyPosition }) => {
     const timelineKeyRef = useRef(null);
     const [isDraggingKey, setIsDraggingKey] = useState(false);
-    const [draggingKeyId, setDraggingKeyId]= useState(null)
-    // const keys = timelineBlockState.keys
+    const [draggingKeyId, setDraggingKeyId] = useState(null);
+    const [draggingStart, setDraggingStart] = useState({ startX: 0, initialLeft: 0 });
 
-    let maxDurationKey;
-    let minDurationKey;
+    const handleKeyMouseDown = (event, keyId) => {
+        event.preventDefault();
+        setIsDraggingKey(true);
+        setDraggingKeyId(keyId);
 
-    if (keyframesKeys.length > 0) {
-        maxDurationKey = keyframesKeys.reduce((maxKey, currentKey) => {
-            return currentKey.duration > maxKey.duration ? currentKey : maxKey;
-        }, keyframesKeys[0]);
-        minDurationKey = keyframesKeys.reduce((minKey, currentKey) => {
-            return currentKey.duration < minKey.duration ? currentKey : minKey;
-        }, keyframesKeys[0]);
-    } else {
-        // Если массив пустой, просто устанавливаем нулевые значения
-        maxDurationKey = { duration: 0, position: 0 };
-        minDurationKey = { duration: 0, position: 0 };
-    }
+        svgCanvasState.setActiveElement(id)
+        svgCanvasState.setActiveKey(keyId)
 
-    const handleKeyDrag = (event) => {
-        if (isDraggingKey) {
-            const boundingRect = timelineKeyRef.current.getBoundingClientRect();
-            const newPosition = event.clientX - boundingRect.left;
+        // Получаем текущую позицию из стиля `left`
+        const currentKeyElem = document.getElementById(keyId);
+        const initialLeft = currentKeyElem ? parseFloat(currentKeyElem.style.left || '0') : 0;
 
-            // Обновляем позицию перетаскиваемого ключа в timelineBlockState.keys
-            const updatedToolBlockKeys = keyframesKeys.map(key => {
-                if (key.id === draggingKeyId) {
-                    return { ...key, position: findNearestTickPosition(newPosition) };
-                }
-                return key;
-            });
-            updateKeys(updatedToolBlockKeys)
-            // Обновляем состояние keys из timelineBlockState.keys
-            // timelineBlockState.setKeys([...updatedToolBlockKeys]);
+        // Инициализируем начальную позицию для перетаскивания
+        setDraggingStart({
+            startX: event.clientX,
+            initialLeft: initialLeft,
+        });
+
+        // Устанавливаем атрибут `data-active` для выбранного ключа
+        document.querySelectorAll('.frame').forEach(elem => elem.setAttribute('data-active', 'false'));
+        if (currentKeyElem) {
+            currentKeyElem.setAttribute('data-active', 'true');
         }
     };
 
-    const handleKeyMouseDown = (event, keyId) => {
-        setIsDraggingKey(true)
-        event.preventDefault();
-        setIsDraggingKey(true); // Устанавливаем флаг, что началось перетаскивание ключа
-        setDraggingKeyId(keyId); // Устанавливаем id перетаскиваемого ключа
+    const handleKeyDrag = (event) => {
+        if (isDraggingKey && draggingKeyId !== null) {
+            // Вычисляем смещение относительно начальной позиции
+            const offsetX = event.clientX - draggingStart.startX;
+            const newLeft = draggingStart.initialLeft + offsetX;
 
-
-        const updatedSvgElements = svgCanvasState.svgElements.map(element => {
-            const updatedKeys = element.keys.map(key => {
-                return { ...key, isActive: false };
-            });
-            return { ...element, keys: updatedKeys };
-        });
-
-        svgCanvasState.setSvgElements(updatedSvgElements);
-
-        const updatedKeys = keyframesKeys.map(key => {
-            return { ...key, isActive: key.id === keyId }; // Устанавливаем активность только для выбранного ключа
-        });
-        updateKeys(updatedKeys); // Обновляем массив ключей в родительском компоненте
+            // Обновляем только стиль `left` для визуального смещения
+            const currentKeyElem = document.getElementById(draggingKeyId);
+            if (currentKeyElem) {
+                currentKeyElem.style.left = `${findNearestTickPosition(newLeft)}px`;
+            }
+        }
     };
 
     const handleKeyEnd = (event) => {
-        const boundingRect = timelineKeyRef.current.getBoundingClientRect();
-        const newPosition = event.clientX - boundingRect.left;
-        const updatedToolBlockKeys = keyframesKeys.map(key => {
-            if (key.id === draggingKeyId) {
-                return { ...key, duration: (findNearestTickPosition(newPosition) / 150)};
-            }
-            return key;
-        });
-        updateKeys(updatedToolBlockKeys)
+        if (isDraggingKey && draggingKeyId !== null) {
+            // Завершаем перетаскивание и передаем финальную позицию
+            const boundingRect = timelineKeyRef.current.getBoundingClientRect();
+            const newPosition = event.clientX - boundingRect.left;
 
-        setIsDraggingKey(false); // Сбрасываем флаг перетаскивания ключа
-        document.removeEventListener('mousemove', handleKeyDrag);
-    };
+            // Здесь мы вызываем функцию обновления ключа, передавая новое значение
+            svgCanvasState.updateKeyframeField(id, draggingKeyId, "duration", findNearestTickPosition(newPosition)/150);
 
-    const handleClick = () => {
-        timelineBlockState.setActiveTimeline(id);
-
-    };
-
-    const timelineKeyTimeStyles = {
-        marginLeft: `${minDurationKey.position}px`,
-        width: `${maxDurationKey.position - minDurationKey.position}px`,
-        height: `50%`,
-        backgroundColor: 'rgba(46,80,166,0.67)'
+            setIsDraggingKey(false);
+            setDraggingKeyId(null);
+        }
     };
 
     return (
-
-        <div className="timeline-line"
-             id={`timeline${id}`}
-             ref={timelineKeyRef}
-             onMouseMove={handleKeyDrag}
-             onMouseUp={handleKeyEnd}
-             onClick={handleClick}
+        <div
+            className="timeline-line"
+            id={`timeline${id}`}
+            ref={timelineKeyRef}
+            onMouseMove={handleKeyDrag}
+            onMouseUp={handleKeyEnd}
         >
-            <div className="timeline-keytime" style={timelineKeyTimeStyles}></div>
             {keyframesKeys.map(key => (
                 <div
                     onMouseDown={(event) => handleKeyMouseDown(event, key.id)}
-                    key={key.name}
-                    id={key.name}
-                    className={`btn-key frame ${key.isActive ? 'active-frame' : ''}`}
-                    style={{ left: `${key.position}px` }}
+                    key={key.id}
+                    id={key.id}
+                    className="btn-key frame"
+                    data-active="false"
+                    style={{ left: `0px` }} // Начальное положение
                 ></div>
             ))}
-            <div className="thumb-current" style={{ transform: `translateX(${timelineBlockState.roundedElapsedTime * (150 / 1000)-4}px)` }}></div>
         </div>
     );
 });

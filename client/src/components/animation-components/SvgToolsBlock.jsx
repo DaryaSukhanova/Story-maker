@@ -5,6 +5,7 @@ import BoxSelect from "../../tools/animation-tools/BoxSelect";
 import svgCanvasState from "../../store/svgCanvasState";
 import BoxSelectNew from "../../tools/animation-tools/BoxSelectNew";
 import Group from "../../tools/animation-tools/Group";
+import Mover from "../../tools/animation-tools/Mover";
 
 const SvgToolsBlock = ({ currentColor }) => {
     const [isFill, setIsFill] = useState(false);
@@ -69,10 +70,9 @@ const SvgToolsBlock = ({ currentColor }) => {
                 <button className="tool-bar__btn-tools group" onClick={() => {
                     new Group(svgCanvasState.canvas);
                 }} />
-                <input
-                    className="tool-bar__btn-tools move"
-                    type="button"
-                />
+                <button className="tool-bar__btn-tools move" onClick={() => {
+                    new Mover(svgCanvasState.canvas);
+                }} />
                 {/*<input*/}
                 {/*    className="tool-bar__btn-tools color-picker"*/}
                 {/*    type="button"*/}

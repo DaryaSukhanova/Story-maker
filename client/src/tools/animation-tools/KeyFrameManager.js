@@ -3,7 +3,7 @@ import AnimationTool from "./AnimationTool";
 import svgCanvasState from "../../store/svgCanvasState";
 import {action} from "mobx";
 import animationToolState from "../../store/animationToolState";
-
+import { createAnimationStyle } from './animationStylesManager';
 
 export default class KeyFrameManager extends AnimationTool{
     constructor(svgCanvas) {
@@ -17,7 +17,6 @@ export default class KeyFrameManager extends AnimationTool{
     mouseDownHandler = (e) => {
         const target = e.target;
         svgCanvasState.toggleAnimation(target)
-        console.log(svgCanvasState.svgElements)
     }
 
 
@@ -29,12 +28,12 @@ export default class KeyFrameManager extends AnimationTool{
             this.element = animatedElement.shape;
             const rect = animatedElement.shape.bbox();
             console.log(animatedElement.shape.bbox())
-
-            this.applyRotationAnimationStyle(animatedElement.origin.x, animatedElement.origin.y, animatedElement.keys, index);
+            const animationName = `rotatePath_${index}`;
+            createAnimationStyle({x: animatedElement.origin.x, y: animatedElement.origin.y}, animatedElement.keys, index, timelineBlockState.totalTime, animationName);
 
             animatedElement.shape.attr({
                 'style': `
-                animation: rotatePath_${index}; 
+                animation: ${animationName}; 
                 animation-duration: ${timelineBlockState.totalTime}s; 
                 animation-iteration-count: infinite; 
                 animation-play-state: ${!isRunningThumb ? 'paused' : 'running'};
@@ -42,50 +41,7 @@ export default class KeyFrameManager extends AnimationTool{
             });
         });
     }
-    applyRotationAnimationStyle (x, y, keys, index) {
-        this.thumbPosition = timelineBlockState.thumbEndPosition
 
-        const prevStyle = document.querySelector(`style[data-animation="rotatePath_${index}"]`);
-        if (prevStyle) {
-            prevStyle.remove();
-        }
-
-        // Создание нового элемента <style>
-        const style = document.createElement('style');
-        style.setAttribute('data-animation', `rotatePath_${index}`);
-
-        let keyframes = `
-        0% {
-            transform-origin: ${x}px ${y}px;
-            transform: rotate(0deg) scale(1, 1) translate(0px, 0px) skew(0deg, 0deg);
-        }
-        `;
-
-        keys.forEach((key, index) => {
-            const percent = (key.position / this.thumbPosition)*100;
-            keyframes += `
-            ${percent}% {
-                transform-origin: ${x}px ${y}px;
-                transform: rotate(${key.rotate}deg) scale(${key.scaleX}, ${key.scaleY}) translate(${key.translateX}px, ${key.translateY}px) skew(${key.skewX}deg, ${key.skewY}deg);
-            }
-        `;
-        });
-        const maxDurationKey = keys.reduce((maxKey, currentKey) => {
-            return currentKey.duration > maxKey.duration ? currentKey : maxKey;
-        }, keys[0]); // Начальное значение - первый ключ
-        keyframes += `
-        100% {
-            transform-origin: ${x}px ${y}px;
-            transform: rotate(${maxDurationKey.rotate}deg) scale(${maxDurationKey.scaleX}, ${maxDurationKey.scaleY}) translate(${maxDurationKey.translateX}px, ${maxDurationKey.translateY}px) skew(${maxDurationKey.skewX}deg, ${maxDurationKey.skewY}deg);
-        }
-        `;
-        style.textContent = `
-        @keyframes rotatePath_${index} {
-            ${keyframes}
-        }
-        `;
-        document.head.appendChild(style);
-    };
     resetAnimations() {
         // Удаление стилей для каждой анимации
         svgCanvasState.svgElements.forEach((element, index) => {

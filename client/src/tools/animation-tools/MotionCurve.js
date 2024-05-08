@@ -8,70 +8,106 @@ import svgCanvasState from "../../store/svgCanvasState";
 
 import {SVG} from "@svgdotjs/svg.js";
 import timelineBlockState from "../../store/timelineBlockState";
+import AnimationMotionCurveController from "./AnimationMotionCurveController";
 
-
-let distanceCovered = null
-let isAnimationSaved = animationToolState.isAnimationSaved;
-let isUpdateTime = true
 
 export default class MotionCurve extends AnimationTool {
     constructor(svgCanvas) {
         super(svgCanvas);
         // this.pathData = "";
         this.path = null;
-        this.distanceCovered = 0; // Переменная для отслеживания пройденного расстояния
-        this.pathLength = 0; // Длина пути
+         // Переменная для отслеживания пройденного расстояния
+         // Длина пути
         this.speed = 2; // Скорость анимации
-        this.requestId = null; // ID для отслеживания requestAnimationFrame
+        this.requestId = null;
         this.drawingCanvas = SVG(document.getElementById("drawingCanvas"))
         this.arrPath = []
+        this.distanceCovered = 0;
         svgToolState.clearBoundingBox()
 
+        this.animationController = new AnimationMotionCurveController();
+
     }
 
+    // initializeAnimation(element, path, duration, useFlag = true) {
+    //     const pathLength = path.length(); // Общая длина пути
+    //     let startTime = null; // Время начала текущего цикла анимации
+    
+    //     // Проверка корректности параметров
+    //     if (!element || !path || !path.length()) return;
+    //     if (duration <= 0) {
+    //         console.error('Animation duration must be greater than zero');
+    //         return;
+    //     }
+    
+    //     const pixelsPerMs = pathLength / (duration * 1000); // Скорость движения в пикселях за миллисекунду
+    
+    //     // Функция анимации
+    //     const animate = (timestamp) => {
+    //         // Проверяем флаг `this.isRunningThumb`, если `useFlag` активен
+    //         if (useFlag && !this.isRunningThumb) {
+    //             startTime = null; 
+    //             return; 
+    //         }
+    
+    //         // Устанавливаем начальное время или корректируем его после паузы
+    //         if (startTime === null) {
+    //             startTime = timestamp;
+    //         }
+    
+    //         // Рассчитываем прошедшее время с момента начала текущего цикла
+    
+    //         let elapsedTime;
+    //         if (useFlag) {
+    //             elapsedTime = timelineBlockState.elapsedTime;
+    //         } else {
+    //             elapsedTime = timestamp - startTime;
+    //         }
+    
+    //         // Рассчитываем новое расстояние с учетом сохраненного
+    //         this.distanceCovered = elapsedTime * pixelsPerMs ;
+    //         console.log(this.distanceCovered, pathLength)
+    //         // Обеспечиваем цикличность анимации
+    //         if (this.distanceCovered >= pathLength) {
+    //             console.log('Animation completed, restarting...');
+    //             this.distanceCovered = this.distanceCovered % pathLength; // Перезапускаем движение с начала
+    //             startTime = timestamp; // Перезапускаем отсчёт времени
+    //         }
+    
+    //         // Перемещаем элемент
+    //         const point = path.pointAt(this.distanceCovered);
+    //         if (element) {
+    //             element.center(point.x, point.y);
+    //         }
+    
+    //         // Запланировать следующий кадр
+    //         this.requestId = requestAnimationFrame(animate);
+    //     };
+    
+    //     // Отменяем предыдущий кадр, если он запланирован
+    //     if (this.requestId) {
+    //         cancelAnimationFrame(this.requestId);
+    //     }
+    
+    //     // Запускаем анимацию
+    //     this.requestId = requestAnimationFrame(animate);
+    // }
+    
     startAnimations(isRunningThumb) {
         this.isRunningThumb = isRunningThumb;
+        const element = this.drawingCanvas.findOne('[data-tool="true"]');
 
-        if (!this.path || !this.path.length()) return; // Если путь не определен или его длина равна нулю, выходим из функции
-
-        this.pathLength = this.path.length(); // Получаем длину пути
-        
-        if (timelineBlockState.totalTime  <= 0) {
-            console.error('Animation duration must be greater than zero');
-            return;
-        }
-        const pixelsPerMs = this.pathLength / (timelineBlockState.totalTime * 1000); // Скорость движения по пути в пикселях за миллисекунду
-
-        const animate = () => {
-            if (!this.isRunningThumb) {
-                console.log('Animation paused at distance:', this.distanceCovered);
-                return; // Прекращаем анимацию, если флаг опущен
-            }
-
-            // Пройденное расстояние = прошедшее время * скорость
-            this.distanceCovered = timelineBlockState.elapsedTime * pixelsPerMs;
-
-            if (this.distanceCovered >= this.pathLength) {
-                console.log('Animation completed, restarting...');
-                this.distanceCovered %= this.pathLength; // Обеспечиваем цикличность анимации
-            }
-
-            const point = this.path.pointAt(this.distanceCovered);
-            const element = this.drawingCanvas.findOne('[data-tool="true"]');
-            if (element) {
-                element.center(point.x, point.y);
-            }
-
-            this.requestId = requestAnimationFrame(animate); // Запланировать следующий кадр
-        };
-
-        if (this.requestId) {
-            cancelAnimationFrame(this.requestId); // Отменяем предыдущий запланированный кадр
-        }
-
-        this.requestId = requestAnimationFrame(animate); // Запускаем анимацию
-        this.path.attr('visibility', this.isRunningThumb ? 'hidden' : 'visible');
+        // Используем метод `initializeAnimation` из импортированного класса
+        this.animationController.initializeAnimation(
+            element, 
+            this.path, 
+            timelineBlockState.totalTime, 
+            true, 
+            isRunningThumb, 
+            timelineBlockState
+        );
     }
+
     resetAnimations() {
         if (this.requestId) {
             cancelAnimationFrame(this.requestId); // Отменяем текущую анимацию
@@ -127,40 +163,20 @@ export default class MotionCurve extends AnimationTool {
 
     mouseUpHandler(e) {
         super.mouseUpHandler(e);
+
+        const pathData = this.path.attr('d');
+        console.log(pathData)
+        // Используем идентификатор активного элемента из хранилища
+        // const activeElementId = svgCanvasState.activeElement;
+        const element = this.drawingCanvas.findOne('[data-tool="true"]');
+        const activeElementId = element.attr('id');
+
+        if (activeElementId) {
+            svgCanvasState.updateElementPath(activeElementId, pathData);
+            console.log(svgCanvasState.svgElements)
+        } else {
+            console.log("No active element set in canvas state.");
+        }
     }
-
-    /**
-     * TODO
-     * 1. Сделать key для элементов. У двух и более элементов должен быть одинаковый ключ, ключ положи class/data-attribute, чтобы можно было достать пары и отфильтровать траекториию
-     * 2.
-     */
-
-    // saveAlongPath(){
-    //     const listSvgConfigs = new Map();
-    //     const documentHolst = document.getElementById('drawingCanvas');
-    //     // TODO data-type нужно расширить значения допустимые. data-type должен описывать тип фигуры круг/квадрат
-    //     // TODO Доставать нужно по ключу, ключ и тип являются разными значениями
-    //     const getAllElementsOnAttribute = documentHolst.querySelectorAll('[fill]')
-    //     // Родитель всех элементов на странице
-    //     for(let i = 0; i < 2; i++) {
-    //         const elements = [];
-    //         // TODO for(let itemType of types) { }
-    //         // Тут type
-    //         for (let item of getAllElementsOnAttribute) {
-    //             let config = {}
-    //
-    //             for (let attr of item.attributes) {
-    //                 config[attr.name] = attr.value;
-    //             }
-    //
-    //             elements.push(config);
-    //         }
-    //
-    //         listSvgConfigs.set(i, elements);
-    //     }
-    //
-    //     const convertToObject = Object.fromEntries(listSvgConfigs);
-    //     // savedJson(convertToObject, this.currentName)
-    // }
 
 }

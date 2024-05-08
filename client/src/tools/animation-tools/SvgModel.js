@@ -19,6 +19,7 @@ export default class SvgModel extends SvgTool{
     }
 
     mouseUpHandler(e) {
+        this.mouseDown = false;
     }
 
     mouseDownHandler(e) {
@@ -56,7 +57,7 @@ export default class SvgModel extends SvgTool{
     }
 
     mouseMoveHandler(e) {
-
+        super.mouseMoveHandler()
     }
 
 }
