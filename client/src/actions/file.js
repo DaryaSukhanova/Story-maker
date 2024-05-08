@@ -7,6 +7,7 @@ import axios from "axios";
 import {SVG} from "@svgdotjs/svg.js";
 import { createAnimationStyle } from "../tools/animation-tools/animationStylesManager.js";
 import timelineBlockState from "../store/timelineBlockState";
+import AnimationMotionCurveController from "../tools/animation-tools/AnimationMotionCurveController.js";
 
 export const getFiles = async (dirId) => {
     try {
@@ -119,7 +120,7 @@ export const addBackground = async (file) => {
 // };
 
 export const addAnimation = async (file) => {
-    console.log(file);
+    
     try {
         const response = await axios.get(`http://localhost:5000/api/v1/animations?id=${file._id}`, {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -127,7 +128,8 @@ export const addAnimation = async (file) => {
 
         const canvas = SVG(svgCanvasState.canvas);
         const canvasRect = canvas.node.getBoundingClientRect();
-
+        console.log(response.data);
+        const animationController = new AnimationMotionCurveController();
         response.data.animationData.forEach((item, index) => {
             let svgElement;
 
@@ -155,11 +157,23 @@ export const addAnimation = async (file) => {
 
             if (item.isAnimated && item.keys.length > 0) {
                 const animationName = `animation_${index}`;
-                console.log("origin", item.origin.x + svgElement.bbox().x, item.origin.y + svgElement.bbox().y, item.origin.x, item.origin.y);
                 createAnimationStyle({x: item.origin.x, y: item.origin.y}, item.keys, index, response.data.duration, animationName);
                 svgElement.attr({
                     style: `animation: ${animationName} ${response.data.duration}s infinite;`
                 });
+            }
+            if (item.isAnimated) {
+                // Предполагается, что путь известен и находится в `item.path`
+                const path = canvas.path(item.path); // или как-то иначе получаем путь
+
+                // animationController.initializeAnimation(
+                //     svgElement,
+                //     path,
+                //     response.data.duration,
+                //     false, // Используем флаг
+                //     false, // Флаг isRunningThumb
+                //     null // Храним блок с таймлайном
+                // );
             }
         });
 
