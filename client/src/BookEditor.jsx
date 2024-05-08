@@ -55,7 +55,7 @@ const BookEditor = () => {
     return (
         <div className="book-editor">
             <div className="book-editor-workspace">
-            <SvgCanvas />
+            <SvgCanvas/>
             {/* <div className="file-manager">
                 <div className="book-editor-title">
                     File Manager

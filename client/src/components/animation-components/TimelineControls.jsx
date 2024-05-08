@@ -52,12 +52,12 @@ const TimelineControls = observer( () => {
     const handleStartButtonClick = () => {
 
         timelineBlockState.setIsRunningThumb(!isRunningThumb);
-        if (timelineBlockState.activeElement) {
+        // if (timelineBlockState.activeElement) {
             animationToolState.currentTool.startAnimations(timelineBlockState.isRunningThumb);
 
-        } else{
-            alert("Select the active element")
-        }
+        // } else{
+        //     alert("Select the active element")
+        // }
 
     };
     const handleStopButtonClick = () => {

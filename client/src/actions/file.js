@@ -120,7 +120,6 @@ export const addBackground = async (file) => {
 // };
 
 export const addAnimation = async (file) => {
-    
     try {
         const response = await axios.get(`http://localhost:5000/api/v1/animations?id=${file._id}`, {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
@@ -128,8 +127,11 @@ export const addAnimation = async (file) => {
 
         const canvas = SVG(svgCanvasState.canvas);
         const canvasRect = canvas.node.getBoundingClientRect();
-        console.log(response.data);
         const animationController = new AnimationMotionCurveController();
+
+        // Создаём группу <g> для анимации
+        const animationGroup = canvas.group().attr({ id: 'animationGroup' , 'data-tool': true});
+
         response.data.animationData.forEach((item, index) => {
             let svgElement;
 
@@ -152,26 +154,40 @@ export const addAnimation = async (file) => {
                     break;
                 default:
                     console.warn("Unsupported SVG element type:", item.attributes['type-tool']);
-                    return; // Пропускаем необрабатываемые типы
+                    return;
             }
 
+            // Добавляем элемент в группу
+            animationGroup.add(svgElement);
+
+            // Если элемент анимирован, создаем стили и задаем анимацию
             if (item.isAnimated && item.keys.length > 0) {
                 const animationName = `animation_${index}`;
-                createAnimationStyle({x: item.origin.x, y: item.origin.y}, item.keys, index, response.data.duration, animationName);
+                createAnimationStyle(
+                    { x: item.origin.x, y: item.origin.y },
+                    item.keys,
+                    index,
+                    response.data.duration,
+                    animationName
+                );
                 svgElement.attr({
                     style: `animation: ${animationName} ${response.data.duration}s infinite;`
                 });
             }
+
+            // Добавляем путь для анимации по кривой
             if (item.pathData) {
-                const path = canvas.path(item.pathData); 
-                
-                console.log(path)
+                const path = canvas.path(item.pathData);
                 path.attr({
                     fill: "none",
                     stroke: "black",
                     "stroke-width": 2,
                     display: "none"
                 });
+
+                // Добавляем путь в группу
+                animationGroup.add(path);
+
                 animationController.initializeAnimation(
                     svgElement,
                     path,
@@ -183,7 +199,7 @@ export const addAnimation = async (file) => {
             }
         });
 
-        console.log("SVG elements successfully added to the canvas");
+        console.log("SVG elements successfully added to the canvas in a group");
     } catch (e) {
         console.error("Error fetching animation data:", e?.response?.data?.message);
     }

@@ -38,6 +38,7 @@ export default class KeyFrameManager extends AnimationTool{
                     animation-duration: ${timelineBlockState.totalTime}s; 
                     animation-iteration-count: infinite; 
                     animation-play-state: ${!isRunningThumb ? 'paused' : 'running'};
+                    transform-origin: 50% 50%;
                 `
                 });
             }

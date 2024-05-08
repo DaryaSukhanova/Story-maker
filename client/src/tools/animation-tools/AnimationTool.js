@@ -5,10 +5,9 @@ import svgCanvasState from "../../store/svgCanvasState";
 export default class AnimationTool {
     constructor(svgCanvas) {
         this.svgCanvas = svgCanvas;
-
+        
         this.currentSpeed = 20;
         this.mouseDown = false; // Добавляем состояние для отслеживания нажатия кнопки мыши
-
         this.destroyEvents();
     }
 
@@ -25,6 +24,7 @@ export default class AnimationTool {
     }
 
     mouseDownHandler(e) {
+        
         this.mouseDown = true; // Устанавливаем флаг нажатия кнопки мыши
         // Добавляем слушатель mousemove только после нажатия кнопки мыши
         this.svgCanvas.onmousemove = this.mouseMoveHandler.bind(this);

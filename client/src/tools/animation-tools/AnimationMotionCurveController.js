@@ -17,9 +17,10 @@ export default class AnimationMotionCurveController {
         }
 
         const pixelsPerMs = pathLength / (duration * 1000); // Скорость движения в пикселях за миллисекунду
-
+       
         // Функция анимации
         const animate = (timestamp) => {
+            
             if (useFlag && !isRunningThumb) {
                 startTime = null;
                 return;
@@ -40,7 +41,7 @@ export default class AnimationMotionCurveController {
 
             // Рассчитываем новое расстояние с учетом сохраненного
             this.distanceCovered = elapsedTime * pixelsPerMs;
-
+            
             // Обеспечиваем цикличность анимации
             if (this.distanceCovered >= pathLength) {
                 console.log('Animation completed, restarting...');
