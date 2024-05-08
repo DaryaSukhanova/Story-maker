@@ -8,70 +8,106 @@ import svgCanvasState from "../../store/svgCanvasState";
 
 import {SVG} from "@svgdotjs/svg.js";
 import timelineBlockState from "../../store/timelineBlockState";
+import AnimationMotionCurveController from "./AnimationMotionCurveController";
 
-
-let distanceCovered = null
-let isAnimationSaved = animationToolState.isAnimationSaved;
-let isUpdateTime = true
 
 export default class MotionCurve extends AnimationTool {
     constructor(svgCanvas) {
         super(svgCanvas);
         // this.pathData = "";
         this.path = null;
-        this.distanceCovered = 0; // Переменная для отслеживания пройденного расстояния
-        this.pathLength = 0; // Длина пути
+         // Переменная для отслеживания пройденного расстояния
+         // Длина пути
         this.speed = 2; // Скорость анимации
-        this.requestId = null; // ID для отслеживания requestAnimationFrame
+        this.requestId = null;
         this.drawingCanvas = SVG(document.getElementById("drawingCanvas"))
         this.arrPath = []
+        this.distanceCovered = 0;
         svgToolState.clearBoundingBox()
+
+        this.animationController = new AnimationMotionCurveController();
 
     }
 
-    startAnimations(isRunningThumb) {
-        this.isRunningThumb = isRunningThumb;
-
-        if (!this.path || !this.path.length()) return; // Если путь не определен или его длина равна нулю, выходим из функции
-
-        this.pathLength = this.path.length(); // Получаем длину пути
-        
-        if (timelineBlockState.totalTime  <= 0) {
+    initializeAnimation(element, path, duration, useFlag = true) {
+        const pathLength = path.length(); // Общая длина пути
+        let startTime = null; // Время начала текущего цикла анимации
+    
+        // Проверка корректности параметров
+        if (!element || !path || !path.length()) return;
+        if (duration <= 0) {
             console.error('Animation duration must be greater than zero');
             return;
         }
-        const pixelsPerMs = this.pathLength / (timelineBlockState.totalTime * 1000); // Скорость движения по пути в пикселях за миллисекунду
-
-        const animate = () => {
-            if (!this.isRunningThumb) {
-                console.log('Animation paused at distance:', this.distanceCovered);
-                return; // Прекращаем анимацию, если флаг опущен
+    
+        const pixelsPerMs = pathLength / (duration * 1000); // Скорость движения в пикселях за миллисекунду
+    
+        // Функция анимации
+        const animate = (timestamp) => {
+            // Проверяем флаг `this.isRunningThumb`, если `useFlag` активен
+            if (useFlag && !this.isRunningThumb) {
+                startTime = null; 
+                return; 
             }
-
-            // Пройденное расстояние = прошедшее время * скорость
-            this.distanceCovered = timelineBlockState.elapsedTime * pixelsPerMs;
-
-            if (this.distanceCovered >= this.pathLength) {
+    
+            // Устанавливаем начальное время или корректируем его после паузы
+            if (startTime === null) {
+                startTime = timestamp;
+            }
+    
+            // Рассчитываем прошедшее время с момента начала текущего цикла
+    
+            let elapsedTime;
+            if (useFlag) {
+                elapsedTime = timelineBlockState.elapsedTime;
+            } else {
+                elapsedTime = timestamp - startTime;
+            }
+    
+            // Рассчитываем новое расстояние с учетом сохраненного
+            this.distanceCovered = elapsedTime * pixelsPerMs ;
+            console.log(this.distanceCovered, pathLength)
+            // Обеспечиваем цикличность анимации
+            if (this.distanceCovered >= pathLength) {
                 console.log('Animation completed, restarting...');
-                this.distanceCovered %= this.pathLength; // Обеспечиваем цикличность анимации
+                this.distanceCovered = this.distanceCovered % pathLength; // Перезапускаем движение с начала
+                startTime = timestamp; // Перезапускаем отсчёт времени
             }
-
-            const point = this.path.pointAt(this.distanceCovered);
-            const element = this.drawingCanvas.findOne('[data-tool="true"]');
+    
+            // Перемещаем элемент
+            const point = path.pointAt(this.distanceCovered);
             if (element) {
                 element.center(point.x, point.y);
             }
-
-            this.requestId = requestAnimationFrame(animate); // Запланировать следующий кадр
+    
+            // Запланировать следующий кадр
+            this.requestId = requestAnimationFrame(animate);
         };
-
+    
+        // Отменяем предыдущий кадр, если он запланирован
         if (this.requestId) {
-            cancelAnimationFrame(this.requestId); // Отменяем предыдущий запланированный кадр
+            cancelAnimationFrame(this.requestId);
         }
-
-        this.requestId = requestAnimationFrame(animate); // Запускаем анимацию
-        this.path.attr('visibility', this.isRunningThumb ? 'hidden' : 'visible');
+    
+        // Запускаем анимацию
+        this.requestId = requestAnimationFrame(animate);
     }
+    
+    startAnimations(isRunningThumb) {
+        this.isRunningThumb = isRunningThumb;
+        const element = this.drawingCanvas.findOne('[data-tool="true"]');
+
+        // Используем метод `initializeAnimation` из импортированного класса
+        this.animationController.initializeAnimation(
+            element, 
+            this.path, 
+            timelineBlockState.totalTime, 
+            true, 
+            isRunningThumb, 
+            timelineBlockState
+        );
+    }
+
     resetAnimations() {
         if (this.requestId) {
             cancelAnimationFrame(this.requestId); // Отменяем текущую анимацию
@@ -89,42 +125,30 @@ export default class MotionCurve extends AnimationTool {
 
         console.log("Animations reset and element moved to the start position");
     }
-    
     mouseDownHandler(e) {
-        super.mouseDownHandler(e);
-
-        // Проверка, является ли элемент целевым с атрибутом data-tool="true"
-        const targetElement = e.target;
-        const isToolElement = targetElement.getAttribute('data-tool') === 'true';
-
-        if (isToolElement) {
-            // Устанавливаем активный элемент в хранилище
-            svgCanvasState.setActiveElement(targetElement.id);
-        } else {
-            // Начинаем новый путь, если клик вне элементов с атрибутом `data-tool`
-            const existingPath = this.drawingCanvas.findOne('#motionPath');
-            if (existingPath) {
-                existingPath.remove(); // Удаляем существующий путь
-            }
-
-            const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
-            const startX = e.pageX - svgCanvasRect.left;
-            const startY = e.pageY - svgCanvasRect.top;
-            this.path = this.drawingCanvas.path(`M${startX},${startY}`)
-                .stroke({
-                    color: '#8DADFF',
-                    width: 2,
-                    linecap: 'round',
-                    linejoin: 'round'
-                })
-                .fill('none');
-            this.path.attr({
-                id: 'motionPath',
-                visibility: 'visible'
-            });
+        super.mouseDownHandler(e)
+        const existingPath = this.drawingCanvas.findOne('#motionPath');
+        if (existingPath) {
+            existingPath.remove();  // Удаление существующего пути
         }
+        const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
+        const startX = e.pageX - svgCanvasRect.left;
+        const startY = e.pageY - svgCanvasRect.top;
+        this.path = this.drawingCanvas.path(`M${startX},${startY}`)
+            .stroke({
+                color: '#8DADFF',
+                width: 2,
+                linecap: 'round',
+                linejoin: 'round'
+            })
+            .fill('none');
+        this.path.attr({
+            id: 'motionPath',
+            visibility: 'visible'
+        });
+
     }
-    
+    //
     mouseMoveHandler(e) {
         if (this.path && this.mouseDown) {
             const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
@@ -148,7 +172,7 @@ export default class MotionCurve extends AnimationTool {
             svgCanvasState.updateElementPath(activeElementId, pathData);
             console.log(svgCanvasState.svgElements)
         } else {
-            console.error("No active element set in canvas state.");
+            console.log("No active element set in canvas state.");
         }
     }
 
