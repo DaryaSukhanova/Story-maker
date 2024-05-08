@@ -5,6 +5,7 @@ export default class AnimationMotionCurveController {
     }
 
     initializeAnimation(element, path, duration, useFlag = true, isRunningThumb = false, timelineBlockState = null) {
+       
         const pathLength = path.length(); // Общая длина пути
         let startTime = null; // Время начала текущего цикла анимации
 

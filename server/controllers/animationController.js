@@ -17,7 +17,7 @@ class animationController {
 
 			animationData.forEach(element => {
 				keyFrames.push(element.keys)
-				svgAttrs.push({isAnimated: element.isAnimated, attributes: element.attributes, origin: element.origin, path: element.path})
+				svgAttrs.push({isAnimated: element.isAnimated, attributes: element.attributes, origin: element.origin, pathData: element.pathData})
 			})
 			const filePath = path.resolve(`files/${req.user.id}/Animations`, `${req.body.name}.json`)
 			fs.writeFileSync(filePath, JSON.stringify({attr: svgAttrs, duration: req.body.duration}))
@@ -70,7 +70,7 @@ class animationController {
 					keys: keyFrames[i],
 					attributes: svgAttrs.attr[i].attributes,
 					origin:svgAttrs.attr[i].origin,
-					path: svgAttrs.attr[i].path
+					pathData: svgAttrs.attr[i].pathData
 				})
 			}
 			return res.status(200).json(animations)

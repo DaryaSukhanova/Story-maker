@@ -204,10 +204,10 @@ class SvgCanvasState{
             console.error(`Element with ID ${elementId} not found.`);
             return;
         }
-
+        console.log(pathData)
         this.svgElements[elementIndex] = {
             ...this.svgElements[elementIndex],
-            path: pathData
+            pathData: pathData
         };
         console.log(`Updated path for element ${elementId}`);
     }

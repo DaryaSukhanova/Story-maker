@@ -162,18 +162,24 @@ export const addAnimation = async (file) => {
                     style: `animation: ${animationName} ${response.data.duration}s infinite;`
                 });
             }
-            if (item.isAnimated) {
-                // Предполагается, что путь известен и находится в `item.path`
-                const path = canvas.path(item.path); // или как-то иначе получаем путь
-
-                // animationController.initializeAnimation(
-                //     svgElement,
-                //     path,
-                //     response.data.duration,
-                //     false, // Используем флаг
-                //     false, // Флаг isRunningThumb
-                //     null // Храним блок с таймлайном
-                // );
+            if (item.pathData) {
+                const path = canvas.path(item.pathData); 
+                
+                console.log(path)
+                path.attr({
+                    fill: "none",
+                    stroke: "black",
+                    "stroke-width": 2,
+                    display: "none"
+                });
+                animationController.initializeAnimation(
+                    svgElement,
+                    path,
+                    response.data.duration,
+                    false, // Используем флаг
+                    true, // Флаг isRunningThumb
+                    null // Храним блок с таймлайном
+                );
             }
         });
 
