@@ -5,7 +5,6 @@ import TimelineControls from "./TimelineControls";
 import animationToolState from "../../store/animationToolState";
 import TimelineTool from "./TimelineTool";
 import TimelineTicks from "./TimelineTicks";
-import TimelineKeyframes from "./TimelineKeyframes";
 import svgCanvasState from "../../store/svgCanvasState";
 import TimelineItems from "./TimelineItems";
 

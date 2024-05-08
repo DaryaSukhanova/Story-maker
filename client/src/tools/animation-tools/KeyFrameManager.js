@@ -29,16 +29,19 @@ export default class KeyFrameManager extends AnimationTool{
             const rect = animatedElement.shape.bbox();
             console.log(animatedElement.shape.bbox())
             const animationName = `rotatePath_${index}`;
-            createAnimationStyle({x: animatedElement.origin.x, y: animatedElement.origin.y}, animatedElement.keys, index, timelineBlockState.totalTime, animationName);
-
-            animatedElement.shape.attr({
-                'style': `
-                animation: ${animationName}; 
-                animation-duration: ${timelineBlockState.totalTime}s; 
-                animation-iteration-count: infinite; 
-                animation-play-state: ${!isRunningThumb ? 'paused' : 'running'};
-            `
-            });
+            if(animatedElement.keys.length> 0){
+                createAnimationStyle({x: animatedElement.origin.x, y: animatedElement.origin.y}, animatedElement.keys, index, timelineBlockState.totalTime, animationName);
+                
+                animatedElement.shape.attr({
+                    'style': `
+                    animation: ${animationName}; 
+                    animation-duration: ${timelineBlockState.totalTime}s; 
+                    animation-iteration-count: infinite; 
+                    animation-play-state: ${!isRunningThumb ? 'paused' : 'running'};
+                `
+                });
+            }
+    
         });
     }
 

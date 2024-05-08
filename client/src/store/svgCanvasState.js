@@ -89,6 +89,27 @@ class SvgCanvasState{
         console.log(`Added new keyframe to element ${elementId}`, newKey);
     }
 
+    removeKeyframeFromElement(elementId, keyId) {
+        // Находим элемент по его ID
+        const elementIndex = this.svgElements.findIndex(el => el.id === elementId);
+        if (elementIndex === -1) {
+            console.error(`Element with ID ${elementId} не найден.`);
+            return;
+        }
+
+        // Находим индекс ключа по его ID
+        const keyIndex = this.svgElements[elementIndex].keys.findIndex(key => key.id === keyId);
+        if (keyIndex === -1) {
+            console.error(`Keyframe с ID ${keyId} не найден в элементе ${elementId}.`);
+            return;
+        }
+
+        // Используем splice для удаления ключа по индексу
+        this.svgElements[elementIndex].keys.splice(keyIndex, 1);
+
+        console.log(`Удален keyframe ${keyId} из элемента ${elementId}`);
+    }
+
     updateKeyframeField(elementId, keyId, field, value) {
         // Ищем индекс элемента в массиве svgElements
         const elementIndex = this.svgElements.findIndex(el => el.id === elementId);
