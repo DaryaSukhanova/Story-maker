@@ -26,6 +26,7 @@ export default class MotionCurve extends AnimationTool {
         svgToolState.clearBoundingBox()
         this.animationController = new AnimationMotionCurveController();
         this.listen()
+        this.isRunningThumb = true;
     }
     
     startAnimations(isRunningThumb) {
@@ -43,6 +44,7 @@ export default class MotionCurve extends AnimationTool {
     }
 
     resetAnimations() {
+        this.isRunningThumb = false;
         if (this.requestId) {
             cancelAnimationFrame(this.requestId); // Отменяем текущую анимацию
             this.requestId = null;
@@ -78,7 +80,7 @@ export default class MotionCurve extends AnimationTool {
             .fill('none');
         this.path.attr({
             id: 'motionPath',
-            visibility: 'visible'
+            visibility:  'visible'
         });
 
     }

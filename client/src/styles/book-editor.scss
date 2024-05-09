@@ -139,8 +139,10 @@ ul.folder-list li:nth-child(odd){
   }
 }
 .center-buttons {
-
+  height: 150px;
   display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   margin-left: 140px;
   align-items: center;
 }

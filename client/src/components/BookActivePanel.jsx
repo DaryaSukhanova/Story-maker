@@ -15,7 +15,7 @@ const BookActivePanel = () => {
 
     
     useEffect(() => {
-        timelineBlockState.setTotalTime(5)
+        // timelineBlockState.setTotalTime(5)
     }, []);
 
     const download = () =>{
@@ -53,14 +53,19 @@ const BookActivePanel = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-            <div className="center-buttons">   
-            <button className="action-buttons__btn prev-page">Предыдущая страница</button>
-            <button className="action-buttons__btn clear" onClick={svgCanvasState.handleClearCanvas}>Очистить холст</button>       
-            <button className="action-buttons__btn next-page">Следующая страница</button>
+            
+            <div className="center-buttons">
+                <TimelineControls/>
+                <div>
+                    <button className="action-buttons__btn prev-page">Предыдущая страница</button>
+                    <button className="action-buttons__btn clear" onClick={svgCanvasState.handleClearCanvas}>Очистить холст</button>       
+                    <button className="action-buttons__btn next-page">Следующая страница</button>
+                </div>
+
             </div>
             <div className='right-buttons'>
             <button className="action-buttons__btn add-text" onClick={handleMotionCurveClick}>Движение по пути</button>
-            <TimelineControls/>
+            
             <button className="action-buttons__btn add-text">Добавить текст к истории</button>
             <button className="action-buttons__btn save" onClick={()=> setModal(true)}>Сохранить историю</button>
             </div>
