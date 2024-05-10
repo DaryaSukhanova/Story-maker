@@ -220,17 +220,17 @@ class SvgCanvasState{
     };
     
     updateElementPath(elementId, pathData) {
-        const elementIndex = this.svgElements.findIndex(el => el.id === elementId);
-        if (elementIndex === -1) {
-            console.error(`Element with ID ${elementId} not found.`);
-            return;
-        }
-        console.log(pathData)
-        this.svgElements[elementIndex] = {
-            ...this.svgElements[elementIndex],
-            pathData: pathData
-        };
-        console.log(`Updated path for element ${elementId}`);
+        // const elementIndex = this.svgElements.findIndex(el => el.id === elementId);
+        // if (elementIndex === -1) {
+        //     console.error(`Element with ID ${elementId} not found.`);
+        //     return;
+        // }
+        // console.log(pathData)
+        // this.svgElements[elementIndex] = {
+        //     ...this.svgElements[elementIndex],
+        //     pathData: pathData
+        // };
+        // console.log(`Updated path for element ${elementId}`);
     }
 
 }

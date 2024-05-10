@@ -36,9 +36,7 @@ const AnimationSettingBlock = observer(() => {
     };
 
     let selectedToolContent;
-    if (animationToolState.currentTool instanceof MotionCurve) {
-        selectedToolContent = <div className='animation-setting-block-title'>Нарисуйте кривую, по которой будет двигаться элемент</div>;
-    } else if (animationToolState.currentTool instanceof KeyFrameManager) {
+    if (animationToolState.currentTool instanceof KeyFrameManager) {
         selectedToolContent = <TransformBlock />;
     } else {
         selectedToolContent = <div>Выберите инструмент анимации</div>;
@@ -51,11 +49,11 @@ const AnimationSettingBlock = observer(() => {
                     Настройки анимации
                 </div>
                 <div className="animation-setting-block-btns">
-                    <button 
+                    {/* <button 
                         className={`animation-setting-block-btns__btn ${activeTool === 'motionCurve' ? 'activeAnimBtn' : ''}`}
                         onClick={handleMotionCurveClick}>
                             Путь
-                    </button>
+                    </button> */}
                     <button 
                         className={`animation-setting-block-btns__btn ${activeTool === 'keyframe' ? 'activeAnimBtn' : ''}`}
                         onClick={handleKeyframeClick}> 

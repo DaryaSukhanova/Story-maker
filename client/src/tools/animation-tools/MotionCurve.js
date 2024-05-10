@@ -9,6 +9,7 @@ import svgCanvasState from "../../store/svgCanvasState";
 import {SVG} from "@svgdotjs/svg.js";
 import timelineBlockState from "../../store/timelineBlockState";
 import AnimationMotionCurveController from "./AnimationMotionCurveController";
+import pageState from "../../store/pageState";
 
 
 export default class MotionCurve extends AnimationTool {
@@ -33,14 +34,17 @@ export default class MotionCurve extends AnimationTool {
         this.isRunningThumb = isRunningThumb;
         const element = this.drawingCanvas.findOne('[data-tool="true"]');
         // Используем метод `initializeAnimation` из импортированного класса
-        this.animationController.initializeAnimation(
-            element, 
-            this.path, 
-            timelineBlockState.totalTime, 
-            true,
-            isRunningThumb,
-            timelineBlockState
-        );
+        if(element){
+            this.animationController.initializeAnimation(
+                element, 
+                this.path, 
+                pageState.totalTime, 
+                true,
+                isRunningThumb,
+                timelineBlockState
+            );            
+        }
+
     }
 
     resetAnimations() {
@@ -54,6 +58,7 @@ export default class MotionCurve extends AnimationTool {
         if (this.path) {
             const startPoint = this.path.pointAt(0); // Получаем начальную точку пути
             const element = this.drawingCanvas.findOne('[data-tool="true"]');
+            
             if (element) {
                 element.center(startPoint.x, startPoint.y); // Перемещаем элемент на начальную точку
             }
@@ -108,7 +113,7 @@ export default class MotionCurve extends AnimationTool {
         const activeElementId = element.attr('id');
 
         if (activeElementId) {
-            svgCanvasState.updateElementPath(activeElementId, pathData);
+            // svgCanvasState.updateElementPath(activeElementId, pathData);
             console.log(svgCanvasState.svgElements)
         } else {
             console.log("No active element set in canvas state.");

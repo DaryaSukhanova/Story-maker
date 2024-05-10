@@ -6,8 +6,9 @@ import pageState from '../store/pageState';
 import MotionCurve from '../tools/animation-tools/MotionCurve';
 import timelineBlockState from '../store/timelineBlockState';
 import TimelineControls from './animation-components/TimelineControls';
+import { observer } from 'mobx-react-lite';
 
-const BookActivePanel = () => {
+const BookActivePanel = observer( () => {
     const pageNameRef = useRef()
     const motionCurveRef = useRef(null);
     const isRunningThumb = timelineBlockState.isRunningThumb
@@ -55,8 +56,22 @@ const BookActivePanel = () => {
             </Modal>
             
             <div className="center-buttons">
-                <TimelineControls/>
-                <div>
+                <div className='motion-controls'>
+                    <TimelineControls variant="wide" totalTime={pageState.totalTime}/>
+                    <div className="slider-container">
+                        <label htmlFor="slider" className="slider-label"></label>
+                        <input className="slider__total-time"
+                         type="range" 
+                         id="slider" 
+                         min="0" 
+                         max="10"
+                         defaultValue="5"
+                         onChange={e => pageState.setTotalTime(parseFloat(e.target.value))}
+                        />
+                    </div>                    
+                </div>
+
+                <div className='action-buttons__navigation'>
                     <button className="action-buttons__btn prev-page">Предыдущая страница</button>
                     <button className="action-buttons__btn clear" onClick={svgCanvasState.handleClearCanvas}>Очистить холст</button>       
                     <button className="action-buttons__btn next-page">Следующая страница</button>
@@ -72,7 +87,7 @@ const BookActivePanel = () => {
         </div>
 
     );
-};
+});
 
 function saveSvg(){
     animationToolState.isAnimationSaved = true

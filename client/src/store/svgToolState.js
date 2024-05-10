@@ -7,8 +7,8 @@ class SvgToolState{
     tool = null
     isDrawn = false
     stroke = "1"
-    strokeColor: "black"
-    fillColor: "black"
+    strokeColor = "black"
+    fillColor = "black"
 
     constructor() {
         makeAutoObservable(this)
@@ -32,11 +32,17 @@ class SvgToolState{
 
     setFillColor(color){
         // this.fillColor = color
-        this.tool.svgFillColor = color
+        if(this.tool){
+            this.tool.svgFillColor = color
+        }
+        
     }
     setStroke(stroke){
         // this.stroke = stroke
-        this.tool.svgLineWidth = stroke
+        if(this.tool){
+            this.tool.svgLineWidth = stroke
+        }
+        
     }
     setStrokeColor(color){
         // this.strokeColor = color

@@ -3,6 +3,7 @@ import { makeAutoObservable } from "mobx";
 class PageState {
 	backgrounds = []
 	animations = []
+	totalTime = 5
 
 	constructor() {
 		makeAutoObservable(this)
@@ -10,6 +11,9 @@ class PageState {
 
 	addBackground(background) {
 		this.backgrounds.push(background)
+	}
+	setTotalTime(time){
+		this.totalTime = time
 	}
 }
 

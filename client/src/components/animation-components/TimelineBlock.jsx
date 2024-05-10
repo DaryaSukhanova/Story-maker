@@ -7,6 +7,7 @@ import TimelineTool from "./TimelineTool";
 import TimelineTicks from "./TimelineTicks";
 import svgCanvasState from "../../store/svgCanvasState";
 import TimelineItems from "./TimelineItems";
+import timelineBlockState from '../../store/timelineBlockState';
 
 const TimeLineBlock = observer (() => {
     const findNearestTickPosition = (position) => {
@@ -38,7 +39,7 @@ const TimeLineBlock = observer (() => {
     };
     return (
         <div className="timeline-block">
-            <TimelineControls/>
+            <TimelineControls variant="default" totalTime={timelineBlockState.totalTime}/>
             <TimelineItems findNearestTickPosition={findNearestTickPosition} updateKeysInSvgElement={updateKeysInSvgElement}/>
             <TimelineTicks findNearestTickPosition={findNearestTickPosition}/>
         </div>

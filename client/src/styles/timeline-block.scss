@@ -34,19 +34,31 @@
   display: flex;
   flex-direction: column;
 }
-.timeline-controls{
+.timeline-controls-default{
   background-color: #AAC2FF;
   display: flex;
   text-align: center;
   align-items: center;
   //height: 40%;
   grid-column: 1 / 1.5; // Занимает первый столбец
-  justify-content: start;
+  justify-content: center;
   padding: 0 10px;
-
+  max-width:  100%;
+  flex: 1;
 }
-.timeline-player{
 
+.timeline-controls-wide{
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  max-width:  100%;
+
+  
+}
+
+.timeline-player{
   display: flex;
   height: 100%;
   align-items: flex-end;

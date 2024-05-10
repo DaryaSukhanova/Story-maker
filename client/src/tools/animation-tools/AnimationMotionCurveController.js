@@ -1,3 +1,5 @@
+import svgCanvasState from "../../store/svgCanvasState";
+
 export default class AnimationMotionCurveController {
     constructor() {
         this.requestId = null;
@@ -51,8 +53,18 @@ export default class AnimationMotionCurveController {
 
             // Перемещаем элемент
             const point = path.pointAt(this.distanceCovered);
+            
             if (element) {
-                element.center(point.x, point.y);
+                if (element.type === 'g') {
+                    const bbox = element.bbox();
+                    const translateX = point.x - bbox.width / 2;
+                    const translateY = point.y - bbox.height / 2;
+                    // Если это группа, используем transform для перемещения
+                    element.attr('transform', `translate(${translateX - svgCanvasState.canvas.getBoundingClientRect().left}, ${translateY - svgCanvasState.canvas.getBoundingClientRect().top})`);
+                } else {
+                    // Для отдельных элементов перемещаем с помощью методов позиционирования
+                    element.center(point.x, point.y);
+                }
             }
 
             // Запланировать следующий кадр

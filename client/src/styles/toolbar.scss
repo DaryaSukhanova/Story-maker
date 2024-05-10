@@ -113,39 +113,65 @@
   //position: absolute;
   width: 100%;
 }
-.slider-line-width{
-  min-width: 90%;
-  height: 12px;
-  -webkit-appearance: none;
-  border-radius: 5px;
-  //background: #f3f3f3;
-  border: solid #ddd 1px;
-  outline: none;
-  margin: 6px;
+.slider {
+  &__line-width {
+    min-width: 90%;
+    height: 12px;
+    -webkit-appearance: none;
+    border-radius: 5px;
+    border: solid #ddd 1px;
+    outline: none;
+    margin: 6px;
+
+    /* Стили для ползунка в Chrome и Safari */
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #dadada;
+      cursor: pointer;
+    }
+
+    /* Стили для ползунка в Firefox */
+    &::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #dadada;
+      cursor: pointer;
+    }
+  }
+  &__total-time {
+    min-width: 100%;
+    height: 12px;
+    -webkit-appearance: none;
+    border-radius: 5px;
+    outline: none;
+    background-color: #f0f5ff;
+
+    /* Стили для ползунка в Chrome и Safari */
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #beaaff;
+      cursor: pointer;
+    }
+
+    /* Стили для ползунка в Firefox */
+    &::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #dadada;
+      cursor: pointer;
+    }
+  }
+
 }
 
-/* Стили для ползунка в Chrome и Safari */
-.slider-line-width::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background: #dadada;
-  cursor: pointer;
-}
-
-/* Стили для ползунка в Firefox */
-.slider-line-width::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: $main-color-animation-editor;
-  cursor: pointer;
-}
-
-.brush-block-container{
-
-}
 .tool-bar-item-title{
   text-align: center;
   //padding: 8px;
