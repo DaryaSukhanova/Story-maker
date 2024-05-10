@@ -1,7 +1,7 @@
 @import "./variables";
 
 .registration, .authorization {
-    width: 300px;
+    width: 330px;
     margin: 0 auto;
     padding: 20px;
     background-color: #efefef;
@@ -40,6 +40,18 @@
         
         &:hover {
             background-color: $purple-color-buttons;
+        }
+    }
+    .link {
+        margin-top: 20px;
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
 }

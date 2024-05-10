@@ -1,16 +1,12 @@
 import React, {useRef, useState} from 'react';
 import {Button, Modal} from "react-bootstrap";
 import svgCanvasState from "../store/svgCanvasState";
-import animationToolState from "../store/animationToolState";
-import pageState from '../store/pageState';
+import { savePage } from '../actions/page';
 
 const BookActivePanel = () => {
     const pageNameRef = useRef()
     const [modal,setModal] = useState(false)
-    const download = () =>{
-        setModal(false)
-       saveSvg()
-    }
+
     return (
         <div className="action-buttons">
             <Modal className="modal-container" show={modal} onHide={()=>{setModal(false)}}>
@@ -21,7 +17,7 @@ const BookActivePanel = () => {
                      <input className="input-modal" type="text" ref={pageNameRef}/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button className="button-modal" variant="secondary" onClick={()=> download()}>
+                    <Button className="button-modal" variant="secondary" onClick={()=> savePage(pageNameRef, () => setModal(false))}>
                         Сохранить историю
                     </Button>
                 </Modal.Footer>
@@ -32,17 +28,12 @@ const BookActivePanel = () => {
             <button className="action-buttons__btn next-page">Следующая страница</button>
             </div>
             <div className='right-buttons'>
-            <button className="action-buttons__btn add-text">Добавить текст к истории</button>
-            <button className="action-buttons__btn save" onClick={()=> setModal(true)}>Сохранить историю</button>
+            <button className="action-buttons__btn add-text">Добавить текст к странице</button>
+            <button className="action-buttons__btn save" onClick={()=> setModal(true)}>Сохранить страницу</button>
             </div>
         </div>
 
     );
 };
-
-function saveSvg(){
-    animationToolState.isAnimationSaved = true
-	console.log(JSON.stringify(pageState.backgrounds));
-}
 
 export default BookActivePanel;

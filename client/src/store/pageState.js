@@ -8,9 +8,7 @@ class PageState {
 		makeAutoObservable(this)
 	}
 
-	addBackground(background) {
-		this.backgrounds.push(background)
-	}
+	
 }
 
 const pageState = new PageState()

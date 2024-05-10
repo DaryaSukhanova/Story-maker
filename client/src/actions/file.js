@@ -91,6 +91,7 @@ export const downloadFile = async (file) => {
 
 export const addBackground = async (file) => {
 	try {
+        pageState.backgrounds.push(file._id)
 		const response = await axios.get(`http://localhost:5000/api/v1/backgrounds?id=${file._id}`, {
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -102,7 +103,6 @@ export const addBackground = async (file) => {
 		svgImageElement.setAttribute('height', '644')
 		svgImageElement.setAttribute('href', response.data[0].backgroundImage)
 		canvas.appendChild(svgImageElement)
-		pageState.addBackground(file)
 	} catch (e) {
 		console.log(e?.response?.data?.message)
 	}
@@ -119,9 +119,9 @@ export const addBackground = async (file) => {
 //     };
 // };
 
-export const addAnimation = async (file) => {
-    
+export const addAnimation = async (file) => {   
     try {
+        pageState.animations.push(file._id)
         const response = await axios.get(`http://localhost:5000/api/v1/animations?id=${file._id}`, {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });

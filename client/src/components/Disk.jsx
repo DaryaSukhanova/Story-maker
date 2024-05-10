@@ -58,30 +58,8 @@ const Disk = observer(() => {
 
     return ( !dragEnter ?
 
-        <div className="disk" onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>
-            {!userState.isAuth &&
-                <div className="home-navbar">
-                    {/*<NavLink to="/" activeClassName="active-link" className="home-icon">*/}
-                    {/*    <IconSM activeClassName="home-icon"></IconSM>*/}
-                    {/*</NavLink>*/}
-                    <div className="navbar__login"><NavLink to="/login">Log In</NavLink></div>
-                    <div className="navbar__registration"><NavLink to="/registration">Sign In</NavLink></div>
-                </div>
-            }
-            {userState.isAuth &&
-
-                
-                    // <div className="home-navbar">
-                        <div className='pr'>
-                            <div className="navbar__logout" onClick={()=>userState.logout()}>Выйти из аккаунта</div>
-                       </div>
-                    // </div>
-                
-
-            }
+        <div className="disk" onDragEnter={dragEnterHandler} onDragLeave={dragLeaveHandler} onDragOver={dragEnterHandler}>           
             <div className="disk__btns">
-                {/* <button className="disk__back" onClick={() => backClickHandler()}>Назад</button> */}
-                {/* <img src={pl}/> */}
                 <button className="disk__create" onClick={()=>showPopupHandler()}><img className="img" src={pl}/>  Создать папку</button>
                 <div className="disk__upload">
                     <label htmlFor="disk__upload-input" className="disk__upload-label"><img className="img2" src={ul}/>  Загрузить</label>
