@@ -9,7 +9,7 @@ const SettingBar = () => {
             <div>
                 <div className="tool-bar-item-title">Толщина</div>
                 <div className="tool-bar-item">
-                    <input className="slider-line-width"
+                    <input className="slider__total-time"
                         onChange={e => toolState.setLineWidth(e.target.value)}
                         id="line-width" type="range"
                         defaultValue={1} min={1} max={50}/>

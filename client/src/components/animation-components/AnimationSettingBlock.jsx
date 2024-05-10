@@ -57,7 +57,7 @@ const AnimationSettingBlock = observer(() => {
                     <button 
                         className={`animation-setting-block-btns__btn ${activeTool === 'keyframe' ? 'activeAnimBtn' : ''}`}
                         onClick={handleKeyframeClick}> 
-                            Кадры
+                            Ключевые кадры
                     </button>
                 </div>
                 <div className="animation-setting-block-data">

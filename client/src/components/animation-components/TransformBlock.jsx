@@ -142,8 +142,8 @@ const TransformBlock = observer(() => {
             </div>
 
             <div className="transform-block__entry">
-                <label htmlFor="originSelect">Точка трансформации</label>
-                <select id="originSelect" value={origin} onChange={handleOriginChange}>
+                <label className='label-select' htmlFor="originSelect">Точка трансформации</label>
+                <select className='transform-block__entry__select' id="originSelect" value={origin} onChange={handleOriginChange}>
                     {originOptions.map((option) => (
                         <option key={option.value} value={option.value}>
                             {option.label}
