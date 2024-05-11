@@ -8,7 +8,7 @@ export const savePage = async(name, closeModal) => {
     const serializedAnimations = JSON.stringify(pageState.animations);
 
     try {
-        const response = await axios.post('http://localhost:5000/api/v1', {
+        const response = await axios.post('http://localhost:5000/api/v1/pages', {
             name: name.current.value,
             backgrounds: serializedBg,
             animations: serializedAnimations

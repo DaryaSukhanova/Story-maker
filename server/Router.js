@@ -6,6 +6,7 @@ import FileService from './services/fileService.js'
 import File from './models/File.js'
 import fC from './controllers/fileController.js'
 import animationController from './controllers/animationController.js'
+import pageController from './controllers/pageController.js'
 
 const router = new Router()
 const fileController = new fC()
@@ -30,4 +31,6 @@ router.get("/files/download", authMiddleware, fileController.downloadFile)
 router.delete("/files", authMiddleware, fileController.deleteFile)
 router.post('/animations', authMiddleware, animationController.saveAnimation)
 router.get("/animations", authMiddleware, animationController.getAnimation)
+router.post("/pages", authMiddleware, pageController.savePage)
+router.get("/pages", authMiddleware, pageController.getPage)
 export default router;

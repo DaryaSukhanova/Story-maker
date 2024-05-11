@@ -101,7 +101,7 @@ export const addBackground = async (file) => {
 		const svgImageElement = document.createElementNS('http://www.w3.org/2000/svg', 'image')
 		svgImageElement.setAttribute('width', '1100')
 		svgImageElement.setAttribute('height', '644')
-		svgImageElement.setAttribute('href', response.data[0].backgroundImage)
+		svgImageElement.setAttribute('href', response.data.backgroundImage)
 		canvas.appendChild(svgImageElement)
 	} catch (e) {
 		console.log(e?.response?.data?.message)
