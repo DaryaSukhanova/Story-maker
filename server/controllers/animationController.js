@@ -3,6 +3,7 @@ import path from "path"
 import fs from "fs"
 import User from "../models/User.js";
 import Keys from "../models/Keys.js";
+import animationService from "../services/animationService.js";
 
 class animationController {
 	async saveAnimation(req, res) {
@@ -24,7 +25,7 @@ class animationController {
 			const svgSize = fs.statSync(filePath).size
 			const keySize = new Blob(keyFrames).size
 			if (user.usedSpace + svgSize + keySize > user.diskSpace) {
-				return background.status(400).json({message: "There no space on the disk"})
+				return res.status(400).json({message: "There no space on the disk"})
 			}
 			user.usedSpace = user.usedSpace + svgSize + keySize
 			let svgData = await File.create({
@@ -57,22 +58,8 @@ class animationController {
 	}
 
 	async getAnimation(req, res) {
-
 		try {
-			const svgData = await File.findOne({user: req.user.id, _id: req.query.id})
-			const svgAttrs = JSON.parse(fs.readFileSync(path.resolve(`files/${req.user.id}/${svgData.path}`)))
-			const keyData = await Keys.findOne({user: req.user.id, svgId: svgData.id})
-			const keyFrames = keyData != null ? JSON.parse(keyData.data) : new Array(svgAttrs.attr.length)
-			const animations = {name: svgData.name, animationData: [], duration: svgAttrs.duration}
-			for (let i = 0; i < svgAttrs.attr.length; i++) {
-				animations.animationData.push({
-					isAnimated: svgAttrs.attr[i].isAnimated,
-					keys: keyFrames[i],
-					attributes: svgAttrs.attr[i].attributes,
-					origin:svgAttrs.attr[i].origin,
-					pathData: svgAttrs.attr[i].pathData
-				})
-			}
+			const animations = await animationService.getAnimation(req.user.id, req.query.id)
 			return res.status(200).json(animations)
 		} catch (e) {
 			const status = e.status || 500

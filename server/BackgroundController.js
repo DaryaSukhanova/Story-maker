@@ -25,7 +25,7 @@ class BackgroundController{
     // }
     async getBackground(req, res){
         try{
-            const background = await BackgroundService.getBackground(req, res);
+            const background = await BackgroundService.getBackground(req.user.id, req.query.id);
             return res.status(200).send(background)
         } catch (e){
             console.log(e)

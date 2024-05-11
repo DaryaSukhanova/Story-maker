@@ -8,6 +8,7 @@ import bcrypt from "bcryptjs"
 import {check, validationResult} from "express-validator"
 import FS from "./services/fileService.js";
 import File from "./models/File.js";
+import { error } from "console";
 
 const secretKey = "mern-secret-key"
 
@@ -65,31 +66,21 @@ class BackgroundService{
 
     //     return backgrounds
     // }
-    async getBackground(req, res){
-		const parent = await File.findOne({user: req.user.id, name: "Backgrounds"})
-		let backgroundNames = null
-		if (req.query.id) {
-			backgroundNames = await File.find({user: req.user.id, _id: req.query.id})
-		} else {
-			backgroundNames = await File.find({user: req.user.id, parent: parent.id})
-		}
-        let backgrounds = []
-        backgroundNames.forEach((data) =>{
-			const picture = fs.readFileSync(path.resolve(`files/${req.user.id}/${data.path}`))
-			const image = `data:image/png;base64,` + picture.toString('base64')
-			backgrounds.push(
-				{
-					backgroundId: data._id,
-					backgroundName: data.name,
-					backgroundImage: image
-				})
-        })
-        if (backgrounds === 0){
-			res.status(400).json({message: "background not found"})
+    async getBackground(userId, id){
+		const backgroundData = await File.findOne({user: userId, _id: id})
+		const picture = fs.readFileSync(path.resolve(`files/${userId}/${backgroundData.path}`))
+		const image = `data:image/png;base64,` + picture.toString('base64')
+		const background = {
+				backgroundId: backgroundData._id,
+				backgroundName: backgroundData.name,
+				backgroundImage: image
+			}
+        if (!background){
+			return error("error %d", 400, {message: "background not found"})
         }
-        return backgrounds
-
+        return background
     }
+
     async update(background){
         if (!background.backgroundId){
             throw createError(400, `Bad Request`)
@@ -188,6 +179,9 @@ class BackgroundService{
 			const animations = new File({user: user.id, name: "Animations", type: "dir", path: "Animations"})
 			await FileService.createDir(animations)
 			await animations.save()
+			const pages = new File({user: user.id, name: "Pages", type: "dir", path: "Pages"})
+			await FileService.createDir(pages)
+			await pages.save()
             return res.json({message:"User was created"})
         } catch (error) {
             console.error('Error:', error);
