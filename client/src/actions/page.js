@@ -1,6 +1,5 @@
 import axios from "axios"
 import pageState from "../store/pageState";
-import { stringify} from "flatted"
 
 export const savePage = async(name, closeModal) => {
     closeModal();
