@@ -15,6 +15,7 @@ class PageState {
 	setTotalTime(time){
 		this.totalTime = time
 	}
+
 }
 
 const pageState = new PageState()

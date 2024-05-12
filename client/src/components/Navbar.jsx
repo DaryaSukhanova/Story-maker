@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom'
+import userState from "../store/userState";
 import "../styles/nav-bar.scss"
 import { ReactComponent as IconSM } from '../assets/img/home.svg'
 import { ReactComponent as IconGE } from '../assets/img/graphic-editor-icon.svg'
@@ -31,6 +32,7 @@ const Navbar = () => {
                     Редактор книги
                 </div>
             </NavLink>
+            <div className="logout" onClick={()=>userState.logout()}>Выйти из аккаунта</div>
         </div>
     );
 };

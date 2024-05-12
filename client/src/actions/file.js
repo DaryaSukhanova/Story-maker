@@ -91,6 +91,7 @@ export const downloadFile = async (file) => {
 
 export const addBackground = async (file) => {
 	try {
+        pageState.backgrounds.push(file._id)
 		const response = await axios.get(`http://localhost:5000/api/v1/backgrounds?id=${file._id}`, {
 			headers: {
 				Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -100,9 +101,8 @@ export const addBackground = async (file) => {
 		const svgImageElement = document.createElementNS('http://www.w3.org/2000/svg', 'image')
 		svgImageElement.setAttribute('width', '1100')
 		svgImageElement.setAttribute('height', '644')
-		svgImageElement.setAttribute('href', response.data[0].backgroundImage)
+		svgImageElement.setAttribute('href', response.data.backgroundImage)
 		canvas.appendChild(svgImageElement)
-		pageState.addBackground(file)
 	} catch (e) {
 		console.log(e?.response?.data?.message)
 	}
@@ -119,8 +119,10 @@ export const addBackground = async (file) => {
 //     };
 // };
 
-export const addAnimation = async (file) => {
+
+export const addAnimation = async (file) => {   
     try {
+        pageState.animations.push(file._id)
         const response = await axios.get(`http://localhost:5000/api/v1/animations?id=${file._id}`, {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
@@ -205,6 +207,86 @@ export const addAnimation = async (file) => {
     }
 };
 
+export const printBackground = async (file) => {
+	try {
+		const canvas = svgCanvasState.canvas
+		const svgImageElement = document.createElementNS('http://www.w3.org/2000/svg', 'image')
+		svgImageElement.setAttribute('width', '1100')
+		svgImageElement.setAttribute('height', '644')
+		svgImageElement.setAttribute('href', file.backgroundImage)
+		canvas.appendChild(svgImageElement)
+	} catch (e) {
+		console.log("Error fetching background data")
+	}
+};
+
+export const printAnimation = async (file) => {   
+    try {
+        const response = await axios.get(`http://localhost:5000/api/v1/animations?id=${file._id}`, {
+            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        });
+
+        const canvas = SVG(svgCanvasState.canvas);
+        const canvasRect = canvas.node.getBoundingClientRect();
+        const animationController = new AnimationMotionCurveController();
+        file.animationData.forEach((item, index) => {
+            let svgElement;
+
+            // Создание SVG элементов в зависимости от типа инструмента
+            switch (item.attributes['type-tool']) {
+                case 'circle':
+                    svgElement = canvas.circle().attr(item.attributes);
+                    break;
+                case 'rect':
+                    svgElement = canvas.rect().attr(item.attributes);
+                    break;
+                case 'line':
+                    svgElement = canvas.line().attr(item.attributes);
+                    break;
+                case 'polygon':
+                    svgElement = canvas.polygon().attr(item.attributes);
+                    break;
+                case 'path':
+                    svgElement = canvas.path().attr(item.attributes);
+                    break;
+                default:
+                    console.warn("Unsupported SVG element type:", item.attributes['type-tool']);
+                    return; // Пропускаем необрабатываемые типы
+            }
+
+            if (item.isAnimated && item.keys.length > 0) {
+                const animationName = `animation_${index}`;
+                createAnimationStyle({x: item.origin.x, y: item.origin.y}, item.keys, index, file.duration, animationName);
+                svgElement.attr({
+                    style: `animation: ${animationName} ${file.duration}s infinite;`
+                });
+            }
+            if (item.pathData) {
+                const path = canvas.path(item.pathData); 
+                
+                console.log(path)
+                path.attr({
+                    fill: "none",
+                    stroke: "black",
+                    "stroke-width": 2,
+                    display: "none"
+                });
+                animationController.initializeAnimation(
+                    svgElement,
+                    path,
+                    file.duration,
+                    false, // Используем флаг
+                    true, // Флаг isRunningThumb
+                    null // Храним блок с таймлайном
+                );
+            }
+        });
+
+        console.log("SVG elements successfully added to the canvas");
+    } catch (e) {
+        console.error("Error fetching animation data:");
+    }
+};
 
 export const deleteFile = async (file) => {
 	try {

@@ -1,12 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Button, Modal} from "react-bootstrap";
 import svgCanvasState from "../store/svgCanvasState";
+
 import animationToolState from "../store/animationToolState";
 import pageState from '../store/pageState';
 import MotionCurve from '../tools/animation-tools/MotionCurve';
 import timelineBlockState from '../store/timelineBlockState';
 import TimelineControls from './animation-components/TimelineControls';
 import { observer } from 'mobx-react-lite';
+
+import { savePage } from '../actions/page';
+
 
 const BookActivePanel = observer( () => {
     const pageNameRef = useRef()
@@ -19,10 +23,10 @@ const BookActivePanel = observer( () => {
         // timelineBlockState.setTotalTime(5)
     }, []);
 
-    const download = () =>{
-        setModal(false)
-       saveSvg()
-    }
+    // const download = () =>{
+    //     setModal(false)
+    //     saveSvg()
+    // }
 
     const handleMotionCurveClick = () => {
         if (!motionCurveRef.current) {
@@ -39,18 +43,19 @@ const BookActivePanel = observer( () => {
 
     };
 
+
     return (
         <div className="action-buttons">
             <Modal className="modal-container" show={modal} onHide={()=>{setModal(false)}}>
                 <Modal.Header>
-                    <Modal.Title>Введите название истории</Modal.Title>
+                    <Modal.Title>Введите название страницы</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                      <input className="input-modal" type="text" ref={pageNameRef}/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button className="button-modal" variant="secondary" onClick={()=> download()}>
-                        Сохранить историю
+                    <Button className="button-modal" variant="secondary" onClick={()=> savePage(pageNameRef, () => setModal(false))}>
+                        Сохранить страницу
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -79,19 +84,16 @@ const BookActivePanel = observer( () => {
 
             </div>
             <div className='right-buttons'>
+
             <button className="action-buttons__btn add-text" onClick={handleMotionCurveClick}>Движение по пути</button>
-            
-            <button className="action-buttons__btn add-text">Добавить текст к истории</button>
-            <button className="action-buttons__btn save" onClick={()=> setModal(true)}>Сохранить историю</button>
+
+            {/* <button className="action-buttons__btn add-text">Добавить текст к странице</button> */}
+            <button className="action-buttons__btn save" onClick={()=> setModal(true)}>Сохранить страницу</button>
+
             </div>
         </div>
 
     );
 });
-
-function saveSvg(){
-    animationToolState.isAnimationSaved = true
-	console.log(JSON.stringify(pageState.backgrounds));
-}
 
 export default BookActivePanel;

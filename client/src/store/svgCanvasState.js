@@ -5,6 +5,7 @@ import svgToolState from "./svgToolState";
 import SvgBrush from "../tools/animation-tools/SvgBrush";
 import timelineBlockState from "./timelineBlockState";
 import KeyFrameManager from "../tools/animation-tools/KeyFrameManager";
+import pageState from "./pageState";
 
 
 
@@ -206,6 +207,8 @@ class SvgCanvasState{
     handleClearCanvas = () => {
         this.canvas.innerHTML = '';
         this.svgElements = [];
+        pageState.backgrounds = [];
+        pageState.animations = [];
         svgToolState.setIsDrawnSvg(false)
         timelineBlockState.setIsRunningThumb(false)
         timelineBlockState.setTotalTime(0)
