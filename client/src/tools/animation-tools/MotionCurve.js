@@ -33,6 +33,13 @@ export default class MotionCurve extends AnimationTool {
     startAnimations(isRunningThumb) {
         this.isRunningThumb = isRunningThumb;
         const element = this.drawingCanvas.findOne('[data-tool="true"]');
+
+        const motionCurveElement = document.getElementById('motionPath');
+
+        // Устанавливаем видимость элемента в зависимости от isRunningThumb
+        if (motionCurveElement) {
+            motionCurveElement.style.visibility = this.isRunningThumb ? 'hidden' : 'visible';
+        }
         // Используем метод `initializeAnimation` из импортированного класса
         if(element){
             this.animationController.initializeAnimation(
