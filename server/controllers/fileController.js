@@ -79,7 +79,7 @@ class FileController {
 				type,
 				size: file.size,
 				path: filePath,
-				parent: parent?._id,
+				parent: parent ? parent._id : null,
 				user: user._id
 			})
 
