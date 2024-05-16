@@ -45,24 +45,22 @@ const AnimationSettingBlock = observer(() => {
     return (
         <div className="block-container">
             <div className="setting-block">
-                <div className="animation-setting-block-title">
-                    Настройки анимации
+                <div>
+                    <div className="animation-setting-block-title">
+                        Настройки анимации
+                    </div>
+                    <div className="animation-setting-block-btns">
+                        <button
+                            className={`animation-setting-block-btns__btn ${activeTool === 'keyframe' ? 'activeAnimBtn' : ''}`}
+                            onClick={handleKeyframeClick}> 
+                                Ключевые кадры
+                        </button>
+                    </div>
+                    <div className="animation-setting-block-data">
+                        {selectedToolContent}
+                    </div>                    
                 </div>
-                <div className="animation-setting-block-btns">
-                    {/* <button 
-                        className={`animation-setting-block-btns__btn ${activeTool === 'motionCurve' ? 'activeAnimBtn' : ''}`}
-                        onClick={handleMotionCurveClick}>
-                            Путь
-                    </button> */}
-                    <button 
-                        className={`animation-setting-block-btns__btn ${activeTool === 'keyframe' ? 'activeAnimBtn' : ''}`}
-                        onClick={handleKeyframeClick}> 
-                            Ключевые кадры
-                    </button>
-                </div>
-                <div className="animation-setting-block-data">
-                    {selectedToolContent}
-                </div>
+
             </div>
         </div>
     );

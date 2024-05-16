@@ -4,13 +4,11 @@ import {observer} from "mobx-react-lite";
 import layerState from "../../store/layerState";
 
 const Layer = observer(({id, canvasRef, style}) => {
-    // const isVisible = canvasState.layerVisibility[id];
-    // const layerStyle = {
-    //     display: isVisible ? 'block' : 'none',
-    //     pointerEvents: isVisible ? 'auto': 'none'
-    // }
+
     const mouseDownHandler = () => {
         console.log("mouseDownHandler")
+        const rect = canvasRef.current.getBoundingClientRect();
+        console.log(rect)
         canvasState.pushToUndo(layerState.layers[id].ref.current.toDataURL());
     };
     return (
@@ -20,7 +18,9 @@ const Layer = observer(({id, canvasRef, style}) => {
             height={644}
             id={id}
             ref={canvasRef}
-            style={style}></canvas>
+            style={style}>
+
+        </canvas>
     );
 });
 

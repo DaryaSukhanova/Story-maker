@@ -19,11 +19,13 @@ export default class Pencil extends Tool{
     mouseDownHandler(e){
         this.mouseDown = true
         this.points = [ ];
-        this.points.push({ x: e.pageX - e.target.offsetLeft, y: e.pageY - e.target.offsetTop });
+        const pos = this.getMousePos(e);
+        this.points.push({ x: pos.x, y: pos.y });
     }
     mouseMoveHandler(e){
         if (!this.mouseDown) return;
-        this.points.push({ x: e.pageX - e.target.offsetLeft, y: e.pageY - e.target.offsetTop });
+        const pos = this.getMousePos(e);
+        this.points.push({ x: pos.x, y: pos.y });
         this.ctx.beginPath();
         this.ctx.moveTo(this.points[this.points.length - 2].x, this.points[this.points.length - 2].y);
         this.ctx.lineTo(this.points[this.points.length - 1].x, this.points[this.points.length - 1].y);

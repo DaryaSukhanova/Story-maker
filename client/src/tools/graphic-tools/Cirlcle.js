@@ -17,15 +17,17 @@ export default class Circle extends Tool{
     }
     mouseDownHandler(e){
         this.mouseDown = true
-        this.ctx.beginPath() //говорит о том что мы начали рисовать новую линию
-        this.startX = e.pageX - e.target.offsetLeft
-        this.startY = e.pageY - e.target.offsetTop
+        this.ctx.beginPath()
+        const pos = this.getMousePos(e);
+        this.startX = pos.x
+        this.startY = pos.y
         this.saved = this.canvas.toDataURL()
     }
     mouseMoveHandler(e){
         if(this.mouseDown){
-            let startX = e.pageX - e.target.offsetLeft
-            let startY = e.pageY - e.target.offsetTop
+            const pos = this.getMousePos(e);
+            let startX = pos.x
+            let startY = pos.y
             let width = startX - this.startX
             let height = startY - this.startY
             this.r = Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2))

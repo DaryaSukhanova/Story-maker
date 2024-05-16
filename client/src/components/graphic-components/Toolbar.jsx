@@ -17,7 +17,7 @@ const Toolbar = () => {
             <ShapesBlock></ShapesBlock>
             <ToolsBlock currentColor={currentColor}></ToolsBlock>
             <ColorPicker currentColor={currentColor} handleColorChange={handleColorChange} />
-            <SettingBar></SettingBar>
+            <SettingBar/>
         </div>
     );
 };

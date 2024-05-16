@@ -3,7 +3,7 @@ import Disk from './Disk';
 
 const DiskBlock = () => {
     return (
-        <div className="block-container">
+        <div className="block-container book-block">
             <div className="setting-block">
                 <Disk/>
             </div>

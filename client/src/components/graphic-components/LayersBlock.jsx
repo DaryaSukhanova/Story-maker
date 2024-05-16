@@ -6,13 +6,20 @@ import LayerSelector from "../LayerSelector";
 import '../../styles/layers-block.scss'
 import layerState from "../../store/layerState";
 import Line from "../../tools/graphic-tools/Line";
-import CustomImage from "../../tools/graphic-tools/CustomImage";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 const LayersBlock = () => {
     const newLayerRef = useRef(null);
 
     const [file, setFile] = useState(null);
     const fileInputRef = useRef(null); // Ссылка на элемент input file
+    const [isVisible, setIsVisible] = useState(true);
+
+    const toggleVisibility = () => {
+        setIsVisible(!isVisible);
+    };
+
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0]; // Получаем выбранный файл из события
         setFile(selectedFile); // Обновляем состояние файла
@@ -39,6 +46,7 @@ const LayersBlock = () => {
             // Устанавливаем источник изображения как выбранный файл
             img.src = URL.createObjectURL(file);
         }
+        
     }, [file]); // Вызываем эффект только при изменении файла
 
     const handleAddLayer = () => {
@@ -52,8 +60,8 @@ const LayersBlock = () => {
 
     };
     return (
-        <div className="block-container">
-            <div className="setting-block layer">
+        <div className={` ${isVisible ? 'block-container' : 'hidden-block'}`}>
+            <div className={`setting-block ${isVisible ? '' : 'hidden'}`}>
                 <div>
                     <div className="tool-bar-item-title">Слои</div>
                     <div className="layer-buttons">
@@ -71,10 +79,12 @@ const LayersBlock = () => {
                         <input type="file" id="fileInput" ref={fileInputRef} onChange={handleFileChange} />
                     </div>
                 </div>
-
-                {/*<input type="file" id="fileInput" accept="image/*">*/}
-                {/*<button className="tool-bar__btn-tools line" onClick={()=> toolState.setTool(new CustomImage(canvasState.canvas))}/>*/}
             </div>
+            <button id="toggle-button" className="icon-button rigth" onClick={toggleVisibility}>
+                <FontAwesomeIcon 
+                icon={faChevronRight} 
+                style={{ color: "#e0e0e0", transform: isVisible ? 'none' : 'rotate(180deg)', transition: 'transform 0.3s ease' }} />
+            </button>
         </div>
     );
 };

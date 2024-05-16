@@ -1,34 +1,39 @@
 import Tool from "./Tool";
-import canvas from "../../components/graphic-components/Canvas";
-export default class Brush extends Tool{
+
+export default class Brush extends Tool {
     constructor(canvas) {
         super(canvas);
-        this.listen()
+        this.listen();
     }
 
-    listen(){
-        this.canvas.onmousemove = this.mouseMoveHandler.bind(this)
-        this.canvas.onmousedown = this.mouseDownHandler.bind(this)
-        this.canvas.onmouseup = this.mouseUpHandler.bind(this)
+    listen() {
+        this.canvas.onmousemove = this.mouseMoveHandler.bind(this);
+        this.canvas.onmousedown = this.mouseDownHandler.bind(this);
+        this.canvas.onmouseup = this.mouseUpHandler.bind(this);
     }
 
-    mouseUpHandler(e){
-        this.mouseDown = false
+    mouseUpHandler(e) {
+        this.mouseDown = false;
     }
-    mouseDownHandler(e){
-        this.mouseDown = true
-        this.ctx.beginPath()
+
+    mouseDownHandler(e) {
+        this.mouseDown = true;
+        this.ctx.beginPath();
         this.ctx.lineJoin = this.ctx.lineCap = 'round';
-        this.ctx.moveTo(e.pageX - e.target.offsetLeft, e.pageY - e.target.offsetTop)
+        const pos = this.getMousePos(e);
+        this.ctx.moveTo(pos.x, pos.y);
     }
-    mouseMoveHandler(e){
-        if(this.mouseDown){
-            this.draw(e.pageX - e.target.offsetLeft, e.pageY - e.target.offsetTop)
+
+    mouseMoveHandler(e) {
+        if (this.mouseDown) {
+            const pos = this.getMousePos(e);
+            this.draw(pos.x, pos.y);
         }
     }
 
-    draw(x, y){
-        this.ctx.lineTo(x, y)
-        this.ctx.stroke()
+
+    draw(x, y) {
+        this.ctx.lineTo(x, y);
+        this.ctx.stroke();
     }
 }

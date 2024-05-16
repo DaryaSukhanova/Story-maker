@@ -33,9 +33,8 @@ const Canvas = observer(() => {
     }, [canvasState.canvas]);
 
 
-
     return (
-        <div className="canvas">
+        <div className="canvas-container">
             {Object.keys(layers).map((layer, index) => (
 
                 <Layer
@@ -46,9 +45,7 @@ const Canvas = observer(() => {
                         pointerEvents: layers[index].isActive === true ? 'auto' : 'none'
                     }}
                 />
-                // <canvas key={index} id={layer} width={1100} height={644} ref={layerRefs[layer]}></canvas>
             ))}
-            {/*<canvas id={layers.length > 0 ? layers[0].name : ''} width={1100} height={644} ref={layers.length > 0 ? layers[0].ref : null}></canvas>*/}
 
         </div>
     );

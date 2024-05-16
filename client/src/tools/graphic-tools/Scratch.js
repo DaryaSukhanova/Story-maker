@@ -20,26 +20,27 @@ export default class Scratch extends Tool{
     }
     mouseDownHandler(e){
         this.mouseDown = true
-        this.lastPoint = { x: e.pageX - e.target.offsetLeft, y: e.pageY - e.target.offsetTop };
+        const pos = this.getMousePos(e);
+        this.lastPoint = { x: pos.x, y: pos.y };
     }
     mouseMoveHandler(e){
         if (!this.mouseDown) return;
 
         this.ctx.beginPath();
-
+        const pos = this.getMousePos(e);
         this.ctx.moveTo(this.lastPoint.x - this.getRandomInt(0, 3), this.lastPoint.y - this.getRandomInt(0, 3));
-        this.ctx.lineTo(e.pageX - e.target.offsetLeft - this.getRandomInt(0, 3), e.pageY - e.target.offsetTop - this.getRandomInt(0, 3));
+        this.ctx.lineTo(pos.x - this.getRandomInt(0, 3), pos.y - this.getRandomInt(0, 3));
         this.ctx.stroke();
 
         this.ctx.moveTo(this.lastPoint.x, this.lastPoint.y);
-        this.ctx.lineTo(e.pageX - e.target.offsetLeft, e.pageY - e.target.offsetTop);
+        this.ctx.lineTo(pos.x, pos.y);
         this.ctx.stroke();
 
         this.ctx.moveTo(this.lastPoint.x + this.getRandomInt(0, 3), this.lastPoint.y + this.getRandomInt(0, 3));
-        this.ctx.lineTo(e.pageX - e.target.offsetLeft + this.getRandomInt(0, 3), e.pageY - e.target.offsetTop + this.getRandomInt(0, 3));
+        this.ctx.lineTo(pos.x + this.getRandomInt(0, 3), pos.y + this.getRandomInt(0, 3));
         this.ctx.stroke();
 
-        this.lastPoint = { x: e.pageX - e.target.offsetLeft, y: e.pageY - e.target.offsetTop };
+        this.lastPoint = { x: pos.x, y: pos.y };
     }
 
 }

@@ -22,9 +22,10 @@ export default class Bubbles extends Tool{
     }
     mouseDownHandler(e){
         this.mouseDown = true
+        const pos = this.getMousePos(e);
         this.points.push({
-            x: e.pageX - e.target.offsetLeft,
-            y: e.pageY - e.target.offsetTop,
+            x: pos.x,
+            y: pos.y,
             radius: this.getRandomInt(10, 30),
             opacity: Math.random()
         });
@@ -32,10 +33,11 @@ export default class Bubbles extends Tool{
     point = null
     mouseMoveHandler(e){
         if (!this.mouseDown) return;
+        const pos = this.getMousePos(e);
         if (this.counter%5 ===0){
             this.point = {
-                x: e.pageX - e.target.offsetLeft,
-                y: e.pageY - e.target.offsetTop,
+                x: pos.x,
+                y: pos.y,
                 radius: this.getRandomInt(5, 20),
                 opacity: Math.random()
             };

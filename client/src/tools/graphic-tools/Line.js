@@ -17,15 +17,17 @@ export default class Line extends Tool{
     }
     mouseDownHandler(e){
         this.mouseDown = true
-        this.startX = e.pageX-e.target.offsetLeft
-        this.startY = e.pageY-e.target.offsetTop
+        const pos = this.getMousePos(e);
+        this.startX = pos.x
+        this.startY = pos.y
         this.ctx.beginPath()
         this.ctx.moveTo(this.startX, this.startY)
         this.saved = this.canvas.toDataURL()
     }
     mouseMoveHandler(e){
         if(this.mouseDown){
-            this.draw(e.pageX - e.target.offsetLeft, e.pageY - e.target.offsetTop)
+            const pos = this.getMousePos(e);
+            this.draw(pos.x, pos.y)
         }
     }
 

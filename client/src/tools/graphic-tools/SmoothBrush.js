@@ -19,7 +19,8 @@ export default class SmoothBrush extends Tool{
     mouseDownHandler(e){
         this.mouseDown = true
         this.ctx.lineJoin = this.ctx.lineCap = 'round';
-        this.lastPoint = { x: e.clientX- e.target.offsetLeft, y: e.clientY - e.target.offsetTop };
+        const pos = this.getMousePos(e);
+        this.lastPoint = { x: pos.x, y: pos.y };
     }
     distanceBetween(point1, point2) {
         return Math.sqrt(Math.pow(point2.x - point1.x, 2) + Math.pow(point2.y - point1.y, 2));
@@ -41,8 +42,8 @@ export default class SmoothBrush extends Tool{
     }
     mouseMoveHandler(e) {
         if (!this.mouseDown) return;
-
-        let currentPoint = { x: e.clientX - e.target.offsetLeft, y: e.clientY - e.target.offsetTop };
+        const pos = this.getMousePos(e);
+        let currentPoint = { x: pos.x, y: pos.y };
         let dist = this.distanceBetween(this.lastPoint, currentPoint);
         let angle = this.angleBetween(this.lastPoint, currentPoint);
 
