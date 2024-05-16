@@ -5,8 +5,8 @@ import router from './Router.js'
 import mongoose from "mongoose";
 import fileUpload from "express-fileupload"
 const PORT = process.env.PORT || 5000
-// const DB_URL = `mongodb+srv://darya:admin@storymaker.x6axj9v.mongodb.net/?retryWrites=true&w=majority`
-const DB_URL = "mongodb://localhost:27017/StoryMaker"
+const DB_URL = `mongodb+srv://darya:admin@storymaker.x6axj9v.mongodb.net/?retryWrites=true&w=majority`
+// const DB_URL = "mongodb://localhost:27017/StoryMaker"
 app.use(fileUpload({}))
 app.use(cors())
 app.use(express.json())
