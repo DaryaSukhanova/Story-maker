@@ -4,13 +4,9 @@
   width: 1100px;
   height: 644px;
   background: #FFF;
-  //height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  //background: url('../assets/img/icons.png') repeat 0 0/350px 268px;
-  //opacity: 0.5;
-  //z-index: 999;
   box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.10);
   border-radius: 7px;
 }
@@ -18,5 +14,4 @@
 canvas{
   border-radius: 7px;
   position: absolute;
-
 }

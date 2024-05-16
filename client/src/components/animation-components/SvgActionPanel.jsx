@@ -25,7 +25,7 @@ const SvgActionPanel = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
-            <button className="action-button" onClick={()=> setModal(true)}>Сохрнаить</button>
+            <button className="action-button" onClick={()=> setModal(true)}>Сохранить</button>
             <button className="action-button" onClick={svgCanvasState.handleClearCanvas}>Очистить холст</button>
         </div>
     );

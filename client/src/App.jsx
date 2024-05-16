@@ -22,8 +22,6 @@ const App =  observer(() => {
 	useEffect(() => {
 		auth()
 	}, [])
-
-
     return (
         <div className="app">
             <BrowserRouter>
@@ -74,12 +72,7 @@ const App =  observer(() => {
                         }>
                         </Route>
                     }
-                    {/*{userState.isAuth && */}
-                    {/*    <Route path="/disk" element={*/}
-                    {/*        <Disk/>*/}
-                    {/*    }>*/}
-                    {/*    </Route>*/}
-                    {/*}       */}
+    
                     <Route path="*" element={<Navigate to="/home" replace/>}/>
                 </Routes>
             </BrowserRouter>

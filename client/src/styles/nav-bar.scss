@@ -7,11 +7,16 @@
   //justify-content: space-around;
 }
 .nav-bar{
-  height: 47px;
+  height: $navbar-heigth;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  position: relative;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff; 
 }
 .nav-bar a:hover {
   text-decoration: underline;

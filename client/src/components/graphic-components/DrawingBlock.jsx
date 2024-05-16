@@ -1,8 +1,8 @@
 import React from 'react';
-import SvgToolbar from "../animation-components/SvgToolbar";
-import SvgSettingBar from "../animation-components/SvgSettingBar";
+
 import Toolbar from "./Toolbar";
-import SettingBar from "./SettingBar";
+
+import '../../styles/setting-block.scss'
 
 const DrawingBlock = () => {
     return (

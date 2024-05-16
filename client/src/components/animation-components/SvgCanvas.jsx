@@ -1,23 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
-import "../../styles/svg-canvas.scss"
+import "../../styles/canvas.scss"
 import {observer} from "mobx-react-lite";
 import canvasState from "../../store/canvasState";
 import svgToolState from "../../store/svgToolState";
-import SvgRect from "../../tools/animation-tools/SvgRect";
-import SvgBrush from "../../tools/animation-tools/SvgBrush";
-import Circle from "../../tools/animation-tools/jsx-tools/Circle";
-import SvgLine from "../../tools/animation-tools/SvgLine";
-import SvgPolyline from "../../tools/animation-tools/SvgPolyline";
-import SvgPolygon from "../../tools/animation-tools/SvgPolygon";
+
 
 import svgCanvasState from "../../store/svgCanvasState";
-import animationToolState from "../../store/animationToolState";
-import Rect from "../../tools/animation-tools/jsx-tools/Rect";
-import Brush from "../../tools/animation-tools/jsx-tools/Brush";
-import Line from "../../tools/animation-tools/jsx-tools/Line";
-import Polyline from "../../tools/animation-tools/jsx-tools/Polyline";
-import Polygon from "../../tools/animation-tools/jsx-tools/Polygon";
-import {set} from "mobx";
+
 
 const SvgCanvas = observer(() => {
     const svgCanvasRef = useRef();
@@ -76,20 +65,9 @@ const SvgCanvas = observer(() => {
 
     };
 
-    const handleMouseUp = () => {
-        setIsDrawing(false);
-        if (!currentShape) return; // Если нет текущей фигуры, выходим
-        setShapes(prevShapes => [...prevShapes, currentShape]); // Добавляем текущую фигуру в массив shapes
-        setCurrentShape(null); // Сбрасываем текущую фигуру
-
-    };
-
-    // handleMouseDown = animationToolState.tool === 'motionCurve' ?  () => {} : handleMouseDown;
-    // handleMouseMove = animationToolState.tool === 'motionCurve' ? handleMouseMove : () => {};
-    // handleMouseUp = animationToolState.tool === 'motionCurve' ? handleMouseUp : () => {};
 
     return (
-        <div className="block-container">
+        <div className="canvas">
             <svg
                 ref={svgCanvasRef}
                 className="svg-canvas"

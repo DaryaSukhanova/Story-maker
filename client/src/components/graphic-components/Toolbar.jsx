@@ -1,19 +1,5 @@
 import React, {useRef, useState} from 'react';
 import "../../styles/toolbar.scss"
-import canvasState from "../../store/canvasState";
-import Brush from "../../tools/graphic-tools/Brush";
-import toolState from "../../store/toolState";
-import Rect from "../../tools/graphic-tools/Rect";
-import Circle from "../../tools/graphic-tools/Cirlcle";
-import Eraser from "../../tools/graphic-tools/Eraser";
-import Line from "../../tools/graphic-tools/Line";
-import canvas from "./Canvas";
-import Canvas from "./Canvas";
-import {Button, Modal} from "react-bootstrap";
-import axios from "axios";
-import Scratch from "../../tools/graphic-tools/Scratch";
-import Bubbles from "../../tools/graphic-tools/Bubbles";
-import Pencil from "../../tools/graphic-tools/Pencil";
 import BrushBlock from "./BrushBlock";
 import ShapesBlock from "./ShapesBlock";
 import ToolsBlock from "./ToolsBlock";
