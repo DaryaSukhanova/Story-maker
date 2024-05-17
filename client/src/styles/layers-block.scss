@@ -15,8 +15,8 @@
 
   &__item{
     display: flex;
-    width: 200px;
-    height: 60px;
+    width: 80%;
+    padding: 1.5vh 0;
     align-items: center;
     justify-content: space-around;
     border: solid #ddd 1px;
@@ -52,11 +52,11 @@
   border-radius: 7px;
   display: flex;
   justify-content: space-around;
-  width: 80px;
-  padding: 5px;
+  width: 4.2vw;
+  padding: 0.6vh;
   &__btn{
-    height: 25px;
-    width: 25px;
+    height: 1.4vw;
+    width: 1.4vw;
     border: none;
     outline: none;
     cursor: pointer;

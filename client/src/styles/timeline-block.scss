@@ -12,6 +12,7 @@
   grid-template-columns: 1fr 9fr; // первый столбец в 3 раза меньше второго
   grid-template-rows: 1fr 2fr; // две строки, каждая автоматически адаптируется по высоте контента
   gap: 2px; // расстояние между столбцами и строками
+  overflow-x: auto;
 }
 .btn-time-block{
   width: 30px;
@@ -54,8 +55,6 @@
   justify-content: center;
   padding: 0 10px;
   max-width:  100%;
-
-  
 }
 
 .timeline-player{

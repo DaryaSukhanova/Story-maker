@@ -28,14 +28,6 @@ const SvgCanvas = observer(() => {
         setStartX(x);
         setStartY(y);
 
-        // if (svgToolState.tool === 'polyline') {
-        //     setDataPoints(`${x},${y}`);
-        //     setCurrentShape({ type: svgToolState.tool, points: `${x},${y}`, stroke: svgToolState.stroke });
-        // }
-        // if(svgToolState.tool === 'polygon' ){
-        //     setDataPoints(dataPoints + ` ${x},${y}`)
-        // }
-
         setCurrentShape({ type: svgToolState.tool, x, y, width: 0, height: 0, d:`M ${x} ${y}`,points:"" });
     };
 
@@ -70,12 +62,12 @@ const SvgCanvas = observer(() => {
         <div className="canvas-container">
             <svg
                 ref={svgCanvasRef}
-                className="svg-canvas"
                 id="drawingCanvas"
                 width={1100}
                 height={644}
+                viewBox="0 0 1100 644"
+                preserveAspectRatio="xMidYMid meet"
             >
-
             </svg>
         </div>
     );

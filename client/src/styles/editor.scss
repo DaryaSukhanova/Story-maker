@@ -3,14 +3,17 @@
 
   background: rgb(250, 250, 250) url('../assets/img/BG-repeat.png') repeat center center;
   height:100vh;
-  font-size: 17px;
+  font-size: 1vw;
+  display: flex;
+  flex-direction: column;
 }
 .editor-workspace{
   padding: 10vh 0 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 80%;
+  min-height: 80%; 
+
   
 }
 .block-container{
@@ -47,6 +50,25 @@
   position: absolute;
   top: 50%;
   z-index: 10; 
+}
+.action-panel-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.action-button{
+  width: 13vw;
+  margin: 0 20px;
+  font-size: 1.1vw;
+  padding: 0.8vw 2vw;
+  border-radius: 15px;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  background-color: $main-color-animation-editor;
+  color: #FFFFFF;
 }
 
 .left{
