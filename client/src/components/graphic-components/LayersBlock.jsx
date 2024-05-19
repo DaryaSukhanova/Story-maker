@@ -8,46 +8,15 @@ import layerState from "../../store/layerState";
 import Line from "../../tools/graphic-tools/Line";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import UploadImageBlock from './UploadImageBlock';
 
 const LayersBlock = () => {
     const newLayerRef = useRef(null);
-
-    const [file, setFile] = useState(null);
-    const fileInputRef = useRef(null); // Ссылка на элемент input file
     const [isVisible, setIsVisible] = useState(true);
 
     const toggleVisibility = () => {
         setIsVisible(!isVisible);
     };
-
-    const handleFileChange = (e) => {
-        const selectedFile = e.target.files[0]; // Получаем выбранный файл из события
-        setFile(selectedFile); // Обновляем состояние файла
-    };
-    useEffect(() => {
-        if (file) {
-            const canvas = canvasState.canvas;
-            const ctx = canvas.getContext('2d');
-
-            // Создаем новый элемент изображения
-            const img = new Image();
-
-            // Устанавливаем обработчик загрузки изображения
-            img.onload = () => {
-                // Очищаем холст перед рисованием нового изображения
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                // Рассчитываем координаты для размещения изображения внизу холста
-                const x = (canvas.width - img.width) / 2; // по горизонтали в центре
-                const y = canvas.height - img.height; // по вертикали внизу
-                // Рисуем изображение на холсте
-                ctx.drawImage(img, x, y);
-            };
-
-            // Устанавливаем источник изображения как выбранный файл
-            img.src = URL.createObjectURL(file);
-        }
-        
-    }, [file]); // Вызываем эффект только при изменении файла
 
     const handleAddLayer = () => {
         layerState.addLayer(newLayerRef);
@@ -72,13 +41,7 @@ const LayersBlock = () => {
                     <LayerSelector />
                 </div>
 
-                <div>
-                    <div className="tool-bar-item-title">Загрузка изображения</div>
-                    <div className="upload-img-container">
-                        <label htmlFor="fileInput" className="upload-img">Загрузить</label>
-                        <input type="file" id="fileInput" ref={fileInputRef} onChange={handleFileChange} />
-                    </div>
-                </div>
+                <UploadImageBlock/>
             </div>
             <button id="toggle-button" className="icon-button rigth" onClick={toggleVisibility}>
                 <FontAwesomeIcon 

@@ -16,16 +16,18 @@ export default class Triangle extends Tool{
         this.mouseDown = false
     }
     mouseDownHandler(e){
+        const pos = this.getMousePos(e);
         this.mouseDown = true
         this.ctx.beginPath() //говорит о том что мы начали рисовать новую линию
-        this.startX = e.pageX - e.target.offsetLeft
-        this.startY = e.pageY - e.target.offsetTop
+        this.startX = pos.x
+        this.startY = pos.y
         this.saved = this.canvas.toDataURL()
     }
     mouseMoveHandler(e){
         if(this.mouseDown){
-            let currentX = e.pageX - e.target.offsetLeft
-            let currentY = e.pageY - e.target.offsetTop
+            const pos = this.getMousePos(e);
+            let currentX = pos.x
+            let currentY = pos.y
 
             this.draw(currentX, currentY)
         }

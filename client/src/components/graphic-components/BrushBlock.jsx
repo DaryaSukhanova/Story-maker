@@ -7,20 +7,36 @@ import Bubbles from "../../tools/graphic-tools/Bubbles";
 import Pencil from "../../tools/graphic-tools/Pencil";
 import SmoothBrush from "../../tools/graphic-tools/SmoothBrush";
 import Highlighter from "../../tools/graphic-tools/Highlighter";
+const toolComponents = {
+    pen: Brush,
+    scratch: Scratch,
+    bubbles: Bubbles,
+    pencil: Pencil,
+    smoothBrush: SmoothBrush,
+    marker: Highlighter
+};
 
 const BrushBlock = () => {
+    const handleToolClick = (toolKey) => {
+        const ToolComponent = toolComponents[toolKey];
+        if (ToolComponent) {
+            const toolInstance = new ToolComponent(canvasState.canvas);
+            toolState.setTool(toolInstance);
+        }
+    };
+
     return (
         <div className="brush-block-container">
             <div className="tool-bar-item-title">Кисти</div>
             <div className="tool-bar-item brush-block">
-                <button className="tool-bar__btn pen" onClick={()=> toolState.setTool(new Brush(canvasState.canvas))}/>
-                <button className="tool-bar__btn scratch" onClick={()=> toolState.setTool(new Scratch(canvasState.canvas))}/>
-                <button className="tool-bar__btn bubbles" onClick={()=> toolState.setTool(new Bubbles(canvasState.canvas))}/>
-                <button className="tool-bar__btn pencil" onClick={()=> toolState.setTool(new Pencil(canvasState.canvas))}/>
-                <button className="tool-bar__btn smoothBrush" onClick={()=> toolState.setTool(new SmoothBrush(canvasState.canvas))}/>
-                <button className="tool-bar__btn marker" onClick={()=> toolState.setTool(new Highlighter(canvasState.canvas))}/>
+                {Object.keys(toolComponents).map((toolKey) => (
+                    <button
+                        key={toolKey}
+                        className={`tool-bar__btn ${toolKey}`}
+                        onClick={() => handleToolClick(toolKey)}
+                    />
+                ))}
             </div>
-
         </div>
     );
 };
