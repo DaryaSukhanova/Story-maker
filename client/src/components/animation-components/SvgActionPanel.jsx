@@ -17,11 +17,11 @@ const SvgActionPanel = () => {
                     <Modal.Title>Введите название анимации</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                        <input type="text" ref={animationNameRef}/>
+                        <input className="input-modal" type="text" ref={animationNameRef}/>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button className="button-modal" variant="secondary" onClick={()=> saveAnimation(animationNameRef, () => setModal(false))}>
-                        Save
+                        Сохранить
                     </Button>
                 </Modal.Footer>
             </Modal>

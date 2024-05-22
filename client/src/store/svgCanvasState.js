@@ -57,8 +57,25 @@ class SvgCanvasState{
         };
 
         this.svgElements.push(svgElementWrapper);
-        console.log("this.svgElements", this.svgElements)
         timelineBlockState.setActiveElement(svgElementWrapper);
+    }
+    removeSvgElement(elementId) {
+        // Находим индекс элемента в массиве svgElements
+        const elementIndex = this.svgElements.findIndex(el => el.id === elementId);
+        if (elementIndex === -1) {
+            console.error(`Element with ID ${elementId} not found.`);
+            return;
+        }
+        
+        // Удаляем элемент из массива
+        this.svgElements.splice(elementIndex, 1);
+        console.log(`Element with ID ${elementId} has been removed.`);
+        
+        // Очистка активного элемента, если он был удален
+        if (this.activeElement === elementId) {
+            this.activeElement = null;
+            this.activeKey = null;
+        }
     }
 
     addKeyframeToElement(elementId) {

@@ -14,13 +14,6 @@ const TimelineControls = observer( ({variant, totalTime} ) => {
     const intervalIdRef = useRef(null);
     const startTimeRef = useRef(null);
 
-    useEffect(() => {
-        // keyframeManagerRef.current = new KeyFrameManager(svgCanvasState.canvas);
-        // return () => {
-        //     // Очищаем экземпляр AnimationManager при размонтировании компонента
-        //     keyframeManagerRef.current = null;
-        // };
-    }, []);
 
     useEffect(() => {
         if (isRunningThumb) {

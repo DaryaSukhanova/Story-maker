@@ -7,7 +7,6 @@ const SvgDrawingBlock = () => {
         <div className="block-container">
             <div className="setting-block ">
                 <SvgToolbar></SvgToolbar>
-                
             </div>
             
         </div>

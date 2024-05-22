@@ -10,7 +10,6 @@ export default class Group extends SvgTool {
         this.group = this.svg.group();  // Создаем группу внутри SVG-объекта
         this.group.attr('data-tool', 'true');
 
-
         this.bboxRect = null;
         this.bboxRects = [];
         this.listen();
@@ -28,7 +27,7 @@ export default class Group extends SvgTool {
         if (target) {
             const isDataTool = target.attr('data-tool');
             if (isDataTool === 'true') {
-                this.group.add(target);  // Добавляем элемент в группу
+                this.group.add(target);
                 console.log('Element added to the group:', target);
 
                 // Получаем bbox текущего элемента

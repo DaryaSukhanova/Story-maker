@@ -49,7 +49,7 @@ export default class MotionCurve extends AnimationTool {
                 true,
                 isRunningThumb,
                 timelineBlockState
-            );            
+            ); 
         }
 
     }

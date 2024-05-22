@@ -108,18 +108,6 @@ export const addBackground = async (file) => {
 	}
 }
 
-// const adjustTransformOrigin = (element, canvasRect) => {
-//     const bbox = element.getBBox();
-//     const originX = bbox.x + bbox.width / 2;
-//     const originY = bbox.y + bbox.height / 2;
-//
-//     return {
-//         x: originX - canvasRect.left,
-//         y: originY - canvasRect.top
-//     };
-// };
-
-
 export const addAnimation = async (file) => {   
     try {
         pageState.animations.push(file._id)

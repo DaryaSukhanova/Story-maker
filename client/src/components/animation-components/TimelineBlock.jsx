@@ -2,8 +2,6 @@ import React from 'react';
 import '../../styles/timeline-block.scss';
 import {observer} from "mobx-react-lite";
 import TimelineControls from "./TimelineControls";
-import animationToolState from "../../store/animationToolState";
-import TimelineTool from "./TimelineTool";
 import TimelineTicks from "./TimelineTicks";
 import svgCanvasState from "../../store/svgCanvasState";
 import TimelineItems from "./TimelineItems";

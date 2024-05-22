@@ -179,6 +179,15 @@
     width: 50px;
     justify-content: space-around;
   }
+  &__input{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 16px; /* Замените на нужный размер шрифта */
+    padding: 0;
+    margin: 0;
+    width: 100%;
+  }
 
 }
 

@@ -64,7 +64,5 @@ export default class SvgTool {
             svgCanvasState.pushToSvgElements(this.currentDrawingTool);
             this.currentDrawingTool = null
         }
-        console.log('MouseUp Event');
-        console.log(svgCanvasState.svgElements)
     }
 }

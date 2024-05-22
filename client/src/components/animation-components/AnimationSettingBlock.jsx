@@ -12,12 +12,6 @@ const AnimationSettingBlock = observer(() => {
     const keyFrameManagerRef = useRef(null);
     const [activeTool, setActiveTool] = useState(null); // состояние для отслеживания активного инструмента
 
-    useEffect(() => {
-        if (svgCanvasState.canvas) {
-            // motionCurveRef.current = new MotionCurve(svgCanvasState.canvas);
-            // keyFrameManagerRef.current = new KeyFrameManager(svgCanvasState.canvas);
-        }
-    }, [svgCanvasState.canvas]);
 
     const handleMotionCurveClick = () => {
         if (!motionCurveRef.current) {
@@ -58,7 +52,7 @@ const AnimationSettingBlock = observer(() => {
                     </div>
                     <div className="animation-setting-block-data">
                         {selectedToolContent}
-                    </div>                    
+                    </div>
                 </div>
 
             </div>

@@ -12,14 +12,6 @@ export default class SvgBrush extends SvgTool {
         this.drawingCanvas = SVG(document.getElementById("drawingCanvas"))
     }
 
-
-    // mouseUpHandler(e) {
-    //     if (this.path) {
-    //         svgCanvasState.pushToSvgElements(this.path);
-    //         this.path = null;
-    //     }
-    // }
-
     mouseDownHandler(e) {
         this.mouseDown = true
         const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
@@ -48,11 +40,8 @@ export default class SvgBrush extends SvgTool {
             const currentX = e.pageX - svgCanvasRect.left;
             const currentY = e.pageY - svgCanvasRect.top;
 
-            // Append new line segment to the path
             const d = this.path.attr('d');
             this.path.plot(d + ` L${currentX},${currentY}`);
         }
     }
-
-
 }

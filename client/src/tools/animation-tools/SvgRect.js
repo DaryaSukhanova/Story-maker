@@ -14,12 +14,6 @@ export default class SvgRect extends SvgTool {
         this.drawingCanvas = SVG(this.svgCanvas).group();
     }
 
-    // listen() {
-    //     this.svgCanvas.addEventListener('mousemove', this.mouseMoveHandler.bind(this));
-    //     this.svgCanvas.addEventListener('mousedown', this.mouseDownHandler.bind(this));
-    //     this.svgCanvas.addEventListener('mouseup', this.mouseUpHandler.bind(this));
-    // }
-
     mouseDownHandler(e) {
         const svgCanvasRect = this.svgCanvas.getBoundingClientRect();
         this.startX = e.pageX - svgCanvasRect.left;

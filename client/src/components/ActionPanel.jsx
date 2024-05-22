@@ -32,7 +32,7 @@ const ActionPanel = () => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button className="button-modal" variant="secondary" onClick={()=> saveBackground(backgroundNameRef, () => setModal(false))}>
-                        Save
+                        Сохранить
                     </Button>
                 </Modal.Footer>
             </Modal>

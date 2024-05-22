@@ -16,30 +16,6 @@ class timelineBlockState{
         makeAutoObservable(this)
     }
 
-    // addKey(){
-    //     const id = `key-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-    //     this.keys.push({
-    //         id: id,
-    //         name: `Key${this.keyCount}`,
-    //         isActive: false,
-    //         position: 0,
-    //         duration: 0,
-    //         rotate: 0,
-    //         scaleX: 1,
-    //         scaleY: 1,
-    //         translateX: 0,
-    //         translateY: 0,
-    //         skewX: 0,
-    //         skewY: 0,
-    //         originX: 0,
-    //         originY: 0
-    //     });
-    //     this.keyCount++
-    //     // console.log(keys)
-    // }
-    // setKeys(arr){
-    //     this.keys = arr
-    // }
     setActiveElement(element){
         this.activeElement = element
     }

@@ -16,7 +16,13 @@ export default class KeyFrameManager extends AnimationTool{
 
     mouseDownHandler = (e) => {
         const target = e.target;
-        svgCanvasState.toggleAnimation(target)
+        const isDataTool = target.getAttribute('data-tool') === 'true'; // Проверяем значение атрибута
+    
+        if (isDataTool) {
+            svgCanvasState.toggleAnimation(target);
+        } else {
+            console.log('Clicked element does not have data-tool="true"');
+        }
     }
 
 
@@ -31,7 +37,6 @@ export default class KeyFrameManager extends AnimationTool{
             const animationName = `rotatePath_${index}`;
             if(animatedElement.keys.length> 0){
                 createAnimationStyle({x: animatedElement.origin.x, y: animatedElement.origin.y}, animatedElement.keys, index, timelineBlockState.totalTime, animationName);
-                
                 animatedElement.shape.attr({
                     'style': `
                     animation: ${animationName}; 
@@ -42,7 +47,6 @@ export default class KeyFrameManager extends AnimationTool{
                 `
                 });
             }
-    
         });
     }
 
