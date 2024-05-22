@@ -6,12 +6,19 @@ import svgCanvasState from "../../store/svgCanvasState";
 import { observer } from "mobx-react-lite";
 import TransformBlock from "./TransformBlock";
 import KeyFrameManager from "../../tools/animation-tools/KeyFrameManager";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 const AnimationSettingBlock = observer(() => {
     const motionCurveRef = useRef(null);
     const keyFrameManagerRef = useRef(null);
     const [activeTool, setActiveTool] = useState(null); // состояние для отслеживания активного инструмента
 
+    const [isVisible, setIsVisible] = useState(true);
+
+    const toggleVisibility = () => {
+        setIsVisible(!isVisible);
+    };
 
     const handleMotionCurveClick = () => {
         if (!motionCurveRef.current) {
@@ -37,8 +44,8 @@ const AnimationSettingBlock = observer(() => {
     }
 
     return (
-        <div className="block-container">
-            <div className="setting-block">
+        <div className={` ${isVisible ? 'block-container' : 'hidden-block'}`}>
+            <div className={`setting-block ${isVisible ? '' : 'hidden'}`}>
                 <div>
                     <div className="animation-setting-block-title">
                         Настройки анимации
@@ -54,8 +61,12 @@ const AnimationSettingBlock = observer(() => {
                         {selectedToolContent}
                     </div>
                 </div>
-
             </div>
+            <button id="toggle-button" className="icon-button rigth" onClick={toggleVisibility}>
+                <FontAwesomeIcon 
+                icon={faChevronRight} 
+                style={{ color: "#e0e0e0", transform: isVisible ? 'none' : 'rotate(180deg)', transition: 'transform 0.3s ease' }} />
+            </button>
         </div>
     );
 });
