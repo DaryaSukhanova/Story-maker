@@ -23,8 +23,8 @@ const Home = () => {
 
                         </div>
                         <div className="home-workspace__info__buttons">
-                            <div className="action-button"><NavLink to="/login">Войти</NavLink></div>
-                            <div className="action-button"><NavLink to="/registration">Регистрация</NavLink></div>
+                            <div className="action-button" id='btnLogin'><NavLink to="/login">Войти</NavLink></div>
+                            <div className="action-button" id='btnRegistration'><NavLink to="/registration">Регистрация</NavLink></div>
                         </div>
                     </div>
                     <div className="home-workspace__image">
