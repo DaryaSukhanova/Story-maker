@@ -51,7 +51,7 @@ const File = observer(({file}) => {
             <div className="file__name">{file.name}</div>
             {/* <div className="file__date">{file.date.slice(0,10)}</div>
             <div className="file__size">{file.size}</div> */}
-            {/* {file.type !== 'dir' && <button className="file__btn file__add" onClick={(e) => addPageClickHandler(e)}>На холст</button>} */}
+            {file.type === 'pg' && <button className="file__btn file__add" onClick={(e) => addPageClickHandler(e)}>На холст</button>}
 			{file.type === 'png' && <button className="file__btn file__add" onClick={(e) => addBgClickHandler(e)}>На холст</button>}
             {file.type === 'json' && <button className="file__btn file__add" onClick={(e) => addAnimationClickHandler(e)}>На холст</button>}
             {file.type !== 'dir' && <button className="file__btn file__download" onClick={(e) => downloadClickHandler(e)}><img src={dl}/></button>}

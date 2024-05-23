@@ -32,6 +32,7 @@ const ShapesBlock = () => {
                         key={toolKey}
                         className={`tool-bar__btn-tools ${toolKey}`}
                         onClick={() => handleToolClick(toolKey)}
+                        id={`GE${toolKey}`}
                     />
                 ))}
             </div>

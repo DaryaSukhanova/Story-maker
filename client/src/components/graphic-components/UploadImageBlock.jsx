@@ -1,4 +1,3 @@
-// UploadImageBlock.js
 import React, { useEffect, useRef, useState } from 'react';
 import canvasState from "../../store/canvasState";
 import '../../styles/layers-block.scss';
@@ -9,7 +8,12 @@ const UploadImageBlock = () => {
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
-        setFile(selectedFile);
+        if (selectedFile && selectedFile.type === 'image/png') {
+            setFile(selectedFile);
+        } else {
+            alert('Пожалуйста, загрузите файл формата PNG.');
+            fileInputRef.current.value = ''; // Сбросить значение input
+        }
     };
 
     useEffect(() => {
@@ -42,4 +46,3 @@ const UploadImageBlock = () => {
 };
 
 export default UploadImageBlock;
-

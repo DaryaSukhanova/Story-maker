@@ -16,7 +16,7 @@ const Layer = observer(({id, canvasRef, style}) => {
             onMouseDown={()=> mouseDownHandler()}
             width={1100}
             height={644}
-            id={id}
+            id={`canvas${id}`}
             ref={canvasRef}
             style={style}>
 

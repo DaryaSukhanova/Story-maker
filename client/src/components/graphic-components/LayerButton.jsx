@@ -16,7 +16,7 @@ const LayerButton = observer(({id, layerName, func, isActive, isVisible}) => {
     return (
         <div
             className={`layer-selector__item ${isActive ? 'active' : ''}`}
-            id={id}
+            id={`layerBtn${id}`}
             onClick={handleClick}
         >
             <div className="layer-selector__layer-btn"></div>

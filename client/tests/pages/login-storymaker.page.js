@@ -36,7 +36,7 @@ class LoginStoryMaker extends Page {
 
     async openGraphicEditor () {
         const link = await this.linkGraphicEditor;
-        await link.scrollIntoView();
+        // await link.scrollIntoView();
         await link.waitForClickable({ timeout: 3000 });
         await link.click();
     }

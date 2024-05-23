@@ -34,8 +34,8 @@ const LayersBlock = () => {
                 <div>
                     <div className="tool-bar-item-title">Слои</div>
                     <div className="layer-buttons">
-                        <button className="layer-buttons__btn add-layer" onClick={handleAddLayer}></button>
-                        <button className="layer-buttons__btn remove-layer" onClick={handleRemoveLayer}></button>
+                        <button id='btnLayerAdd' className="layer-buttons__btn add-layer" onClick={handleAddLayer}></button>
+                        <button id='btnLayerRemove' className="layer-buttons__btn remove-layer" onClick={handleRemoveLayer}></button>
                     </div>
 
                     <LayerSelector />

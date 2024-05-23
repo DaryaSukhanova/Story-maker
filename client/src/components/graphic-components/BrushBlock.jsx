@@ -34,6 +34,7 @@ const BrushBlock = () => {
                         key={toolKey}
                         className={`tool-bar__btn ${toolKey}`}
                         onClick={() => handleToolClick(toolKey)}
+                        id={`GE${toolKey}`}
                     />
                 ))}
             </div>

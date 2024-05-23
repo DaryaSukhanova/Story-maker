@@ -65,7 +65,7 @@ const BookActivePanel = observer( () => {
                     <TimelineControls variant="wide" totalTime={pageState.totalTime}/>
                     <div className="slider-container">
                         <label htmlFor="slider" className="slider-label"></label>
-                        <input className="slider__total-time"
+                        <input className="slider__input"
                          type="range" 
                          id="slider" 
                          min="0" 
