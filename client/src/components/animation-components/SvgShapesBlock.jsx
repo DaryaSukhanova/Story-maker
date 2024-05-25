@@ -10,6 +10,7 @@ import SvgCircle from "../../tools/animation-tools/SvgCircle";
 import SvgPolygon from "../../tools/animation-tools/SvgPolygon";
 import SvgModel from "../../tools/animation-tools/SvgModel";
 import "../../styles/toolbar.scss";
+import { Tooltip } from 'react-tooltip';
 
 const toolComponents = {
     brush: SvgBrush,
@@ -18,6 +19,15 @@ const toolComponents = {
     circle: SvgCircle,
     polygon: SvgPolygon,
     model: SvgModel
+};
+
+const toolTips = {
+    brush: 'Кисть',
+    line: 'Линия',
+    rect: 'Прямоугольник',
+    circle: 'Круг',
+    polygon: 'Треугольник',
+    model: 'Шаблон'
 };
 
 const SvgShapesBlock = () => {
@@ -37,12 +47,28 @@ const SvgShapesBlock = () => {
             <div className="tool-bar-item-title">Фигуры</div>
             <div className="tool-bar-item">
                 {Object.keys(toolComponents).map((toolKey) => (
-                    <button
-                        key={toolKey}
-                        className={`tool-bar__btn ${toolKey}`}
-                        onClick={() => handleSvgToolClick(toolKey)}
-                    />
+                    <div>
+                        <button
+                            key={toolKey}
+                            className={`tool-bar__btn ${toolKey}`}
+                            onClick={() => handleSvgToolClick(toolKey)}
+                            id={`AE${toolKey}`}
+                            data-tooltip-id={`tooltip-${toolKey}`}
+                        />     
+                        <Tooltip
+                            id={`tooltip-${toolKey}`}
+                            place="bottom"
+                            type="info"
+                            effect="float"
+                        >
+                            {toolTips[toolKey]}
+                        </Tooltip>                      
+                    </div>
+
+
+
                 ))}
+
             </div>
         </div>
     );

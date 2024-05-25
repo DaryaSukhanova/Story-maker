@@ -5,7 +5,7 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    padding: 25px 0;
+    padding: 30px 0;
     
   }
   &__options{
@@ -53,7 +53,7 @@
 .transform-block__entry > * {
   flex: 1; /* Равномерно распределяет пространство между дочерними элементами */
 }
-input[type="number"] {
+.transform-input {
   -moz-appearance: textfield;
   -webkit-appearance: textfield;
   appearance: textfield;
@@ -66,19 +66,24 @@ input[type="number"] {
   margin: 5px;
   width: 80px;
 }
-input[type="number"]:focus {
+.transform-input:focus {
   outline: 2px solid $main-color-animation-editor;
 }
 
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
+input[type="text"]::-webkit-outer-spin-button,
+input[type="text"]::-webkit-inner-spin-button {
   display: none;
 }
-input[type="number"]:focus {
+input[type="text"]:focus {
   //outline: 2px solid $main-color-animation-editor;
 }
 .deg-label {
   font-size: 12px;
   position: absolute;
   right: 90px;
+}
+
+.input-error {
+  border: 1px solid red !important;
+  background-color: #ffe6e6 !important;
 }

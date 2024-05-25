@@ -10,12 +10,31 @@ class GraphicEditor extends Page {
     get shapeTool(){
         return $('#GErect')
     }
+
+    async drawShape(startX, startY, endX, endY) {
+        
+        await browser.performActions([{
+            type: 'pointer',
+            id: 'mouse',
+            parameters: { pointerType: 'mouse' },
+            actions: [
+                { type: 'pointerMove', duration: 0, x: startX, y: startY },
+                { type: 'pointerDown', button: 0 },
+                { type: 'pointerMove', duration: 500, origin: 'pointer', x: endX - startX, y: endY - startY },
+                { type: 'pointerUp', button: 0 }
+            ]
+        }]);
+        
+        await browser.releaseActions();
+        await browser.pause(1000);
+    }
+
     get colorPicker() {
         return $('.saturation-white');
     }
 
     get colorPickerInput() {
-        return $('#colorPickerInput'); // Убедитесь, что у вас есть элемент с этим селектором
+        return $('#colorPickerInput'); 
     }
     
     get thicknessSlider() {

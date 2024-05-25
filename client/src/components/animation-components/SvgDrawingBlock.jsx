@@ -14,7 +14,7 @@ const SvgDrawingBlock = () => {
             <div className={`setting-block ${isVisible ? '' : 'hidden'}`}>
                 <SvgToolbar></SvgToolbar>
             </div>
-            <button id="toggle-button" className="icon-button left" onClick={toggleVisibility}>
+            <button id="toggleButtonLeft" className="icon-button left" onClick={toggleVisibility}>
                 <FontAwesomeIcon 
                 icon={faChevronLeft} 
                 style={{ color: "#e0e0e0", transform: isVisible ? 'none' : 'rotate(180deg)', transition: 'transform 0.3s ease' }} />

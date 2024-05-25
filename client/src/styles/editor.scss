@@ -12,9 +12,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-height: 80%; 
-
-  
+  min-height: 80%;   
 }
 .block-container{
   // padding: 0;
@@ -36,7 +34,7 @@
 
 }
 .icon-button {
-  background-color: #ffffff;
+  background: none;
   color: white;
   border: none;
   border-radius: 50%;
@@ -46,7 +44,7 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  // transition: background-color 0.3s ease;
   position: absolute;
   top: 50%;
   z-index: 10; 
@@ -74,7 +72,7 @@
 .left{
   right: 0;
 }
-.rigth{
+.right{
   left: 0;
 }
 
@@ -102,9 +100,3 @@
   }
 }
 
-// @media (max-width: 800px) {
-//   .setting-block {
-//     width: 90vw; /* Почти полная ширина экрана для маленьких устройств */
-//     height: calc(90vw * (700 / 340)); /* Сохраняем соотношение сторон */
-//   }
-// }

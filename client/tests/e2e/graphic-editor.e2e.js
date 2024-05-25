@@ -10,7 +10,7 @@ describe('Graphic Editor Tests', () => {
         const loginPage = require('../pages/login-storymaker.page');
 
         await loginPage.enter();
-        await loginPage.login('darya.sukh21@mail.ru', '123456');
+        await loginPage.login('darya.sukh32@mail.ru', '123456');
         await loginPage.openGraphicEditor();
 
         // Убедимся, что мы находимся на странице графического редактора
@@ -52,13 +52,15 @@ describe('Graphic Editor Tests', () => {
         await GraphicEditor.selectBrushTool();
         await GraphicEditor.selectShapeTool();
 
+        await GraphicEditor.drawShape(500, 500, 700, 700);
+
         // const color = '#ff0000'; // Красный цвет
         // await GraphicEditor.changeColor(color);
 
         // const inputColor = await GraphicEditor.colorPickerInput.getValue();
         // expect(inputColor).toBe(color);
 
-        await GraphicEditor.changeThickness(10); // Толщина 10
+        await GraphicEditor.changeThickness(10);
     });
 
     it('should select and manipulate layers', async () => {
@@ -88,6 +90,8 @@ describe('Graphic Editor Tests', () => {
         await GraphicEditor.addLayer();
         await GraphicEditor.deleteLayer();
     });
+    
+
 
     it('should save and clear the canvas', async () => {
         // Сохраняем рисунок
@@ -97,6 +101,24 @@ describe('Graphic Editor Tests', () => {
         await GraphicEditor.clearCanvas();
 
         // Ожидаем, что модальное окно закроется после сохранения   
+        await browser.pause(1000); // Временная задержка для наблюдения за результатом
+    });
+
+    it('should show an error message for invalid input', async () => {
+        
+        // Пытаемся сохранить рисунок с неверным именем
+        await GraphicEditor.saveDrawing('<invalid name>');
+
+        // Ожидаем, что сообщение об ошибке будет отображено
+        const errorMessageElement = await $('.modal-body p');
+        const errorMessage = await errorMessageElement.getText();
+        expect(errorMessage).toBe('Неверное название. Пожалуйста, убедитесь, что оно содержит только буквы, цифры, дефисы и подчеркивания.');
+
+        // Закрываем модальное окно
+        const closeButton = GraphicEditor.saveModalBtn
+        await closeButton.click();
+
+        // Ожидаем, что модальное окно закроется после нажатия на кнопку закрытия   
         await browser.pause(1000); // Временная задержка для наблюдения за результатом
     });
 });

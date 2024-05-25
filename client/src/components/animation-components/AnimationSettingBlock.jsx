@@ -53,6 +53,7 @@ const AnimationSettingBlock = observer(() => {
                     <div className="animation-setting-block-btns">
                         <button
                             className={`animation-setting-block-btns__btn ${activeTool === 'keyframe' ? 'activeAnimBtn' : ''}`}
+                            id='frameActivationBtn'
                             onClick={handleKeyframeClick}> 
                                 Ключевые кадры
                         </button>
@@ -62,7 +63,7 @@ const AnimationSettingBlock = observer(() => {
                     </div>
                 </div>
             </div>
-            <button id="toggle-button" className="icon-button rigth" onClick={toggleVisibility}>
+            <button id="toggleButtonRight" className="icon-button right" onClick={toggleVisibility}>
                 <FontAwesomeIcon 
                 icon={faChevronRight} 
                 style={{ color: "#e0e0e0", transform: isVisible ? 'none' : 'rotate(180deg)', transition: 'transform 0.3s ease' }} />

@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import "../../styles/toolbar.scss"
 import toolState from "../../store/toolState";
-import { SketchPicker } from "react-color";
 const SettingBar = () => {
 
     return (
         <div className="setting-bar">
             <div>
-                <div className="tool-bar-item-title">Толщина</div>
+                <label className="tool-bar-item-title" for="line-width">Толщина</label>
                 <div className="tool-bar-item">
+                    
                     <input className="slider__input"
                         onChange={e => toolState.setLineWidth(e.target.value)}
                         id="line-width" type="range"
@@ -18,5 +18,4 @@ const SettingBar = () => {
         </div>
     );
 };
-
 export default SettingBar;

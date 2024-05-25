@@ -9,12 +9,8 @@ import layerState from "../../store/layerState";
 const Canvas = observer(() => {
 
     let layers = layerState.layers
-    const [currentLayer, setCurrentLayer] = useState(0);
-
     const [currentTool, setCurrentTool] = useState(null);
-
     useEffect(() => {
-
         if (layers.length > 0) {
             const activeIndex = layers.findIndex(layer => layer.isActive);
             if (activeIndex !== -1) {
@@ -30,7 +26,7 @@ const Canvas = observer(() => {
 
     return (
         <div className="canvas-container">
-            {Object.keys(layers).map((layer, index) => (
+            {Object.keys(layers).map((index) => (
 
                 <Layer
                     id={layers.length > 0 ? index : ''}

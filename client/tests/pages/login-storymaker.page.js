@@ -23,6 +23,10 @@ class LoginStoryMaker extends Page {
         return $('a[href="/graphic-editor"]');
     }
 
+    get linkAnimationEditor () {
+        return $('a[href="/animation-editor"]');
+    }
+
     // Methods
     async enter () {
         await this.btnEnter.click();
@@ -36,6 +40,13 @@ class LoginStoryMaker extends Page {
 
     async openGraphicEditor () {
         const link = await this.linkGraphicEditor;
+        // await link.scrollIntoView();
+        await link.waitForClickable({ timeout: 3000 });
+        await link.click();
+    }
+
+    async openAnimationEditor () {
+        const link = await this.linkAnimationEditor;
         // await link.scrollIntoView();
         await link.waitForClickable({ timeout: 3000 });
         await link.click();

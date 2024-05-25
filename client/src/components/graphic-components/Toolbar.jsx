@@ -1,9 +1,8 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import "../../styles/toolbar.scss"
 import BrushBlock from "./BrushBlock";
 import ShapesBlock from "./ShapesBlock";
 import ToolsBlock from "./ToolsBlock";
-import {SketchPicker} from "react-color";
 import ColorPicker from "../ColorPicker";
 import SettingBar from "./SettingBar";
 const Toolbar = () => {

@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import svgToolState from "../../store/svgToolState";
 import "../../styles/toolbar.scss";
 import BoxSelectNew from "../../tools/animation-tools/BoxSelectNew";
 import Group from "../../tools/animation-tools/Group";
 import Mover from "../../tools/animation-tools/Mover";
 import svgCanvasState from "../../store/svgCanvasState";
+import { Tooltip } from 'react-tooltip';
 
 const SvgToolsBlock = ({ currentColor }) => {
     const [isFill, setIsFill] = useState(false);
@@ -55,30 +56,65 @@ const SvgToolsBlock = ({ currentColor }) => {
         svgToolState.setIsDrawnSvg(true);
     };
 
+    const toolTips = {
+        boxSelect: 'Выбрать',
+        group: 'Группировка',
+        move: 'Перемещение',
+        stroke: 'Обводка',
+        fill: 'Заливка'
+    };
+
     return (
         <div className="tools-block-container">
             <div className="tool-bar-item-title">Инструменты</div>
             <div className="tool-bar-item">
-                <button className="tool-bar__btn-tools boxSelect" onClick={() => {
-                    new BoxSelectNew(svgCanvasState.canvas);
-                }} />
-                <button className="tool-bar__btn-tools group" onClick={() => {
-                    new Group(svgCanvasState.canvas);
-                }} />
-                <button className="tool-bar__btn-tools move" onClick={() => {
-                    new Mover(svgCanvasState.canvas);
-                }} />
+                <button
+                    className="tool-bar__btn-tools boxSelect"
+                    onClick={() => { new BoxSelectNew(svgCanvasState.canvas); }}
+                    data-tip={toolTips.boxSelect}
+                    data-tooltip-id="tooltip-boxSelect"
+                    data-tooltip-content={toolTips.boxSelect}
+                />
+                <button
+                    className="tool-bar__btn-tools group"
+                    onClick={() => { new Group(svgCanvasState.canvas); }}
+                    data-tip={toolTips.group}
+                    data-tooltip-id="tooltip-group"
+                    data-tooltip-content={toolTips.group}
+                    
+                />
+                <button
+                    className="tool-bar__btn-tools move"
+                    onClick={() => { new Mover(svgCanvasState.canvas); }}
+                    data-tooltip-id="tooltip-move"
+                    data-tooltip-content={toolTips.move}
+                />
                 <input
                     className="tool-bar__btn-tools stroke"
                     type="button"
                     onClick={changeStrokeColorBtn}
+                    data-tooltip-id="tooltip-stroke"
+                    data-tooltip-content={toolTips.stroke}
                 />
                 <input
                     className="tool-bar__btn-tools fill"
                     type="button"
                     onClick={changeFillColorBtn}
+                    data-tooltip-id="tooltip-fill"
+                    data-tooltip-content={toolTips.fill}
                 />
             </div>
+            {Object.keys(toolTips).map(toolKey => (
+                <Tooltip
+                    id={`tooltip-${toolKey}`}
+                    place="bottom"
+                    type="dark"
+                    effect="float"
+                    key={toolKey}
+                >
+                    {toolTips[toolKey]}
+                </Tooltip>
+            ))}
         </div>
     );
 };

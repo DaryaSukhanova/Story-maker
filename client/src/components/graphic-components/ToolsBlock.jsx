@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { Tooltip } from 'react-tooltip';
 import canvasState from "../../store/canvasState";
 import toolState from "../../store/toolState";
 import Eraser from "../../tools/graphic-tools/Eraser";
-import { Button, Modal } from "react-bootstrap";
-import axios from "axios";
-import { SketchPicker } from "react-color";
+
+const toolTips = {
+    select: 'Выбрать',
+    fill: 'Заливка',
+    stroke: 'Обводка',
+    undo: 'Отменить',
+    redo: 'Повторить',
+    eraser: 'Ластик'
+};
 
 const ToolsBlock = ({ currentColor }) => {
     const [isFill, setIsFill] = useState(true);
@@ -38,15 +45,56 @@ const ToolsBlock = ({ currentColor }) => {
         <div className="tools-block-container">
             <div className="tool-bar-item-title">Инструменты</div>
             <div className="tool-bar-item">
-                <input className="tool-bar__btn-tools select" type="button"  />
-                <input className="tool-bar__btn-tools fill" type="button" onClick={changeFillColorBtn} />
-                <input className="tool-bar__btn-tools stroke" type="button" onClick={changeStrokeColorBtn} />
+                <input
+                    className="tool-bar__btn-tools select"
+                    type="button"
+                    data-tooltip-id="tooltip-select"
+                    data-tooltip-content={toolTips.select}
+                />
+                <input
+                    className="tool-bar__btn-tools fill"
+                    type="button"
+                    onClick={changeFillColorBtn}
+                    data-tooltip-id="tooltip-fill"
+                    data-tooltip-content={toolTips.fill}
+                />
+                <input
+                    className="tool-bar__btn-tools stroke"
+                    type="button"
+                    onClick={changeStrokeColorBtn}
+                    data-tooltip-id="tooltip-stroke"
+                    data-tooltip-content={toolTips.stroke}
+                />
                 <div className="undo-redo-container">
-                    <button className="tool-bar__btn-tools undo" onClick={() => canvasState.undo()} />
-                    <button className="tool-bar__btn-tools redo" onClick={() => canvasState.redo()} />
+                    <button
+                        className="tool-bar__btn-tools undo"
+                        onClick={() => canvasState.undo()}
+                        data-tooltip-id="tooltip-undo"
+                        data-tooltip-content={toolTips.undo}
+                    />
+                    <button
+                        className="tool-bar__btn-tools redo"
+                        onClick={() => canvasState.redo()}
+                        data-tooltip-id="tooltip-redo"
+                        data-tooltip-content={toolTips.redo}
+                    />
                 </div>
-                <button className="tool-bar__btn-tools eraser" onClick={() => toolState.setTool(new Eraser(canvasState.canvas))} />
+                <button
+                    className="tool-bar__btn-tools eraser"
+                    onClick={() => toolState.setTool(new Eraser(canvasState.canvas))}
+                    data-tooltip-id="tooltip-eraser"
+                    data-tooltip-content={toolTips.eraser}
+                />
             </div>
+            {Object.keys(toolTips).map(toolKey => (
+                <Tooltip
+                    id={`tooltip-${toolKey}`}
+                    place="bottom"
+                    type="dark"
+                    effect="float"
+                    key={toolKey}
+                />
+            ))}
         </div>
     );
 };

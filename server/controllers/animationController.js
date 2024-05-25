@@ -7,8 +7,10 @@ import animationService from "../services/animationService.js";
 
 class animationController {
 	async saveAnimation(req, res) {
+		
 		try {
-			// console.log("req.body", req.body)
+			console.log("req.body.name", req.body.name)
+
 			const animationData = JSON.parse(req.body.animationData)
 
 			const user = await User.findOne({_id: req.user.id})
@@ -36,8 +38,12 @@ class animationController {
 				parent: parent.id,
 				user: user.id
 			})
+			
 			svgData.save()
+			console.log('svgData', svgData)
 			svgData = await File.findOne(svgData)
+			// console.log('svgDataFindOne', svgData)
+
 			if (keySize != 0) {
 				const keysData = await Keys.create({
 					data: JSON.stringify(keyFrames),
