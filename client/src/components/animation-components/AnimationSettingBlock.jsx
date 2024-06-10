@@ -40,7 +40,8 @@ const AnimationSettingBlock = observer(() => {
     if (animationToolState.currentTool instanceof KeyFrameManager) {
         selectedToolContent = <TransformBlock />;
     } else {
-        selectedToolContent = <div>Выберите инструмент анимации</div>;
+        // selectedToolContent = <div>Выберите инструмент анимации</div>;
+        selectedToolContent = <TransformBlock />;
     }
 
     return (

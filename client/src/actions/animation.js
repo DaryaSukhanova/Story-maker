@@ -46,7 +46,7 @@ const serializeSvgElements = () => {
             keys: svgElement.keys,
             attributes: attrsObj,
             origin: svgElement.origin,
-            pathData: svgElement.pathData 
+            pathData: svgElement.pathData
         };
     });
 };
