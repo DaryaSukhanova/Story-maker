@@ -5,7 +5,7 @@ node_modules
 /.pnp
 .pnp.js
 .idea
-server/files/
+# server/files/
 client/allure-report/
 client/allure-results/
 # testing
